@@ -7,10 +7,12 @@ on:
     branches: [main, master]
     paths:
       - "04_CURSOR_WORKSPACES/01_C_UNIT_TEST_HELPER/**"
+      - "02_SOURCE_TARGETS/**"
       - ".github/workflows/genesis-foundation-verify.yml"
   pull_request:
     paths:
       - "04_CURSOR_WORKSPACES/01_C_UNIT_TEST_HELPER/**"
+      - "02_SOURCE_TARGETS/**"
       - ".github/workflows/genesis-foundation-verify.yml"
 
 permissions:
