@@ -1,0 +1,3721 @@
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/CORE_CONSTITUTION.md work/CORE_CONSTITUTION.md
+--- 00-base/mbg-core-v0.1-alpha1/CORE_CONSTITUTION.md	2026-05-06 21:27:26.806407155 +0000
++++ work/CORE_CONSTITUTION.md	2026-05-06 21:27:58.940781883 +0000
+@@ -2,7 +2,7 @@
+ 
+ Status: normative draft for Trust Kernel Hardening  
+ Scope: MBG Core v0.1 only  
+-Base code: `pr35_metadata_lifecycle_fix_v2`
++Base code: `mbg-core-v0.1-alpha1-followup`
+ 
+ This document defines the non-negotiable laws of the Core Trust Kernel.
+ 
+@@ -67,7 +67,7 @@
+ - current: `core/contracts/src/events.ts`
+ - current: `core/system/journal.ts`
+ - future: `core/contracts/src/event-envelope.ts`
+-- future: `core/kernel/event-validator.ts`
++- future: `core/events/validate-domain-event.ts`
+ 
+ ### Snapshot
+ 
+@@ -138,6 +138,45 @@
+ - current: `core/system/state-hash.ts`
+ - future: `core/trust/core-trust-report.ts`
+ 
++### Bootstrap FSM
++
++The Bootstrap FSM is the explicit state machine that governs startup and trading readiness.
++
++It is responsible for proving whether the core is still cold, loading, replaying, reconciling, recovered, failed, or ready. It must not infer readiness from API reachability, frontend state, V1 state, or a convenient default.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/transitions/src/reducers.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/bootstrap/bootstrap-fsm.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### Event validation
++
++Event validation is a core responsibility.
++
++API schemas may reject malformed requests early, but the canonical decision that a domain event is valid belongs inside the core before journal append, reducer execution, idempotency recording, or snapshot mutation.
++
++Current/future modules:
++
++- current: `core/contracts/src/events.ts`
++- future: `core/events/validate-domain-event.ts`
++- tests: `tests/scenarios/*`
++
++### Idempotency index
++
++The idempotency index is the recoverable set of event identities already accepted by the core.
++
++It must be derivable from the canonical journal so a restart or replay cannot forget which events were already applied. It is an acceleration structure, not an independent authority over the journal.
++
++Current/future modules:
++
++- current: `core/system/journal.ts`
++- future: `core/runtime/event-index.ts`
++- tests: `tests/scenarios/*`
++
+ ## 4. Laws of the core
+ 
+ ### LAW-001 — No event, no state change
+@@ -246,7 +285,7 @@
+ 
+ - current: `core/state/src/types.ts`
+ - current: `core/gates/src/action-gate.ts`
+-- future: `core/kernel/bootstrap-fsm.ts`
++- future: `core/bootstrap/bootstrap-fsm.ts`
+ - future: `core/trust/core-trust-report.ts`
+ 
+ ### LAW-007 — Stale exchange truth forbids trading
+@@ -301,7 +340,7 @@
+ 
+ - current: `core/contracts/src/events.ts`
+ - current: `core/system/journal.ts`
+-- future: `core/kernel/event-validator.ts`
++- future: `core/events/validate-domain-event.ts`
+ 
+ ### LAW-010 — Duplicate event does not change state
+ 
+@@ -320,7 +359,7 @@
+ 
+ - current: `core/contracts/src/events.ts`
+ - current: `core/system/journal.ts`
+-- future: `core/replay/idempotency-index.ts`
++- future: `core/runtime/event-index.ts`
+ 
+ ### LAW-011 — No fill, no PnL
+ 
+@@ -413,6 +452,145 @@
+ - future: `core/kernel/kernel-authority.ts`
+ - future: `core/adapters/v1-input-adapter.ts`
+ 
++
++### LAW-016 — Bootstrap FSM governs trading readiness
++
++Trading readiness is governed by the Bootstrap FSM and `ActionGate`, not by process uptime, API availability, frontend state, V1, or a manually set flag.
++
++Required proof:
++
++- bootstrap state is represented explicitly;
++- unreconciled, failed, loading, replaying, or uncertain bootstrap states cannot allow trading;
++- only a proven reconciled/ready bootstrap path may participate in trading readiness;
++- `ActionGate` consumes bootstrap evidence and fails closed when readiness is not proven.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/transitions/src/reducers.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/bootstrap/bootstrap-fsm.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-017 — Event validation is core responsibility
++
++Event validation is performed inside the core. API validation is allowed as an early filter but is not authority.
++
++Required proof:
++
++- the core validates domain events before journal append;
++- the core validates domain events before reducer execution;
++- bypassing the API cannot create a canonical event;
++- invalid event rejection is explicit and testable.
++
++Current/future modules:
++
++- current: `core/contracts/src/events.ts`
++- future: `core/events/validate-domain-event.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-018 — Idempotency index is recoverable from journal
++
++The applied-event idempotency index must be rebuildable from the canonical journal.
++
++A restart, replay, or recovery path must not lose duplicate-event knowledge. If the index conflicts with the journal, the journal is the source of reconstruction and the conflict is a trust problem.
++
++Required proof:
++
++- accepted event identities are represented in or derivable from journal entries;
++- replay can rebuild the applied-event index;
++- duplicate detection works after restart/replay;
++- an index-only state is not trusted if it cannot be traced to the journal.
++
++Current/future modules:
++
++- current: `core/system/journal.ts`
++- future: `core/runtime/event-index.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-019 — Reducers remain pure
++
++Reducers are pure deterministic functions over prior snapshot and accepted event.
++
++Reducers must not perform journal I/O, API calls, exchange calls, clock reads for decisions, random reads, frontend reads, V1 reads, strategy reads, or hidden global mutation.
++
++Required proof:
++
++- reducer output depends only on prior state and accepted event;
++- side effects happen outside reducers;
++- reducer tests can replay identical inputs and receive identical outputs;
++- reducers do not validate authority by consulting external systems.
++
++Current/future modules:
++
++- current: `core/transitions/src/reducers.ts`
++- future: `core/kernel/reducer-contract.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-020 — Duplicate event cannot mutate state
++
++A duplicate event identity cannot mutate snapshot, advance revision, recalculate PnL, create orders, unblock risk, or change trust state.
++
++A duplicate with identical content may be reported as ignored. A duplicate identity with different content is an integrity failure and must not be reduced.
++
++Required proof:
++
++- duplicate detection runs before reducer execution;
++- ignored duplicate keeps snapshot revision unchanged;
++- conflicting duplicate is reported as integrity failure;
++- duplicate handling is covered by scenario tests.
++
++Current/future modules:
++
++- current: `core/contracts/src/events.ts`
++- current: `core/system/journal.ts`
++- future: `core/runtime/event-index.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-021 — Invalid event never enters canonical journal
++
++Invalid events must not be appended to the canonical journal.
++
++They may be returned as explicit rejections or recorded in a separate non-canonical rejection/audit channel, but they must not become replay input for trusted state.
++
++Required proof:
++
++- canonical journal append happens only after core validation succeeds;
++- invalid event rejection does not affect snapshot revision;
++- replay input excludes invalid rejected events;
++- scenario tests prove invalid-event rejection before journal append.
++
++Current/future modules:
++
++- current: `core/contracts/src/events.ts`
++- current: `core/system/journal.ts`
++- future: `core/events/validate-domain-event.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-022 — Bootstrap failed cannot transition to reconciled without recovery event
++
++A failed bootstrap state cannot transition to reconciled, ready, or trusted by direct assignment, restart optimism, API request, UI action, V1 output, or strategy output.
++
++It may leave failed state only through an accepted recovery event that is validated, journaled, reduced, replayable, and auditable.
++
++Required proof:
++
++- bootstrap failure is represented explicitly;
++- direct failed-to-reconciled transition is forbidden;
++- recovery transition requires an accepted recovery event;
++- recovery event is present in journal and replay;
++- scenario tests cover failed bootstrap recovery gating.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/transitions/src/reducers.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/bootstrap/bootstrap-fsm.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
+ ## 5. Review rule
+ 
+ A change is acceptable only if it increases the provability of the kernel or preserves it while making the implementation clearer.
+@@ -428,6 +606,7 @@
+ 3. exact verification commands;
+ 4. risk list;
+ 5. statement of which core laws are strengthened or preserved.
++6. statement of what was intentionally not implemented when a task is constitution-only.
+ 
+ ## 7. Open questions
+ 
+@@ -441,6 +620,8 @@
+ 8. What is the minimum accepted metadata contract for a live order?
+ 9. Should duplicate `eventId` with different payload be `COMPROMISED` or immediate `PANIC`?
+ 10. Should `CoreTrustReport` be a pure function over evidence, or may it read runtime state directly?
++11. For Wave 2, should failed bootstrap recovery events have a dedicated event type or reuse an existing system event envelope?
++12. What exact event identity fields are canonical for duplicate detection beyond `eventId`?
+ 
+ ## 8. Machine-readable companion
+ 
+@@ -448,4 +629,4 @@
+ 
+ - `core/kernel/kernel-constitution.ts`
+ 
+-It contains stable law ids, trust states, authority exclusions, and law-to-module mappings. It does not change runtime behavior.
++It contains stable law ids, trust states, authority exclusions, law-to-module mappings, and Wave 2 constitution markers. It does not change runtime behavior.
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/DELIVERY_REPORT_TASK4_EVENT_VALIDATION.md work/DELIVERY_REPORT_TASK4_EVENT_VALIDATION.md
+--- 00-base/mbg-core-v0.1-alpha1/DELIVERY_REPORT_TASK4_EVENT_VALIDATION.md	1970-01-01 00:00:00.000000000 +0000
++++ work/DELIVERY_REPORT_TASK4_EVENT_VALIDATION.md	2026-05-06 21:27:26.875407228 +0000
+@@ -0,0 +1,111 @@
++# MBG Core v0.1 Wave 2 — Task 4 Delivery Report
++
++Task: Event Validation inside Core  
++Canonical base: `mbg-core-v0.1-alpha1-followup.zip`  
++Output package: `mbg-core-v0.1-alpha2-task4-event-validation.zip`
++
++## Summary
++
++Implemented core-side domain event validation before journal append and before reducer application.
++
++The runtime no longer trusts API-level validation alone. Events submitted through the runtime commit path are validated inside core before persistence or state transition. Invalid events return a diagnostic rejection result and leave the canonical journal, in-memory event window, snapshot, and revision unchanged.
++
++## Implemented
++
++- Added `core/events/validate-domain-event.ts`.
++- Added `RuntimeEngine.commitEventResult()` for diagnostic accept/reject results.
++- Routed `commitEvent()` and `commitEventSilent()` through core validation.
++- Kept reducer/replay behavior deterministic and separate from validation.
++- Added `source` and optional `schemaVersion` fields to the domain event envelope.
++- Updated `makeEvent()` to attach `source: "core"` by default.
++- Updated core `PLACE_ORDER` event creation to include `orderId`, `clientOrderId`, and provider metadata.
++- Added focused scenario test for event validation.
++- Added `npm run test:core:event-validation`.
++- Updated `CORE_CONSTITUTION.md` with the Wave 2 event-validation law.
++
++## Validation rules covered
++
++Generic event validation:
++
++- `eventId` is required.
++- `eventType` must be one of the known core event types.
++- `timestamp` must be valid.
++- `timestamp` must not be beyond future tolerance.
++- optional `schemaVersion`, when present, must be `1` or `v1`.
++- payload must be an object.
++- source/provider/diagnostic reason must be present where required.
++
++Market tick validation:
++
++- `symbol` required.
++- `price > 0`.
++- `bid > 0`.
++- `ask > 0`.
++- `bid <= ask`.
++- `volume >= 0`.
++- source/provider required.
++
++Order/fill validation:
++
++- `orderId` required.
++- `quantity > 0`.
++- `symbol` required.
++- `side` must be `buy` or `sell`.
++- source/provider required.
++- `fillId` required for `order.execution.reported`.
++
++## Changed files
++
++- `CORE_CONSTITUTION.md`
++- `core/contracts/src/events.ts`
++- `core/events/validate-domain-event.ts`
++- `core/runtime/src/runtime-engine.ts`
++- `package.json`
++- `tests/scenarios/core-event-validation.ts`
++- `tests/scenarios/gate-scenarios.ts`
++- `DELIVERY_REPORT_TASK4_EVENT_VALIDATION.md`
++
++## Tests
++
++Executed locally after `npm install`:
++
++```text
++npm run typecheck
++PASS
++
++npm test
++PASS
++
++npm run test:core:event-validation
++PASS
++```
++
++Observed command output summary:
++
++```text
++> tsc --noEmit
++(no errors)
++
++> tsx tests/scenarios/gate-scenarios.ts
++5 gate scenario base checks passed
++
++> tsx tests/scenarios/core-event-validation.ts
++core event validation checks passed
++```
++
++## Risks
++
++- Existing non-test runtime paths that create order execution events without `fillId` will now be rejected by the core validator. This is intentional for Task 4, but integration owners should audit scenario scripts and API debug endpoints that emit historical fill-like events.
++- Market ticks now require `bid`, `ask`, `volume`, and provider/source. This is stricter than the older optional contract and may require callers to provide full tick payloads.
++- The rejection diagnostic is returned from `commitEventResult()`. The legacy `commitEvent()` compatibility method returns the current snapshot on rejection to avoid breaking existing callers.
++
++## Intentionally not done
++
++- No quarantine persistence for rejected events.
++- No event idempotency implementation.
++- No Bootstrap FSM implementation.
++- No CoreTrustReport implementation.
++- No ExchangeTruth implementation.
++- No Freshness Guard implementation.
++- No Metadata-as-Events implementation.
++- No V1, Signal Layer, Decision Engine, strategy, UI, live trading, or exchange-key integration.
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/DELIVERY_REPORT_TASK5_IDEMPOTENCY.md work/DELIVERY_REPORT_TASK5_IDEMPOTENCY.md
+--- 00-base/mbg-core-v0.1-alpha1/DELIVERY_REPORT_TASK5_IDEMPOTENCY.md	1970-01-01 00:00:00.000000000 +0000
++++ work/DELIVERY_REPORT_TASK5_IDEMPOTENCY.md	2026-05-06 21:29:43.805717718 +0000
+@@ -0,0 +1,81 @@
++# MBG Core v0.1 Wave 2 — Task 5 Delivery Report
++
++Task: Event Idempotency  
++Base: `mbg-core-v0.1-alpha1-followup.zip`  
++Delivered archive: `mbg-core-v0.1-alpha2-task5-idempotency.zip`
++
++## Summary
++
++Implemented runtime idempotency before event persistence and before reducer execution.
++
++The same `eventId` can no longer mutate the core snapshot twice. Duplicate events do not increment revision and are not appended as canonical events. The runtime also checks secondary identities for fills, reconcile events, and exchange execution reports when those keys exist.
++
++## Implemented
++
++- Added `EventIdempotencyIndex`.
++- Added canonical event fingerprinting.
++- Added duplicate diagnostics:
++  - `accepted`
++  - `duplicate_ignored`
++  - `duplicate_conflict`
++- Added `commitEventWithDiagnostic()` for explicit audit/testing.
++- Added `getIdempotencyView()` to expose index sizes and recent diagnostics.
++- Rebuilt idempotency index from the persisted event journal during startup/recovery.
++- Updated replay check to use idempotency-aware snapshot-first streaming tail.
++- Added idempotency invariant `no_idempotency_conflicts`.
++- Added dedicated test script `npm run test:core:idempotency`.
++- Updated Core Constitution with LAW-011.
++- Added Scenario Audit for Task 5.
++
++## Changed files
++
++- `package.json`
++- `CORE_CONSTITUTION.md`
++- `core/runtime/src/idempotency.ts`
++- `core/runtime/src/runtime-engine.ts`
++- `tests/scenarios/core-idempotency.ts`
++- `SCENARIO_AUDIT_TASK5_IDEMPOTENCY.md`
++- `DELIVERY_REPORT_TASK5_IDEMPOTENCY.md`
++
++## Test commands and results
++
++```txt
++npm run typecheck
++EXIT=0
++
++npm test
++EXIT=0
++
++npm run test:core:idempotency
++EXIT=0
++```
++
++## Coverage against requested tests
++
++1. same `eventId` second time rejected/ignored — covered.
++2. duplicate event does not change snapshot — covered.
++3. duplicate event does not increase revision — covered.
++4. duplicate fill does not change PnL twice — covered.
++5. duplicate reconcile does not break state — covered.
++6. replay after duplicate remains correct — covered.
++7. existing tests continue to pass — `npm test` passed.
++
++## Risks
++
++- Secondary-key idempotency depends on keys being present in payloads. If an exchange report has no `fillId`, `tradeId`, `executionId`, `exchangeReportId`, `executionReportId`, `reportId`, or derivable report key, only `eventId` idempotency applies.
++- Existing historical journals with already-applied duplicate canonical events may require a separate migration or full cold replay audit. This task prevents new duplicates from becoming canonical and rebuilds indexes from current journals.
++- `duplicate_conflict` is recorded as a diagnostic and invariant failure, but this task does not implement Bootstrap FSM/PANIC transitions because that belongs to another Wave 2 task.
++
++## Intentionally not done
++
++- Did not connect V1.
++- Did not modify Signal Layer.
++- Did not add Decision Engine.
++- Did not add strategy logic.
++- Did not add UI.
++- Did not enable live trading.
++- Did not add exchange real keys.
++- Did not implement CoreTrustReport.
++- Did not implement ExchangeTruth.
++- Did not implement Freshness Guard.
++- Did not implement Metadata as Events.
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/DELIVERY_REPORT_WAVE2_SCENARIO_AUDIT_V3.md work/DELIVERY_REPORT_WAVE2_SCENARIO_AUDIT_V3.md
+--- 00-base/mbg-core-v0.1-alpha1/DELIVERY_REPORT_WAVE2_SCENARIO_AUDIT_V3.md	1970-01-01 00:00:00.000000000 +0000
++++ work/DELIVERY_REPORT_WAVE2_SCENARIO_AUDIT_V3.md	2026-05-06 21:27:26.909424827 +0000
+@@ -0,0 +1,209 @@
++# MBG Core v0.1 — Wave 2 Scenario Audit Delivery Report v3
++
++Role: 7 — Scenario Audit / Test Owner  
++Canonical base: `mbg-core-v0.1-alpha1-followup.zip`  
++Target integration: `mbg-core-v0.1-alpha2` after Roles 4, 5, and 6 merge.
++
++## Scope
++
++This delivery updates the Wave 2 scenario audit to match the implemented boundaries from:
++
++- Role 4: Bootstrap FSM events.
++- Role 5: core-side `commitEventResult(event, { log: false })` validation API.
++- Role 6: Event Idempotency diagnostics.
++
++No runtime behavior, reducer behavior, ActionGate behavior, strategy logic, V1, Signal Layer, Decision Engine, UI, live trading, ExchangeTruth, Freshness Guard, Metadata-as-Events, or CoreTrustReport was changed.
++
++`CORE_CONSTITUTION.md` was not modified. Test requirements are documented only in this delivery report.
++
++## Changed files
++
++```txt
++package.json
++tests/scenarios/wave2-scenario-audit.ts
++DELIVERY_REPORT_WAVE2_SCENARIO_AUDIT_V3.md
++```
++
++## Added command
++
++```bash
++npm run test:wave2:scenario-audit
++```
++
++Command definition:
++
++```bash
++PERSISTENCE_ENABLED=false tsx tests/scenarios/wave2-scenario-audit.ts
++```
++
++## Scenario list
++
++1. `bootstrap not reconciled -> PLACE_ORDER denied`
++2. `failed bootstrap cannot transition to reconciled directly`
++3. `invalid market tick rejected and no state change`
++4. `duplicate market event is ignored without revision bump or canonical append`
++5. `duplicate eventId conflict is rejected without state or journal mutation`
++6. `duplicate fill is ignored and does not double PnL`
++7. `duplicate reconcile is ignored without state or journal mutation`
++8. `market tick alone does not allow trading`
++9. `position reconciled but bootstrap not reconciled -> still denied`
++10. `bootstrap reconciled + valid state -> allow only if ActionGate allows`
++
++## Wave 2 coverage mapping
++
++```txt
++Bootstrap FSM:
++- bootstrap not reconciled -> PLACE_ORDER denied
++- failed bootstrap cannot transition to reconciled directly
++- position reconciled but bootstrap not reconciled -> still denied
++- bootstrap reconciled + valid state -> allow only if ActionGate allows
++
++Event Validation:
++- invalid market tick rejected and no state change
++- failed bootstrap cannot transition to reconciled directly
++
++Event Idempotency:
++- duplicate market event -> duplicate_ignored
++- duplicate eventId content conflict -> duplicate_conflict
++- duplicate fill -> duplicate_ignored
++- duplicate position reconcile -> duplicate_ignored
++
++Combined Safety:
++- market tick alone does not allow trading
++- position reconciled but bootstrap not reconciled -> still denied
++- bootstrap reconciled + valid state -> allow only if ActionGate allows
++```
++
++## Role 5 validation expectations
++
++Invalid event scenarios now use only:
++
++```ts
++runtimeEngine.commitEventResult(event, { log: false })
++```
++
++They assert:
++
++```txt
++result.ok === false
++snapshot.revision unchanged
++snapshot unchanged
++event not appended to canonical journal
++```
++
++They do not expect `throw` as the primary behavior.
++
++## Role 6 idempotency expectations
++
++Duplicate scenarios now assert the final idempotency diagnostic:
++
++```txt
++duplicate_ignored
++duplicate_conflict
++```
++
++They also assert:
++
++```txt
++revision unchanged
++snapshot unchanged
++duplicate/conflict not appended as canonical
++same eventId has exactly one canonical accepted journal entry
++```
++
++## Valid fill provenance
++
++`validFill()` now includes provenance and validation fields expected by Role 5:
++
++```txt
++provider
++source
++executionId
++fillId
++tradeId
++symbol
++side
++quantity
++filledQuantity
++filledQuantityDelta
++fillPrice
++price
++exchangeStatus
++commission
++commissionAsset
++reportedAt
++```
++
++The duplicate-fill scenario therefore tests idempotency/accounting protection, not validation failure.
++
++## Bootstrap FSM events used
++
++```txt
++bootstrap.loading_snapshot
++bootstrap.replaying_tail
++bootstrap.awaiting_exchange_truth
++bootstrap.reconciled
++bootstrap.failed
++```
++
++`bootstrap.recovery_started` is not used in this scenario set because the required minimum scenarios do not exercise recovery flow. It remains a candidate for a dedicated recovery scenario if Role 4 exposes a recovery acceptance path.
++
++## Expected alpha2 result
++
++After Roles 4/5/6 are merged, the target result is:
++
++```json
++{
++  "total": 10,
++  "passed": 10,
++  "failed": 0
++}
++```
++
++## Local command results on available base
++
++The available local package is still `mbg-core-v0.1-alpha1-followup`, not the merged alpha2 package.
++
++```bash
++npm install
++```
++
++Result: passed.
++
++```bash
++npm run typecheck
++```
++
++Result: passed.
++
++```bash
++npm run test:wave2:scenario-audit
++```
++
++Result on alpha1-followup: failed with `total=10`, `passed=1`, `failed=9`; not representative for alpha2 because the base does not contain the final Role 4/5/6 implementations. The suite is intentionally alpha2-targeted and requires:
++
++```txt
++runtimeEngine.commitEventResult(event, { log: false })
++Bootstrap FSM events from Role 4
++core validation from Role 5
++idempotency diagnostics from Role 6
++```
++
++This is not a fail-by-design suite for alpha2. It is expected to pass on the merged alpha2 package.
++
++## Risks and gaps
++
++1. The exact concrete shape of the Role 6 result object was not available in the local alpha1 base. The test accepts diagnostics exposed as top-level `code/status/reason/diagnostic`, nested `diagnostic`, or nested `idempotency` fields, but the diagnostic value must be exactly `duplicate_ignored` or `duplicate_conflict`.
++
++2. The suite checks the in-memory canonical journal through `runtimeEngine.getEvents(10000)`. If alpha2 stores canonical journal visibility elsewhere, Integration Owner may need to provide a read-only helper without changing core behavior.
++
++3. The final ActionGate allow scenario assumes Role 4 exposes `bootstrap.reconciled` as the event that removes bootstrap denial when market and position are valid. If Role 4 names an additional ready state, the test should be adjusted to that published FSM contract.
++
++4. `bootstrap.recovery_started` is documented but not asserted in this minimal scenario set.
++
++## Intentionally not done
++
++- Did not modify `CORE_CONSTITUTION.md`.
++- Did not change runtime architecture.
++- Did not change core behavior, reducers, validation, idempotency, persistence, or ActionGate.
++- Did not add V1, Signal Layer, Decision Engine, strategies, UI, live trading, exchange keys, CoreTrustReport, ExchangeTruth, Freshness Guard, or Metadata-as-Events.
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/DELIVERY_REPORT_WAVE2_TASK3_BOOTSTRAP_FSM.md work/DELIVERY_REPORT_WAVE2_TASK3_BOOTSTRAP_FSM.md
+--- 00-base/mbg-core-v0.1-alpha1/DELIVERY_REPORT_WAVE2_TASK3_BOOTSTRAP_FSM.md	1970-01-01 00:00:00.000000000 +0000
++++ work/DELIVERY_REPORT_WAVE2_TASK3_BOOTSTRAP_FSM.md	2026-05-06 21:27:26.854657187 +0000
+@@ -0,0 +1,123 @@
++# MBG Core v0.1 — Wave 2 Task 3 Delivery Report
++
++Task: Bootstrap FSM  
++Canonical base: `mbg-core-v0.1-alpha1-followup.zip`  
++Package status: task-level patch for Integration Owner; not a standalone canonical alpha2 release.
++
++## Summary
++
++Implemented an explicit `bootstrap` state domain and lifecycle reducer. Normal trading is denied by `ActionGate` until `bootstrap.status === "reconciled"`.
++
++## Implemented
++
++- Added `BootstrapStatus` and `BootstrapState`.
++- Added `bootstrap` to `RuntimeSnapshot`.
++- Added bootstrap lifecycle event types:
++  - `bootstrap.loading_snapshot`
++  - `bootstrap.replaying_tail`
++  - `bootstrap.awaiting_exchange_truth`
++  - `bootstrap.reconciled`
++  - `bootstrap.failed`
++  - `bootstrap.recovery_started`
++- Added bootstrap reducer and lifecycle transition rules.
++- Added `quarantineRequired` flag.
++- Added blocking reasons:
++  - `bootstrap_not_reconciled`
++  - `bootstrap_failed`
++  - `bootstrap_awaiting_exchange_truth`
++- Updated risk/system reducers so bootstrap status contributes to blocked/degraded/healthy state.
++- Updated `ActionGate` so normal actions are denied until bootstrap is reconciled.
++- Preserved cold start truth:
++  - `position.status === "unknown"`
++  - `risk.status === "blocked"`
++  - `bootstrap.status === "cold"`
++- Added dedicated bootstrap FSM scenario test.
++- Updated runtime audit and cold-start tests for explicit bootstrap domain.
++- Updated constitution coverage for explicit bootstrap FSM.
++
++## Changed files
++
++- `CORE_CONSTITUTION.md`
++- `RUNBOOK.md`
++- `package.json`
++- `core/contracts/src/events.ts`
++- `core/state/src/types.ts`
++- `core/transitions/src/reducers.ts`
++- `core/runtime/src/runtime-engine.ts`
++- `core/gates/src/action-gate.ts`
++- `core/kernel/kernel-constitution.ts`
++- `tests/scenarios/bootstrap-fsm.ts`
++- `tests/scenarios/cold-start-unknown.ts`
++- `tests/scenarios/gate-scenarios.ts`
++- `tests/scenarios/audit-runtime.ts`
++- `DELIVERY_REPORT_WAVE2_TASK3_BOOTSTRAP_FSM.md`
++
++## Test results
++
++Commands were run after `npm install`.
++
++| Command | Result |
++|---|---|
++| `npm run typecheck` | PASS |
++| `npm test` | PASS |
++| `npm run test:core:cold-start` | PASS |
++| `npm run test:core:bootstrap` | PASS |
++| `npm run verify` | PASS |
++
++## Bootstrap FSM behavior
++
++Allowed lifecycle:
++
++```text
++cold
++  -> loading_snapshot
++  -> replaying_tail
++  -> awaiting_exchange_truth
++  -> reconciled
++```
++
++Failure lifecycle:
++
++```text
++any state -> failed
++failed -> recovery_started -> loading_snapshot
++```
++
++Forbidden lifecycle:
++
++```text
++failed -> reconciled
++```
++
++The direct `failed -> reconciled` event is ignored by the bootstrap reducer and does not change bootstrap status.
++
++## Trading gate behavior
++
++`PLACE_ORDER` is denied for all bootstrap statuses except `reconciled`.
++
++Reasons:
++
++- `cold`, `loading_snapshot`, `replaying_tail`: `bootstrap_not_reconciled`
++- `awaiting_exchange_truth`: `bootstrap_awaiting_exchange_truth`
++- `failed`: `bootstrap_failed`
++
++## Risks / integration notes
++
++- This patch intentionally adds a new `bootstrap` domain to `RuntimeSnapshot`, so downstream code assuming exactly six state domains must be updated.
++- Historical persisted snapshots without `bootstrap` were not migrated in this task. Integration Owner should decide whether alpha2 needs a migration shim for old local runtime data. This task package was reset to a clean runtime state.
++- Bootstrap lifecycle events are accepted as normal core events, but Wave 2 Task 3 does not implement the broader Event Validation task.
++- The bootstrap lifecycle is deterministic in reducers, but invalid lifecycle attempts currently become no-op domain transitions while the global snapshot revision still advances because the event was committed. Full rejection belongs to Wave 2 Event Validation.
++
++## Intentionally not done
++
++- CoreTrustReport was not implemented.
++- ExchangeTruth was not implemented.
++- Freshness Guard was not implemented.
++- Metadata as Events was not implemented.
++- Event idempotency was not implemented.
++- Signal Layer was not touched.
++- Decision Engine was not touched.
++- Strategy logic was not added.
++- UI was not added.
++- Live trading and exchange keys were not added.
++- V1 was not connected.
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/INTEGRATION_REPORT_ALPHA2.md work/INTEGRATION_REPORT_ALPHA2.md
+--- 00-base/mbg-core-v0.1-alpha1/INTEGRATION_REPORT_ALPHA2.md	1970-01-01 00:00:00.000000000 +0000
++++ work/INTEGRATION_REPORT_ALPHA2.md	2026-05-06 22:39:45.941090911 +0000
+@@ -0,0 +1,201 @@
++# INTEGRATION_REPORT_ALPHA2
++
++## Package
++
++- Target package: `mbg-core-v0.1-alpha2`
++- Base archive: `mbg-core-v0.1-alpha1-followup.zip`
++- Integration role: Role 8 / Integration Owner / Merge Engineer
++- Integration mode: semantic merge over canonical alpha1 followup base
++
++## Inputs merged
++
++- Role 2 — Constitution Update
++  - `CORE_CONSTITUTION.md`
++  - `core/kernel/kernel-constitution.ts`
++  - constitution test and package script updates
++- Role 4 — Bootstrap FSM
++  - bootstrap domain
++  - bootstrap lifecycle events
++  - bootstrap reducer
++  - ActionGate block until bootstrap reconciled
++  - `test:core:bootstrap`
++- Role 5 — Event Validation
++  - `core/events/validate-domain-event.ts`
++  - validation before journal/reducer
++  - canonical diagnostic API `commitEventResult(event, { log?: boolean })`
++  - `test:core:event-validation`
++- Role 6 — Event Idempotency
++  - `core/runtime/src/idempotency.ts`
++  - idempotency index
++  - duplicate diagnostics
++  - idempotency-aware recovery/replay
++  - `getIdempotencyView()`
++  - invariant `no_idempotency_conflicts`
++  - `test:core:idempotency`
++- Role 7 — Scenario Audit v3
++  - `tests/scenarios/wave2-scenario-audit.ts`
++  - `test:wave2:scenario-audit`
++  - `DELIVERY_REPORT_WAVE2_SCENARIO_AUDIT_V3.md`
++
++## Semantic merge result
++
++The final event commit pipeline is:
++
++```text
++validate event
++→ idempotency check
++→ append journal
++→ record idempotency
++→ reduce snapshot
++```
++
++Implementation note: accepted events are validated first, checked against the idempotency index second, then persisted and reduced through the accepted-event path. Invalid events and duplicate events exit before journal append and before reducer mutation.
++
++### Invalid event contract
++
++Invalid events produce:
++
++```text
++no journal append
++no snapshot mutation
++no idempotency index mutation
++```
++
++### Duplicate event contract
++
++Duplicate events produce:
++
++```text
++no journal append
++no snapshot mutation
++revision unchanged
++```
++
++Duplicate conflicts are rejected without journal/snapshot mutation.
++
++## Canonical commit API
++
++The canonical diagnostic API for alpha2 is:
++
++```ts
++commitEventResult(event, { log?: boolean })
++```
++
++`commitEventWithDiagnostic()` from Role 6 was retained as a compatibility/internal diagnostic alias for idempotency-focused tests. It delegates into `commitEventResult()` and is not the competing canonical public commit API.
++
++## Conflicts and resolutions
++
++### `events.ts`
++
++Conflict source:
++
++- Role 4 added bootstrap lifecycle events.
++- Role 5 added validation requirements around domain events.
++- Role 6 required idempotency metadata to work across event identities.
++
++Resolution:
++
++- Semantically merged event types so bootstrap lifecycle events are present.
++- Kept existing PR/alpha1 event types.
++- Preserved event fields required by validation and idempotency.
++- No V1/Signal/Decision events were introduced.
++
++### `runtime-engine.ts`
++
++Conflict source:
++
++- Role 5 introduced validation-before-commit and `commitEventResult()`.
++- Role 6 introduced idempotency diagnostics and idempotency-aware recovery/replay.
++- Role 4 required bootstrap state to participate in runtime safety.
++
++Resolution:
++
++- Final commit path is validation first, idempotency second, accepted-event persistence/reduction third.
++- Invalid events return rejected diagnostics before journal/reducer/idempotency mutation.
++- Duplicate events return duplicate diagnostics before journal/reducer mutation.
++- Accepted events are the only events appended and reduced.
++- Recovery/replay rebuilds idempotency from accepted persisted events and avoids duplicate tail reduction.
++- `commitEventResult()` is the canonical diagnostic commit API.
++
++### `package.json`
++
++Conflict source:
++
++- Role 4, 5, 6, and 7 each added test scripts.
++- Alpha1 already had expanded `verify`.
++
++Resolution:
++
++- Preserved alpha1 scripts.
++- Added Wave 2 scripts:
++  - `test:core:bootstrap`
++  - `test:core:event-validation`
++  - `test:core:idempotency`
++  - `test:wave2:scenario-audit`
++- Updated `verify` to run full alpha2 scope:
++  - reset runtime
++  - typecheck
++  - npm test
++  - test:core-constitution
++  - test:core:cold-start
++  - test:core:bootstrap
++  - test:core:event-validation
++  - test:core:idempotency
++  - test:wave2:scenario-audit
++  - audit:runtime
++
++### ActionGate reason conflict
++
++Semantic decision:
++
++```text
++Wave2 Bootstrap FSM makes `bootstrap_not_reconciled` the canonical top-level ActionGate denial reason. The previous alpha1 reason `bootstrap_position_not_reconciled` remains only as internal risk/detail reason where applicable.
++```
++
++Resolution applied:
++
++- `tests/scenarios/gate-scenarios.ts` now expects top-level denial reason `bootstrap_not_reconciled`.
++- `bootstrap_position_not_reconciled` was not removed from internal/risk detail usage.
++
++## Verification results
++
++All required commands were executed.
++
++```text
++npm install: PASS
++npm run typecheck: PASS
++npm test: PASS
++npm run test:core-constitution: PASS
++npm run test:core:cold-start: PASS
++npm run test:core:bootstrap: PASS
++npm run test:core:event-validation: PASS
++npm run test:core:idempotency: PASS
++npm run test:wave2:scenario-audit: PASS
++npm run audit:runtime: PASS
++npm run verify: PASS
++```
++
++`npm run verify` completed with exit code `0`.
++
++## Scope guard
++
++Confirmed not added or connected in alpha2:
++
++```text
++V1
++V2
++Signal Layer
++Decision Engine
++UI
++strategy logic
++live trading
++real exchange keys
++```
++
++## Unresolved conflicts
++
++None.
++
++## Final status
++
++`mbg-core-v0.1-alpha2` is ready as the Wave 2 canonical integration candidate.
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/SCENARIO_AUDIT_TASK5_IDEMPOTENCY.md work/SCENARIO_AUDIT_TASK5_IDEMPOTENCY.md
+--- 00-base/mbg-core-v0.1-alpha1/SCENARIO_AUDIT_TASK5_IDEMPOTENCY.md	1970-01-01 00:00:00.000000000 +0000
++++ work/SCENARIO_AUDIT_TASK5_IDEMPOTENCY.md	2026-05-06 21:29:43.806679364 +0000
+@@ -0,0 +1,59 @@
++# MBG Core v0.1 Wave 2 — Scenario Audit: Task 5 Event Idempotency
++
++Scope: Event Idempotency only. No V1, Signal Layer, Decision Engine, strategy logic, UI, live trading, CoreTrustReport, ExchangeTruth, Freshness Guard, or Metadata-as-Events were added.
++
++## Scenario T5-IDEMP-001 — Duplicate eventId is ignored
++
++Given an accepted `market.tick.received` event  
++When the exact same event with the same `eventId` is committed again  
++Then the result is `duplicate_ignored`, the snapshot is unchanged, revision is unchanged, and the duplicate is not appended as a canonical event.
++
++Evidence: `tests/scenarios/core-idempotency.ts`, `npm run test:core:idempotency`
++
++## Scenario T5-IDEMP-002 — Duplicate eventId conflict is rejected
++
++Given an accepted event with `eventId=evt-market-1`  
++When another event with the same `eventId` but a different canonical payload is committed  
++Then the result is `duplicate_conflict`, the snapshot is unchanged, revision is unchanged, and an idempotency conflict diagnostic is recorded.
++
++Evidence: `tests/scenarios/core-idempotency.ts`, `npm run test:core:idempotency`
++
++## Scenario T5-IDEMP-003 — Duplicate fill is not applied twice
++
++Given an accepted `order.execution.reported` event with `fillId=fill-1`  
++When another execution event with a new `eventId` but the same `fillId` and same payload arrives  
++Then the result is `duplicate_ignored`, position is unchanged, revision is unchanged, and reducers are not run again.
++
++Evidence: `tests/scenarios/core-idempotency.ts`, `npm run test:core:idempotency`
++
++## Scenario T5-IDEMP-004 — Duplicate fill does not change PnL twice
++
++Given a PnL engine that processed `pnl-fill-1` once  
++When the same fill is submitted again  
++Then `processedFillIds` remains unique, `duplicateFillIds` records the duplicate, position remains unchanged, and net PnL remains unchanged.
++
++Evidence: `tests/scenarios/core-idempotency.ts`, `npm run test:core:idempotency`
++
++## Scenario T5-IDEMP-005 — Duplicate reconcile is not applied twice
++
++Given an accepted `position.reconciled` event with `reconcileId=reconcile-1`  
++When another reconcile event with a new `eventId` but same `reconcileId` and payload arrives  
++Then the result is `duplicate_ignored`, snapshot is unchanged, and revision is unchanged.
++
++Evidence: `tests/scenarios/core-idempotency.ts`, `npm run test:core:idempotency`
++
++## Scenario T5-IDEMP-006 — Replay remains correct after duplicates
++
++Given duplicates were submitted and ignored before canonical journal append  
++When `replayCheck()` runs  
++Then replay remains ok and replay revision equals current revision.
++
++Evidence: `tests/scenarios/core-idempotency.ts`, `npm run test:core:idempotency`
++
++## Scenario T5-IDEMP-007 — Recovery restores eventId index
++
++Given an engine with persisted accepted events  
++When a new engine instance recovers from disk  
++Then the idempotency index is rebuilt from the event journal and a duplicate of an already persisted event is ignored without changing snapshot or revision.
++
++Evidence: `tests/scenarios/core-idempotency.ts`, `npm run test:core:idempotency`
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/core/contracts/src/events.ts work/core/contracts/src/events.ts
+--- 00-base/mbg-core-v0.1-alpha1/core/contracts/src/events.ts	2026-05-06 21:27:26.823396885 +0000
++++ work/core/contracts/src/events.ts	2026-05-06 21:32:12.409693497 +0000
+@@ -10,6 +10,12 @@
+   ORDER_UNCERTAIN: "order.uncertain",
+   POSITION_UNKNOWN: "position.unknown",
+   POSITION_RECONCILED: "position.reconciled",
++  BOOTSTRAP_LOADING_SNAPSHOT: "bootstrap.loading_snapshot",
++  BOOTSTRAP_REPLAYING_TAIL: "bootstrap.replaying_tail",
++  BOOTSTRAP_AWAITING_EXCHANGE_TRUTH: "bootstrap.awaiting_exchange_truth",
++  BOOTSTRAP_RECONCILED: "bootstrap.reconciled",
++  BOOTSTRAP_FAILED: "bootstrap.failed",
++  BOOTSTRAP_RECOVERY_STARTED: "bootstrap.recovery_started",
+   SYSTEM_HEALTH_CHANGED: "system.health.changed",
+   SYSTEM_HALTED: "system.halted"
+ } as const;
+@@ -20,6 +26,8 @@
+   eventId: string;
+   eventType: EventType;
+   timestamp: string;
++  source?: string;
++  schemaVersion?: string;
+   payload: TPayload;
+ }
+ 
+@@ -44,11 +52,21 @@
+ 
+ export type SignalPayload = z.infer<typeof SignalPayloadSchema>;
+ 
++
++export const BootstrapPayloadSchema = z.object({
++  reason: z.string().optional(),
++  quarantineRequired: z.boolean().optional()
++});
++
++export type BootstrapPayload = z.infer<typeof BootstrapPayloadSchema>;
++
++
+ export function makeEvent<T>(eventType: EventType, payload: T): DomainEvent<T> {
+   return {
+     eventId: crypto.randomUUID(),
+     eventType,
+     timestamp: new Date().toISOString(),
++    source: "core",
+     payload
+   };
+ }
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/core/events/validate-domain-event.ts work/core/events/validate-domain-event.ts
+--- 00-base/mbg-core-v0.1-alpha1/core/events/validate-domain-event.ts	1970-01-01 00:00:00.000000000 +0000
++++ work/core/events/validate-domain-event.ts	2026-05-06 22:21:42.312215592 +0000
+@@ -0,0 +1,249 @@
++import { EVENT_TYPE, type DomainEvent, type EventType } from "../contracts/src/events.js";
++
++export type DomainEventValidationCode =
++  | "event_id_missing"
++  | "event_type_invalid"
++  | "timestamp_invalid"
++  | "timestamp_in_future"
++  | "source_missing"
++  | "payload_invalid";
++
++export interface DomainEventValidationIssue {
++  code: DomainEventValidationCode;
++  path: string;
++  message: string;
++}
++
++export interface DomainEventValidationAccepted {
++  ok: true;
++  eventId: string;
++  eventType: EventType;
++}
++
++export interface DomainEventValidationRejected {
++  ok: false;
++  eventId?: string;
++  eventType?: string;
++  issues: DomainEventValidationIssue[];
++}
++
++export type DomainEventValidationResult = DomainEventValidationAccepted | DomainEventValidationRejected;
++
++const DEFAULT_FUTURE_TOLERANCE_MS = Number(process.env.MBG_EVENT_FUTURE_TOLERANCE_MS ?? 5000);
++
++function issue(code: DomainEventValidationCode, path: string, message: string): DomainEventValidationIssue {
++  return { code, path, message };
++}
++
++function isRecord(value: unknown): value is Record<string, unknown> {
++  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
++}
++
++function nonEmptyString(value: unknown) {
++  return typeof value === "string" && value.trim().length > 0;
++}
++
++function positiveNumber(value: unknown) {
++  return typeof value === "number" && Number.isFinite(value) && value > 0;
++}
++
++function nonNegativeNumber(value: unknown) {
++  return typeof value === "number" && Number.isFinite(value) && value >= 0;
++}
++
++function validSide(value: unknown) {
++  return value === "buy" || value === "sell";
++}
++
++function hasKnownSource(event: DomainEvent, payload: Record<string, unknown>) {
++  return nonEmptyString(event.source) || nonEmptyString(payload.provider) || nonEmptyString(payload.source);
++}
++
++function validateTimestamp(event: DomainEvent, issues: DomainEventValidationIssue[], futureToleranceMs: number) {
++  if (!nonEmptyString(event.timestamp)) {
++    issues.push(issue("timestamp_invalid", "timestamp", "event timestamp is required"));
++    return;
++  }
++
++  const parsed = Date.parse(event.timestamp);
++  if (!Number.isFinite(parsed)) {
++    issues.push(issue("timestamp_invalid", "timestamp", "event timestamp must be a valid ISO-compatible timestamp"));
++    return;
++  }
++
++  if (parsed > Date.now() + futureToleranceMs) {
++    issues.push(issue("timestamp_in_future", "timestamp", `event timestamp is beyond future tolerance (${futureToleranceMs}ms)`));
++  }
++}
++
++function validateMarketTick(event: DomainEvent, payload: Record<string, unknown>, issues: DomainEventValidationIssue[]) {
++  if (!nonEmptyString(payload.symbol)) {
++    issues.push(issue("payload_invalid", "payload.symbol", "market tick symbol is required"));
++  }
++
++  if (!positiveNumber(payload.price)) {
++    issues.push(issue("payload_invalid", "payload.price", "market tick price must be > 0"));
++  }
++
++  if (!positiveNumber(payload.bid)) {
++    issues.push(issue("payload_invalid", "payload.bid", "market tick bid must be > 0"));
++  }
++
++  if (!positiveNumber(payload.ask)) {
++    issues.push(issue("payload_invalid", "payload.ask", "market tick ask must be > 0"));
++  }
++
++  if (positiveNumber(payload.bid) && positiveNumber(payload.ask) && Number(payload.bid) > Number(payload.ask)) {
++    issues.push(issue("payload_invalid", "payload.bid", "market tick bid must be <= ask"));
++  }
++
++  if (!nonNegativeNumber(payload.volume)) {
++    issues.push(issue("payload_invalid", "payload.volume", "market tick volume must be >= 0"));
++  }
++
++  if (!hasKnownSource(event, payload)) {
++    issues.push(issue("source_missing", "source", "market tick source/provider is required"));
++  }
++}
++
++function validateOrderLike(event: DomainEvent, payload: Record<string, unknown>, issues: DomainEventValidationIssue[]) {
++  if (event.eventType !== EVENT_TYPE.ORDER_REQUESTED && !nonEmptyString(payload.orderId)) {
++    issues.push(issue("payload_invalid", "payload.orderId", `${event.eventType} orderId is required`));
++  }
++
++  if (!positiveNumber(payload.quantity)) {
++    issues.push(issue("payload_invalid", "payload.quantity", `${event.eventType} quantity must be > 0`));
++  }
++
++  if (!nonEmptyString(payload.symbol)) {
++    issues.push(issue("payload_invalid", "payload.symbol", `${event.eventType} symbol is required`));
++  }
++
++  if (!validSide(payload.side)) {
++    issues.push(issue("payload_invalid", "payload.side", `${event.eventType} side must be buy or sell`));
++  }
++
++  if (!hasKnownSource(event, payload)) {
++    issues.push(issue("source_missing", "source", `${event.eventType} source/provider is required`));
++  }
++
++  if (event.eventType === EVENT_TYPE.ORDER_EXECUTION_REPORTED && !nonEmptyString(payload.fillId)) {
++    issues.push(issue("payload_invalid", "payload.fillId", "fill event fillId is required"));
++  }
++}
++
++function validatePositionReconciled(event: DomainEvent, payload: Record<string, unknown>, issues: DomainEventValidationIssue[]) {
++  if (!nonEmptyString(payload.symbol)) {
++    issues.push(issue("payload_invalid", "payload.symbol", "position reconcile symbol is required"));
++  }
++
++  if (!nonEmptyString(payload.source) && !nonEmptyString(event.source)) {
++    issues.push(issue("source_missing", "source", "position reconcile source is required"));
++  }
++
++  if (typeof payload.quantity !== "number" || !Number.isFinite(payload.quantity)) {
++    issues.push(issue("payload_invalid", "payload.quantity", "position reconcile quantity must be finite"));
++  }
++
++  if (typeof payload.exposure !== "number" || !Number.isFinite(payload.exposure) || payload.exposure < 0) {
++    issues.push(issue("payload_invalid", "payload.exposure", "position reconcile exposure must be finite and >= 0"));
++  }
++}
++
++function validateSignal(payload: Record<string, unknown>, issues: DomainEventValidationIssue[]) {
++  if (!nonEmptyString(payload.symbol)) {
++    issues.push(issue("payload_invalid", "payload.symbol", "signal symbol is required"));
++  }
++  if (!validSide(payload.side)) {
++    issues.push(issue("payload_invalid", "payload.side", "signal side must be buy or sell"));
++  }
++  if (typeof payload.confidence !== "number" || payload.confidence < 0 || payload.confidence > 1) {
++    issues.push(issue("payload_invalid", "payload.confidence", "signal confidence must be between 0 and 1"));
++  }
++  if (payload.quantity !== undefined && !positiveNumber(payload.quantity)) {
++    issues.push(issue("payload_invalid", "payload.quantity", "signal quantity must be > 0 when provided"));
++  }
++}
++
++export function validateDomainEvent(
++  event: DomainEvent,
++  options: { futureToleranceMs?: number } = {}
++): DomainEventValidationResult {
++  const issues: DomainEventValidationIssue[] = [];
++  const futureToleranceMs = options.futureToleranceMs ?? DEFAULT_FUTURE_TOLERANCE_MS;
++
++  if (!isRecord(event)) {
++    return {
++      ok: false,
++      issues: [issue("payload_invalid", "event", "domain event must be an object")]
++    };
++  }
++
++  if (!nonEmptyString(event.eventId)) {
++    issues.push(issue("event_id_missing", "eventId", "eventId is required"));
++  }
++
++  const validEventTypes = new Set<string>(Object.values(EVENT_TYPE));
++  if (!nonEmptyString(event.eventType) || !validEventTypes.has(event.eventType)) {
++    issues.push(issue("event_type_invalid", "eventType", `unsupported event type: ${String(event.eventType)}`));
++  }
++
++  validateTimestamp(event, issues, futureToleranceMs);
++
++  if (event.schemaVersion !== undefined && !["1", "v1", 1].includes(event.schemaVersion as string | number)) {
++    issues.push(issue("payload_invalid", "schemaVersion", "unsupported event schema version"));
++  }
++
++  if (!isRecord(event.payload)) {
++    issues.push(issue("payload_invalid", "payload", "event payload must be an object"));
++  }
++
++  const payload = isRecord(event.payload) ? event.payload : {};
++
++  switch (event.eventType) {
++    case EVENT_TYPE.MARKET_TICK_RECEIVED:
++      validateMarketTick(event, payload, issues);
++      break;
++    case EVENT_TYPE.ORDER_REQUESTED:
++    case EVENT_TYPE.ORDER_CANCELED:
++    case EVENT_TYPE.ORDER_RECONCILED:
++    case EVENT_TYPE.ORDER_EXECUTION_REPORTED:
++      validateOrderLike(event, payload, issues);
++      break;
++    case EVENT_TYPE.POSITION_RECONCILED:
++      validatePositionReconciled(event, payload, issues);
++      break;
++    case EVENT_TYPE.SIGNAL_RECEIVED:
++      validateSignal(payload, issues);
++      break;
++    case EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT:
++    case EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL:
++    case EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH:
++    case EVENT_TYPE.BOOTSTRAP_RECONCILED:
++    case EVENT_TYPE.BOOTSTRAP_FAILED:
++    case EVENT_TYPE.BOOTSTRAP_RECOVERY_STARTED:
++    case EVENT_TYPE.ORDER_UNCERTAIN:
++    case EVENT_TYPE.POSITION_UNKNOWN:
++    case EVENT_TYPE.SYSTEM_HEALTH_CHANGED:
++    case EVENT_TYPE.SYSTEM_HALTED:
++      if (!hasKnownSource(event, payload) && !nonEmptyString(payload.reason)) {
++        issues.push(issue("source_missing", "source", `${event.eventType} source/provider or diagnostic reason is required`));
++      }
++      break;
++  }
++
++  if (issues.length > 0) {
++    return {
++      ok: false,
++      eventId: nonEmptyString(event.eventId) ? event.eventId : undefined,
++      eventType: nonEmptyString(event.eventType) ? event.eventType : undefined,
++      issues
++    };
++  }
++
++  return {
++    ok: true,
++    eventId: event.eventId,
++    eventType: event.eventType
++  };
++}
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/core/gates/src/action-gate.ts work/core/gates/src/action-gate.ts
+--- 00-base/mbg-core-v0.1-alpha1/core/gates/src/action-gate.ts	2026-05-06 21:27:26.824479855 +0000
++++ work/core/gates/src/action-gate.ts	2026-05-06 21:27:26.859090202 +0000
+@@ -13,7 +13,16 @@
+     const blockingStates: string[] = [];
+     let reason: string | undefined;
+ 
++    const bootstrapBlocked = snapshot.bootstrap.status !== "reconciled";
++    const bootstrapReason =
++      snapshot.bootstrap.status === "failed"
++        ? "bootstrap_failed"
++        : snapshot.bootstrap.status === "awaiting_exchange_truth"
++          ? "bootstrap_awaiting_exchange_truth"
++          : "bootstrap_not_reconciled";
++
+     const unsafeRuntime =
++      bootstrapBlocked ||
+       snapshot.order.status === "uncertain" ||
+       snapshot.position.status === "unknown" ||
+       snapshot.risk.status === "blocked" ||
+@@ -29,13 +38,16 @@
+       reason = "invalid_action_type";
+       blockingStates.push("action");
+     } else if (unsafeRuntime && !isRecoveryAction) {
++      if (bootstrapBlocked) blockingStates.push("bootstrap");
+       if (snapshot.order.status === "uncertain") blockingStates.push("order");
+       if (snapshot.position.status === "unknown") blockingStates.push("position");
+       if (snapshot.risk.status === "blocked") blockingStates.push("risk");
+       if (snapshot.system.status === "degraded" || snapshot.system.status === "halted") blockingStates.push("system");
+-      reason = snapshot.risk.reasons.includes("bootstrap_position_not_reconciled")
+-        ? "bootstrap_position_not_reconciled"
+-        : "unsafe_state_requires_reconcile";
++      reason = bootstrapBlocked
++        ? bootstrapReason
++        : snapshot.risk.reasons.includes("bootstrap_position_not_reconciled")
++          ? "bootstrap_position_not_reconciled"
++          : "unsafe_state_requires_reconcile";
+     } else if (actionType === ACTION_TYPE.PLACE_ORDER) {
+       if (snapshot.market.status !== "open") {
+         reason = "market_not_open";
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/core/kernel/kernel-constitution.ts work/core/kernel/kernel-constitution.ts
+--- 00-base/mbg-core-v0.1-alpha1/core/kernel/kernel-constitution.ts	2026-05-06 21:27:26.832246399 +0000
++++ work/core/kernel/kernel-constitution.ts	2026-05-06 21:27:58.954033280 +0000
+@@ -37,7 +37,14 @@
+   LIVE_ORDER_WITHOUT_METADATA_FORBIDDEN: "LAW-012",
+   EXCHANGE_TRUTH_OVER_LOCAL_MEMORY: "LAW-013",
+   FRONTEND_NOT_AUTHORITY: "LAW-014",
+-  V1_NOT_AUTHORITY: "LAW-015"
++  V1_NOT_AUTHORITY: "LAW-015",
++  BOOTSTRAP_FSM_GOVERNS_TRADING_READINESS: "LAW-016",
++  EVENT_VALIDATION_IS_CORE_RESPONSIBILITY: "LAW-017",
++  IDEMPOTENCY_INDEX_RECOVERABLE_FROM_JOURNAL: "LAW-018",
++  REDUCERS_REMAIN_PURE: "LAW-019",
++  DUPLICATE_EVENT_CANNOT_MUTATE_STATE: "LAW-020",
++  INVALID_EVENT_NEVER_ENTERS_CANONICAL_JOURNAL: "LAW-021",
++  BOOTSTRAP_FAILED_REQUIRES_RECOVERY_EVENT: "LAW-022"
+ } as const;
+ 
+ export type CoreLawId = typeof CORE_LAW_ID[keyof typeof CORE_LAW_ID];
+@@ -51,8 +58,11 @@
+   severity: CoreLawSeverity;
+   currentModules: readonly string[];
+   futureModules: readonly string[];
++  testModules: readonly string[];
+ }
+ 
++const SCENARIO_TESTS = ["tests/scenarios/*"] as const;
++
+ export const CORE_LAWS: readonly CoreLawDefinition[] = [
+   {
+     id: CORE_LAW_ID.NO_EVENT_NO_STATE_CHANGE,
+@@ -62,9 +72,11 @@
+     currentModules: [
+       "core/contracts/src/events.ts",
+       "core/transitions/src/reducers.ts",
+-      "core/state/src/types.ts"
++      "core/state/src/types.ts",
++      "core/invariants/engine.invariants.ts"
+     ],
+-    futureModules: ["core/kernel/kernel-authority.ts"]
++    futureModules: ["core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.NO_TRUSTED_STATE_NO_TRADING_ACTION,
+@@ -72,7 +84,8 @@
+     statement: "A trading action is forbidden unless the kernel can prove the current state is trusted.",
+     severity: "blocking",
+     currentModules: ["core/gates/src/action-gate.ts", "core/contracts/src/actions.ts"],
+-    futureModules: ["core/trust/core-trust-report.ts"]
++    futureModules: ["core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.UNKNOWN_OVER_FAKE_CONFIDENCE,
+@@ -80,7 +93,8 @@
+     statement: "When the kernel cannot prove a fact, it must report unknown, uncertain, or an equivalent blocked state.",
+     severity: "blocking",
+     currentModules: ["core/state/src/types.ts"],
+-    futureModules: ["core/trust/core-trust-report.ts"]
++    futureModules: ["core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.POSITION_UNKNOWN_BLOCKS_RISK,
+@@ -88,7 +102,8 @@
+     statement: "If position is unknown, risk is blocked.",
+     severity: "blocking",
+     currentModules: ["core/state/src/types.ts", "core/gates/src/action-gate.ts"],
+-    futureModules: ["core/trust/core-trust-report.ts"]
++    futureModules: ["core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.ORDER_UNCERTAIN_BLOCKS_RISK,
+@@ -96,15 +111,21 @@
+     statement: "If order state is uncertain, risk is blocked.",
+     severity: "blocking",
+     currentModules: ["core/state/src/types.ts", "core/gates/src/action-gate.ts"],
+-    futureModules: ["core/trust/core-trust-report.ts"]
++    futureModules: ["core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.BOOTSTRAP_NOT_RECONCILED_FORBIDS_TRADING,
+     title: "Bootstrap not reconciled forbids trading",
+     statement: "During bootstrap, trading is forbidden until required recovery, replay, journal, snapshot, exchange truth, and freshness checks pass.",
+     severity: "blocking",
+-    currentModules: ["core/state/src/types.ts", "core/gates/src/action-gate.ts"],
+-    futureModules: ["core/kernel/bootstrap-fsm.ts", "core/trust/core-trust-report.ts"]
++    currentModules: [
++      "core/state/src/types.ts",
++      "core/transitions/src/reducers.ts",
++      "core/gates/src/action-gate.ts"
++    ],
++    futureModules: ["core/bootstrap/bootstrap-fsm.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.EXCHANGE_TRUTH_NOT_FRESH_FORBIDS_TRADING,
+@@ -112,7 +133,8 @@
+     statement: "Trading is forbidden when exchange truth is absent, stale, or not reconciled.",
+     severity: "blocking",
+     currentModules: ["application/exchange/*"],
+-    futureModules: ["core/exchange/exchange-truth.ts", "core/trust/core-trust-report.ts"]
++    futureModules: ["core/exchange/exchange-truth.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.REPLAY_MISMATCH_BREAKS_TRUST,
+@@ -120,7 +142,8 @@
+     statement: "If replayed state does not match the expected snapshot/hash, trust is broken.",
+     severity: "panic",
+     currentModules: ["core/system/journal.ts", "core/system/state-hash.ts"],
+-    futureModules: ["core/replay/replay-check.ts", "core/trust/core-trust-report.ts"]
++    futureModules: ["core/replay/replay-check.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.INVALID_EVENT_NOT_JOURNALED,
+@@ -128,7 +151,8 @@
+     statement: "Invalid events are rejected before journal append and before reducer execution.",
+     severity: "panic",
+     currentModules: ["core/contracts/src/events.ts", "core/system/journal.ts"],
+-    futureModules: ["core/kernel/event-validator.ts"]
++    futureModules: ["core/events/validate-domain-event.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.DUPLICATE_EVENT_NO_STATE_CHANGE,
+@@ -136,7 +160,8 @@
+     statement: "An event already applied by identity is idempotent; conflicting duplicate identity is an integrity failure.",
+     severity: "panic",
+     currentModules: ["core/contracts/src/events.ts", "core/system/journal.ts"],
+-    futureModules: ["core/replay/idempotency-index.ts"]
++    futureModules: ["core/runtime/event-index.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.NO_FILL_NO_PNL,
+@@ -144,7 +169,8 @@
+     statement: "PnL may only be derived from proven execution/fill data.",
+     severity: "panic",
+     currentModules: ["core/pnl/pnl-engine.ts", "core/contracts/src/events.ts"],
+-    futureModules: ["core/invariants/pnl.invariants.ts"]
++    futureModules: ["core/invariants/pnl.invariants.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.LIVE_ORDER_WITHOUT_METADATA_FORBIDDEN,
+@@ -156,7 +182,8 @@
+       "core/strategy/trade-metadata.ts",
+       "engine/execution/execution.service.ts"
+     ],
+-    futureModules: ["core/orders/order-metadata-contract.ts"]
++    futureModules: ["core/orders/order-metadata-contract.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.EXCHANGE_TRUTH_OVER_LOCAL_MEMORY,
+@@ -164,7 +191,8 @@
+     statement: "When exchange truth conflicts with local memory, the kernel must prefer exchange truth and block until reconciled.",
+     severity: "panic",
+     currentModules: ["application/exchange/*", "tests/scenarios/position-reconcile.ts"],
+-    futureModules: ["core/exchange/exchange-truth.ts", "core/kernel/reconcile-policy.ts"]
++    futureModules: ["core/exchange/exchange-truth.ts", "core/kernel/reconcile-policy.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.FRONTEND_NOT_AUTHORITY,
+@@ -172,7 +200,8 @@
+     statement: "Frontend may display state and request actions; it may not certify trust, mutate snapshot, bypass gates, override replay, or override exchange truth.",
+     severity: "blocking",
+     currentModules: ["apps/runtime-api/*"],
+-    futureModules: ["core/kernel/kernel-authority.ts"]
++    futureModules: ["core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
+   },
+   {
+     id: CORE_LAW_ID.V1_NOT_AUTHORITY,
+@@ -180,13 +209,121 @@
+     statement: "V1 may not define MBG Core v0.1 trust.",
+     severity: "blocking",
+     currentModules: [],
+-    futureModules: ["core/kernel/kernel-authority.ts", "core/adapters/v1-input-adapter.ts"]
++    futureModules: ["core/kernel/kernel-authority.ts", "core/adapters/v1-input-adapter.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.BOOTSTRAP_FSM_GOVERNS_TRADING_READINESS,
++    title: "Bootstrap FSM governs trading readiness",
++    statement: "Trading readiness is governed by Bootstrap FSM evidence and ActionGate, not by uptime, API availability, frontend state, V1, or manual flags.",
++    severity: "blocking",
++    currentModules: [
++      "core/state/src/types.ts",
++      "core/transitions/src/reducers.ts",
++      "core/gates/src/action-gate.ts"
++    ],
++    futureModules: ["core/bootstrap/bootstrap-fsm.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.EVENT_VALIDATION_IS_CORE_RESPONSIBILITY,
++    title: "Event validation is core responsibility",
++    statement: "API validation is an early filter only; canonical domain-event validation belongs inside core before journal append or reducer execution.",
++    severity: "panic",
++    currentModules: ["core/contracts/src/events.ts"],
++    futureModules: ["core/events/validate-domain-event.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.IDEMPOTENCY_INDEX_RECOVERABLE_FROM_JOURNAL,
++    title: "Idempotency index is recoverable from journal",
++    statement: "The idempotency index must be rebuildable from the canonical journal so restart or replay cannot forget applied events.",
++    severity: "panic",
++    currentModules: ["core/system/journal.ts"],
++    futureModules: ["core/runtime/event-index.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.REDUCERS_REMAIN_PURE,
++    title: "Reducers remain pure",
++    statement: "Reducers are deterministic functions of prior snapshot and accepted event; they must not perform side effects or consult external authority.",
++    severity: "panic",
++    currentModules: ["core/transitions/src/reducers.ts"],
++    futureModules: ["core/kernel/reducer-contract.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.DUPLICATE_EVENT_CANNOT_MUTATE_STATE,
++    title: "Duplicate event cannot mutate state",
++    statement: "A duplicate event identity cannot mutate snapshot, advance revision, recalculate PnL, create orders, unblock risk, or change trust state.",
++    severity: "panic",
++    currentModules: ["core/contracts/src/events.ts", "core/system/journal.ts"],
++    futureModules: ["core/runtime/event-index.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.INVALID_EVENT_NEVER_ENTERS_CANONICAL_JOURNAL,
++    title: "Invalid event never enters canonical journal",
++    statement: "Invalid events may be rejected or recorded only in a non-canonical audit channel; they must not become replay input for trusted state.",
++    severity: "panic",
++    currentModules: ["core/contracts/src/events.ts", "core/system/journal.ts"],
++    futureModules: ["core/events/validate-domain-event.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.BOOTSTRAP_FAILED_REQUIRES_RECOVERY_EVENT,
++    title: "Bootstrap failed cannot transition to reconciled without recovery event",
++    statement: "A failed bootstrap state may leave failure only through an accepted recovery event that is validated, journaled, reduced, replayable, and auditable.",
++    severity: "blocking",
++    currentModules: [
++      "core/state/src/types.ts",
++      "core/transitions/src/reducers.ts",
++      "core/gates/src/action-gate.ts"
++    ],
++    futureModules: ["core/bootstrap/bootstrap-fsm.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
+   }
+ ] as const;
+ 
+ export const CORE_REVIEW_RULE =
+   "Every change must strengthen or preserve kernel provability; convenience must not create false confidence." as const;
+ 
++export const WAVE2_CONSTITUTION_SCOPE = {
++  IMPLEMENTS_RUNTIME_BEHAVIOR: false,
++  IMPLEMENTS_CORE_TRUST_REPORT: false,
++  IMPLEMENTS_EXCHANGE_TRUTH: false,
++  IMPLEMENTS_FRESHNESS_GUARD: false,
++  IMPLEMENTS_METADATA_AS_EVENTS: false,
++  CONNECTS_V1: false,
++  TOUCHES_SIGNAL_LAYER: false,
++  TOUCHES_DECISION_ENGINE: false,
++  TOUCHES_STRATEGIES: false,
++  TOUCHES_UI: false,
++  ENABLES_LIVE_TRADING: false
++} as const;
++
++export const WAVE2_MODULE_MAPPING = {
++  BOOTSTRAP: {
++    currentModules: [
++      "core/state/src/types.ts",
++      "core/transitions/src/reducers.ts",
++      "core/gates/src/action-gate.ts"
++    ],
++    futureModules: ["core/bootstrap/bootstrap-fsm.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  EVENT_VALIDATION: {
++    currentModules: ["core/contracts/src/events.ts"],
++    futureModules: ["core/events/validate-domain-event.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  IDEMPOTENCY: {
++    currentModules: ["core/system/journal.ts"],
++    futureModules: ["core/runtime/event-index.ts"],
++    testModules: SCENARIO_TESTS
++  }
++} as const;
++
+ export function getCoreLaw(id: CoreLawId): CoreLawDefinition {
+   const law = CORE_LAWS.find((candidate) => candidate.id === id);
+   if (!law) {
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/core/runtime/src/idempotency.ts work/core/runtime/src/idempotency.ts
+--- 00-base/mbg-core-v0.1-alpha1/core/runtime/src/idempotency.ts	1970-01-01 00:00:00.000000000 +0000
++++ work/core/runtime/src/idempotency.ts	2026-05-06 21:29:43.807733950 +0000
+@@ -0,0 +1,253 @@
++import { createHash } from "node:crypto";
++import { DomainEvent, EVENT_TYPE } from "../../contracts/src/events.js";
++
++export type IdempotencyScope = "eventId" | "fillId" | "reconcileId" | "exchangeReportId";
++
++export type IdempotencyDecision =
++  | "accepted"
++  | "duplicate_ignored"
++  | "duplicate_conflict";
++
++export interface IdempotencyDiagnostic {
++  decision: IdempotencyDecision;
++  scope: IdempotencyScope;
++  key: string;
++  eventId: string;
++  eventType: string;
++  reason: string;
++  canonicalEvent: boolean;
++  existingEventId?: string;
++  existingFingerprint?: string;
++  incomingFingerprint?: string;
++}
++
++interface IndexedIdentity {
++  eventId: string;
++  fingerprint: string;
++}
++
++function stableStringify(value: unknown): string {
++  if (value === null || typeof value !== "object") return JSON.stringify(value);
++
++  if (Array.isArray(value)) {
++    return `[${value.map((item) => stableStringify(item)).join(",")}]`;
++  }
++
++  const record = value as Record<string, unknown>;
++  return `{${Object.keys(record)
++    .sort()
++    .map((key) => `${JSON.stringify(key)}:${stableStringify(record[key])}`)
++    .join(",")}}`;
++}
++
++function fingerprint(value: unknown): string {
++  return createHash("sha256").update(stableStringify(value)).digest("hex");
++}
++
++function payloadRecord(event: DomainEvent): Record<string, unknown> {
++  return event.payload && typeof event.payload === "object"
++    ? event.payload as Record<string, unknown>
++    : {};
++}
++
++function firstString(record: Record<string, unknown>, keys: string[]): string | undefined {
++  for (const key of keys) {
++    const value = record[key];
++    if (typeof value === "string" && value.trim()) return value.trim();
++    if (typeof value === "number" && Number.isFinite(value)) return String(value);
++  }
++  return undefined;
++}
++
++function exchangeReportKey(event: DomainEvent, payload: Record<string, unknown>): string | undefined {
++  const direct = firstString(payload, [
++    "exchangeReportId",
++    "executionReportId",
++    "reportId",
++    "executionId",
++    "transactionId"
++  ]);
++  if (direct) return direct;
++
++  if (event.eventType !== EVENT_TYPE.ORDER_EXECUTION_REPORTED) return undefined;
++
++  const orderId = firstString(payload, ["orderId", "clientOrderId"]);
++  const tradeId = firstString(payload, ["tradeId", "fillId"]);
++  const executionTime = firstString(payload, ["executionTime", "tradeTime", "time", "transactTime"]);
++  if (!orderId || !tradeId || !executionTime) return undefined;
++
++  return `${orderId}:${tradeId}:${executionTime}`;
++}
++
++export function canonicalEventFingerprint(event: DomainEvent): string {
++  return fingerprint({
++    eventType: event.eventType,
++    timestamp: event.timestamp,
++    payload: event.payload
++  });
++}
++
++function secondaryFingerprint(event: DomainEvent): string {
++  return fingerprint({
++    eventType: event.eventType,
++    payload: event.payload
++  });
++}
++
++export class EventIdempotencyIndex {
++  private eventIds = new Map<string, IndexedIdentity>();
++  private fillIds = new Map<string, IndexedIdentity>();
++  private reconcileIds = new Map<string, IndexedIdentity>();
++  private exchangeReportIds = new Map<string, IndexedIdentity>();
++
++  clear(): void {
++    this.eventIds.clear();
++    this.fillIds.clear();
++    this.reconcileIds.clear();
++    this.exchangeReportIds.clear();
++  }
++
++  get size() {
++    return {
++      eventIds: this.eventIds.size,
++      fillIds: this.fillIds.size,
++      reconcileIds: this.reconcileIds.size,
++      exchangeReportIds: this.exchangeReportIds.size
++    };
++  }
++
++  evaluate(event: DomainEvent): IdempotencyDiagnostic {
++    const eventFingerprint = canonicalEventFingerprint(event);
++    const byEventId = this.eventIds.get(event.eventId);
++    if (byEventId) {
++      return {
++        decision: byEventId.fingerprint === eventFingerprint ? "duplicate_ignored" : "duplicate_conflict",
++        scope: "eventId",
++        key: event.eventId,
++        eventId: event.eventId,
++        eventType: event.eventType,
++        reason: byEventId.fingerprint === eventFingerprint
++          ? "duplicate_event_id_same_payload"
++          : "duplicate_event_id_conflicting_payload",
++        canonicalEvent: false,
++        existingEventId: byEventId.eventId,
++        existingFingerprint: byEventId.fingerprint,
++        incomingFingerprint: eventFingerprint
++      };
++    }
++
++    const payload = payloadRecord(event);
++    const secondary = secondaryFingerprint(event);
++
++    if (event.eventType === EVENT_TYPE.ORDER_EXECUTION_REPORTED) {
++      const fillId = firstString(payload, ["fillId", "tradeId", "executionId"]);
++      if (fillId) {
++        const existing = this.fillIds.get(fillId);
++        if (existing) {
++          return {
++            decision: existing.fingerprint === secondary ? "duplicate_ignored" : "duplicate_conflict",
++            scope: "fillId",
++            key: fillId,
++            eventId: event.eventId,
++            eventType: event.eventType,
++            reason: existing.fingerprint === secondary
++              ? "duplicate_fill_id_same_payload"
++              : "duplicate_fill_id_conflicting_payload",
++            canonicalEvent: false,
++            existingEventId: existing.eventId,
++            existingFingerprint: existing.fingerprint,
++            incomingFingerprint: secondary
++          };
++        }
++      }
++    }
++
++    if (event.eventType === EVENT_TYPE.ORDER_RECONCILED || event.eventType === EVENT_TYPE.POSITION_RECONCILED) {
++      const reconcileId = firstString(payload, ["reconcileId", "reconciliationId"]);
++      if (reconcileId) {
++        const existing = this.reconcileIds.get(reconcileId);
++        if (existing) {
++          return {
++            decision: existing.fingerprint === secondary ? "duplicate_ignored" : "duplicate_conflict",
++            scope: "reconcileId",
++            key: reconcileId,
++            eventId: event.eventId,
++            eventType: event.eventType,
++            reason: existing.fingerprint === secondary
++              ? "duplicate_reconcile_id_same_payload"
++              : "duplicate_reconcile_id_conflicting_payload",
++            canonicalEvent: false,
++            existingEventId: existing.eventId,
++            existingFingerprint: existing.fingerprint,
++            incomingFingerprint: secondary
++          };
++        }
++      }
++    }
++
++    const reportKey = exchangeReportKey(event, payload);
++    if (reportKey) {
++      const existing = this.exchangeReportIds.get(reportKey);
++      if (existing) {
++        return {
++          decision: existing.fingerprint === secondary ? "duplicate_ignored" : "duplicate_conflict",
++          scope: "exchangeReportId",
++          key: reportKey,
++          eventId: event.eventId,
++          eventType: event.eventType,
++          reason: existing.fingerprint === secondary
++            ? "duplicate_exchange_report_same_payload"
++            : "duplicate_exchange_report_conflicting_payload",
++          canonicalEvent: false,
++          existingEventId: existing.eventId,
++          existingFingerprint: existing.fingerprint,
++          incomingFingerprint: secondary
++        };
++      }
++    }
++
++    return {
++      decision: "accepted",
++      scope: "eventId",
++      key: event.eventId,
++      eventId: event.eventId,
++      eventType: event.eventType,
++      reason: "accepted_new_event_identity",
++      canonicalEvent: true,
++      incomingFingerprint: eventFingerprint
++    };
++  }
++
++  recordAccepted(event: DomainEvent): void {
++    const eventFingerprint = canonicalEventFingerprint(event);
++    this.eventIds.set(event.eventId, { eventId: event.eventId, fingerprint: eventFingerprint });
++
++    const payload = payloadRecord(event);
++    const secondary = secondaryFingerprint(event);
++
++    if (event.eventType === EVENT_TYPE.ORDER_EXECUTION_REPORTED) {
++      const fillId = firstString(payload, ["fillId", "tradeId", "executionId"]);
++      if (fillId && !this.fillIds.has(fillId)) {
++        this.fillIds.set(fillId, { eventId: event.eventId, fingerprint: secondary });
++      }
++    }
++
++    if (event.eventType === EVENT_TYPE.ORDER_RECONCILED || event.eventType === EVENT_TYPE.POSITION_RECONCILED) {
++      const reconcileId = firstString(payload, ["reconcileId", "reconciliationId"]);
++      if (reconcileId && !this.reconcileIds.has(reconcileId)) {
++        this.reconcileIds.set(reconcileId, { eventId: event.eventId, fingerprint: secondary });
++      }
++    }
++
++    const reportKey = exchangeReportKey(event, payload);
++    if (reportKey && !this.exchangeReportIds.has(reportKey)) {
++      this.exchangeReportIds.set(reportKey, { eventId: event.eventId, fingerprint: secondary });
++    }
++  }
++
++  evaluateAndRecord(event: DomainEvent): IdempotencyDiagnostic {
++    const diagnostic = this.evaluate(event);
++    if (diagnostic.decision === "accepted") this.recordAccepted(event);
++    return diagnostic;
++  }
++}
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/core/runtime/src/runtime-engine.ts work/core/runtime/src/runtime-engine.ts
+--- 00-base/mbg-core-v0.1-alpha1/core/runtime/src/runtime-engine.ts	2026-05-06 21:27:26.827452953 +0000
++++ work/core/runtime/src/runtime-engine.ts	2026-05-06 22:13:18.301426248 +0000
+@@ -1,11 +1,13 @@
+ import { DomainEvent, EVENT_TYPE, makeEvent, MarketTickPayload, SignalPayload } from "../../contracts/src/events.js";
+ import { ActionRequest, ACTION_TYPE, GateDecision } from "../../contracts/src/actions.js";
+ import { initialSnapshot, RuntimeSnapshot } from "../../state/src/types.js";
+-import { reduceMarketState, reduceTradeState, reduceOrderState, reducePositionState, reduceRiskState, reduceSystemState } from "../../transitions/src/reducers.js";
++import { reduceBootstrapState, reduceMarketState, reduceTradeState, reduceOrderState, reducePositionState, reduceRiskState, reduceSystemState } from "../../transitions/src/reducers.js";
++import { validateDomainEvent, type DomainEventValidationRejected } from "../../events/validate-domain-event.js";
+ import { ActionGate } from "../../gates/src/action-gate.js";
+ import { FileRuntimePersistence } from "./persistence.js";
++import { EventIdempotencyIndex, type IdempotencyDiagnostic } from "./idempotency.js";
+ 
+-type StateDomain = "market" | "trade" | "order" | "position" | "risk" | "system";
++type StateDomain = "bootstrap" | "market" | "trade" | "order" | "position" | "risk" | "system";
+ 
+ export interface TransitionTrace {
+   transitionId: string;
+@@ -31,6 +33,54 @@
+   details: string;
+ }
+ 
++export interface CommitEventAcceptedResult {
++  ok: true;
++  status: "accepted";
++  eventId: string;
++  eventType: string;
++  snapshot: RuntimeSnapshot;
++  diagnostic?: IdempotencyDiagnostic;
++}
++
++export interface CommitEventRejectedResult {
++  ok: false;
++  status: "rejected";
++  diagnostic: DomainEventValidationRejected;
++  snapshot: RuntimeSnapshot;
++  snapshotRevision: number;
++}
++
++export interface CommitEventDuplicateResult {
++  ok: true;
++  status: "duplicate_ignored";
++  eventId: string;
++  eventType: string;
++  snapshot: RuntimeSnapshot;
++  snapshotRevision: number;
++  diagnostic: IdempotencyDiagnostic;
++}
++
++export interface CommitEventConflictResult {
++  ok: false;
++  status: "duplicate_conflict";
++  eventId: string;
++  eventType: string;
++  snapshot: RuntimeSnapshot;
++  snapshotRevision: number;
++  diagnostic: IdempotencyDiagnostic;
++}
++
++export type CommitEventResult =
++  | CommitEventAcceptedResult
++  | CommitEventRejectedResult
++  | CommitEventDuplicateResult
++  | CommitEventConflictResult;
++
++export interface EventCommitResult {
++  snapshot: RuntimeSnapshot;
++  diagnostic: IdempotencyDiagnostic;
++}
++
+ export interface RuntimeMetrics {
+   startedAt: string;
+   uptimeMs: number;
+@@ -49,6 +99,8 @@
+   gateTransitionCount: number;
+   snapshotRevision: number;
+   snapshotStalled: boolean;
++  duplicateEventCount: number;
++  idempotencyConflictCount: number;
+ }
+ 
+ function domainTrace(domain: StateDomain, before: any, after: any) {
+@@ -64,9 +116,10 @@
+ }
+ 
+ export function reduceSnapshot(prev: RuntimeSnapshot, event: DomainEvent): RuntimeSnapshot {
++  const nextBootstrap = reduceBootstrapState(prev.bootstrap, event);
+   const nextMarket = reduceMarketState(prev.market, event);
+   const nextTrade = reduceTradeState(prev.trade, event);
+-  const temp1: RuntimeSnapshot = { ...prev, market: nextMarket, trade: nextTrade };
++  const temp1: RuntimeSnapshot = { ...prev, bootstrap: nextBootstrap, market: nextMarket, trade: nextTrade };
+ 
+   const nextOrder = reduceOrderState(prev.order, event);
+   const nextPosition = reducePositionState(prev.position, event);
+@@ -78,6 +131,7 @@
+   const nextSystem = reduceSystemState(prev.system, event, temp3);
+ 
+   return {
++    bootstrap: nextBootstrap,
+     market: nextMarket,
+     trade: nextTrade,
+     order: nextOrder,
+@@ -95,6 +149,7 @@
+ 
+ function makeTrace(cur: RuntimeSnapshot, next: RuntimeSnapshot, event: DomainEvent): TransitionTrace {
+   const domains = {
++    bootstrap: domainTrace("bootstrap", cur.bootstrap, next.bootstrap),
+     market: domainTrace("market", cur.market, next.market),
+     trade: domainTrace("trade", cur.trade, next.trade),
+     order: domainTrace("order", cur.order, next.order),
+@@ -131,6 +186,7 @@
+   // Cold replay has a new initial timestamp. Ignore only non-event-derived initial timestamps.
+   return {
+     ...snapshot,
++    bootstrap: normalizeMeta(snapshot.bootstrap),
+     market: normalizeMeta(snapshot.market),
+     trade: normalizeMeta(snapshot.trade),
+     order: normalizeMeta(snapshot.order),
+@@ -143,6 +199,45 @@
+   };
+ }
+ 
++
++function validateEventForCurrentSnapshot(event: DomainEvent, snapshot: RuntimeSnapshot): DomainEventValidationRejected | undefined {
++  const rejectBootstrapTransition = (expected: string, actual: string): DomainEventValidationRejected => ({
++    ok: false,
++    eventId: event.eventId,
++    eventType: event.eventType,
++    issues: [{
++      code: "payload_invalid",
++      path: "bootstrap.status",
++      message: `${event.eventType} requires bootstrap status ${expected}; current status is ${actual}`
++    }]
++  });
++
++  switch (event.eventType) {
++    case EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT:
++      return snapshot.bootstrap.status === "cold"
++        ? undefined
++        : rejectBootstrapTransition("cold", snapshot.bootstrap.status);
++    case EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL:
++      return snapshot.bootstrap.status === "loading_snapshot"
++        ? undefined
++        : rejectBootstrapTransition("loading_snapshot", snapshot.bootstrap.status);
++    case EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH:
++      return snapshot.bootstrap.status === "replaying_tail"
++        ? undefined
++        : rejectBootstrapTransition("replaying_tail", snapshot.bootstrap.status);
++    case EVENT_TYPE.BOOTSTRAP_RECONCILED:
++      return snapshot.bootstrap.status === "awaiting_exchange_truth"
++        ? undefined
++        : rejectBootstrapTransition("awaiting_exchange_truth", snapshot.bootstrap.status);
++    case EVENT_TYPE.BOOTSTRAP_RECOVERY_STARTED:
++      return snapshot.bootstrap.status === "failed"
++        ? undefined
++        : rejectBootstrapTransition("failed", snapshot.bootstrap.status);
++    default:
++      return undefined;
++  }
++}
++
+ export class RuntimeEngine {
+   private snapshot: RuntimeSnapshot = initialSnapshot();
+   private events: DomainEvent[] = []; // recent event window only; full history lives in segmented persistence
+@@ -156,6 +251,10 @@
+   private commitLatencyLastMs = 0;
+   private commitLatencyMaxMs = 0;
+   private rejectedEvents = 0;
++  private idempotencyIndex = new EventIdempotencyIndex();
++  private idempotencyDiagnostics: IdempotencyDiagnostic[] = [];
++  private duplicateEventCount = 0;
++  private idempotencyConflictCount = 0;
+   private falseAllowCount = 0;
+   private actionViolationCount = 0;
+   private uncertaintyTransitionCount = 0;
+@@ -185,30 +284,37 @@
+   };
+ }
+ 
+-  private applyEvent(event: DomainEvent, options: { persist: boolean; log: boolean }) {
++  private recordIdempotencyDiagnostic(diagnostic: IdempotencyDiagnostic) {
++    this.idempotencyDiagnostics.push(diagnostic);
++    if (this.idempotencyDiagnostics.length > 500) this.idempotencyDiagnostics.shift();
++
++    if (diagnostic.decision === "duplicate_ignored") this.duplicateEventCount += 1;
++    if (diagnostic.decision === "duplicate_conflict") this.idempotencyConflictCount += 1;
++  }
++
++  private applyAcceptedEvent(event: DomainEvent, options: { persist: boolean; log: boolean }) {
+     const commitStarted = performance.now();
+ 
+-    // ✅ FIX: Сохраняем на диск ПЕРВЫМ, чтобы гарантировать persistence
+-    // перед тем, как добавлять в кольцевой буфер памяти
+     if (options.persist) {
+       try {
+         this.persistence.appendEvent(event);
+       } catch (err) {
+         console.error("[CRITICAL] Failed to persist event:", event.eventId, err);
+-        throw err; // Re-throw чтобы не потерять данные!
++        throw err;
+       }
+     }
+ 
+-    // Теперь безопасно добавляем в memory buffer (кольцевой буфер)
++    this.idempotencyIndex.recordAccepted(event);
++
+     this.events.push(event);
+     if (this.events.length > 5000) {
+       const removed = this.events.shift();
+-      // ✅ FIX: Логируем удаление (для отладки)
+       if (options.log && removed) {
+         console.log(`[runtime] purged event from buffer: ${removed.eventId} (buffer full)`);
+       }
+     }
+     this.totalEventCount += 1;
++
+     const cur = this.snapshot;
+     const next = reduceSnapshot(cur, event);
+     this.snapshot = next;
+@@ -242,12 +348,102 @@
+     return this.snapshot;
+   }
+ 
++  commitEventResult(event: DomainEvent, options: { log?: boolean } = {}): CommitEventResult {
++    const validation = validateDomainEvent(event);
++    if (!validation.ok) {
++      this.rejectedEvents += 1;
++      if (options.log !== false) {
++        console.warn(
++          `[runtime] rejected event=${String((event as any)?.eventType ?? "unknown")} eventId=${String((event as any)?.eventId ?? "missing")} issues=${validation.issues.map((i) => i.code).join(",")}`
++        );
++      }
++      return {
++        ok: false,
++        status: "rejected",
++        diagnostic: validation,
++        snapshot: this.snapshot,
++        snapshotRevision: this.snapshot.revision
++      };
++    }
++
++    const stateValidation = validateEventForCurrentSnapshot(event, this.snapshot);
++    if (stateValidation) {
++      this.rejectedEvents += 1;
++      if (options.log !== false) {
++        console.warn(
++          `[runtime] rejected event=${event.eventType} eventId=${event.eventId} issues=${stateValidation.issues.map((i) => i.code).join(",")}`
++        );
++      }
++      return {
++        ok: false,
++        status: "rejected",
++        diagnostic: stateValidation,
++        snapshot: this.snapshot,
++        snapshotRevision: this.snapshot.revision
++      };
++    }
++
++    const idempotency = this.idempotencyIndex.evaluate(event);
++    if (idempotency.decision !== "accepted") {
++      this.recordIdempotencyDiagnostic(idempotency);
++      if (options.log !== false) {
++        console.warn(
++          `[runtime] idempotency=${idempotency.decision} scope=${idempotency.scope} key=${idempotency.key} eventId=${event.eventId}`
++        );
++      }
++
++      const base = {
++        eventId: event.eventId,
++        eventType: event.eventType,
++        snapshot: this.snapshot,
++        snapshotRevision: this.snapshot.revision,
++        diagnostic: idempotency
++      };
++
++      if (idempotency.decision === "duplicate_ignored") {
++        return { ok: true, status: "duplicate_ignored", ...base };
++      }
++
++      return { ok: false, status: "duplicate_conflict", ...base };
++    }
++
++    this.recordIdempotencyDiagnostic(idempotency);
++    const snapshot = this.applyAcceptedEvent(event, { persist: true, log: options.log !== false });
++    return {
++      ok: true,
++      status: "accepted",
++      eventId: event.eventId,
++      eventType: event.eventType,
++      snapshot,
++      diagnostic: idempotency
++    };
++  }
++
++  commitEventWithDiagnostic(event: DomainEvent): EventCommitResult {
++    const result = this.commitEventResult(event, { log: true });
++    if (result.status === "rejected") {
++      return {
++        snapshot: result.snapshot,
++        diagnostic: {
++          decision: "duplicate_conflict",
++          scope: "eventId",
++          key: String((event as any)?.eventId ?? "missing"),
++          eventId: String((event as any)?.eventId ?? "missing"),
++          eventType: String((event as any)?.eventType ?? "unknown"),
++          reason: result.diagnostic.issues.map((issue) => issue.code).join(","),
++          canonicalEvent: false
++        }
++      };
++    }
++    return { snapshot: result.snapshot, diagnostic: result.diagnostic as IdempotencyDiagnostic };
++  }
++
+   commitEvent(event: DomainEvent): RuntimeSnapshot {
+-    return this.applyEvent(event, { persist: true, log: true });
++    return this.commitEventResult(event, { log: true }).snapshot;
+   }
+ 
+   commitEventSilent(event: DomainEvent): RuntimeSnapshot {
+-    return this.applyEvent(event, { persist: true, log: false });
++    return this.commitEventResult(event, { log: false }).snapshot;
+   }
+ 
+   beginPersistenceBatch() {
+@@ -272,12 +468,30 @@
+     this.decisions = [];
+     this.uncertaintyTransitionCount = 0;
+     this.gateTransitionCount = 0;
++    this.idempotencyIndex.clear();
++    this.idempotencyDiagnostics = [];
++    this.duplicateEventCount = 0;
++    this.idempotencyConflictCount = 0;
+     this.totalEventCount = this.snapshot.revision;
+ 
+-    // Snapshot-first recovery: never load the full historical event log into one string/array.
+-    // Only replay the tail after the persisted snapshot revision.
+-    this.persistence.forEachEventAfterRevision(this.snapshot.revision, (event) => {
+-      this.applyEvent(event, { persist: false, log: false });
++    // Snapshot-first recovery: rebuild idempotency from accepted persisted journal, then
++    // replay only the tail after the persisted snapshot revision. Duplicate tail events
++    // are never reduced into the snapshot a second time.
++    const snapshotRevision = this.snapshot.revision;
++    this.persistence.forEachEvent((event, index) => {
++      if (index < snapshotRevision) {
++        this.idempotencyIndex.recordAccepted(event);
++        return;
++      }
++
++      const diagnostic = this.idempotencyIndex.evaluate(event);
++      if (diagnostic.decision !== "accepted") {
++        this.recordIdempotencyDiagnostic(diagnostic);
++        return;
++      }
++
++      this.recordIdempotencyDiagnostic(diagnostic);
++      this.applyAcceptedEvent(event, { persist: false, log: false });
+     });
+ 
+     if (this.totalEventCount > 0) {
+@@ -294,16 +508,32 @@
+   replayCheck() {
+     const persistedSnapshot = this.persistence.loadSnapshot();
+ 
+-    // PR21: restart-safety replay uses snapshot-first + streaming tail.
+-    // Full cold replay of millions of events is intentionally not performed on every /debug call.
+     let replayed = persistedSnapshot ?? initialSnapshot();
+     let eventCount = replayed.revision;
+     let lastEventId: string | undefined;
++    let duplicateCount = 0;
++    let conflictCount = 0;
++    const replayIdempotency = new EventIdempotencyIndex();
++    const snapshotRevision = replayed.revision;
++
++    this.persistence.forEachEvent((event, index) => {
++      if (index < snapshotRevision) {
++        replayIdempotency.recordAccepted(event);
++        lastEventId = event.eventId;
++        return;
++      }
++
++      const diagnostic = replayIdempotency.evaluate(event);
++      if (diagnostic.decision === "accepted") {
++        replayIdempotency.recordAccepted(event);
++        replayed = reduceSnapshot(replayed, event);
++        eventCount += 1;
++        lastEventId = event.eventId;
++        return;
++      }
+ 
+-    this.persistence.forEachEventAfterRevision(replayed.revision, (event) => {
+-      replayed = reduceSnapshot(replayed, event);
+-      eventCount += 1;
+-      lastEventId = event.eventId;
++      duplicateCount += 1;
++      if (diagnostic.decision === "duplicate_conflict") conflictCount += 1;
+     });
+ 
+     const currentComparable = comparableSnapshot(this.snapshot);
+@@ -311,14 +541,18 @@
+     const matches = JSON.stringify(currentComparable) === JSON.stringify(replayComparable);
+ 
+     return {
+-      ok: matches && replayed.revision === eventCount && eventCount === this.totalEventCount,
++      ok: matches && replayed.revision === eventCount && eventCount === this.totalEventCount && conflictCount === 0,
+       eventCount,
+       currentRevision: this.snapshot.revision,
+       replayRevision: replayed.revision,
+       currentCommittedAt: this.snapshot.committedAt,
+       replayCommittedAt: replayed.committedAt,
+       lastEventId: lastEventId ?? this.events.at(-1)?.eventId,
+-      mode: "snapshot-first-streaming-tail",
++      mode: "snapshot-first-streaming-tail-idempotent",
++      idempotency: {
++        duplicateCount,
++        conflictCount
++      },
+       mismatch: matches ? undefined : {
+         current: currentComparable,
+         replayed: replayComparable
+@@ -341,6 +575,11 @@
+     this.actionViolationCount = 0;
+     this.uncertaintyTransitionCount = 0;
+     this.gateTransitionCount = 0;
++    this.rejectedEvents = 0;
++    this.idempotencyIndex.clear();
++    this.idempotencyDiagnostics = [];
++    this.duplicateEventCount = 0;
++    this.idempotencyConflictCount = 0;
+     return this.getRuntimeView();
+   }
+ 
+@@ -386,6 +625,15 @@
+   getTransitions(limit = 100) { return this.transitions.slice(-limit); }
+   getDecisions(limit = 100) { return this.decisions.slice(-limit); }
+ 
++  getIdempotencyView() {
++    return {
++      size: this.idempotencyIndex.size,
++      diagnostics: this.idempotencyDiagnostics.slice(-50),
++      duplicateEventCount: this.duplicateEventCount,
++      conflictCount: this.idempotencyConflictCount
++    };
++  }
++
+   getPersistenceView() {
+     return {
+       status: this.persistence.getStatus(),
+@@ -452,7 +700,9 @@
+       uncertaintyTransitionCount: this.uncertaintyTransitionCount,
+       gateTransitionCount: this.gateTransitionCount,
+       snapshotRevision: this.snapshot.revision,
+-      snapshotStalled: Boolean(timeSinceLastCommitMs !== undefined && timeSinceLastCommitMs > 5000)
++      snapshotStalled: Boolean(timeSinceLastCommitMs !== undefined && timeSinceLastCommitMs > 5000),
++      duplicateEventCount: this.duplicateEventCount,
++      idempotencyConflictCount: this.idempotencyConflictCount
+     };
+   }
+ 
+@@ -460,13 +710,14 @@
+     return {
+       engine: "genesis-v1",
+       mode: "live-paper-readonly+persistent",
+-      flow: ["Market", "Signal", "Trade", "Gate", "Order", "Position", "Risk", "System", "API/UI"],
++      flow: ["Bootstrap", "Market", "Signal", "Trade", "Gate", "Order", "Position", "Risk", "System", "API/UI"],
+       snapshotRevision: this.snapshot.revision,
+       committedAt: this.snapshot.committedAt,
+       eventCount: this.totalEventCount,
+       transitionCount: this.transitions.length,
+       decisionCount: this.decisions.length,
+       stateDomains: {
++        bootstrap: this.snapshot.bootstrap.status,
+         market: this.snapshot.market.status,
+         trade: this.snapshot.trade.status,
+         order: this.snapshot.order.status,
+@@ -483,6 +734,7 @@
+     return {
+       currentState: this.snapshot,
+       stateDomains: {
++        BootstrapState: this.snapshot.bootstrap,
+         MarketState: this.snapshot.market,
+         TradeState: this.snapshot.trade,
+         OrderState: this.snapshot.order,
+@@ -531,6 +783,16 @@
+         details: `snapshot.revision=${s.revision}`
+       },
+       {
++        name: "bootstrap_blocks_place_order_until_reconciled",
++        ok: s.bootstrap.status === "reconciled" || this.gate.evaluateAll(s).place_order.decision === "deny",
++        details: `bootstrap.status=${s.bootstrap.status}, place_order=${this.gate.evaluateAll(s).place_order.decision}`
++      },
++      {
++        name: "bootstrap_failed_is_not_reconciled",
++        ok: s.bootstrap.status !== "failed" || this.gate.evaluateAll(s).place_order.reason === "bootstrap_failed",
++        details: `bootstrap.status=${s.bootstrap.status}, place_order_reason=${this.gate.evaluateAll(s).place_order.reason ?? "none"}`
++      },
++      {
+         name: "risk_blocks_unknown_position",
+         ok: s.position.status !== "unknown" || s.risk.status === "blocked",
+         details: `position.status=${s.position.status}, risk.status=${s.risk.status}`
+@@ -561,6 +823,11 @@
+         details: `maxCommitLatencyMs=${this.getMetrics().commitLatencyMs.max}`
+       },
+       {
++        name: "no_idempotency_conflicts",
++        ok: this.idempotencyConflictCount === 0,
++        details: `idempotencyConflictCount=${this.idempotencyConflictCount}`
++      },
++      {
+         name: "replay_matches_current_snapshot",
+         ok: replay.ok,
+         details: `currentRevision=${replay.currentRevision}, replayRevision=${replay.replayRevision}, eventCount=${replay.eventCount}`
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/core/state/src/types.ts work/core/state/src/types.ts
+--- 00-base/mbg-core-v0.1-alpha1/core/state/src/types.ts	2026-05-06 21:27:26.827994162 +0000
++++ work/core/state/src/types.ts	2026-05-06 21:27:26.862283319 +0000
+@@ -1,5 +1,20 @@
+ export type DomainStatus = "unknown" | "idle" | "open" | "closed" | "ready" | "pending" | "flat" | "clear" | "blocked" | "healthy" | "degraded" | "halted" | "uncertain" | "reconcile";
+ 
++export type BootstrapStatus =
++  | "cold"
++  | "loading_snapshot"
++  | "replaying_tail"
++  | "awaiting_exchange_truth"
++  | "reconciled"
++  | "failed";
++
++export interface BootstrapState {
++  status: BootstrapStatus;
++  quarantineRequired: boolean;
++  reasons: string[];
++  meta: StateMeta;
++}
++
+ export interface StateMeta {
+   revision: number;
+   updatedAt: string;
+@@ -72,6 +87,7 @@
+ }
+ 
+ export interface RuntimeSnapshot {
++  bootstrap: BootstrapState;
+   market: MarketState;
+   trade: TradeState;
+   order: OrderState;
+@@ -87,6 +103,12 @@
+ export function initialSnapshot(): RuntimeSnapshot {
+   const t = now();
+   return {
++    bootstrap: {
++      status: "cold",
++      quarantineRequired: false,
++      reasons: ["bootstrap_not_reconciled"],
++      meta: { revision: 0, updatedAt: t }
++    },
+     market: { status: "unknown", meta: { revision: 0, updatedAt: t } },
+     trade: { status: "idle", meta: { revision: 0, updatedAt: t } },
+     order: { status: "none", filledQuantity: 0, meta: { revision: 0, updatedAt: t } },
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/core/transitions/src/reducers.ts work/core/transitions/src/reducers.ts
+--- 00-base/mbg-core-v0.1-alpha1/core/transitions/src/reducers.ts	2026-05-06 21:27:26.831480823 +0000
++++ work/core/transitions/src/reducers.ts	2026-05-06 21:27:26.865423063 +0000
+@@ -1,10 +1,86 @@
+ import { DomainEvent, EVENT_TYPE, MarketTickPayload, SignalPayload } from "../../contracts/src/events.js";
+-import { RuntimeSnapshot, MarketState, TradeState, OrderState, PositionState, RiskState, SystemState } from "../../state/src/types.js";
++import { RuntimeSnapshot, BootstrapState, MarketState, TradeState, OrderState, PositionState, RiskState, SystemState } from "../../state/src/types.js";
+ 
+ function meta(prevRev: number, event: DomainEvent) {
+   return { revision: prevRev + 1, updatedAt: event.timestamp, sourceEventId: event.eventId };
+ }
+ 
++
++function bootstrapReason(status: BootstrapState["status"]) {
++  if (status === "failed") return "bootstrap_failed";
++  if (status === "awaiting_exchange_truth") return "bootstrap_awaiting_exchange_truth";
++  if (status === "reconciled") return undefined;
++  return "bootstrap_not_reconciled";
++}
++
++export function reduceBootstrapState(prev: BootstrapState, event: DomainEvent): BootstrapState {
++  const t = event.timestamp;
++  const p: any = event.payload ?? {};
++  const reason = String(p.reason ?? bootstrapReason(prev.status) ?? "bootstrap_not_reconciled");
++  const quarantineRequired = Boolean(p.quarantineRequired ?? prev.quarantineRequired);
++
++  if (event.eventType === EVENT_TYPE.BOOTSTRAP_FAILED) {
++    return {
++      status: "failed",
++      quarantineRequired: Boolean(p.quarantineRequired ?? true),
++      reasons: [String(p.reason ?? "bootstrap_failed")],
++      meta: meta(prev.meta.revision, event)
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.BOOTSTRAP_RECOVERY_STARTED) {
++    if (prev.status !== "failed") return prev;
++    return {
++      status: "loading_snapshot",
++      quarantineRequired: false,
++      reasons: ["bootstrap_not_reconciled"],
++      meta: meta(prev.meta.revision, event)
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT) {
++    if (prev.status !== "cold") return prev;
++    return {
++      status: "loading_snapshot",
++      quarantineRequired,
++      reasons: ["bootstrap_not_reconciled"],
++      meta: meta(prev.meta.revision, event)
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL) {
++    if (prev.status !== "loading_snapshot") return prev;
++    return {
++      status: "replaying_tail",
++      quarantineRequired,
++      reasons: ["bootstrap_not_reconciled"],
++      meta: meta(prev.meta.revision, event)
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH) {
++    if (prev.status !== "replaying_tail") return prev;
++    return {
++      status: "awaiting_exchange_truth",
++      quarantineRequired,
++      reasons: ["bootstrap_awaiting_exchange_truth"],
++      meta: meta(prev.meta.revision, event)
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.BOOTSTRAP_RECONCILED) {
++    if (prev.status !== "awaiting_exchange_truth") return prev;
++    return {
++      status: "reconciled",
++      quarantineRequired: false,
++      reasons: [],
++      meta: meta(prev.meta.revision, event)
++    };
++  }
++
++  return prev;
++}
++
+ export function reduceMarketState(prev: MarketState, event: DomainEvent): MarketState {
+   if (event.eventType !== EVENT_TYPE.MARKET_TICK_RECEIVED) return prev;
+   const p = event.payload as MarketTickPayload;
+@@ -180,6 +256,10 @@
+   const exposure = Math.abs(ctx.position.exposure);
+   const configuredMax = Number(process.env.MAX_EXPOSURE_USDT ?? prev.maxExposure ?? 1000000);
+   const maxExposure = Number.isFinite(configuredMax) && configuredMax > 0 ? configuredMax : prev.maxExposure;
++  if (ctx.bootstrap.status !== "reconciled") {
++    const reason = bootstrapReason(ctx.bootstrap.status);
++    if (reason) reasons.push(reason);
++  }
+   if (ctx.market.status !== "open") reasons.push("market_not_open");
+   if (ctx.order.status === "uncertain") reasons.push("order_uncertain");
+   if (ctx.position.status === "unknown") {
+@@ -214,8 +294,10 @@
+   }
+ 
+   const reasons: string[] = [];
++  if (ctx.bootstrap.status === "failed") reasons.push("bootstrap_failed");
++  else if (ctx.bootstrap.status !== "reconciled") reasons.push(bootstrapReason(ctx.bootstrap.status) ?? "bootstrap_not_reconciled");
+   if (ctx.risk.status === "blocked") reasons.push("risk_blocked");
+   if (ctx.market.status === "unknown") reasons.push("market_unknown");
+-  const status = reasons.length ? "degraded" : "healthy";
++  const status = ctx.bootstrap.status === "failed" ? "halted" : reasons.length ? "degraded" : "healthy";
+   return { status, reasons, startedAt: prev.startedAt, meta: { revision: prev.meta.revision + 1, updatedAt: t } };
+ }
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/package-lock.json work/package-lock.json
+--- 00-base/mbg-core-v0.1-alpha1/package-lock.json	2026-05-06 21:27:26.803068877 +0000
++++ work/package-lock.json	2026-05-06 22:39:00.313913415 +0000
+@@ -1,12 +1,12 @@
+ {
+-  "name": "mbg-core-v0.1-alpha1",
+-  "version": "1.0.1",
++  "name": "mbg-core-v0.1-alpha2",
++  "version": "1.0.2",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+-      "name": "mbg-core-v0.1-alpha1",
+-      "version": "1.0.1",
++      "name": "mbg-core-v0.1-alpha2",
++      "version": "1.0.2",
+       "dependencies": {
+         "cors": "^2.8.5",
+         "dotenv": "^16.4.5",
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/package.json work/package.json
+--- 00-base/mbg-core-v0.1-alpha1/package.json	2026-05-06 21:27:26.802031644 +0000
++++ work/package.json	2026-05-06 21:54:35.898691773 +0000
+@@ -1,6 +1,6 @@
+ {
+-  "name": "mbg-core-v0.1-alpha1",
+-  "version": "1.0.1",
++  "name": "mbg-core-v0.1-alpha2",
++  "version": "1.0.2",
+   "type": "module",
+   "scripts": {
+     "dev": "tsx apps/runtime-api/src/server.ts",
+@@ -21,12 +21,16 @@
+     "test:pr33:pnl": "npm run typecheck && tsx tests/scenarios/pr33-pnl-engine.ts",
+     "test:pr33.2:pnl-hardening": "npm run typecheck && tsx tests/scenarios/pr33-2-pnl-hardening.ts",
+     "test:pr35:metadata": "npm run typecheck && tsx tests/scenarios/pr35-metadata-pipeline.ts",
+-    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && npm run test:core:cold-start && npm run audit:runtime",
++    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && npm run test:core:cold-start && npm run test:core:bootstrap && npm run test:core:event-validation && npm run test:core:idempotency && npm run test:wave2:scenario-audit && npm run audit:runtime",
+     "reset:runtime": "node -e \"const fs=require('node:fs'); fs.rmSync('data/runtime',{recursive:true,force:true}); fs.rmSync('data/journal',{recursive:true,force:true}); fs.mkdirSync('data/runtime/events',{recursive:true}); fs.mkdirSync('data/runtime/transitions',{recursive:true}); fs.mkdirSync('data/journal',{recursive:true}); fs.writeFileSync('data/journal/.gitkeep', ''); console.log('runtime state reset: data/runtime and data/journal recreated empty')\"",
+     "core:status": "PERSISTENCE_ENABLED=false tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.getRuntimeView(), null, 2));\"",
+     "replay:check": "tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.replayCheck(), null, 2));\"",
+     "test:core-constitution": "node tests/scenarios/core-constitution.test.mjs",
+-    "test:core:cold-start": "npm run typecheck && tsx tests/scenarios/cold-start-unknown.ts"
++    "test:core:cold-start": "npm run typecheck && tsx tests/scenarios/cold-start-unknown.ts",
++    "test:core:bootstrap": "npm run typecheck && tsx tests/scenarios/bootstrap-fsm.ts",
++    "test:core:event-validation": "npm run typecheck && tsx tests/scenarios/core-event-validation.ts",
++    "test:core:idempotency": "npm run typecheck && tsx tests/scenarios/core-idempotency.ts",
++    "test:wave2:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave2-scenario-audit.ts"
+   },
+   "dependencies": {
+     "cors": "^2.8.5",
+@@ -46,4 +50,4 @@
+     "typescript": "^5.4.3"
+   },
+   "description": "MBG Core v0.1 clean package based on PR35 metadata lifecycle fix v2; trust-kernel-only baseline."
+-}
++}
+\ No newline at end of file
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/tests/scenarios/audit-runtime.ts work/tests/scenarios/audit-runtime.ts
+--- 00-base/mbg-core-v0.1-alpha1/tests/scenarios/audit-runtime.ts	2026-05-06 21:27:26.833008831 +0000
++++ work/tests/scenarios/audit-runtime.ts	2026-05-06 22:21:42.313618781 +0000
+@@ -15,7 +15,7 @@
+ runtimeEngine.clearPersistenceAndReset();
+ 
+ const initial = runtimeEngine.getRuntimeView();
+-assert("initial has all six state domains", Object.keys(initial.stateDomains).length === 6, initial.stateDomains);
++assert("initial has all six state domains", Object.keys(initial.stateDomains).length === 7, initial.stateDomains);
+ assert("initial position is unknown", initial.stateDomains.position === "unknown", initial.stateDomains);
+ assert("initial risk is blocked", initial.stateDomains.risk === "blocked", initial.stateDomains);
+ 
+@@ -46,7 +46,7 @@
+ let decision = runtimeEngine.evaluateAction({ type: ACTION_TYPE.PLACE_ORDER, symbol: "BTCUSDT", side: "buy", quantity: 0.01, price: 65000 });
+ assert("gate uses current snapshot", decision.snapshotRevision === runtimeEngine.getSnapshot().revision, decision);
+ assert("gate denies before position reconcile", decision.decision === "deny", decision);
+-assert("gate explains bootstrap block", decision.reason === "bootstrap_position_not_reconciled", decision);
++assert("gate explains bootstrap block", decision.reason === "bootstrap_not_reconciled", decision);
+ 
+ runtimeEngine.commitEvent({
+   eventId: crypto.randomUUID(),
+@@ -66,7 +66,35 @@
+ } as any);
+ 
+ decision = runtimeEngine.evaluateAction({ type: ACTION_TYPE.PLACE_ORDER, symbol: "BTCUSDT", side: "buy", quantity: 0.01, price: 65000 });
+-assert("gate allows only after exchange reconcile", decision.decision === "allow", decision);
++assert("gate stays denied until bootstrap reconcile", decision.decision === "deny" && decision.reason === "bootstrap_not_reconciled", decision);
++
++runtimeEngine.commitEvent({
++  eventId: crypto.randomUUID(),
++  eventType: "bootstrap.loading_snapshot",
++  timestamp: new Date().toISOString(),
++  payload: { reason: "audit" }
++} as any);
++runtimeEngine.commitEvent({
++  eventId: crypto.randomUUID(),
++  eventType: "bootstrap.replaying_tail",
++  timestamp: new Date().toISOString(),
++  payload: { reason: "audit" }
++} as any);
++runtimeEngine.commitEvent({
++  eventId: crypto.randomUUID(),
++  eventType: "bootstrap.awaiting_exchange_truth",
++  timestamp: new Date().toISOString(),
++  payload: { reason: "audit" }
++} as any);
++runtimeEngine.commitEvent({
++  eventId: crypto.randomUUID(),
++  eventType: "bootstrap.reconciled",
++  timestamp: new Date().toISOString(),
++  payload: { reason: "audit" }
++} as any);
++
++decision = runtimeEngine.evaluateAction({ type: ACTION_TYPE.PLACE_ORDER, symbol: "BTCUSDT", side: "buy", quantity: 0.01, price: 65000 });
++assert("gate allows only after exchange reconcile and bootstrap reconcile", decision.decision === "allow", decision);
+ 
+ runtimeEngine.dispatchAction({ type: ACTION_TYPE.PLACE_ORDER, symbol: "BTCUSDT", side: "buy", quantity: 0.01, price: 65000 });
+ assert("order becomes pending", runtimeEngine.getSnapshot().order.status === "pending", runtimeEngine.getSnapshot().order);
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/tests/scenarios/bootstrap-fsm.ts work/tests/scenarios/bootstrap-fsm.ts
+--- 00-base/mbg-core-v0.1-alpha1/tests/scenarios/bootstrap-fsm.ts	1970-01-01 00:00:00.000000000 +0000
++++ work/tests/scenarios/bootstrap-fsm.ts	2026-05-06 21:27:26.870644414 +0000
+@@ -0,0 +1,138 @@
++import assert from "node:assert/strict";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { EVENT_TYPE, makeEvent } from "../../core/contracts/src/events.js";
++import { ActionGate } from "../../core/gates/src/action-gate.js";
++import { reduceSnapshot } from "../../core/runtime/src/runtime-engine.js";
++import { initialSnapshot, RuntimeSnapshot } from "../../core/state/src/types.js";
++
++function placeOrder(snapshot: RuntimeSnapshot) {
++  return new ActionGate().evaluate({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  }, snapshot);
++}
++
++function marketAndPositionReconciled(snapshot: RuntimeSnapshot) {
++  const afterMarket = reduceSnapshot(snapshot, makeEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "bootstrap-test"
++  }));
++
++  return reduceSnapshot(afterMarket, makeEvent(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange"
++  }));
++}
++
++function advanceBootstrap(snapshot: RuntimeSnapshot) {
++  const loading = reduceSnapshot(snapshot, makeEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "test_loading_snapshot" }));
++  assert.equal(loading.bootstrap.status, "loading_snapshot");
++
++  const replaying = reduceSnapshot(loading, makeEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "test_replaying_tail" }));
++  assert.equal(replaying.bootstrap.status, "replaying_tail");
++
++  const awaiting = reduceSnapshot(replaying, makeEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "test_awaiting_exchange_truth" }));
++  assert.equal(awaiting.bootstrap.status, "awaiting_exchange_truth");
++
++  const reconciled = reduceSnapshot(awaiting, makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "test_reconciled" }));
++  assert.equal(reconciled.bootstrap.status, "reconciled");
++
++  return { loading, replaying, awaiting, reconciled };
++}
++
++function testColdStartStatus() {
++  const snapshot = initialSnapshot();
++
++  assert.equal(snapshot.bootstrap.status, "cold");
++  assert.equal(snapshot.bootstrap.quarantineRequired, false);
++  assert.equal(snapshot.position.status, "unknown");
++  assert.equal(snapshot.risk.status, "blocked");
++
++  const decision = placeOrder(snapshot);
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "bootstrap_not_reconciled");
++}
++
++function testLifecycleSequence() {
++  const snapshot = initialSnapshot();
++  const { loading, replaying, awaiting, reconciled } = advanceBootstrap(snapshot);
++
++  assert.equal(loading.bootstrap.status, "loading_snapshot");
++  assert.equal(replaying.bootstrap.status, "replaying_tail");
++  assert.equal(awaiting.bootstrap.status, "awaiting_exchange_truth");
++  assert.equal(reconciled.bootstrap.status, "reconciled");
++}
++
++function testFailedCannotDirectlyReconcile() {
++  const failed = reduceSnapshot(initialSnapshot(), makeEvent(EVENT_TYPE.BOOTSTRAP_FAILED, {
++    reason: "test_failure",
++    quarantineRequired: true
++  }));
++
++  assert.equal(failed.bootstrap.status, "failed");
++  assert.equal(failed.bootstrap.quarantineRequired, true);
++
++  const illegalDirectReconcile = reduceSnapshot(failed, makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, {
++    reason: "illegal_direct_reconcile"
++  }));
++
++  assert.equal(illegalDirectReconcile.bootstrap.status, "failed");
++  assert.equal(placeOrder(illegalDirectReconcile).decision, "deny");
++  assert.equal(placeOrder(illegalDirectReconcile).reason, "bootstrap_failed");
++
++  const recovered = reduceSnapshot(failed, makeEvent(EVENT_TYPE.BOOTSTRAP_RECOVERY_STARTED, {
++    reason: "test_recovery"
++  }));
++
++  assert.equal(recovered.bootstrap.status, "loading_snapshot");
++  assert.equal(recovered.bootstrap.quarantineRequired, false);
++}
++
++function testPlaceOrderDeniedUntilBootstrapReconciled() {
++  const readyExceptBootstrap = marketAndPositionReconciled(initialSnapshot());
++
++  const loading = reduceSnapshot(readyExceptBootstrap, makeEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, {}));
++  const replaying = reduceSnapshot(loading, makeEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, {}));
++  const awaiting = reduceSnapshot(replaying, makeEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, {}));
++
++  const states = [readyExceptBootstrap, loading, replaying, awaiting];
++  for (const state of states) {
++    const decision = placeOrder(state);
++    assert.equal(decision.decision, "deny", `PLACE_ORDER must be denied during ${state.bootstrap.status}`);
++    if (state.bootstrap.status === "awaiting_exchange_truth") {
++      assert.equal(decision.reason, "bootstrap_awaiting_exchange_truth");
++    } else {
++      assert.equal(decision.reason, "bootstrap_not_reconciled");
++    }
++  }
++
++  const reconciled = reduceSnapshot(awaiting, makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, {}));
++  const decision = placeOrder(reconciled);
++  assert.equal(reconciled.bootstrap.status, "reconciled");
++  assert.equal(reconciled.risk.status, "clear");
++  assert.equal(decision.decision, "allow");
++}
++
++testColdStartStatus();
++testLifecycleSequence();
++testFailedCannotDirectlyReconcile();
++testPlaceOrderDeniedUntilBootstrapReconciled();
++
++console.log(JSON.stringify({
++  name: "bootstrap_fsm",
++  ok: true
++}, null, 2));
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/tests/scenarios/cold-start-unknown.ts work/tests/scenarios/cold-start-unknown.ts
+--- 00-base/mbg-core-v0.1-alpha1/tests/scenarios/cold-start-unknown.ts	2026-05-06 21:27:26.845039207 +0000
++++ work/tests/scenarios/cold-start-unknown.ts	2026-05-06 22:05:38.606895511 +0000
+@@ -29,8 +29,8 @@
+ 
+   const decision = placeOrderProbe(snapshot);
+   assert.equal(decision.decision, "deny");
+-  assert.equal(decision.reason, "bootstrap_position_not_reconciled");
+-  assert.deepEqual(decision.blockingStates, ["position", "risk"]);
++  assert.equal(decision.reason, "bootstrap_not_reconciled");
++  assert.deepEqual(decision.blockingStates, ["bootstrap", "position", "risk"]);
+ }
+ 
+ function testPositionReconciledZeroBecomesFlatOnlyAfterExchangeReconcile() {
+@@ -86,7 +86,7 @@
+ 
+   const deniedBeforeReconcile = placeOrderProbe(afterMarket);
+   assert.equal(deniedBeforeReconcile.decision, "deny");
+-  assert.equal(deniedBeforeReconcile.reason, "bootstrap_position_not_reconciled");
++  assert.equal(deniedBeforeReconcile.reason, "bootstrap_not_reconciled");
+ 
+   const afterReconcile = reduceSnapshot(afterMarket, makeEvent(EVENT_TYPE.POSITION_RECONCILED, {
+     symbol: "BTCUSDT",
+@@ -101,11 +101,25 @@
+   }));
+ 
+   assert.equal(afterReconcile.position.status, "flat");
+-  assert.equal(afterReconcile.risk.status, "clear");
+-  assert.deepEqual(afterReconcile.risk.reasons, []);
+-  assert.equal(afterReconcile.system.status, "healthy");
++  assert.equal(afterReconcile.risk.status, "blocked");
++  assert.ok(afterReconcile.risk.reasons.includes("bootstrap_not_reconciled"));
++  assert.equal(afterReconcile.system.status, "degraded");
++
++  const deniedBeforeBootstrap = placeOrderProbe(afterReconcile);
++  assert.equal(deniedBeforeBootstrap.decision, "deny");
++  assert.equal(deniedBeforeBootstrap.reason, "bootstrap_not_reconciled");
++
++  const afterBootstrapLoading = reduceSnapshot(afterReconcile, makeEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "cold-start-test" }));
++  const afterBootstrapReplay = reduceSnapshot(afterBootstrapLoading, makeEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "cold-start-test" }));
++  const afterBootstrapAwaitingTruth = reduceSnapshot(afterBootstrapReplay, makeEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "cold-start-test" }));
++  const afterBootstrapReconciled = reduceSnapshot(afterBootstrapAwaitingTruth, makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "cold-start-test" }));
++
++  assert.equal(afterBootstrapReconciled.bootstrap.status, "reconciled");
++  assert.equal(afterBootstrapReconciled.risk.status, "clear");
++  assert.deepEqual(afterBootstrapReconciled.risk.reasons, []);
++  assert.equal(afterBootstrapReconciled.system.status, "healthy");
+ 
+-  const allowedAfterReconcile = placeOrderProbe(afterReconcile);
++  const allowedAfterReconcile = placeOrderProbe(afterBootstrapReconciled);
+   assert.equal(allowedAfterReconcile.decision, "allow");
+ }
+ 
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/tests/scenarios/core-event-validation.ts work/tests/scenarios/core-event-validation.ts
+--- 00-base/mbg-core-v0.1-alpha1/tests/scenarios/core-event-validation.ts	1970-01-01 00:00:00.000000000 +0000
++++ work/tests/scenarios/core-event-validation.ts	2026-05-06 21:59:56.898623111 +0000
+@@ -0,0 +1,92 @@
++import assert from "node:assert";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++import { EVENT_TYPE, makeEvent } from "../../core/contracts/src/events.js";
++
++function eventIds() {
++  return new Set(runtimeEngine.getEvents(1000).map((event) => event.eventId));
++}
++
++function assertRejected(result: ReturnType<typeof runtimeEngine.commitEventResult>, code: string) {
++  assert.equal(result.ok, false, "event should be rejected");
++  assert.equal(result.status, "rejected", "event should fail validation before idempotency");
++  if (!result.ok && result.status === "rejected") {
++    assert.ok(
++      result.diagnostic.issues.some((issue) => issue.code === code),
++      `expected diagnostic code ${code}, got ${result.diagnostic.issues.map((issue) => issue.code).join(",")}`
++    );
++  }
++}
++
++runtimeEngine.clearPersistenceAndReset();
++
++const beforeValid = runtimeEngine.getSnapshot().revision;
++const validMarketTick = makeEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++  symbol: "BTCUSDT",
++  price: 65000,
++  bid: 64999,
++  ask: 65001,
++  volume: 1,
++  provider: "core-event-validation-test"
++});
++const validResult = runtimeEngine.commitEventResult(validMarketTick, { log: false });
++assert.equal(validResult.ok, true);
++assert.equal(runtimeEngine.getSnapshot().revision, beforeValid + 1);
++assert.equal(runtimeEngine.getSnapshot().market.status, "open");
++assert.ok(eventIds().has(validMarketTick.eventId), "valid event should appear in canonical journal window");
++
++const beforeNegativePriceRevision = runtimeEngine.getSnapshot().revision;
++const beforeNegativePriceEvents = eventIds();
++const negativePrice = makeEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++  symbol: "BTCUSDT",
++  price: -1,
++  bid: 64999,
++  ask: 65001,
++  volume: 1,
++  provider: "core-event-validation-test"
++});
++const negativePriceResult = runtimeEngine.commitEventResult(negativePrice, { log: false });
++assertRejected(negativePriceResult, "payload_invalid");
++assert.equal(runtimeEngine.getSnapshot().revision, beforeNegativePriceRevision, "invalid event must not increase revision");
++assert.deepEqual(eventIds(), beforeNegativePriceEvents, "invalid event must not enter canonical journal window");
++assert.ok(!eventIds().has(negativePrice.eventId), "negative price event must not enter canonical journal");
++
++const beforeCrossedBookRevision = runtimeEngine.getSnapshot().revision;
++const beforeCrossedBookEvents = eventIds();
++const crossedBook = makeEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++  symbol: "BTCUSDT",
++  price: 65000,
++  bid: 65002,
++  ask: 65001,
++  volume: 1,
++  provider: "core-event-validation-test"
++});
++const crossedBookResult = runtimeEngine.commitEventResult(crossedBook, { log: false });
++assertRejected(crossedBookResult, "payload_invalid");
++assert.equal(runtimeEngine.getSnapshot().revision, beforeCrossedBookRevision, "bid > ask must not increase revision");
++assert.deepEqual(eventIds(), beforeCrossedBookEvents, "bid > ask event must not enter canonical journal window");
++assert.ok(!eventIds().has(crossedBook.eventId), "bid > ask event must not enter canonical journal");
++
++const beforeBadFillRevision = runtimeEngine.getSnapshot().revision;
++const beforeBadFillEvents = eventIds();
++const badFill = makeEvent(EVENT_TYPE.ORDER_EXECUTION_REPORTED, {
++  orderId: "order-validation-1",
++  fillId: "fill-validation-1",
++  symbol: "BTCUSDT",
++  side: "buy",
++  quantity: 0,
++  filledQuantity: 0,
++  filledQuantityDelta: 0,
++  fillPrice: 65000,
++  exchangeStatus: "FILLED",
++  provider: "core-event-validation-test"
++});
++const badFillResult = runtimeEngine.commitEventResult(badFill, { log: false });
++assertRejected(badFillResult, "payload_invalid");
++assert.equal(runtimeEngine.getSnapshot().revision, beforeBadFillRevision, "quantity <= 0 must not increase revision");
++assert.deepEqual(eventIds(), beforeBadFillEvents, "quantity <= 0 event must not enter canonical journal window");
++assert.ok(!eventIds().has(badFill.eventId), "quantity <= 0 fill must not enter canonical journal");
++
++const persistence = runtimeEngine.getPersistenceView().status;
++assert.equal(persistence.eventCount, runtimeEngine.getSnapshot().revision, "canonical persisted event count must match accepted revision");
++
++console.log("core event validation checks passed");
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/tests/scenarios/core-idempotency.ts work/tests/scenarios/core-idempotency.ts
+--- 00-base/mbg-core-v0.1-alpha1/tests/scenarios/core-idempotency.ts	1970-01-01 00:00:00.000000000 +0000
++++ work/tests/scenarios/core-idempotency.ts	2026-05-06 22:10:12.811893348 +0000
+@@ -0,0 +1,155 @@
++import assert from "node:assert/strict";
++import fs from "node:fs";
++import os from "node:os";
++import path from "node:path";
++
++const dataDir = path.join(os.tmpdir(), `mbg-core-idempotency-${process.pid}-${Date.now()}`);
++process.env.GENESIS_DATA_DIR = dataDir;
++process.env.PERSISTENCE_ENABLED = "true";
++
++const { RuntimeEngine } = await import("../../core/runtime/src/runtime-engine.js");
++const { EVENT_TYPE } = await import("../../core/contracts/src/events.js");
++const { PnLEngine } = await import("../../core/pnl/pnl-engine.js");
++
++function clone<T>(value: T): T {
++  return structuredClone(value);
++}
++
++function makeEvent(eventId: string, eventType: string, payload: unknown, timestamp = "2026-05-06T00:00:00.000Z") {
++  return { eventId, eventType: eventType as any, timestamp, payload };
++}
++
++const engine = new RuntimeEngine();
++engine.clearPersistenceAndReset();
++
++const firstMarket = makeEvent("evt-market-1", EVENT_TYPE.MARKET_TICK_RECEIVED, {
++  symbol: "BTCUSDT",
++  price: 100,
++  bid: 99,
++  ask: 101,
++  volume: 1,
++  provider: "idempotency-test"
++});
++
++const firstCommit = engine.commitEventWithDiagnostic(firstMarket);
++assert.equal(firstCommit.diagnostic.decision, "accepted");
++assert.equal(firstCommit.snapshot.revision, 1);
++
++const snapshotBeforeDuplicate = clone(engine.getSnapshot());
++const duplicateCommit = engine.commitEventWithDiagnostic(firstMarket);
++assert.equal(duplicateCommit.diagnostic.decision, "duplicate_ignored");
++assert.equal(duplicateCommit.diagnostic.scope, "eventId");
++assert.deepEqual(engine.getSnapshot(), snapshotBeforeDuplicate);
++assert.equal(engine.getSnapshot().revision, snapshotBeforeDuplicate.revision);
++assert.equal(engine.getMetrics().totalEvents, 1);
++
++const conflictingDuplicate = makeEvent("evt-market-1", EVENT_TYPE.MARKET_TICK_RECEIVED, {
++  symbol: "BTCUSDT",
++  price: 101,
++  bid: 100,
++  ask: 102,
++  volume: 2,
++  provider: "idempotency-test"
++});
++const beforeConflict = clone(engine.getSnapshot());
++const conflictCommit = engine.commitEventWithDiagnostic(conflictingDuplicate);
++assert.equal(conflictCommit.diagnostic.decision, "duplicate_conflict");
++assert.equal(conflictCommit.diagnostic.scope, "eventId");
++assert.deepEqual(engine.getSnapshot(), beforeConflict);
++assert.equal(engine.getSnapshot().revision, beforeConflict.revision);
++
++const fillPayload = {
++  fillId: "fill-1",
++  exchangeReportId: "report-1",
++  orderId: "order-1",
++  symbol: "BTCUSDT",
++  side: "buy",
++  quantity: 0.1,
++  filledQuantity: 0.1,
++  filledQuantityDelta: 0.1,
++  fillPrice: 100,
++  exchangeStatus: "FILLED",
++  provider: "idempotency-test"
++};
++
++const fillEvent = makeEvent("evt-fill-1", EVENT_TYPE.ORDER_EXECUTION_REPORTED, fillPayload, "2026-05-06T00:00:01.000Z");
++engine.commitEventWithDiagnostic(fillEvent);
++const afterFill = clone(engine.getSnapshot());
++assert.equal(afterFill.position.quantity, 0.1);
++
++const duplicateFillEvent = makeEvent("evt-fill-duplicate-new-event-id", EVENT_TYPE.ORDER_EXECUTION_REPORTED, fillPayload, "2026-05-06T00:00:02.000Z");
++const duplicateFill = engine.commitEventWithDiagnostic(duplicateFillEvent);
++assert.equal(duplicateFill.diagnostic.decision, "duplicate_ignored");
++assert.equal(duplicateFill.diagnostic.scope, "fillId");
++assert.deepEqual(engine.getSnapshot(), afterFill);
++assert.equal(engine.getSnapshot().revision, afterFill.revision);
++assert.equal(engine.getSnapshot().position.quantity, 0.1);
++
++const pnlEngine = new PnLEngine();
++const pnlFill = pnlEngine.normalizeFill({
++  id: "pnl-fill-1",
++  symbol: "BTCUSDT",
++  side: "BUY",
++  price: 100,
++  qty: 0.1,
++  quoteQty: 10,
++  commission: 0,
++  time: 1,
++  expectedPrice: 100
++});
++const pnlAfterFirst = pnlEngine.onFill(pnlFill);
++const pnlNetAfterFirst = pnlEngine.getPnL().netPnl;
++const pnlAfterDuplicate = pnlEngine.onFill(pnlFill);
++assert.equal(pnlAfterDuplicate.processedFillIds.length, 1);
++assert.deepEqual(pnlAfterDuplicate.duplicateFillIds, ["pnl-fill-1"]);
++assert.equal(pnlAfterDuplicate.position, pnlAfterFirst.position);
++assert.equal(pnlEngine.getPnL().netPnl, pnlNetAfterFirst);
++
++const reconcilePayload = {
++  reconcileId: "reconcile-1",
++  symbol: "BTCUSDT",
++  asset: "BTC",
++  quoteAsset: "USDT",
++  free: 0.1,
++  locked: 0,
++  quantity: 0.1,
++  markPrice: 100,
++  exposure: 10,
++  source: "exchange"
++};
++engine.commitEventWithDiagnostic(makeEvent("evt-reconcile-1", EVENT_TYPE.POSITION_RECONCILED, reconcilePayload, "2026-05-06T00:00:03.000Z"));
++const afterReconcile = clone(engine.getSnapshot());
++const duplicateReconcile = engine.commitEventWithDiagnostic(makeEvent("evt-reconcile-2", EVENT_TYPE.POSITION_RECONCILED, reconcilePayload, "2026-05-06T00:00:04.000Z"));
++assert.equal(duplicateReconcile.diagnostic.decision, "duplicate_ignored");
++assert.equal(duplicateReconcile.diagnostic.scope, "reconcileId");
++assert.deepEqual(engine.getSnapshot(), afterReconcile);
++assert.equal(engine.getSnapshot().revision, afterReconcile.revision);
++
++const replay = engine.replayCheck();
++assert.equal(replay.ok, true);
++assert.equal(replay.currentRevision, engine.getSnapshot().revision);
++assert.equal(replay.replayRevision, engine.getSnapshot().revision);
++
++const recoveredEngine = new RuntimeEngine();
++const recoveredBefore = clone(recoveredEngine.getSnapshot());
++assert.equal(recoveredBefore.revision, engine.getSnapshot().revision);
++
++const duplicateAfterRecovery = recoveredEngine.commitEventWithDiagnostic(firstMarket);
++assert.equal(duplicateAfterRecovery.diagnostic.decision, "duplicate_ignored");
++assert.equal(duplicateAfterRecovery.diagnostic.scope, "eventId");
++assert.deepEqual(recoveredEngine.getSnapshot(), recoveredBefore);
++assert.equal(recoveredEngine.getSnapshot().revision, recoveredBefore.revision);
++
++const idempotency = engine.getIdempotencyView();
++assert.ok(idempotency.duplicateEventCount >= 3);
++assert.equal(idempotency.conflictCount, 1);
++
++fs.rmSync(dataDir, { recursive: true, force: true });
++
++console.log(JSON.stringify({
++  name: "core_idempotency",
++  ok: true,
++  revision: engine.getSnapshot().revision,
++  replay,
++  idempotency
++}, null, 2));
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/tests/scenarios/gate-scenarios.ts work/tests/scenarios/gate-scenarios.ts
+--- 00-base/mbg-core-v0.1-alpha1/tests/scenarios/gate-scenarios.ts	2026-05-06 21:27:26.834004326 +0000
++++ work/tests/scenarios/gate-scenarios.ts	2026-05-06 22:03:27.112685113 +0000
+@@ -7,13 +7,20 @@
+ let p = runtimeEngine.getPermissions();
+ assert.equal(p.tradingAllowed, false);
+ assert.equal(p.actions.place_order.decision, "deny");
+-assert.equal(p.actions.place_order.reason, "bootstrap_position_not_reconciled");
++assert.equal(p.actions.place_order.reason, "bootstrap_not_reconciled");
+ 
+-runtimeEngine.ingestMarketTick({ symbol: "BTCUSDT", price: 65000, provider: "test" });
++runtimeEngine.ingestMarketTick({
++  symbol: "BTCUSDT",
++  price: 65000,
++  bid: 64999,
++  ask: 65001,
++  volume: 1,
++  provider: "test"
++});
+ p = runtimeEngine.getPermissions();
+ assert.equal(p.tradingAllowed, false);
+ assert.equal(p.actions.place_order.decision, "deny");
+-assert.equal(p.actions.place_order.reason, "bootstrap_position_not_reconciled");
++assert.equal(p.actions.place_order.reason, "bootstrap_not_reconciled");
+ 
+ runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.POSITION_RECONCILED, {
+   symbol: "BTCUSDT",
+@@ -28,6 +35,16 @@
+ }));
+ 
+ p = runtimeEngine.getPermissions();
++assert.equal(p.tradingAllowed, false);
++assert.equal(p.actions.place_order.decision, "deny");
++assert.equal(p.actions.place_order.reason, "bootstrap_not_reconciled");
++
++runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "test" }));
++runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "test" }));
++runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "test" }));
++runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "test" }));
++
++p = runtimeEngine.getPermissions();
+ assert.equal(p.tradingAllowed, true);
+ assert.equal(p.actions.place_order.decision, "allow");
+ 
+diff -ruN -x node_modules -x data 00-base/mbg-core-v0.1-alpha1/tests/scenarios/wave2-scenario-audit.ts work/tests/scenarios/wave2-scenario-audit.ts
+--- 00-base/mbg-core-v0.1-alpha1/tests/scenarios/wave2-scenario-audit.ts	1970-01-01 00:00:00.000000000 +0000
++++ work/tests/scenarios/wave2-scenario-audit.ts	2026-05-06 21:59:56.900526729 +0000
+@@ -0,0 +1,465 @@
++import assert from "node:assert/strict";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { DomainEvent, EVENT_TYPE } from "../../core/contracts/src/events.js";
++import { RuntimeSnapshot } from "../../core/state/src/types.js";
++
++type ScenarioResult = {
++  name: string;
++  covers: string[];
++  ok: boolean;
++  detail?: string;
++};
++
++type IdempotencyDiagnosticCode = "duplicate_ignored" | "duplicate_conflict";
++
++type CommitEventResult = {
++  ok: boolean;
++  eventId?: string;
++  eventType?: string;
++  reason?: string;
++  error?: string;
++  code?: string;
++  status?: string;
++  diagnostic?: unknown;
++  idempotency?: string | {
++    diagnostic?: string;
++    code?: string;
++    status?: string;
++    reason?: string;
++  };
++  duplicate?: boolean;
++  idempotent?: boolean;
++  appended?: boolean;
++  canonicalAppended?: boolean;
++  snapshot?: RuntimeSnapshot;
++};
++
++type RuntimeEngineWave2 = typeof runtimeEngine & {
++  commitEventResult?: (event: DomainEvent, options?: { log?: boolean }) => CommitEventResult;
++  getPnlSnapshot?: () => unknown;
++};
++
++const engine = runtimeEngine as RuntimeEngineWave2;
++const results: ScenarioResult[] = [];
++
++function scenario(name: string, covers: string[], body: () => void) {
++  try {
++    runtimeEngine.clearPersistenceAndReset();
++    body();
++    results.push({ name, covers, ok: true });
++  } catch (err) {
++    results.push({
++      name,
++      covers,
++      ok: false,
++      detail: err instanceof Error ? err.message : String(err)
++    });
++  }
++}
++
++function stableSnapshot(snapshot: RuntimeSnapshot) {
++  return JSON.stringify(snapshot);
++}
++
++function expectNoSnapshotChange(before: RuntimeSnapshot, after: RuntimeSnapshot, message: string) {
++  assert.equal(after.revision, before.revision, `${message}: revision changed ${before.revision}->${after.revision}`);
++  assert.equal(stableSnapshot(after), stableSnapshot(before), `${message}: snapshot changed`);
++}
++
++function fixedEvent<TPayload>(
++  eventType: string,
++  payload: TPayload,
++  eventId: string,
++  source = "wave2-scenario-audit"
++): DomainEvent<TPayload> {
++  return {
++    eventId,
++    eventType: eventType as any,
++    timestamp: "2026-05-06T00:00:00.000Z",
++    source,
++    eventVersion: 1,
++    schemaVersion: 1,
++    payload
++  } as any;
++}
++
++function bootstrapEvent(eventType: string, eventId: string, extra: Record<string, unknown> = {}) {
++  return fixedEvent(eventType, {
++    source: "wave2-scenario-audit",
++    phase: eventType.replace("bootstrap.", ""),
++    ...extra
++  }, eventId, "core");
++}
++
++function validMarketTick(eventId = "evt-market-valid-1", price = 65000) {
++  return fixedEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price,
++    bid: price - 1,
++    ask: price + 1,
++    volume: 1,
++    provider: "wave2-scenario-audit",
++    source: "market-data"
++  }, eventId, "market-data");
++}
++
++function validPositionReconciled(eventId = "evt-position-reconciled-flat-1", quantity = 0) {
++  return fixedEvent(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: quantity,
++    locked: 0,
++    quantity,
++    markPrice: 65000,
++    exposure: Math.abs(quantity * 65000),
++    provider: "wave2-scenario-audit",
++    source: "exchange"
++  }, eventId, "exchange");
++}
++
++function validOrderReconciled(eventId = "evt-order-reconciled-1") {
++  return fixedEvent(EVENT_TYPE.ORDER_RECONCILED, {
++    orderId: "order-reconcile-1",
++    clientOrderId: "client-reconcile-1",
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.1,
++    filledQuantity: 0,
++    executedQty: 0,
++    exchangeStatus: "NEW",
++    provider: "wave2-scenario-audit",
++    source: "exchange"
++  }, eventId, "exchange");
++}
++
++function validFill(eventId = "evt-fill-1", executionId = "exec-1", fillId = "fill-1") {
++  return fixedEvent(EVENT_TYPE.ORDER_EXECUTION_REPORTED, {
++    orderId: "order-1",
++    clientOrderId: "client-1",
++    executionId,
++    fillId,
++    tradeId: fillId,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.1,
++    filledQuantity: 0.1,
++    filledQuantityDelta: 0.1,
++    fillPrice: 65000,
++    price: 65000,
++    exchangeStatus: "FILLED",
++    commission: 0,
++    commissionAsset: "USDT",
++    provider: "wave2-scenario-audit",
++    source: "exchange",
++    reportedAt: "2026-05-06T00:00:00.000Z"
++  }, eventId, "exchange");
++}
++
++function eventJournal() {
++  return runtimeEngine.getEvents(10000) as DomainEvent[];
++}
++
++function eventCount(eventId: string) {
++  return eventJournal().filter((event) => event.eventId === eventId).length;
++}
++
++function assertEventNotAppended(eventId: string, beforeJournalLength: number, message: string) {
++  const journal = eventJournal();
++  assert.equal(journal.length, beforeJournalLength, `${message}: journal length changed ${beforeJournalLength}->${journal.length}`);
++  assert.equal(eventCount(eventId), 0, `${message}: rejected event ${eventId} appeared in canonical journal`);
++}
++
++function assertDuplicateNotAppended(eventId: string, beforeJournalLength: number, message: string) {
++  const journal = eventJournal();
++  assert.equal(journal.length, beforeJournalLength, `${message}: duplicate changed canonical journal length ${beforeJournalLength}->${journal.length}`);
++  assert.equal(eventCount(eventId), 1, `${message}: duplicate eventId ${eventId} must have exactly one canonical journal entry`);
++}
++
++function commitResult(event: DomainEvent, message: string) {
++  assert.equal(typeof engine.commitEventResult, "function", "runtimeEngine.commitEventResult(event, { log: false }) is required after Wave 2 Roles 5/6 merge");
++  return engine.commitEventResult!(event, { log: false });
++}
++
++function commitOk(event: DomainEvent, message: string) {
++  const result = commitResult(event, message);
++  assert.equal(result.ok, true, `${message}: expected accepted event, got ${JSON.stringify(result)}`);
++  return result;
++}
++
++function diagnosticTokens(value: unknown): string[] {
++  if (!value) return [];
++  if (typeof value === "string") return [value];
++  if (typeof value === "object") {
++    const record = value as Record<string, unknown>;
++    return [
++      record.code,
++      record.status,
++      record.reason,
++      record.diagnostic,
++      record.idempotency,
++      ...(typeof record.idempotency === "object" ? diagnosticTokens(record.idempotency) : [])
++    ].flatMap(diagnosticTokens);
++  }
++  return [];
++}
++
++function resultDiagnostics(result: CommitEventResult): string[] {
++  return [
++    result.code,
++    result.status,
++    result.reason,
++    result.error,
++    result.diagnostic,
++    result.idempotency
++  ].flatMap(diagnosticTokens);
++}
++
++function assertDiagnostic(result: CommitEventResult, expected: IdempotencyDiagnosticCode, message: string) {
++  const diagnostics = resultDiagnostics(result);
++  assert.ok(
++    diagnostics.includes(expected),
++    `${message}: expected idempotency diagnostic ${expected}, got ${JSON.stringify(result)}`
++  );
++}
++
++function commitInvalidRejectedNoStateChange(event: DomainEvent, message: string) {
++  const before = runtimeEngine.getSnapshot();
++  const beforeJournalLength = eventJournal().length;
++
++  const result = commitResult(event, message);
++
++  assert.equal(result.ok, false, `${message}: invalid event must return result.ok === false`);
++  const after = runtimeEngine.getSnapshot();
++  expectNoSnapshotChange(before, after, message);
++  assertEventNotAppended(event.eventId, beforeJournalLength, message);
++  return result;
++}
++
++function commitDuplicateIgnoredNoStateChange(event: DomainEvent, message: string) {
++  const before = runtimeEngine.getSnapshot();
++  const beforeJournalLength = eventJournal().length;
++
++  const result = commitResult(event, message);
++
++  assertDiagnostic(result, "duplicate_ignored", message);
++  const after = runtimeEngine.getSnapshot();
++  expectNoSnapshotChange(before, after, message);
++  assertDuplicateNotAppended(event.eventId, beforeJournalLength, message);
++  return result;
++}
++
++function commitDuplicateConflictNoStateChange(event: DomainEvent, message: string) {
++  const before = runtimeEngine.getSnapshot();
++  const beforeJournalLength = eventJournal().length;
++
++  const result = commitResult(event, message);
++
++  assertDiagnostic(result, "duplicate_conflict", message);
++  assert.equal(result.ok, false, `${message}: duplicate conflict must not be accepted`);
++  const after = runtimeEngine.getSnapshot();
++  expectNoSnapshotChange(before, after, message);
++  assertDuplicateNotAppended(event.eventId, beforeJournalLength, message);
++  return result;
++}
++
++function placeOrderDecision() {
++  return runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  });
++}
++
++function assertPlaceOrderDenied(message: string) {
++  const decision = placeOrderDecision();
++  assert.equal(decision.decision, "deny", `${message}: PLACE_ORDER must be denied`);
++}
++
++function assertPlaceOrderAllowedOnlyThroughGate(message: string) {
++  const decision = placeOrderDecision();
++  assert.equal(decision.decision, "allow", `${message}: ActionGate denied PLACE_ORDER: ${decision.reason ?? "no reason"}`);
++}
++
++function captureAccounting() {
++  const snapshot = runtimeEngine.getSnapshot();
++  return {
++    positionQuantity: snapshot.position.quantity,
++    positionExposure: snapshot.position.exposure,
++    orderFilledQuantity: snapshot.order.filledQuantity ?? 0,
++    pnl: typeof engine.getPnlSnapshot === "function" ? engine.getPnlSnapshot() : undefined
++  };
++}
++
++function assertAccountingUnchanged(before: ReturnType<typeof captureAccounting>, after: ReturnType<typeof captureAccounting>, message: string) {
++  assert.deepEqual(after, before, `${message}: duplicate fill changed position/order/PnL accounting`);
++}
++
++function completeBootstrapToAwaitingExchangeTruth() {
++  commitOk(bootstrapEvent("bootstrap.loading_snapshot", "evt-bootstrap-loading-snapshot"), "bootstrap.loading_snapshot");
++  commitOk(bootstrapEvent("bootstrap.replaying_tail", "evt-bootstrap-replaying-tail"), "bootstrap.replaying_tail");
++  commitOk(bootstrapEvent("bootstrap.awaiting_exchange_truth", "evt-bootstrap-awaiting-exchange-truth"), "bootstrap.awaiting_exchange_truth");
++}
++
++function completeBootstrapReconciled() {
++  completeBootstrapToAwaitingExchangeTruth();
++  commitOk(validMarketTick("evt-market-for-bootstrap-reconciled"), "valid market tick before bootstrap.reconciled");
++  commitOk(validPositionReconciled("evt-position-for-bootstrap-reconciled"), "valid position reconcile before bootstrap.reconciled");
++  commitOk(bootstrapEvent("bootstrap.reconciled", "evt-bootstrap-reconciled", { status: "reconciled" }), "bootstrap.reconciled");
++}
++
++scenario(
++  "bootstrap not reconciled -> PLACE_ORDER denied",
++  ["Bootstrap FSM", "Combined safety", "ActionGate"],
++  () => {
++    const snapshot = runtimeEngine.getSnapshot();
++    assert.equal(snapshot.position.status, "unknown");
++    assert.equal(snapshot.risk.status, "blocked");
++    assertPlaceOrderDenied("cold start");
++  }
++);
++
++scenario(
++  "failed bootstrap cannot transition to reconciled directly",
++  ["Bootstrap FSM", "Combined safety", "ActionGate"],
++  () => {
++    commitOk(bootstrapEvent("bootstrap.loading_snapshot", "evt-bootstrap-failed-loading"), "bootstrap.loading_snapshot before failure");
++    commitOk(bootstrapEvent("bootstrap.failed", "evt-bootstrap-failed", { reason: "scenario_bootstrap_failure" }), "bootstrap.failed");
++
++    commitInvalidRejectedNoStateChange(
++      bootstrapEvent("bootstrap.reconciled", "evt-bootstrap-reconciled-after-failure", { status: "reconciled" }),
++      "bootstrap.reconciled directly after bootstrap.failed"
++    );
++
++    assertPlaceOrderDenied("failed bootstrap");
++  }
++);
++
++scenario(
++  "invalid market tick rejected and no state change",
++  ["Event Validation", "Combined safety"],
++  () => {
++    const invalidMarketTick = fixedEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++      symbol: "",
++      price: -1,
++      bid: -1,
++      ask: 0,
++      provider: "wave2-invalid",
++      source: "market-data"
++    }, "evt-invalid-market-tick-1", "market-data");
++
++    commitInvalidRejectedNoStateChange(invalidMarketTick, "invalid market tick");
++  }
++);
++
++scenario(
++  "duplicate market event is ignored without revision bump or canonical append",
++  ["Event Idempotency", "Scenario Audit"],
++  () => {
++    const event = validMarketTick("evt-duplicate-market-1");
++    commitOk(event, "first market tick");
++
++    commitDuplicateIgnoredNoStateChange(event, "duplicate market event");
++  }
++);
++
++scenario(
++  "duplicate eventId conflict is rejected without state or journal mutation",
++  ["Event Idempotency", "Scenario Audit"],
++  () => {
++    const first = validMarketTick("evt-duplicate-conflict-1", 65000);
++    const conflict = validMarketTick("evt-duplicate-conflict-1", 66000);
++    commitOk(first, "first market tick before duplicate conflict");
++
++    commitDuplicateConflictNoStateChange(conflict, "duplicate market eventId conflict");
++  }
++);
++
++scenario(
++  "duplicate fill is ignored and does not double PnL",
++  ["Event Idempotency", "Combined safety"],
++  () => {
++    commitOk(validMarketTick("evt-market-before-fill"), "market before fill");
++    commitOk(validPositionReconciled("evt-position-before-fill"), "position before fill");
++
++    const fill = validFill("evt-duplicate-fill-1", "exec-duplicate-fill-1", "fill-duplicate-fill-1");
++    commitOk(fill, "first fill");
++    const afterFirstFill = captureAccounting();
++
++    commitDuplicateIgnoredNoStateChange(fill, "duplicate fill event");
++
++    const afterDuplicateFill = captureAccounting();
++    assertAccountingUnchanged(afterFirstFill, afterDuplicateFill, "duplicate fill");
++  }
++);
++
++scenario(
++  "duplicate reconcile is ignored without state or journal mutation",
++  ["Event Idempotency", "Bootstrap FSM", "Combined safety"],
++  () => {
++    const reconcile = validPositionReconciled("evt-duplicate-position-reconcile-1");
++    commitOk(validMarketTick("evt-market-before-duplicate-reconcile"), "market before duplicate reconcile");
++    commitOk(reconcile, "first position reconcile");
++
++    commitDuplicateIgnoredNoStateChange(reconcile, "duplicate position reconcile");
++  }
++);
++
++scenario(
++  "market tick alone does not allow trading",
++  ["Bootstrap FSM", "Combined safety", "ActionGate"],
++  () => {
++    commitOk(validMarketTick("evt-market-alone"), "market tick alone");
++    const snapshot = runtimeEngine.getSnapshot();
++    assert.equal(snapshot.market.status, "open");
++    assert.equal(snapshot.position.status, "unknown");
++    assert.equal(snapshot.risk.status, "blocked");
++    assertPlaceOrderDenied("market tick alone");
++  }
++);
++
++scenario(
++  "position reconciled but bootstrap not reconciled -> still denied",
++  ["Bootstrap FSM", "Combined safety", "ActionGate"],
++  () => {
++    completeBootstrapToAwaitingExchangeTruth();
++    commitOk(validMarketTick("evt-market-before-position-only"), "market before position-only scenario");
++    commitOk(validPositionReconciled("evt-position-only-no-bootstrap"), "position reconciled without bootstrap.reconciled");
++
++    const snapshot = runtimeEngine.getSnapshot();
++    assert.equal(snapshot.market.status, "open");
++    assert.equal(snapshot.position.status, "flat");
++
++    assertPlaceOrderDenied("position reconciled but bootstrap not reconciled");
++  }
++);
++
++scenario(
++  "bootstrap reconciled + valid state -> allow only if ActionGate allows",
++  ["Bootstrap FSM", "Combined safety", "ActionGate"],
++  () => {
++    completeBootstrapReconciled();
++    assertPlaceOrderAllowedOnlyThroughGate("bootstrap reconciled + valid state");
++  }
++);
++
++const failed = results.filter((result) => !result.ok);
++
++console.log(JSON.stringify({
++  name: "wave2_scenario_audit",
++  target: "mbg-core-v0.1-alpha2 after Roles 4/5/6 merge",
++  ok: failed.length === 0,
++  summary: {
++    total: results.length,
++    passed: results.length - failed.length,
++    failed: failed.length
++  },
++  results
++}, null, 2));
++
++if (failed.length > 0) {
++  process.exitCode = 1;
++}

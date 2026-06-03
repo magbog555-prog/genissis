@@ -1,0 +1,14 @@
+Browser validation network capture
+Frontend bundle validation: production bundle loaded inline for render validation due local-navigation restriction in the container.
+ApiAdapter read-only requests observed when ApiAdapter mode was activated:
+
+REQ GET http://localhost:3011/health
+REQ GET http://localhost:3011/api/core/scenarios
+REQ GET http://localhost:3011/api/core/status
+REQ GET http://localhost:3011/api/core/computation-trace/latest
+REQ GET http://localhost:3011/api/core/computation-trace/latest?scenario=CORRUPTION_VISIBLE
+REQ GET http://localhost:3011/api/core/trace/CORRUPTION_VISIBLE
+REQ GET http://localhost:3011/api/core/status/CORRUPTION_VISIBLE
+
+No POST/PUT/PATCH/DELETE requests are implemented by the frontend.
+Core API was not running in this environment, so GET requests returned connection refused and the UI used visible fallback.

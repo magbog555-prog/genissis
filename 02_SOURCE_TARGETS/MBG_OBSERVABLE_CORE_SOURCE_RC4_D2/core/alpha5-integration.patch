@@ -1,0 +1,3299 @@
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/CORE_CONSTITUTION.md project/CORE_CONSTITUTION.md
+--- base/mbg-core-v0.1-alpha4/CORE_CONSTITUTION.md	2026-05-07 13:36:35.328772342 +0000
++++ project/CORE_CONSTITUTION.md	2026-05-07 13:37:13.407733829 +0000
+@@ -2,7 +2,7 @@
+ 
+ Status: normative draft for Trust Kernel Hardening  
+ Scope: MBG Core v0.1 only  
+-Base code: `mbg-core-v0.1-alpha3`
++Base code: `mbg-core-v0.1-alpha4`
+ 
+ This document defines the non-negotiable laws of the Core Trust Kernel.
+ 
+@@ -984,6 +984,219 @@
+ - tests: `tests/scenarios/*`
+ 
+ 
++
++### LAW-039 — Invalid or suspicious data must not enter canonical journal
++
++Invalid or suspicious data must not enter the canonical journal.
++
++A rejected event, malformed payload, idempotency conflict, poison input, or unverifiable exchange/health/freshness evidence may be preserved for diagnosis, but it must not become canonical runtime history.
++
++Required proof:
++
++- event validation rejects invalid data before canonical append;
++- suspicious evidence is routed outside the canonical journal;
++- rejected evidence cannot be replayed as accepted state history;
++- scenario tests prove invalid or suspicious inputs do not become canonical entries.
++
++Current/future modules:
++
++- current: `core/events/validate-domain-event.ts`
++- current: `core/runtime/event-index.ts`
++- current: `core/system/journal.ts`
++- future: `core/quarantine/quarantine-store.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-040 — Quarantined data must not mutate runtime state
++
++Quarantined data must not mutate runtime state.
++
++Quarantine may preserve rejected evidence for audit and diagnosis. It must not increment runtime revision, update snapshot fields, affect PnL, change positions, change orders, or mark bootstrap/recovery/trust state as complete.
++
++Required proof:
++
++- quarantine writes are outside reducers and canonical snapshot mutation;
++- quarantined records do not increment runtime revision;
++- quarantined fills do not change PnL or position;
++- scenario tests prove quarantine is a no-op for runtime state.
++
++Current/future modules:
++
++- current: `core/transitions/src/reducers.ts`
++- current: `core/runtime/src/runtime-engine.ts`
++- future: `core/quarantine/quarantine-store.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-041 — Quarantine is diagnostic, not canonical history
++
++Quarantine is diagnostic storage, not canonical state history.
++
++Quarantine records may explain rejected, suspicious, duplicated, conflicted, or malformed evidence. They are not accepted domain events and must not be used as the source of canonical replay.
++
++Required proof:
++
++- quarantine storage is distinct from canonical journal storage;
++- canonical replay ignores quarantine records;
++- quarantine records are marked as rejected/suspicious/diagnostic evidence;
++- scenario tests prove quarantine cannot backfill trusted state.
++
++Current/future modules:
++
++- current: `core/system/journal.ts`
++- current: `core/events/validate-domain-event.ts`
++- current: `core/runtime/event-index.ts`
++- future: `core/quarantine/quarantine-store.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-042 — Every ActionGate verdict must be auditable
++
++Every ActionGate verdict must be auditable.
++
++An allowed or denied verdict must preserve enough structured evidence to explain what was requested, what trust state was used, what reasons applied, and which law or domain justified the result.
++
++Required proof:
++
++- ActionGate verdicts include stable action identity, decision, trust state, and reason codes;
++- allowed verdicts are auditable, not only denied verdicts;
++- verdict audit data is append-only diagnostic/audit evidence;
++- scenario tests assert verdict audit records for both allow and deny paths.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- future: `core/permissions/permission-ledger.ts`
++- future: `core/trust/core-trust-report.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-043 — Permission Ledger records allow and deny decisions
++
++Permission Ledger records allow and deny decisions.
++
++The Permission Ledger is an audit trail for ActionGate decisions. It must record both permissions and rejections so that trust decisions can be reviewed, replayed as audit evidence, and correlated with machine-readable reasons.
++
++Required proof:
++
++- allow decisions are recorded;
++- deny decisions are recorded;
++- ledger records include stable reason codes and action identity;
++- scenario tests prove both allow and deny verdicts are present in the ledger.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- future: `core/permissions/permission-ledger.ts`
++- future: `core/trust/core-trust-report.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-044 — Recovery Planner suggests actions but does not execute them
++
++Recovery Planner suggests actions but does not execute them.
++
++A recovery plan is a recommendation derived from trust evidence, blocking reasons, and safe next-action classes. It must not mutate state, submit orders, reconcile automatically, append canonical events, or perform external exchange operations.
++
++Required proof:
++
++- recovery output is a plan, not an executor;
++- planner has no write path to runtime snapshot, canonical journal, exchange client, or ActionGate bypass;
++- proposed recovery actions are machine-readable and explicit;
++- scenario tests prove generating a recovery plan does not change state.
++
++Current/future modules:
++
++- future: `core/recovery/recovery-planner.ts`
++- future: `core/trust/core-trust-report.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-045 — Recovery actions must still pass ActionGate
++
++Recovery actions must still pass ActionGate.
++
++A recovery plan may suggest diagnostic or recovery action classes, but execution of any proposed recovery action remains subject to ActionGate and kernel trust constraints.
++
++Required proof:
++
++- recovery plans cannot bypass ActionGate;
++- recovery action requests receive ActionGate Verdict v2;
++- denied recovery actions have machine-readable reasons;
++- scenario tests prove recovery suggestions are not self-authorizing.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- future: `core/recovery/recovery-planner.ts`
++- future: `core/permissions/permission-ledger.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-046 — Normal trading remains forbidden until recovery conditions are satisfied
++
++Normal trading remains forbidden until recovery conditions are satisfied.
++
++A blocked, uncertain, recoverable, compromised, halted, or panic state must not allow normal trading merely because a recovery plan exists. Normal trading may only be considered after the required recovery evidence has been accepted and the kernel trust evaluation permits it.
++
++Required proof:
++
++- recovery plan presence does not imply `TRUSTED`;
++- normal trading remains denied while required recovery evidence is missing;
++- accepted recovery evidence must pass validation, journal, replay, freshness, health, and ActionGate requirements;
++- scenario tests prove recovery suggestions do not unblock trading by themselves.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- future: `core/recovery/recovery-planner.ts`
++- future: `core/trust/core-trust-report.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-047 — Permission Ledger must not mutate trading state
++
++Permission Ledger must not mutate trading state.
++
++The Permission Ledger records decisions for audit. It must not change positions, orders, PnL, bootstrap status, exchange truth, freshness, health truth, runtime snapshot, or any trading-related state.
++
++Required proof:
++
++- ledger append is separate from domain reducers;
++- ledger records do not increment canonical runtime revision;
++- ledger records do not alter snapshot, positions, orders, or PnL;
++- scenario tests prove permission audit writes are not trading state mutations.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- current: `core/transitions/src/reducers.ts`
++- future: `core/permissions/permission-ledger.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-048 — Quarantine must preserve rejected evidence
++
++Quarantine must preserve rejected evidence.
++
++Rejected, suspicious, malformed, duplicate-conflict, or conflicted data should be retained as diagnostic evidence with enough metadata to support audit, debugging, and recovery planning without making it canonical history.
++
++Required proof:
++
++- quarantine records preserve original evidence where safe to store;
++- quarantine records include rejection reason codes and timestamps;
++- duplicate_conflict and validation failures can be diagnosed from quarantine evidence;
++- scenario tests prove rejected evidence is retained outside canonical history.
++
++Current/future modules:
++
++- current: `core/events/validate-domain-event.ts`
++- current: `core/runtime/event-index.ts`
++- future: `core/quarantine/quarantine-store.ts`
++- future: `core/recovery/recovery-planner.ts`
++- future: `core/permissions/permission-ledger.ts`
++- tests: `tests/scenarios/*`
++
++
+ ## 5. Review rule
+ 
+ A change is acceptable only if it increases the provability of the kernel or preserves it while making the implementation clearer.
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE5_PERMISSION_LEDGER.md project/DELIVERY_REPORT_WAVE5_PERMISSION_LEDGER.md
+--- base/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE5_PERMISSION_LEDGER.md	1970-01-01 00:00:00.000000000 +0000
++++ project/DELIVERY_REPORT_WAVE5_PERMISSION_LEDGER.md	2026-05-07 13:36:35.364172819 +0000
+@@ -0,0 +1,80 @@
++# Delivery Report — Wave 5 / Role 6 / Permission Ledger
++
++## Scope
++
++Canonical base: `mbg-core-v0.1-alpha4.zip`.
++
++Task: create an audit-only Permission Ledger for ActionGate Verdict v2 decisions.
++
++## Implemented
++
++- Added `core/permissions/permission-ledger.ts`.
++- Added `PermissionRecord` with:
++  - `permissionId`
++  - `action`
++  - `allowed`
++  - `actionClass`
++  - `snapshotRevision`
++  - `kernelTrustState`
++  - `blockingReasons`
++  - `allowedAlternatives`
++  - `gateVersion`
++  - `requestedBy`
++  - `decidedAt`
++  - `decisionHash`
++- Added deterministic `decisionHash` using stable JSON + SHA-256.
++- Added `PermissionLedger.record()` for recording any ActionGate verdict.
++- Added `PermissionLedger.last(N)` export for recent records.
++- Added copy-safe record export so callers cannot mutate ledger internals.
++- Added `npm run test:core:permission-ledger`.
++
++## Safety properties
++
++- Permission Ledger does not allow or deny actions.
++- Permission Ledger does not mutate runtime snapshot.
++- Permission Ledger does not write trade/order state.
++- Permission Ledger is audit-only.
++- ActionGate remains the source of the verdict.
++- Kernel Authority / CoreTrustReport remain the source of trust state.
++
++## Tests
++
++Command results:
++
++```txt
++npm run typecheck
++EXIT=0
++
++npm test
++EXIT=0
++
++npm run test:core:permission-ledger
++EXIT=0
++```
++
++Covered scenarios:
++
++1. Denied `PLACE_ORDER` creates ledger record.
++2. Allowed diagnostic-class verdict creates ledger record.
++3. Ledger record includes `snapshotRevision`.
++4. Ledger record includes `kernelTrustState`.
++5. Ledger record includes `blockingReasons`.
++6. Ledger does not mutate snapshot.
++7. Ledger exports last N records.
++
++## Risks
++
++- The ledger is currently in-memory only. Persistent storage policy should be decided by integration owner before production use.
++- No automatic binding was added between `runtimeEngine.evaluateAction()` and the ledger. This is intentional to avoid changing action semantics or mutating runtime state implicitly.
++- The diagnostic action test uses a diagnostic-class verdict object because alpha4 contracts do not yet define a dedicated diagnostic action type.
++
++## Intentionally not done
++
++- Did not make ledger authority.
++- Did not allow actions through ledger.
++- Did not mutate snapshot.
++- Did not write trade/order state.
++- Did not connect V1/V2.
++- Did not add Signal Layer, Decision Engine, strategy logic, UI, live trading, or real exchange keys.
++- Did not implement automatic recovery.
++- Did not update Constitution directly; any ledger law should be taken by Constitution owner.
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE5_QUARANTINE.md project/DELIVERY_REPORT_WAVE5_QUARANTINE.md
+--- base/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE5_QUARANTINE.md	1970-01-01 00:00:00.000000000 +0000
++++ project/DELIVERY_REPORT_WAVE5_QUARANTINE.md	2026-05-07 13:36:35.362989522 +0000
+@@ -0,0 +1,142 @@
++# Delivery Report — Wave 5 / Role 5 — Quarantine
++
++## Canonical base
++
++`mbg-core-v0.1-alpha4.zip`
++
++## Scope
++
++Implemented Quarantine — “карантин плохих данных” — as a diagnostic layer for invalid, unknown, suspicious, or conflicting data that must not enter the canonical event journal.
++
++## Changed files
++
++- `core/quarantine/quarantine.ts`
++- `core/runtime/src/runtime-engine.ts`
++- `tests/scenarios/core-quarantine.ts`
++- `package.json`
++
++## Implemented
++
++### Quarantine module
++
++Added:
++
++`core/quarantine/quarantine.ts`
++
++Exports:
++
++- `QuarantineRecord`
++- `QuarantineSource`
++- `QuarantineSeverity`
++- `QuarantineSummary`
++- `QuarantineStoreView`
++- `QuarantineStore`
++- `quarantinePayloadHash()`
++
++### Quarantine record fields
++
++Each record contains:
++
++- `quarantineId`
++- `reason`
++- `source`
++- `eventId`
++- `eventType`
++- `payloadHash`
++- `detectedBy`
++- `detectedAt`
++- `severity`
++- `rawEvent`
++- `recoverable`
++- `notes`
++
++### Sources covered
++
++- invalid event
++- unknown event type
++- schema violation
++- idempotency conflict
++- suspicious payload is represented in the type system for future detectors
++
++### Runtime integration
++
++`RuntimeEngine.commitEventResult()` now records quarantine diagnostics for:
++
++- event validation rejection;
++- bootstrap/current-state validation rejection;
++- idempotency duplicate conflict.
++
++The quarantined event is not appended to the canonical journal, not reduced into the snapshot, and does not increase snapshot revision.
++
++### Runtime API
++
++Added:
++
++- `RuntimeEngine.getQuarantineView(limit?: number)`
++
++Quarantine summary is also exposed through runtime metadata:
++
++- `getRuntimeView().quarantine`
++- `getEntitiesView().quarantine`
++- `getCoreTrustReport().metadata.quarantine`
++
++This makes quarantine count available to CoreTrustReport / future Recovery Planner without making quarantine part of normal replay state.
++
++### Test script
++
++Added:
++
++`npm run test:core:quarantine`
++
++## Test coverage
++
++Implemented scenarios:
++
++1. invalid event creates quarantine record;
++2. invalid event does not enter canonical journal;
++3. invalid event does not mutate snapshot;
++4. unknown event type is quarantined;
++5. idempotency conflict is quarantined;
++6. quarantine count is available via CoreTrustReport metadata;
++7. quarantine records do not affect normal replay event count/revision.
++
++## Command results
++
++```text
++npm run typecheck
++PASS
++
++npm test
++PASS
++
++npm run test:core:quarantine
++PASS
++```
++
++Focused output:
++
++```text
++core quarantine checks passed
++```
++
++## Risks / integration notes
++
++1. Quarantine is currently in-memory runtime diagnostic state. If alpha5 requires durable quarantine storage, Role 8 should integrate it with a dedicated non-canonical quarantine persistence path.
++2. `suspicious_payload` is defined as a quarantine source, but no separate suspicious-payload detector was added beyond existing validation/idempotency paths.
++3. Quarantine count is exposed via runtime/report metadata, not as a new state domain. This is intentional to avoid making quarantine participate in replay or reducers.
++4. Existing persistence has an older corrupt-file quarantine helper; this task does not merge that file-level quarantine with the new event-level quarantine store.
++
++## Intentionally not done
++
++- No V1/V2 integration.
++- No Signal Layer.
++- No Decision Engine.
++- No strategy logic.
++- No UI.
++- No live trading.
++- No real exchange keys.
++- No automatic repair.
++- No automatic recovery execution.
++- No canonical journal writes for quarantined events.
++- No snapshot mutation from quarantine.
++- No replay participation by quarantine.
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE5_RECOVERY_PLANNER.md project/DELIVERY_REPORT_WAVE5_RECOVERY_PLANNER.md
+--- base/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE5_RECOVERY_PLANNER.md	1970-01-01 00:00:00.000000000 +0000
++++ project/DELIVERY_REPORT_WAVE5_RECOVERY_PLANNER.md	2026-05-07 13:36:35.359711014 +0000
+@@ -0,0 +1,131 @@
++# Delivery Report — Wave 5 / Recovery Planner
++
++## Role
++
++Role 4 — Recovery Planner task implementation.
++
++## Canonical base
++
++`mbg-core-v0.1-alpha4.zip`
++
++## Scope implemented
++
++Created a pure Recovery Planner module that consumes CoreTrustReport and related evidence and returns a proposed RecoveryPlan.
++
++Implemented module:
++
++- `core/recovery/recovery-planner.ts`
++
++Added test scenario:
++
++- `tests/scenarios/recovery-planner.ts`
++
++Added npm script:
++
++- `npm run test:core:recovery-planner`
++
++## Recovery Planner contract
++
++The planner exports:
++
++- `RECOVERY_PLANNER_VERSION`
++- `RECOVERY_ACTION_TYPE`
++- `RecoveryActionType`
++- `RecoveryMode`
++- `RecoveryPriority`
++- `QuarantineSummary`
++- `RecoveryPlannerInput`
++- `RecoveryPlan`
++- `planRecovery`
++- `RecoveryPlanner.plan`
++
++## RecoveryPlan fields
++
++- `required`
++- `mode`
++- `reasons`
++- `nextActions`
++- `forbiddenActions`
++- `priority`
++- `manualReviewRequired`
++- `plannerVersion`
++
++## Recovery actions supported
++
++- `RECONCILE_POSITION`
++- `RECONCILE_ORDERS`
++- `SYNC_FILLS`
++- `REFRESH_MARKET_DATA`
++- `CHECK_HEALTH`
++- `RUN_REPLAY_CHECK`
++- `INSPECT_QUARANTINE`
++- `HALT_RUNTIME`
++- `MANUAL_REVIEW`
++
++## Rules implemented
++
++1. `position_unknown` / bootstrap position uncertainty suggests `RECONCILE_POSITION`.
++2. `exchangeTruth unknown/stale/unavailable` suggests `RECONCILE_POSITION` and `RECONCILE_ORDERS`.
++3. `exchangeTruth conflicted` suggests position/order reconcile, fill sync, and manual review.
++4. stale/unknown market freshness suggests `REFRESH_MARKET_DATA`.
++5. health unknown/partial/stale suggests `CHECK_HEALTH`.
++6. replay mismatch or `COMPROMISED` suggests `RUN_REPLAY_CHECK` and `MANUAL_REVIEW`.
++7. `PANIC` suggests `HALT_RUNTIME` and `MANUAL_REVIEW`.
++8. quarantine count greater than zero suggests `INSPECT_QUARANTINE`.
++9. `TRUSTED` without quarantine items returns recovery not required.
++10. Planner does not mutate snapshot, report, events, persistence, or external systems.
++
++## Changed files
++
++- `package.json`
++- `core/recovery/recovery-planner.ts`
++- `tests/scenarios/recovery-planner.ts`
++
++## Test results
++
++```text
++npm run typecheck
++PASS
++
++npm test
++PASS
++
++npm run test:core:recovery-planner
++PASS
++```
++
++## Test coverage
++
++- cold start -> recovery required, position/exchange reconcile suggested
++- market stale -> refresh market data suggested
++- health unknown -> check health suggested
++- compromised -> replay check + manual review suggested
++- panic -> halt runtime + manual review suggested
++- trusted -> recovery not required
++- quarantine count > 0 -> inspect quarantine suggested
++- planner does not mutate snapshot/report
++
++## Intentional non-work
++
++Did not implement:
++
++- recovery action execution
++- event writes
++- snapshot mutation
++- exchange calls
++- real exchange clients
++- V1/V2 integration
++- Signal Layer
++- Decision Engine
++- strategy logic
++- UI
++- live trading
++- real exchange keys
++- standalone large Recovery Planner system beyond the pure planning module
++
++## Risks / integration notes
++
++1. `RecoveryPlannerInput` consumes `CoreTrustReport` and optionally duplicated evidence fields for semantic merge flexibility. Integration Owner should decide whether later alpha versions want a narrower constructor.
++2. The current `CoreTrustReport` does not directly expose `position`; planner infers `position_unknown` from machine-readable blocking reasons. This avoids changing alpha4 report shape in this task.
++3. Quarantine is represented as a summary input only. The planner does not create, read, or mutate quarantine storage.
++4. Forbidden actions intentionally include side-effect boundaries (`WRITE_EVENTS`, `MUTATE_SNAPSHOT`, `CALL_EXCHANGE`) to prove this module is advisory only.
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE5_SCENARIO_AUDIT.md project/DELIVERY_REPORT_WAVE5_SCENARIO_AUDIT.md
+--- base/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE5_SCENARIO_AUDIT.md	1970-01-01 00:00:00.000000000 +0000
++++ project/DELIVERY_REPORT_WAVE5_SCENARIO_AUDIT.md	2026-05-07 13:36:35.374299890 +0000
+@@ -0,0 +1,179 @@
++# Delivery Report — Wave 5 Scenario Audit
++
++Role: 7 — Scenario Audit / Test Owner
++
++Canonical base: `mbg-core-v0.1-alpha4`
++
++Target: `mbg-core-v0.1-alpha5`
++
++## Scope
++
++This delivery adds Wave 5 scenario-audit coverage for:
++
++1. Recovery Planner.
++2. Quarantine.
++3. Permission Ledger.
++4. Integration with Event Validation, Event Idempotency, ActionGate Verdict v2, Freshness Guard, Health Truth, and CoreTrustReport chain.
++
++The audit intentionally does not implement runtime architecture or change runtime behavior.
++
++## Files changed
++
++```txt
++package.json
++tests/scenarios/wave5-scenario-audit.ts
++DELIVERY_REPORT_WAVE5_SCENARIO_AUDIT.md
++```
++
++## Added script
++
++```bash
++npm run test:wave5:scenario-audit
++```
++
++The script runs:
++
++```bash
++npm run typecheck && tsx tests/scenarios/wave5-scenario-audit.ts
++```
++
++## Scenarios covered
++
++```txt
++1. invalid event -> quarantine record created.
++2. invalid event -> not in canonical journal.
++3. invalid event -> snapshot revision unchanged.
++4. idempotency conflict -> quarantine or diagnostic record.
++5. denied PLACE_ORDER -> Permission Ledger record exists.
++6. allowed diagnostic action -> Permission Ledger record exists.
++7. cold start -> Recovery Planner suggests RECONCILE_POSITION / RECONCILE_ORDERS.
++8. market stale -> Recovery Planner suggests REFRESH_MARKET_DATA.
++9. health unknown -> Recovery Planner suggests CHECK_HEALTH.
++10. Recovery Planner does not mutate snapshot.
++```
++
++## Wave 5 coverage mapping
++
++```txt
++Quarantine:
++- invalid event creates quarantine record
++- invalid event is excluded from canonical journal
++- invalid event does not bump revision
++- idempotency conflict is quarantined or diagnosable
++
++Permission Ledger:
++- denied PLACE_ORDER is recorded
++- allowed diagnostic/recovery action is recorded
++
++Recovery Planner:
++- cold start suggestions include position/order reconciliation
++- stale market suggestions include market data refresh
++- unknown health suggestions include health check
++- planner reads state and suggests only; it does not mutate snapshot
++```
++
++## Commands run on alpha4
++
++```bash
++npm install
++```
++
++Result: passed.
++
++```bash
++npm run typecheck
++```
++
++Result: passed.
++
++```bash
++npm run test:wave5:scenario-audit
++```
++
++Result on alpha4: failed on expected Wave 5 implementation gaps.
++
++Observed alpha4 result:
++
++```json
++{
++  "name": "wave5_scenario_audit",
++  "total": 10,
++  "passed": 3,
++  "failed": 7
++}
++```
++
++The passing alpha4 scenarios are the already-existing canonical journal / revision / idempotency safety checks. The failing scenarios require Wave 5 Quarantine, Permission Ledger, and Recovery Planner APIs.
++
++## Expected alpha5 result
++
++After Wave 5 implementation roles are merged, the audit should pass fully:
++
++```json
++{
++  "name": "wave5_scenario_audit",
++  "total": 10,
++  "passed": 10,
++  "failed": 0
++}
++```
++
++## Required alpha5 integration surfaces
++
++The audit expects the integrated alpha5 runtime to expose equivalent callable surfaces for:
++
++```txt
++Quarantine:
++- getQuarantineView()
++  or getQuarantineRecords()
++  or getQuarantine()
++  or getQuarantinedEvents()
++
++Permission Ledger:
++- getPermissionLedgerView()
++  or getPermissionLedger()
++  or getPermissionsLedgerView()
++
++Recovery Planner:
++- getRecoveryPlan()
++  or getRecoveryPlannerView()
++  or getRecoverySuggestions()
++  or planRecovery()
++```
++
++Equivalent APIs are acceptable if they return the same semantic information and the scenario audit is updated by the integration owner without changing runtime behavior.
++
++## Risks and gaps
++
++Alpha4 does not yet expose Wave 5 Quarantine, Permission Ledger, or Recovery Planner APIs.
++
++The test checks observable behavior only. It does not prescribe storage implementation details.
++
++The idempotency conflict scenario allows either a quarantine record or an idempotency diagnostic record, because the task card explicitly allows “quarantine or diagnostic record”.
++
++Recovery Planner suggestions are asserted as machine-readable text/codes. Integration should preserve stable codes such as:
++
++```txt
++RECONCILE_POSITION
++RECONCILE_ORDERS or RECONCILE_ORDER
++REFRESH_MARKET_DATA
++CHECK_HEALTH
++```
++
++## Intentionally not done
++
++```txt
++CORE_CONSTITUTION.md was not changed.
++Runtime behavior was not changed.
++ActionGate logic was not changed.
++V1/V2 were not connected.
++Signal Layer was not touched.
++Decision Engine was not touched.
++Strategy logic was not added.
++UI was not added.
++Live trading was not enabled.
++Real exchange keys were not added.
++Real exchange calls were not added.
++Automatic recovery execution was not added.
++Recovery Planner execution side effects were not added.
++```
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/INTEGRATION_REPORT_ALPHA5.md project/INTEGRATION_REPORT_ALPHA5.md
+--- base/mbg-core-v0.1-alpha4/INTEGRATION_REPORT_ALPHA5.md	1970-01-01 00:00:00.000000000 +0000
++++ project/INTEGRATION_REPORT_ALPHA5.md	2026-05-07 14:23:37.817278329 +0000
+@@ -0,0 +1,190 @@
++# INTEGRATION_REPORT_ALPHA5
++
++## Status
++
++`mbg-core-v0.1-alpha5` integration completed.
++
++`npm run verify`: PASS / exit code `0`.
++
++## Base
++
++Canonical base:
++
++`mbg-core-v0.1-alpha4.zip`
++
++## Inputs
++
++- Role 2: `mbg-core-wave5-constitution-deliverables.zip`
++- Role 4: `роль 4.5.zip` — Recovery Planner
++- Role 5: `роль 5.5.zip` — Quarantine
++- Role 6: `роль 6.5.zip` — Permission Ledger
++- Role 7 final: `role7_wave5_all_artifacts (1).zip` — Wave 5 Scenario Audit
++
++Important: the earlier `роль 7.5.zip` was not used as final scenario audit input because it used local test adapters. The accepted final role 7 input is `role7_wave5_all_artifacts (1).zip`.
++
++## Semantic Merge Summary
++
++Wave 5 was integrated by semantic merge on top of canonical alpha4, not by replacing the project with a role archive.
++
++### Constitution
++
++Constitution was taken only from Role 2:
++
++- `CORE_CONSTITUTION.md`
++- `core/kernel/kernel-constitution.ts`
++- constitution test updates
++
++### Recovery Planner
++
++Integrated from Role 4:
++
++- `core/recovery/recovery-planner.ts`
++- `tests/scenarios/recovery-planner.ts`
++- package script `test:core:recovery-planner`
++
++Semantic decision:
++
++Recovery Planner proposes recovery only. It does not execute recovery, does not write events, does not mutate runtime state, does not call an exchange, and does not enable trading.
++
++### Quarantine
++
++Integrated from Role 5:
++
++- `core/quarantine/quarantine.ts`
++- runtime integration in `commitEventResult()`
++- `tests/scenarios/core-quarantine.ts`
++- package script `test:core:quarantine`
++
++Semantic decision:
++
++Quarantine stores bad or untrusted data outside the canonical journal. It does not mutate the runtime snapshot and is not part of the canonical event journal.
++
++Runtime surfaces exposed:
++
++- `getQuarantineView()`
++- `getQuarantineRecords()`
++- `getQuarantine()`
++- `getQuarantinedEvents()`
++
++### Permission Ledger
++
++Integrated from Role 6:
++
++- `core/permissions/permission-ledger.ts`
++- runtime integration for ActionGate allow/deny decisions
++- `tests/scenarios/core-permission-ledger.ts`
++- package script `test:core:permission-ledger`
++
++Semantic decision:
++
++Permission Ledger records permission decisions and denials. It is not an authority, does not grant permissions by itself, does not bypass ActionGate, and does not mutate trading state.
++
++Runtime surfaces exposed:
++
++- `getPermissionLedgerView()`
++- `getPermissionLedger()`
++- `getPermissionsLedgerView()`
++
++### Wave 5 Scenario Audit
++
++Integrated from final accepted Role 7 package:
++
++- `tests/scenarios/wave5-scenario-audit.ts`
++- package script `test:wave5:scenario-audit`
++- delivery report
++
++The scenario audit uses the real integrated modules and runtime surfaces:
++
++- Recovery Planner
++- Quarantine
++- Permission Ledger
++
++It does not use local production-contract substitutes such as `ScenarioAuditQuarantine`, `ScenarioAuditPermissionLedger`, or a local `planRecovery`.
++
++Recovery surfaces exposed:
++
++- `getRecoveryPlan()`
++- `getRecoveryPlannerView()`
++- `getRecoverySuggestions()`
++- `planRecovery()`
++
++## Conflicts and Resolutions
++
++No unresolved semantic conflict remained.
++
++Integration resolutions:
++
++1. Role 7 input conflict:
++   - rejected old `роль 7.5.zip` as final scenario audit source;
++   - used final accepted `role7_wave5_all_artifacts (1).zip`.
++
++2. Runtime surface compatibility:
++   - added equivalent public runtime surfaces required by the final scenario audit while preserving semantics.
++
++3. Quarantine/journal boundary:
++   - invalid or quarantined data can be recorded in quarantine diagnostics;
++   - quarantine records do not become canonical journal events and do not mutate snapshot state.
++
++4. Permission Ledger/ActionGate boundary:
++   - Permission Ledger records ActionGate decisions;
++   - ActionGate remains the gate;
++   - Permission Ledger does not authorize actions.
++
++5. Recovery Planner boundary:
++   - recovery suggestions are calculated and exposed;
++   - no automatic recovery action is performed.
++
++## Verify Scope
++
++`npm run verify` includes:
++
++```bash
++npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && npm run test:core:cold-start && npm run test:core:bootstrap && npm run test:core:event-validation && npm run test:core:idempotency && npm run test:wave2:scenario-audit && npm run test:core:exchange-truth && npm run test:core:freshness && npm run test:core:health-truth && npm run test:wave3:scenario-audit && npm run test:core:kernel-authority && npm run test:core:trust-report && npm run test:core:action-gate-verdict && npm run test:wave4:scenario-audit && npm run test:core:recovery-planner && npm run test:core:quarantine && npm run test:core:permission-ledger && npm run test:wave5:scenario-audit && npm run audit:runtime
++```
++
++## Check Results
++
++All checks completed successfully:
++
++- `npm ci`: PASS
++- `npm run typecheck`: PASS
++- `npm test`: PASS
++- `npm run test:core-constitution`: PASS
++- `npm run test:core:cold-start`: PASS
++- `npm run test:core:bootstrap`: PASS
++- `npm run test:core:event-validation`: PASS
++- `npm run test:core:idempotency`: PASS
++- `npm run test:wave2:scenario-audit`: PASS
++- `npm run test:core:exchange-truth`: PASS
++- `npm run test:core:freshness`: PASS
++- `npm run test:core:health-truth`: PASS
++- `npm run test:wave3:scenario-audit`: PASS
++- `npm run test:core:kernel-authority`: PASS
++- `npm run test:core:trust-report`: PASS
++- `npm run test:core:action-gate-verdict`: PASS
++- `npm run test:wave4:scenario-audit`: PASS
++- `npm run test:core:recovery-planner`: PASS
++- `npm run test:core:quarantine`: PASS
++- `npm run test:core:permission-ledger`: PASS
++- `npm run test:wave5:scenario-audit`: PASS 10/10
++- `npm run audit:runtime`: PASS
++- `npm run verify`: PASS / exit code `0`
++
++## Non-Goals Confirmed
++
++The following were not added:
++
++- V1
++- V2
++- Signal Layer
++- Decision Engine
++- strategy logic
++- UI
++- live trading
++- real exchange keys
++
++## Final Package
++
++Target package:
++
++`mbg-core-v0.1-alpha5.zip`
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/SCENARIO_AUDIT_WAVE5_PERMISSION_LEDGER.md project/SCENARIO_AUDIT_WAVE5_PERMISSION_LEDGER.md
+--- base/mbg-core-v0.1-alpha4/SCENARIO_AUDIT_WAVE5_PERMISSION_LEDGER.md	1970-01-01 00:00:00.000000000 +0000
++++ project/SCENARIO_AUDIT_WAVE5_PERMISSION_LEDGER.md	2026-05-07 13:36:35.370468454 +0000
+@@ -0,0 +1,57 @@
++# Scenario Audit — Wave 5 / Permission Ledger
++
++## PL-001 — Denied PLACE_ORDER is auditable
++
++Given cold runtime state.  
++When `PLACE_ORDER` is evaluated and denied by ActionGate.  
++Then Permission Ledger can record the verdict with `allowed=false`, `gateVersion=action-gate-v2`, blocking reasons, snapshot revision, trust state, requester and decision time.
++
++Evidence: `npm run test:core:permission-ledger`
++
++## PL-002 — Allowed diagnostic-class verdict is auditable
++
++Given an allowed diagnostic-class verdict.  
++When the verdict is recorded.  
++Then Permission Ledger stores `allowed=true`, `actionClass=DIAGNOSTIC`, `kernelTrustState`, `requestedBy`, `decidedAt`, and a decision hash.
++
++Evidence: `npm run test:core:permission-ledger`
++
++## PL-003 — Snapshot revision is preserved
++
++Given a recorded denied verdict.  
++When the ledger record is inspected.  
++Then `snapshotRevision` equals the verdict snapshot revision and runtime snapshot revision.
++
++Evidence: `npm run test:core:permission-ledger`
++
++## PL-004 — Kernel trust state is preserved
++
++Given a recorded verdict.  
++When the ledger record is inspected.  
++Then `kernelTrustState` equals the verdict trust state and is not recomputed by the ledger.
++
++Evidence: `npm run test:core:permission-ledger`
++
++## PL-005 — Blocking reasons are preserved
++
++Given a denied `PLACE_ORDER`.  
++When the verdict is recorded.  
++Then `blockingReasons` include the ActionGate reasons such as `bootstrap_not_reconciled` and `exchange_truth_unknown`.
++
++Evidence: `npm run test:core:permission-ledger`
++
++## PL-006 — Ledger does not mutate snapshot
++
++Given a runtime snapshot before recording.  
++When a verdict is recorded in Permission Ledger.  
++Then the runtime snapshot JSON remains unchanged.
++
++Evidence: `npm run test:core:permission-ledger`
++
++## PL-007 — Last N export is available and safe
++
++Given five recorded decisions.  
++When `last(2)` is exported.  
++Then exactly the last two records are returned and mutating the exported copy does not mutate ledger internals.
++
++Evidence: `npm run test:core:permission-ledger`
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/core/kernel/kernel-constitution.ts project/core/kernel/kernel-constitution.ts
+--- base/mbg-core-v0.1-alpha4/core/kernel/kernel-constitution.ts	2026-05-07 13:36:35.341780169 +0000
++++ project/core/kernel/kernel-constitution.ts	2026-05-07 13:37:13.499087096 +0000
+@@ -60,7 +60,17 @@
+   V1_MUST_NOT_CALCULATE_CORE_TRUST: "LAW-035",
+   DENIED_ACTION_REQUIRES_MACHINE_READABLE_REASONS: "LAW-036",
+   TRUST_STATE_MUST_BE_EXPLAINABLE: "LAW-037",
+-  ACTION_GATE_MUST_USE_KERNEL_TRUST_STATE: "LAW-038"
++  ACTION_GATE_MUST_USE_KERNEL_TRUST_STATE: "LAW-038",
++  INVALID_OR_SUSPICIOUS_DATA_NOT_CANONICAL: "LAW-039",
++  QUARANTINED_DATA_NO_STATE_MUTATION: "LAW-040",
++  QUARANTINE_DIAGNOSTIC_NOT_CANONICAL_HISTORY: "LAW-041",
++  ACTION_GATE_VERDICT_MUST_BE_AUDITABLE: "LAW-042",
++  PERMISSION_LEDGER_RECORDS_ALLOW_AND_DENY: "LAW-043",
++  RECOVERY_PLANNER_SUGGESTS_DOES_NOT_EXECUTE: "LAW-044",
++  RECOVERY_ACTIONS_STILL_PASS_ACTION_GATE: "LAW-045",
++  NORMAL_TRADING_FORBIDDEN_UNTIL_RECOVERY_SATISFIED: "LAW-046",
++  PERMISSION_LEDGER_NO_TRADING_STATE_MUTATION: "LAW-047",
++  QUARANTINE_PRESERVES_REJECTED_EVIDENCE: "LAW-048"
+ } as const;
+ 
+ export type CoreLawId = typeof CORE_LAW_ID[keyof typeof CORE_LAW_ID];
+@@ -442,6 +452,96 @@
+     currentModules: ["core/gates/src/action-gate.ts", "core/state/src/types.ts"],
+     futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
+     testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.INVALID_OR_SUSPICIOUS_DATA_NOT_CANONICAL,
++    title: "Invalid or suspicious data must not enter canonical journal",
++    statement: "Invalid, suspicious, conflicted, malformed, poison, or unverifiable data must be rejected or quarantined outside canonical runtime history.",
++    severity: "blocking",
++    currentModules: ["core/events/validate-domain-event.ts", "core/runtime/event-index.ts", "core/system/journal.ts"],
++    futureModules: ["core/quarantine/quarantine-store.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.QUARANTINED_DATA_NO_STATE_MUTATION,
++    title: "Quarantined data must not mutate runtime state",
++    statement: "Quarantined evidence is diagnostic and must not increment revision, update snapshot, change PnL, positions, orders, or trust state.",
++    severity: "blocking",
++    currentModules: ["core/transitions/src/reducers.ts", "core/runtime/src/runtime-engine.ts"],
++    futureModules: ["core/quarantine/quarantine-store.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.QUARANTINE_DIAGNOSTIC_NOT_CANONICAL_HISTORY,
++    title: "Quarantine is diagnostic, not canonical history",
++    statement: "Quarantine records preserve rejected evidence for diagnosis but are not accepted domain events and are not canonical replay history.",
++    severity: "blocking",
++    currentModules: ["core/system/journal.ts", "core/events/validate-domain-event.ts", "core/runtime/event-index.ts"],
++    futureModules: ["core/quarantine/quarantine-store.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.ACTION_GATE_VERDICT_MUST_BE_AUDITABLE,
++    title: "Every ActionGate verdict must be auditable",
++    statement: "Every ActionGate allow or deny verdict must preserve structured decision, action identity, trust state, and machine-readable reasons.",
++    severity: "blocking",
++    currentModules: ["core/gates/src/action-gate.ts"],
++    futureModules: ["core/permissions/permission-ledger.ts", "core/trust/core-trust-report.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.PERMISSION_LEDGER_RECORDS_ALLOW_AND_DENY,
++    title: "Permission Ledger records allow and deny decisions",
++    statement: "The Permission Ledger is an audit trail that records both allowed and denied ActionGate decisions with stable reason codes.",
++    severity: "blocking",
++    currentModules: ["core/gates/src/action-gate.ts"],
++    futureModules: ["core/permissions/permission-ledger.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.RECOVERY_PLANNER_SUGGESTS_DOES_NOT_EXECUTE,
++    title: "Recovery Planner suggests actions but does not execute them",
++    statement: "Recovery Planner produces safe next-action suggestions but must not mutate state, append canonical events, submit orders, or call exchanges.",
++    severity: "blocking",
++    currentModules: [],
++    futureModules: ["core/recovery/recovery-planner.ts", "core/trust/core-trust-report.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.RECOVERY_ACTIONS_STILL_PASS_ACTION_GATE,
++    title: "Recovery actions must still pass ActionGate",
++    statement: "Recovery suggestions are not self-authorizing; any recovery action request must still receive an ActionGate verdict.",
++    severity: "blocking",
++    currentModules: ["core/gates/src/action-gate.ts"],
++    futureModules: ["core/recovery/recovery-planner.ts", "core/permissions/permission-ledger.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.NORMAL_TRADING_FORBIDDEN_UNTIL_RECOVERY_SATISFIED,
++    title: "Normal trading remains forbidden until recovery conditions are satisfied",
++    statement: "A recovery plan does not make the kernel trusted; normal trading remains forbidden until accepted recovery evidence satisfies trust conditions.",
++    severity: "blocking",
++    currentModules: ["core/gates/src/action-gate.ts"],
++    futureModules: ["core/recovery/recovery-planner.ts", "core/trust/core-trust-report.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.PERMISSION_LEDGER_NO_TRADING_STATE_MUTATION,
++    title: "Permission Ledger must not mutate trading state",
++    statement: "Permission Ledger records are audit evidence and must not change positions, orders, PnL, bootstrap, exchange truth, freshness, health, or snapshot state.",
++    severity: "blocking",
++    currentModules: ["core/gates/src/action-gate.ts", "core/transitions/src/reducers.ts"],
++    futureModules: ["core/permissions/permission-ledger.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.QUARANTINE_PRESERVES_REJECTED_EVIDENCE,
++    title: "Quarantine must preserve rejected evidence",
++    statement: "Quarantine must retain rejected, suspicious, malformed, duplicate-conflict, or conflicted evidence with diagnostic metadata outside canonical history.",
++    severity: "blocking",
++    currentModules: ["core/events/validate-domain-event.ts", "core/runtime/event-index.ts"],
++    futureModules: ["core/quarantine/quarantine-store.ts", "core/recovery/recovery-planner.ts", "core/permissions/permission-ledger.ts"],
++    testModules: SCENARIO_TESTS
+   }
+ 
+ ] as const;
+@@ -611,6 +711,68 @@
+ } as const;
+ 
+ 
++export const WAVE5_CONSTITUTION_SCOPE = {
++  IMPLEMENTS_RUNTIME_BEHAVIOR: false,
++  IMPLEMENTS_RECOVERY_PLANNER_CODE: false,
++  IMPLEMENTS_QUARANTINE_CODE: false,
++  IMPLEMENTS_PERMISSION_LEDGER_CODE: false,
++  EXECUTES_AUTOMATIC_RECOVERY: false,
++  CONNECTS_V1: false,
++  CONNECTS_V2: false,
++  TOUCHES_SIGNAL_LAYER: false,
++  TOUCHES_DECISION_ENGINE: false,
++  TOUCHES_STRATEGIES: false,
++  TOUCHES_UI: false,
++  ENABLES_LIVE_TRADING: false,
++  ADDS_REAL_EXCHANGE_KEYS: false
++} as const;
++
++export const WAVE5_MODULE_MAPPING = {
++  QUARANTINE: {
++    currentModules: ["core/events/validate-domain-event.ts", "core/runtime/event-index.ts"],
++    futureModules: ["core/quarantine/quarantine-store.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  PERMISSION_LEDGER: {
++    currentModules: ["core/gates/src/action-gate.ts"],
++    futureModules: ["core/permissions/permission-ledger.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  RECOVERY_PLANNER: {
++    currentModules: ["core/trust/core-trust-report.ts"],
++    futureModules: ["core/recovery/recovery-planner.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  SCENARIO_AUDIT: {
++    currentModules: ["tests/scenarios/*"],
++    futureModules: [],
++    testModules: SCENARIO_TESTS
++  }
++} as const;
++
++export const QUARANTINE_REQUIREMENT = {
++  DIAGNOSTIC_NOT_CANONICAL_HISTORY: "diagnostic_not_canonical_history",
++  MUST_NOT_MUTATE_RUNTIME_STATE: "must_not_mutate_runtime_state",
++  MUST_PRESERVE_REJECTED_EVIDENCE: "must_preserve_rejected_evidence",
++  CANONICAL_REPLAY_MUST_IGNORE_QUARANTINE: "canonical_replay_must_ignore_quarantine"
++} as const;
++
++export const PERMISSION_LEDGER_REQUIREMENT = {
++  RECORDS_ALLOW_DECISIONS: "records_allow_decisions",
++  RECORDS_DENY_DECISIONS: "records_deny_decisions",
++  MUST_BE_AUDITABLE: "must_be_auditable",
++  MUST_NOT_MUTATE_TRADING_STATE: "must_not_mutate_trading_state"
++} as const;
++
++export const RECOVERY_PLANNER_REQUIREMENT = {
++  SUGGESTS_ACTIONS_ONLY: "suggests_actions_only",
++  MUST_NOT_EXECUTE_ACTIONS: "must_not_execute_actions",
++  RECOVERY_ACTIONS_STILL_PASS_ACTION_GATE: "recovery_actions_still_pass_action_gate",
++  NORMAL_TRADING_REMAINS_FORBIDDEN_UNTIL_RECOVERY_CONDITIONS_ARE_SATISFIED: "normal_trading_remains_forbidden_until_recovery_conditions_are_satisfied"
++} as const;
++
++
++
+ export function getCoreLaw(id: CoreLawId): CoreLawDefinition {
+   const law = CORE_LAWS.find((candidate) => candidate.id === id);
+   if (!law) {
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/core/permissions/permission-ledger.ts project/core/permissions/permission-ledger.ts
+--- base/mbg-core-v0.1-alpha4/core/permissions/permission-ledger.ts	1970-01-01 00:00:00.000000000 +0000
++++ project/core/permissions/permission-ledger.ts	2026-05-07 14:02:01.114063479 +0000
+@@ -0,0 +1,120 @@
++import crypto from "node:crypto";
++import type {
++  ActionClass,
++  ActionType,
++  GateDecision,
++  KernelTrustState
++} from "../contracts/src/actions.js";
++
++export interface PermissionRecord {
++  permissionId: string;
++  action: GateDecision["action"];
++  allowed: boolean;
++  decision: GateDecision["decision"];
++  actionClass: ActionClass;
++  snapshotRevision: number;
++  kernelTrustState: KernelTrustState;
++  blockingReasons: string[];
++  allowedAlternatives: ActionType[];
++  gateVersion: GateDecision["gateVersion"];
++  requestedBy: string;
++  decidedAt: string;
++  decisionHash: string;
++}
++
++export interface PermissionLedgerRecordOptions {
++  requestedBy?: string;
++  decidedAt?: string | Date;
++  permissionId?: string;
++}
++
++function stable(value: unknown): unknown {
++  if (Array.isArray(value)) return value.map(stable);
++  if (value && typeof value === "object") {
++    return Object.fromEntries(
++      Object.entries(value as Record<string, unknown>)
++        .sort(([a], [b]) => a.localeCompare(b))
++        .map(([key, nested]) => [key, stable(nested)])
++    );
++  }
++  return value;
++}
++
++function stableJson(value: unknown): string {
++  return JSON.stringify(stable(value));
++}
++
++export function hashPermissionDecision(input: Omit<PermissionRecord, "permissionId" | "decisionHash">): string {
++  return crypto
++    .createHash("sha256")
++    .update(stableJson(input))
++    .digest("hex");
++}
++
++export function createPermissionRecord(
++  verdict: GateDecision,
++  options: PermissionLedgerRecordOptions = {}
++): PermissionRecord {
++  const decidedAt =
++    options.decidedAt instanceof Date
++      ? options.decidedAt.toISOString()
++      : options.decidedAt ?? new Date().toISOString();
++
++  const base = {
++    action: verdict.action,
++    allowed: verdict.allowed,
++    decision: verdict.decision,
++    actionClass: verdict.actionClass,
++    snapshotRevision: verdict.snapshotRevision,
++    kernelTrustState: verdict.kernelTrustState,
++    blockingReasons: [...verdict.blockingReasons],
++    allowedAlternatives: [...verdict.allowedAlternatives],
++    gateVersion: verdict.gateVersion,
++    requestedBy: options.requestedBy ?? "unknown",
++    decidedAt
++  };
++
++  const decisionHash = hashPermissionDecision(base);
++  const permissionId = options.permissionId ?? `permission:${decisionHash.slice(0, 16)}`;
++
++  return {
++    permissionId,
++    ...base,
++    decisionHash
++  };
++}
++
++export class PermissionLedger {
++  private records: PermissionRecord[] = [];
++
++  record(verdict: GateDecision, options: PermissionLedgerRecordOptions = {}): PermissionRecord {
++    const record = createPermissionRecord(verdict, options);
++    this.records.push(record);
++    return record;
++  }
++
++  last(limit = 100): PermissionRecord[] {
++    const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 100;
++    return this.records.slice(-safeLimit).map((record) => ({
++      ...record,
++      action: {
++        ...record.action,
++        request: { ...record.action.request }
++      },
++      blockingReasons: [...record.blockingReasons],
++      allowedAlternatives: [...record.allowedAlternatives]
++    }));
++  }
++
++  all(): PermissionRecord[] {
++    return this.last(this.records.length);
++  }
++
++  clear(): void {
++    this.records = [];
++  }
++
++  count(): number {
++    return this.records.length;
++  }
++}
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/core/quarantine/quarantine.ts project/core/quarantine/quarantine.ts
+--- base/mbg-core-v0.1-alpha4/core/quarantine/quarantine.ts	1970-01-01 00:00:00.000000000 +0000
++++ project/core/quarantine/quarantine.ts	2026-05-07 14:02:01.113171632 +0000
+@@ -0,0 +1,194 @@
++import { createHash } from "node:crypto";
++import type { DomainEvent } from "../contracts/src/events.js";
++import type { DomainEventValidationRejected } from "../events/validate-domain-event.js";
++import type { IdempotencyDiagnostic } from "../runtime/src/idempotency.js";
++
++export type QuarantineSource =
++  | "invalid_event"
++  | "unknown_event_type"
++  | "schema_violation"
++  | "idempotency_conflict"
++  | "suspicious_payload";
++
++export type QuarantineSeverity = "info" | "warning" | "blocking" | "critical" | "panic";
++
++export interface QuarantineRecord {
++  quarantineId: string;
++  reason: string;
++  source: QuarantineSource;
++  eventId?: string;
++  eventType?: string;
++  payloadHash: string;
++  detectedBy: string;
++  detectedAt: string;
++  severity: QuarantineSeverity;
++  rawEvent?: Record<string, unknown>;
++  recoverable: boolean;
++  notes?: string[];
++}
++
++export interface QuarantineSummary {
++  count: number;
++  bySource: Record<string, number>;
++  bySeverity: Record<string, number>;
++  lastRecord?: QuarantineRecord;
++}
++
++export interface QuarantineStoreView extends QuarantineSummary {
++  records: QuarantineRecord[];
++}
++
++function stableStringify(value: unknown): string {
++  if (value === null || typeof value !== "object") return JSON.stringify(value);
++  if (Array.isArray(value)) return `[${value.map((item) => stableStringify(item)).join(",")}]`;
++
++  const record = value as Record<string, unknown>;
++  return `{${Object.keys(record)
++    .sort()
++    .map((key) => `${JSON.stringify(key)}:${stableStringify(record[key])}`)
++    .join(",")}}`;
++}
++
++export function quarantinePayloadHash(value: unknown): string {
++  return createHash("sha256").update(stableStringify(value)).digest("hex");
++}
++
++function isRecord(value: unknown): value is Record<string, unknown> {
++  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
++}
++
++function safeEventSnapshot(event: unknown): Record<string, unknown> | undefined {
++  if (!isRecord(event)) return undefined;
++
++  const payload = isRecord(event.payload)
++    ? event.payload
++    : event.payload === undefined
++      ? undefined
++      : { valueType: typeof event.payload };
++
++  return {
++    eventId: typeof event.eventId === "string" ? event.eventId : event.eventId === undefined ? undefined : String(event.eventId),
++    eventType: typeof event.eventType === "string" ? event.eventType : event.eventType === undefined ? undefined : String(event.eventType),
++    timestamp: typeof event.timestamp === "string" ? event.timestamp : event.timestamp === undefined ? undefined : String(event.timestamp),
++    source: typeof event.source === "string" ? event.source : event.source === undefined ? undefined : String(event.source),
++    schemaVersion: typeof event.schemaVersion === "string" ? event.schemaVersion : event.schemaVersion === undefined ? undefined : String(event.schemaVersion),
++    payload
++  };
++}
++
++function sourceFromValidation(diagnostic: DomainEventValidationRejected): QuarantineSource {
++  if (diagnostic.issues.some((issue) => issue.code === "event_type_invalid")) return "unknown_event_type";
++  if (diagnostic.issues.some((issue) => issue.code === "payload_invalid")) return "schema_violation";
++  return "invalid_event";
++}
++
++function severityFromValidation(diagnostic: DomainEventValidationRejected): QuarantineSeverity {
++  if (diagnostic.issues.some((issue) => issue.code === "event_type_invalid")) return "blocking";
++  if (diagnostic.issues.some((issue) => issue.code === "timestamp_in_future")) return "warning";
++  return "blocking";
++}
++
++export interface QuarantineFromValidationInput {
++  event: unknown;
++  diagnostic: DomainEventValidationRejected;
++  detectedBy?: string;
++  detectedAt?: string;
++  notes?: string[];
++}
++
++export interface QuarantineFromIdempotencyInput {
++  event: DomainEvent;
++  diagnostic: IdempotencyDiagnostic;
++  detectedBy?: string;
++  detectedAt?: string;
++  notes?: string[];
++}
++
++export class QuarantineStore {
++  private records: QuarantineRecord[] = [];
++  constructor(private readonly maxRecords = 1000) {}
++
++  add(record: QuarantineRecord): QuarantineRecord {
++    this.records.push(record);
++    if (this.records.length > this.maxRecords) this.records.shift();
++    return record;
++  }
++
++  recordValidation(input: QuarantineFromValidationInput): QuarantineRecord {
++    const rawEvent = safeEventSnapshot(input.event);
++    const reason = input.diagnostic.issues.map((issue) => issue.code).join(",") || "invalid_event";
++    const record: QuarantineRecord = {
++      quarantineId: crypto.randomUUID(),
++      reason,
++      source: sourceFromValidation(input.diagnostic),
++      eventId: input.diagnostic.eventId ?? (rawEvent?.eventId as string | undefined),
++      eventType: input.diagnostic.eventType ?? (rawEvent?.eventType as string | undefined),
++      payloadHash: quarantinePayloadHash(isRecord(input.event) ? input.event.payload : input.event),
++      detectedBy: input.detectedBy ?? "core.event_validation",
++      detectedAt: input.detectedAt ?? new Date().toISOString(),
++      severity: severityFromValidation(input.diagnostic),
++      rawEvent,
++      recoverable: false,
++      notes: ["rejected", ...(input.notes ?? [])]
++    };
++    return this.add(record);
++  }
++
++  recordIdempotencyConflict(input: QuarantineFromIdempotencyInput): QuarantineRecord {
++    const record: QuarantineRecord = {
++      quarantineId: crypto.randomUUID(),
++      reason: input.diagnostic.reason,
++      source: "idempotency_conflict",
++      eventId: input.event.eventId,
++      eventType: input.event.eventType,
++      payloadHash: input.diagnostic.incomingFingerprint ?? quarantinePayloadHash(input.event.payload),
++      detectedBy: input.detectedBy ?? "core.idempotency",
++      detectedAt: input.detectedAt ?? new Date().toISOString(),
++      severity: "critical",
++      rawEvent: safeEventSnapshot(input.event),
++      recoverable: true,
++      notes: [
++        `scope=${input.diagnostic.scope}`,
++        `key=${input.diagnostic.key}`,
++        ...(input.diagnostic.existingEventId ? [`existingEventId=${input.diagnostic.existingEventId}`] : []),
++        ...(input.notes ?? [])
++      ]
++    };
++    return this.add(record);
++  }
++
++  clear(): void {
++    this.records = [];
++  }
++
++  get count(): number {
++    return this.records.length;
++  }
++
++  getRecords(limit = 100): QuarantineRecord[] {
++    return this.records.slice(-limit);
++  }
++
++  getSummary(): QuarantineSummary {
++    const bySource: Record<string, number> = {};
++    const bySeverity: Record<string, number> = {};
++    for (const record of this.records) {
++      bySource[record.source] = (bySource[record.source] ?? 0) + 1;
++      bySeverity[record.severity] = (bySeverity[record.severity] ?? 0) + 1;
++    }
++
++    return {
++      count: this.records.length,
++      bySource,
++      bySeverity,
++      lastRecord: this.records.at(-1)
++    };
++  }
++
++  getView(limit = 100): QuarantineStoreView {
++    return {
++      ...this.getSummary(),
++      records: this.getRecords(limit)
++    };
++  }
++}
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/core/recovery/recovery-planner.ts project/core/recovery/recovery-planner.ts
+--- base/mbg-core-v0.1-alpha4/core/recovery/recovery-planner.ts	1970-01-01 00:00:00.000000000 +0000
++++ project/core/recovery/recovery-planner.ts	2026-05-07 13:37:13.610148907 +0000
+@@ -0,0 +1,287 @@
++import type { GateDecision, KernelTrustState } from "../contracts/src/actions.js";
++import type { FreshnessReport } from "../runtime/src/freshness.js";
++import type { HealthTruthSnapshot } from "../runtime/src/runtime-engine.js";
++import type { RuntimeSnapshot } from "../state/src/types.js";
++import type { BlockingReason, CoreTrustReport } from "../kernel/core-trust-report.js";
++
++export const RECOVERY_PLANNER_VERSION = "recovery-planner-v1" as const;
++
++export const RECOVERY_ACTION_TYPE = {
++  RECONCILE_POSITION: "RECONCILE_POSITION",
++  RECONCILE_ORDERS: "RECONCILE_ORDERS",
++  SYNC_FILLS: "SYNC_FILLS",
++  REFRESH_MARKET_DATA: "REFRESH_MARKET_DATA",
++  CHECK_HEALTH: "CHECK_HEALTH",
++  RUN_REPLAY_CHECK: "RUN_REPLAY_CHECK",
++  INSPECT_QUARANTINE: "INSPECT_QUARANTINE",
++  HALT_RUNTIME: "HALT_RUNTIME",
++  MANUAL_REVIEW: "MANUAL_REVIEW"
++} as const;
++
++export type RecoveryActionType = typeof RECOVERY_ACTION_TYPE[keyof typeof RECOVERY_ACTION_TYPE];
++
++export type RecoveryMode =
++  | "none"
++  | "evidence_collection"
++  | "guided_recovery"
++  | "forensic_review"
++  | "halted_review"
++  | "panic_halt";
++
++export type RecoveryPriority = "none" | "low" | "medium" | "high" | "critical";
++
++export type ForbiddenRecoveryAction =
++  | "PLACE_ORDER"
++  | "RESUME_RUNTIME"
++  | "LIVE_TRADING"
++  | "BYPASS_ACTION_GATE"
++  | "MUTATE_SNAPSHOT"
++  | "WRITE_EVENTS"
++  | "CALL_EXCHANGE";
++
++export interface QuarantineSummary {
++  count?: number;
++  itemCount?: number;
++  quarantinedCount?: number;
++  badDataCount?: number;
++  rejectedEventCount?: number;
++  hasItems?: boolean;
++  reasons?: string[];
++  [key: string]: unknown;
++}
++
++export interface RecoveryPlannerInput {
++  coreTrustReport: CoreTrustReport;
++  blockingReasons?: BlockingReason[];
++  trustState?: KernelTrustState;
++  exchangeTruth?: RuntimeSnapshot["exchangeTruth"];
++  freshness?: FreshnessReport;
++  healthTruth?: HealthTruthSnapshot;
++  quarantineSummary?: QuarantineSummary;
++  lastActionGateVerdict?: GateDecision;
++}
++
++export interface RecoveryPlan {
++  required: boolean;
++  mode: RecoveryMode;
++  reasons: string[];
++  nextActions: RecoveryActionType[];
++  forbiddenActions: ForbiddenRecoveryAction[];
++  priority: RecoveryPriority;
++  manualReviewRequired: boolean;
++  plannerVersion: typeof RECOVERY_PLANNER_VERSION;
++}
++
++function unique<T>(values: T[]): T[] {
++  return Array.from(new Set(values));
++}
++
++function reasonCodes(reasons: BlockingReason[]): string[] {
++  return unique(reasons.map((reason) => reason.code).filter((code) => code.trim().length > 0));
++}
++
++function quarantineCount(summary?: QuarantineSummary): number {
++  if (!summary) return 0;
++
++  const numericValues = [
++    summary.count,
++    summary.itemCount,
++    summary.quarantinedCount,
++    summary.badDataCount,
++    summary.rejectedEventCount
++  ].filter((value): value is number => typeof value === "number" && Number.isFinite(value));
++
++  if (numericValues.length > 0) return numericValues.reduce((total, value) => total + Math.max(0, value), 0);
++  return summary.hasItems ? 1 : 0;
++}
++
++function replayIsMismatch(report: CoreTrustReport): boolean {
++  const replay = report.replay as { ok?: boolean; mismatch?: unknown; reason?: unknown } | undefined;
++  if (!replay) return false;
++  if (replay.ok === false && replay.mismatch) return true;
++  if (typeof replay.reason === "string" && replay.reason.toLowerCase().includes("mismatch")) return true;
++  return false;
++}
++
++function addForReason(code: string, actions: RecoveryActionType[], manualReviewReasons: string[]) {
++  if (code === "position_unknown" || code === "bootstrap_position_not_reconciled") {
++    actions.push(RECOVERY_ACTION_TYPE.RECONCILE_POSITION);
++  }
++
++  if (
++    code === "exchange_truth_unknown" ||
++    code === "exchange_truth_stale" ||
++    code === "exchange_truth_unavailable"
++  ) {
++    actions.push(RECOVERY_ACTION_TYPE.RECONCILE_POSITION, RECOVERY_ACTION_TYPE.RECONCILE_ORDERS);
++  }
++
++  if (code === "exchange_truth_conflicted") {
++    actions.push(
++      RECOVERY_ACTION_TYPE.RECONCILE_POSITION,
++      RECOVERY_ACTION_TYPE.RECONCILE_ORDERS,
++      RECOVERY_ACTION_TYPE.SYNC_FILLS,
++      RECOVERY_ACTION_TYPE.MANUAL_REVIEW
++    );
++    manualReviewReasons.push(code);
++  }
++
++  if (
++    code === "market_data_stale" ||
++    code === "freshness_stale" ||
++    code === "freshness_expired" ||
++    code === "freshness_unknown"
++  ) {
++    actions.push(RECOVERY_ACTION_TYPE.REFRESH_MARKET_DATA);
++  }
++
++  if (
++    code === "health_truth_unknown" ||
++    code === "health_truth_partial" ||
++    code === "connection_state_unknown" ||
++    code === "connection_state_stale" ||
++    code === "ws_status_unknown"
++  ) {
++    actions.push(RECOVERY_ACTION_TYPE.CHECK_HEALTH);
++  }
++
++  if (code === "replay_mismatch") {
++    actions.push(RECOVERY_ACTION_TYPE.RUN_REPLAY_CHECK, RECOVERY_ACTION_TYPE.MANUAL_REVIEW);
++    manualReviewReasons.push(code);
++  }
++
++  if (code === "system_halted" || code === "health_truth_halted") {
++    actions.push(RECOVERY_ACTION_TYPE.MANUAL_REVIEW);
++    manualReviewReasons.push(code);
++  }
++
++  if (code === "critical_corruption") {
++    actions.push(RECOVERY_ACTION_TYPE.HALT_RUNTIME, RECOVERY_ACTION_TYPE.MANUAL_REVIEW);
++    manualReviewReasons.push(code);
++  }
++}
++
++function modeFor(trustState: KernelTrustState, required: boolean): RecoveryMode {
++  if (!required) return "none";
++  if (trustState === "PANIC") return "panic_halt";
++  if (trustState === "HALTED") return "halted_review";
++  if (trustState === "COMPROMISED") return "forensic_review";
++  if (trustState === "RECOVERABLE") return "guided_recovery";
++  return "evidence_collection";
++}
++
++function priorityFor(trustState: KernelTrustState, actions: RecoveryActionType[], reasons: string[]): RecoveryPriority {
++  if (trustState === "PANIC" || reasons.includes("critical_corruption")) return "critical";
++  if (trustState === "HALTED" || trustState === "COMPROMISED" || actions.includes(RECOVERY_ACTION_TYPE.MANUAL_REVIEW)) return "high";
++  if (actions.length > 0) return "medium";
++  return "none";
++}
++
++export function planRecovery(input: RecoveryPlannerInput): RecoveryPlan {
++  const report = input.coreTrustReport;
++  const trustState = input.trustState ?? report.trustState;
++  const blockingReasons = input.blockingReasons ?? report.blockingReasons ?? [];
++  const exchangeTruth = input.exchangeTruth ?? report.exchangeTruth;
++  const freshness = input.freshness ?? report.freshness;
++  const healthTruth = input.healthTruth ?? report.healthTruth;
++  const lastVerdict = input.lastActionGateVerdict;
++
++  const reasons = reasonCodes(blockingReasons);
++  const actions: RecoveryActionType[] = [];
++  const manualReviewReasons: string[] = [];
++
++  for (const code of reasons) {
++    addForReason(code, actions, manualReviewReasons);
++  }
++
++  if (exchangeTruth.status === "unknown" || exchangeTruth.status === "stale" || exchangeTruth.status === "unavailable") {
++    actions.push(RECOVERY_ACTION_TYPE.RECONCILE_POSITION, RECOVERY_ACTION_TYPE.RECONCILE_ORDERS);
++    reasons.push(`exchange_truth_${exchangeTruth.status}`);
++  }
++
++  if (exchangeTruth.status === "conflicted") {
++    actions.push(
++      RECOVERY_ACTION_TYPE.RECONCILE_POSITION,
++      RECOVERY_ACTION_TYPE.RECONCILE_ORDERS,
++      RECOVERY_ACTION_TYPE.SYNC_FILLS,
++      RECOVERY_ACTION_TYPE.MANUAL_REVIEW
++    );
++    reasons.push("exchange_truth_conflicted");
++    manualReviewReasons.push("exchange_truth_conflicted");
++  }
++
++  if (freshness.marketDataFreshness.status !== "fresh") {
++    actions.push(RECOVERY_ACTION_TYPE.REFRESH_MARKET_DATA);
++    reasons.push(freshness.marketDataFreshness.reason ?? "market_freshness_not_fresh");
++  }
++
++  if (freshness.exchangeTruthFreshness.status !== "fresh") {
++    actions.push(RECOVERY_ACTION_TYPE.RECONCILE_POSITION, RECOVERY_ACTION_TYPE.RECONCILE_ORDERS);
++    reasons.push(freshness.exchangeTruthFreshness.reason ?? "exchange_truth_freshness_not_fresh");
++  }
++
++  if (freshness.connectionFreshness.status !== "fresh") {
++    actions.push(RECOVERY_ACTION_TYPE.CHECK_HEALTH);
++    reasons.push(freshness.connectionFreshness.reason ?? "connection_freshness_not_fresh");
++  }
++
++  if (!healthTruth.healthTruthComplete || healthTruth.wsConnected === "unknown" || healthTruth.wsConnected === "stale") {
++    actions.push(RECOVERY_ACTION_TYPE.CHECK_HEALTH);
++    reasons.push("health_truth_not_complete");
++  }
++
++  if (replayIsMismatch(report) || trustState === "COMPROMISED") {
++    actions.push(RECOVERY_ACTION_TYPE.RUN_REPLAY_CHECK, RECOVERY_ACTION_TYPE.MANUAL_REVIEW);
++    reasons.push(replayIsMismatch(report) ? "replay_mismatch" : "trust_state_compromised");
++    manualReviewReasons.push("compromised");
++  }
++
++  if (trustState === "PANIC") {
++    actions.push(RECOVERY_ACTION_TYPE.HALT_RUNTIME, RECOVERY_ACTION_TYPE.MANUAL_REVIEW);
++    reasons.push("trust_state_panic");
++    manualReviewReasons.push("panic");
++  }
++
++  if (trustState === "HALTED") {
++    actions.push(RECOVERY_ACTION_TYPE.MANUAL_REVIEW);
++    reasons.push("trust_state_halted");
++    manualReviewReasons.push("halted");
++  }
++
++  const qCount = quarantineCount(input.quarantineSummary);
++  if (qCount > 0) {
++    actions.push(RECOVERY_ACTION_TYPE.INSPECT_QUARANTINE);
++    reasons.push("quarantine_items_present");
++  }
++
++  if (lastVerdict?.decision === "deny") {
++    reasons.push(...lastVerdict.blockingReasons);
++  }
++
++  const uniqueReasons = unique(reasons);
++  const uniqueActions = unique(actions);
++  const required = trustState !== "TRUSTED" || uniqueActions.length > 0;
++  const manualReviewRequired =
++    trustState === "PANIC" ||
++    trustState === "COMPROMISED" ||
++    trustState === "HALTED" ||
++    manualReviewReasons.length > 0 ||
++    uniqueActions.includes(RECOVERY_ACTION_TYPE.MANUAL_REVIEW);
++
++  return {
++    required,
++    mode: modeFor(trustState, required),
++    reasons: required ? uniqueReasons : [],
++    nextActions: required ? uniqueActions : [],
++    forbiddenActions: required
++      ? ["PLACE_ORDER", "LIVE_TRADING", "BYPASS_ACTION_GATE", "MUTATE_SNAPSHOT", "WRITE_EVENTS", "CALL_EXCHANGE"]
++      : ["BYPASS_ACTION_GATE", "MUTATE_SNAPSHOT", "WRITE_EVENTS", "CALL_EXCHANGE"],
++    priority: priorityFor(trustState, uniqueActions, uniqueReasons),
++    manualReviewRequired,
++    plannerVersion: RECOVERY_PLANNER_VERSION
++  };
++}
++
++export const RecoveryPlanner = {
++  plan: planRecovery
++} as const;
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/core/runtime/src/runtime-engine.ts project/core/runtime/src/runtime-engine.ts
+--- base/mbg-core-v0.1-alpha4/core/runtime/src/runtime-engine.ts	2026-05-07 13:36:35.343234694 +0000
++++ project/core/runtime/src/runtime-engine.ts	2026-05-07 13:46:49.226107257 +0000
+@@ -8,6 +8,9 @@
+ import { EventIdempotencyIndex, type IdempotencyDiagnostic } from "./idempotency.js";
+ import { calculateFreshness, DEFAULT_FRESHNESS_CONFIG } from "./freshness.js";
+ import { buildCoreTrustReport, type CoreTrustReport } from "../../kernel/core-trust-report.js";
++import { QuarantineStore } from "../../quarantine/quarantine.js";
++import { PermissionLedger } from "../../permissions/permission-ledger.js";
++import { planRecovery, type RecoveryPlan } from "../../recovery/recovery-planner.js";
+ 
+ type StateDomain = "bootstrap" | "exchangeTruth" | "market" | "trade" | "order" | "position" | "risk" | "system";
+ 
+@@ -179,6 +182,8 @@
+   snapshotStalled: boolean;
+   duplicateEventCount: number;
+   idempotencyConflictCount: number;
++  quarantineCount: number;
++  permissionLedgerCount: number;
+ }
+ 
+ function domainTrace(domain: StateDomain, before: any, after: any) {
+@@ -345,6 +350,8 @@
+   private gateTransitionCount = 0;
+   private persistence = new FileRuntimePersistence();
+   private websocketTruth?: ConnectionTruth;
++  private quarantine = new QuarantineStore();
++  private permissionLedger = new PermissionLedger();
+ 
+   constructor() {
+     this.recoverFromDisk();
+@@ -481,6 +488,11 @@
+     const validation = validateDomainEvent(event);
+     if (!validation.ok) {
+       this.rejectedEvents += 1;
++      this.quarantine.recordValidation({
++        event,
++        diagnostic: validation,
++        detectedBy: "RuntimeEngine.commitEventResult"
++      });
+       if (options.log !== false) {
+         console.warn(
+           `[runtime] rejected event=${String((event as any)?.eventType ?? "unknown")} eventId=${String((event as any)?.eventId ?? "missing")} issues=${validation.issues.map((i) => i.code).join(",")}`
+@@ -498,6 +510,11 @@
+     const stateValidation = validateEventForCurrentSnapshot(event, this.snapshot);
+     if (stateValidation) {
+       this.rejectedEvents += 1;
++      this.quarantine.recordValidation({
++        event,
++        diagnostic: stateValidation,
++        detectedBy: "RuntimeEngine.state_validation"
++      });
+       if (options.log !== false) {
+         console.warn(
+           `[runtime] rejected event=${event.eventType} eventId=${event.eventId} issues=${stateValidation.issues.map((i) => i.code).join(",")}`
+@@ -533,6 +550,11 @@
+         return { ok: true, status: "duplicate_ignored", ...base };
+       }
+ 
++      this.quarantine.recordIdempotencyConflict({
++        event,
++        diagnostic: idempotency,
++        detectedBy: "RuntimeEngine.idempotency"
++      });
+       return { ok: false, status: "duplicate_conflict", ...base };
+     }
+ 
+@@ -710,6 +732,8 @@
+     this.duplicateEventCount = 0;
+     this.idempotencyConflictCount = 0;
+     this.websocketTruth = undefined;
++    this.quarantine.clear();
++    this.permissionLedger.clear();
+     return this.getRuntimeView();
+   }
+ 
+@@ -723,6 +747,7 @@
+ 
+   dispatchAction(action: ActionRequest) {
+     const decision = this.gate.evaluate(action, this.snapshot, { enforceFreshness: true, now: new Date(), freshness: this.getFreshness(new Date()), freshnessConfig: DEFAULT_FRESHNESS_CONFIG });
++    this.recordPermissionDecision(decision, "RuntimeEngine.dispatchAction");
+     this.gateTransitionCount += 1;
+     this.decisions.push(decision);
+     if (this.decisions.length > 500) this.decisions.shift();
+@@ -764,6 +789,41 @@
+     };
+   }
+ 
++  getQuarantineView(limit = 100) {
++    return this.quarantine.getView(limit);
++  }
++
++  getQuarantineRecords(limit = 100) {
++    return this.quarantine.getRecords(limit);
++  }
++
++  getQuarantine(limit = 100) {
++    return this.getQuarantineView(limit);
++  }
++
++  getQuarantinedEvents(limit = 100) {
++    return this.getQuarantineRecords(limit);
++  }
++
++  getPermissionLedgerView(limit = 100) {
++    return {
++      count: this.permissionLedger.count(),
++      records: this.permissionLedger.last(limit)
++    };
++  }
++
++  getPermissionLedger(limit = 100) {
++    return this.getPermissionLedgerView(limit);
++  }
++
++  getPermissionsLedgerView(limit = 100) {
++    return this.getPermissionLedgerView(limit);
++  }
++
++  private recordPermissionDecision(decision: GateDecision, requestedBy = "RuntimeEngine") {
++    return this.permissionLedger.record(decision, { requestedBy });
++  }
++
+   getPersistenceView() {
+     return {
+       status: this.persistence.getStatus(),
+@@ -804,6 +864,9 @@
+     const freshness = this.getFreshness(now);
+     const actions = this.gate.evaluateAll(this.snapshot, { enforceFreshness: true, now, freshness, freshnessConfig: DEFAULT_FRESHNESS_CONFIG });
+     const permissions = { snapshotRevision: this.snapshot.revision, tradingAllowed: actions.place_order.decision === "allow", freshness, actions };
++    for (const decision of Object.values(permissions.actions)) {
++      this.recordPermissionDecision(decision, "RuntimeEngine.getPermissions");
++    }
+     this.gateTransitionCount += Object.values(permissions.actions).length;
+     this.decisions.push(...Object.values(permissions.actions));
+     if (this.decisions.length > 500) this.decisions = this.decisions.slice(-500);
+@@ -812,6 +875,7 @@
+ 
+   evaluateAction(action: ActionRequest) {
+     const decision = this.gate.evaluate(action, this.snapshot, { enforceFreshness: true, now: new Date(), freshness: this.getFreshness(new Date()), freshnessConfig: DEFAULT_FRESHNESS_CONFIG });
++    this.recordPermissionDecision(decision, "RuntimeEngine.evaluateAction");
+     this.gateTransitionCount += 1;
+     this.decisions.push(decision);
+     if (this.decisions.length > 500) this.decisions.shift();
+@@ -847,11 +911,35 @@
+       metadata: {
+         runtime: this.getRuntimeView(),
+         idempotency: this.getIdempotencyView(),
++        quarantine: this.getQuarantineView(20),
++        permissionLedger: this.getPermissionLedgerView(20),
+         ...metadata
+       }
+     });
+   }
+ 
++
++  getRecoveryPlan(input: Record<string, unknown> = {}): RecoveryPlan {
++    const lastActionGateVerdict = this.decisions.at(-1);
++    return planRecovery({
++      coreTrustReport: this.getCoreTrustReport({ recoveryInput: input }),
++      quarantineSummary: { ...this.quarantine.getSummary() },
++      lastActionGateVerdict
++    });
++  }
++
++  getRecoveryPlannerView(input: Record<string, unknown> = {}) {
++    return this.getRecoveryPlan(input);
++  }
++
++  getRecoverySuggestions(input: Record<string, unknown> = {}) {
++    return this.getRecoveryPlan(input).nextActions;
++  }
++
++  planRecovery(input: Record<string, unknown> = {}) {
++    return this.getRecoveryPlan(input);
++  }
++
+   getMetrics(): RuntimeMetrics {
+     const now = Date.now();
+     const uptimeMs = now - this.startedAt;
+@@ -887,7 +975,9 @@
+       snapshotRevision: this.snapshot.revision,
+       snapshotStalled: Boolean(timeSinceLastCommitMs !== undefined && timeSinceLastCommitMs > 5000),
+       duplicateEventCount: this.duplicateEventCount,
+-      idempotencyConflictCount: this.idempotencyConflictCount
++      idempotencyConflictCount: this.idempotencyConflictCount,
++      quarantineCount: this.quarantine.count,
++      permissionLedgerCount: this.permissionLedger.count()
+     };
+   }
+ 
+@@ -912,6 +1002,8 @@
+         system: this.snapshot.system.status
+       },
+       metrics: this.getMetrics(),
++      quarantine: this.quarantine.getSummary(),
++      permissionLedger: { count: this.permissionLedger.count() },
+       persistence: this.persistence.getStatus()
+     };
+   }
+@@ -938,6 +1030,9 @@
+         lastTransitions: this.getTransitions(20)
+       },
+       permissions: this.getPermissions(),
++      quarantine: this.getQuarantineView(20),
++      permissionLedger: this.getPermissionLedgerView(20),
++      recovery: this.getRecoveryPlan({ source: "entities_view" }),
+       persistence: this.getPersistenceView()
+     };
+   }
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/package.json project/package.json
+--- base/mbg-core-v0.1-alpha4/package.json	2026-05-07 13:36:35.326098138 +0000
++++ project/package.json	2026-05-07 13:44:53.217981430 +0000
+@@ -1,6 +1,6 @@
+ {
+-  "name": "mbg-core-v0.1-alpha4",
+-  "version": "1.0.4",
++  "name": "mbg-core-v0.1-alpha5",
++  "version": "1.0.5",
+   "type": "module",
+   "scripts": {
+     "dev": "tsx apps/runtime-api/src/server.ts",
+@@ -21,7 +21,7 @@
+     "test:pr33:pnl": "npm run typecheck && tsx tests/scenarios/pr33-pnl-engine.ts",
+     "test:pr33.2:pnl-hardening": "npm run typecheck && tsx tests/scenarios/pr33-2-pnl-hardening.ts",
+     "test:pr35:metadata": "npm run typecheck && tsx tests/scenarios/pr35-metadata-pipeline.ts",
+-    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && npm run test:core:cold-start && npm run test:core:bootstrap && npm run test:core:event-validation && npm run test:core:idempotency && npm run test:wave2:scenario-audit && npm run test:core:exchange-truth && npm run test:core:freshness && npm run test:core:health-truth && npm run test:wave3:scenario-audit && npm run test:core:kernel-authority && npm run test:core:trust-report && npm run test:core:action-gate-verdict && npm run test:wave4:scenario-audit && npm run audit:runtime",
++    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && npm run test:core:cold-start && npm run test:core:bootstrap && npm run test:core:event-validation && npm run test:core:idempotency && npm run test:wave2:scenario-audit && npm run test:core:exchange-truth && npm run test:core:freshness && npm run test:core:health-truth && npm run test:wave3:scenario-audit && npm run test:core:kernel-authority && npm run test:core:trust-report && npm run test:core:action-gate-verdict && npm run test:wave4:scenario-audit && npm run test:core:recovery-planner && npm run test:core:quarantine && npm run test:core:permission-ledger && npm run test:wave5:scenario-audit && npm run audit:runtime",
+     "reset:runtime": "node -e \"const fs=require('node:fs'); fs.rmSync('data/runtime',{recursive:true,force:true}); fs.rmSync('data/journal',{recursive:true,force:true}); fs.mkdirSync('data/runtime/events',{recursive:true}); fs.mkdirSync('data/runtime/transitions',{recursive:true}); fs.mkdirSync('data/journal',{recursive:true}); fs.writeFileSync('data/journal/.gitkeep', ''); console.log('runtime state reset: data/runtime and data/journal recreated empty')\"",
+     "core:status": "PERSISTENCE_ENABLED=false tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.getRuntimeView(), null, 2));\"",
+     "replay:check": "tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.replayCheck(), null, 2));\"",
+@@ -38,7 +38,11 @@
+     "test:core:kernel-authority": "npm run typecheck && tsx tests/scenarios/kernel-authority.ts",
+     "test:core:trust-report": "npm run typecheck && tsx tests/scenarios/core-trust-report.ts",
+     "test:core:action-gate-verdict": "npm run typecheck && tsx tests/scenarios/core-action-gate-verdict.ts",
+-    "test:wave4:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave4-scenario-audit.ts"
++    "test:wave4:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave4-scenario-audit.ts",
++    "test:core:recovery-planner": "npm run typecheck && tsx tests/scenarios/recovery-planner.ts",
++    "test:core:quarantine": "npm run typecheck && tsx tests/scenarios/core-quarantine.ts",
++    "test:core:permission-ledger": "npm run typecheck && tsx tests/scenarios/core-permission-ledger.ts",
++    "test:wave5:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave5-scenario-audit.ts"
+   },
+   "dependencies": {
+     "cors": "^2.8.5",
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/tests/scenarios/core-constitution.test.mjs project/tests/scenarios/core-constitution.test.mjs
+--- base/mbg-core-v0.1-alpha4/tests/scenarios/core-constitution.test.mjs	2026-05-07 13:36:35.336865244 +0000
++++ project/tests/scenarios/core-constitution.test.mjs	2026-05-07 13:37:13.423064974 +0000
+@@ -9,7 +9,7 @@
+ const constitution = fs.readFileSync(constitutionPath, "utf-8");
+ const constants = fs.readFileSync(constantsPath, "utf-8");
+ 
+-const requiredLawIds = Array.from({ length: 30 }, (_, index) => `LAW-${String(index + 1).padStart(3, "0")}`);
++const requiredLawIds = Array.from({ length: 48 }, (_, index) => `LAW-${String(index + 1).padStart(3, "0")}`);
+ const requiredTrustStates = ["TRUSTED", "RECOVERABLE", "UNCERTAIN", "COMPROMISED", "HALTED", "PANIC"];
+ 
+ for (const lawId of requiredLawIds) {
+@@ -64,7 +64,25 @@
+   "Health must not report fake truth",
+   "Unknown connection state is not connected",
+   "Local flat position is not trusted without fresh exchange reconcile",
+-  "Freshness unknown is stale for normal trading"
++  "Freshness unknown is stale for normal trading",
++  "Kernel Authority is the canonical trust evaluator",
++  "Kernel Authority must be pure",
++  "CoreTrustReport is the canonical trust output",
++  "Frontend must not calculate trust",
++  "V1 must not calculate core trust",
++  "Every denied action must have machine-readable reasons",
++  "Trust state must be explainable",
++  "ActionGate must use kernel trust state",
++  "Invalid or suspicious data must not enter canonical journal",
++  "Quarantined data must not mutate runtime state",
++  "Quarantine is diagnostic, not canonical history",
++  "Every ActionGate verdict must be auditable",
++  "Permission Ledger records allow and deny decisions",
++  "Recovery Planner suggests actions but does not execute them",
++  "Recovery actions must still pass ActionGate",
++  "Normal trading remains forbidden until recovery conditions are satisfied",
++  "Permission Ledger must not mutate trading state",
++  "Quarantine must preserve rejected evidence"
+ ];
+ 
+ for (const phrase of requiredPhrases) {
+@@ -91,7 +109,10 @@
+   "core/kernel/kernel-authority.ts",
+   "core/runtime/src/runtime-engine.ts",
+   "apps/runtime-api/src/app.ts",
+-  "tests/scenarios/*"
++  "tests/scenarios/*",
++  "core/quarantine/quarantine-store.ts",
++  "core/permissions/permission-ledger.ts",
++  "core/recovery/recovery-planner.ts"
+ ];
+ 
+ for (const moduleRef of requiredModuleReferences) {
+@@ -182,5 +203,91 @@
+   );
+ }
+ 
++
++
++const requiredWave4Constants = [
++  "WAVE4_CONSTITUTION_SCOPE",
++  "WAVE4_MODULE_MAPPING",
++  "ACTION_GATE_VERDICT_V2_REQUIREMENT",
++  "CORE_TRUST_REPORT_REQUIREMENT",
++  "KERNEL_AUTHORITY_REQUIREMENT"
++];
++
++for (const exportedName of requiredWave4Constants) {
++  assert.ok(
++    constants.includes(`export const ${exportedName}`),
++    `kernel-constitution.ts must export ${exportedName}`
++  );
++}
++
++const requiredWave5Constants = [
++  "WAVE5_CONSTITUTION_SCOPE",
++  "WAVE5_MODULE_MAPPING",
++  "QUARANTINE_REQUIREMENT",
++  "PERMISSION_LEDGER_REQUIREMENT",
++  "RECOVERY_PLANNER_REQUIREMENT"
++];
++
++for (const exportedName of requiredWave5Constants) {
++  assert.ok(
++    constants.includes(`export const ${exportedName}`),
++    `kernel-constitution.ts must export ${exportedName}`
++  );
++}
++
++const requiredWave5Mappings = [
++  "QUARANTINE",
++  "PERMISSION_LEDGER",
++  "RECOVERY_PLANNER",
++  "SCENARIO_AUDIT"
++];
++
++for (const mapping of requiredWave5Mappings) {
++  assert.ok(
++    constants.includes(`${mapping}:`),
++    `kernel-constitution.ts must include Wave 5 mapping ${mapping}`
++  );
++}
++
++const requiredWave5Phrases = [
++  "invalid or suspicious data must not enter canonical journal",
++  "quarantined data must not mutate runtime state",
++  "quarantine is diagnostic, not canonical history",
++  "every ActionGate verdict must be auditable",
++  "Permission Ledger records allow and deny decisions",
++  "Recovery Planner suggests actions but does not execute them",
++  "Recovery actions must still pass ActionGate",
++  "normal trading remains forbidden until recovery conditions are satisfied",
++  "Permission Ledger must not mutate trading state",
++  "Quarantine must preserve rejected evidence"
++];
++
++for (const phrase of requiredWave5Phrases) {
++  assert.ok(
++    constitution.toLowerCase().includes(phrase.toLowerCase()),
++    `CORE_CONSTITUTION.md must document Wave 5 phrase: ${phrase}`
++  );
++}
++
++const forbiddenWave5RuntimeClaims = [
++  /IMPLEMENTS_RUNTIME_BEHAVIOR:\s*true/,
++  /IMPLEMENTS_RECOVERY_PLANNER_CODE:\s*true/,
++  /IMPLEMENTS_QUARANTINE_CODE:\s*true/,
++  /IMPLEMENTS_PERMISSION_LEDGER_CODE:\s*true/,
++  /EXECUTES_AUTOMATIC_RECOVERY:\s*true/,
++  /CONNECTS_V1:\s*true/,
++  /CONNECTS_V2:\s*true/,
++  /ENABLES_LIVE_TRADING:\s*true/,
++  /ADDS_REAL_EXCHANGE_KEYS:\s*true/
++];
++
++for (const pattern of forbiddenWave5RuntimeClaims) {
++  assert.equal(
++    pattern.test(constants),
++    false,
++    `kernel-constitution.ts must not claim forbidden Wave 5 implementation: ${pattern}`
++  );
++}
++
+ 
+ console.log("✅ Core Constitution checks passed");
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/tests/scenarios/core-permission-ledger.ts project/tests/scenarios/core-permission-ledger.ts
+--- base/mbg-core-v0.1-alpha4/tests/scenarios/core-permission-ledger.ts	1970-01-01 00:00:00.000000000 +0000
++++ project/tests/scenarios/core-permission-ledger.ts	2026-05-07 13:37:13.815128559 +0000
+@@ -0,0 +1,154 @@
++import assert from "node:assert/strict";
++import { ACTION_TYPE, type GateDecision } from "../../core/contracts/src/actions.js";
++import { PermissionLedger, createPermissionRecord } from "../../core/permissions/permission-ledger.js";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++
++function reset() {
++  runtimeEngine.clearPersistenceAndReset();
++}
++
++function placeOrderDenied() {
++  return runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  });
++}
++
++function diagnosticVerdict(): GateDecision {
++  return {
++    action: {
++      actionId: "diagnostic:runtime-status",
++      actionType: ACTION_TYPE.RECONCILE_POSITION,
++      request: {
++        type: ACTION_TYPE.RECONCILE_POSITION
++      }
++    },
++    allowed: true,
++    actionClass: "DIAGNOSTIC",
++    severity: "info",
++    snapshotRevision: runtimeEngine.getSnapshot().revision,
++    kernelTrustState: "UNCERTAIN",
++    blockingReasons: [],
++    allowedAlternatives: [],
++    relatedInvariants: [],
++    gateVersion: "action-gate-v2",
++    actionId: "diagnostic:runtime-status",
++    actionType: ACTION_TYPE.RECONCILE_POSITION,
++    decision: "allow"
++  };
++}
++
++function testDeniedPlaceOrderCreatesLedgerRecord() {
++  reset();
++  const ledger = new PermissionLedger();
++  const verdict = placeOrderDenied();
++
++  assert.equal(verdict.allowed, false);
++  const record = ledger.record(verdict, {
++    requestedBy: "permission-ledger-test",
++    decidedAt: "2026-05-07T00:00:00.000Z"
++  });
++
++  assert.equal(ledger.count(), 1);
++  assert.equal(record.action.actionType, ACTION_TYPE.PLACE_ORDER);
++  assert.equal(record.allowed, false);
++  assert.equal(record.requestedBy, "permission-ledger-test");
++  assert.equal(record.gateVersion, "action-gate-v2");
++}
++
++function testAllowedDiagnosticActionCreatesLedgerRecord() {
++  reset();
++  const ledger = new PermissionLedger();
++  const verdict = diagnosticVerdict();
++
++  const record = ledger.record(verdict, {
++    requestedBy: "diagnostic-probe",
++    decidedAt: "2026-05-07T00:00:01.000Z"
++  });
++
++  assert.equal(record.allowed, true);
++  assert.equal(record.actionClass, "DIAGNOSTIC");
++  assert.equal(record.kernelTrustState, "UNCERTAIN");
++  assert.equal(record.blockingReasons.length, 0);
++  assert.equal(record.requestedBy, "diagnostic-probe");
++}
++
++function testLedgerRecordIncludesSnapshotRevisionTrustStateAndBlockingReasons() {
++  reset();
++  const ledger = new PermissionLedger();
++  const verdict = placeOrderDenied();
++  const record = ledger.record(verdict, {
++    requestedBy: "permission-ledger-test",
++    decidedAt: "2026-05-07T00:00:02.000Z"
++  });
++
++  assert.equal(record.snapshotRevision, verdict.snapshotRevision);
++  assert.equal(record.snapshotRevision, runtimeEngine.getSnapshot().revision);
++  assert.equal(record.kernelTrustState, verdict.kernelTrustState);
++  assert.ok(record.blockingReasons.includes("bootstrap_not_reconciled"));
++  assert.ok(record.blockingReasons.includes("exchange_truth_unknown"));
++  assert.ok(record.allowedAlternatives.includes(ACTION_TYPE.RECONCILE_POSITION));
++  assert.match(record.permissionId, /^permission:[a-f0-9]{16}$/);
++  assert.match(record.decisionHash, /^[a-f0-9]{64}$/);
++}
++
++function testLedgerDoesNotMutateSnapshot() {
++  reset();
++  const ledger = new PermissionLedger();
++  const verdict = placeOrderDenied();
++  const before = JSON.stringify(runtimeEngine.getSnapshot());
++
++  ledger.record(verdict, {
++    requestedBy: "permission-ledger-test",
++    decidedAt: "2026-05-07T00:00:03.000Z"
++  });
++
++  const after = JSON.stringify(runtimeEngine.getSnapshot());
++  assert.equal(after, before);
++}
++
++function testLedgerExportsLastNRecords() {
++  reset();
++  const ledger = new PermissionLedger();
++
++  for (let i = 0; i < 5; i += 1) {
++    const record = createPermissionRecord(diagnosticVerdict(), {
++      requestedBy: `diagnostic-${i}`,
++      decidedAt: `2026-05-07T00:00:0${i}.000Z`
++    });
++    ledger.record({
++      ...diagnosticVerdict(),
++      action: {
++        ...diagnosticVerdict().action,
++        actionId: `diagnostic:${i}`
++      },
++      actionId: `diagnostic:${i}`
++    }, {
++      requestedBy: record.requestedBy,
++      decidedAt: record.decidedAt
++    });
++  }
++
++  const lastTwo = ledger.last(2);
++  assert.equal(lastTwo.length, 2);
++  assert.equal(lastTwo[0].requestedBy, "diagnostic-3");
++  assert.equal(lastTwo[1].requestedBy, "diagnostic-4");
++
++  lastTwo[0].blockingReasons.push("mutated-copy");
++  assert.equal(ledger.last(2)[0].blockingReasons.includes("mutated-copy"), false);
++}
++
++testDeniedPlaceOrderCreatesLedgerRecord();
++testAllowedDiagnosticActionCreatesLedgerRecord();
++testLedgerRecordIncludesSnapshotRevisionTrustStateAndBlockingReasons();
++testLedgerDoesNotMutateSnapshot();
++testLedgerExportsLastNRecords();
++
++console.log(JSON.stringify({
++  name: "core_permission_ledger",
++  ok: true,
++  recordsAudited: 9
++}, null, 2));
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/tests/scenarios/core-quarantine.ts project/tests/scenarios/core-quarantine.ts
+--- base/mbg-core-v0.1-alpha4/tests/scenarios/core-quarantine.ts	1970-01-01 00:00:00.000000000 +0000
++++ project/tests/scenarios/core-quarantine.ts	2026-05-07 13:37:13.722153575 +0000
+@@ -0,0 +1,119 @@
++import assert from "node:assert/strict";
++import { RuntimeEngine } from "../../core/runtime/src/runtime-engine.js";
++import { EVENT_TYPE, type DomainEvent } from "../../core/contracts/src/events.js";
++
++function event(overrides: Partial<DomainEvent> = {}): DomainEvent {
++  return {
++    eventId: "evt-" + crypto.randomUUID(),
++    eventType: EVENT_TYPE.MARKET_TICK_RECEIVED,
++    timestamp: new Date().toISOString(),
++    source: "test",
++    payload: {
++      symbol: "BTCUSDT",
++      price: 100,
++      bid: 99,
++      ask: 101,
++      volume: 1,
++      provider: "test"
++    },
++    ...overrides
++  } as DomainEvent;
++}
++
++function resetEngine() {
++  const engine = new RuntimeEngine();
++  engine.clearPersistenceAndReset();
++  return engine;
++}
++
++function assertNoMutation(engine: RuntimeEngine, beforeRevision: number, beforeJournalCount: number) {
++  assert.equal(engine.getSnapshot().revision, beforeRevision, "quarantined event must not mutate snapshot revision");
++  assert.equal(engine.getPersistenceView().replayCheck.eventCount, beforeJournalCount, "quarantined event must not enter canonical journal/replay event count");
++}
++
++{
++  const engine = resetEngine();
++  const beforeRevision = engine.getSnapshot().revision;
++  const beforeJournalCount = engine.getPersistenceView().replayCheck.eventCount;
++  const invalid = event({ payload: { symbol: "BTCUSDT", price: -1, bid: 99, ask: 101, volume: 1, provider: "test" } as any });
++
++  const result = engine.commitEventResult(invalid, { log: false });
++  assert.equal(result.ok, false);
++  assert.equal(result.status, "rejected");
++  assertNoMutation(engine, beforeRevision, beforeJournalCount);
++
++  const quarantine = engine.getQuarantineView();
++  assert.equal(quarantine.count, 1, "invalid event creates quarantine record");
++  assert.equal(quarantine.records[0].source, "schema_violation");
++  assert.equal(quarantine.records[0].eventId, invalid.eventId);
++  assert.equal(quarantine.records[0].eventType, EVENT_TYPE.MARKET_TICK_RECEIVED);
++  assert.ok(quarantine.records[0].payloadHash);
++}
++
++{
++  const engine = resetEngine();
++  const beforeRevision = engine.getSnapshot().revision;
++  const beforeJournalCount = engine.getPersistenceView().replayCheck.eventCount;
++  const unknown = event({ eventType: "unknown.event.type" as any });
++
++  const result = engine.commitEventResult(unknown, { log: false });
++  assert.equal(result.ok, false);
++  assertNoMutation(engine, beforeRevision, beforeJournalCount);
++
++  const quarantine = engine.getQuarantineView();
++  assert.equal(quarantine.count, 1, "unknown event type quarantined");
++  assert.equal(quarantine.records[0].source, "unknown_event_type");
++  assert.equal(quarantine.records[0].eventType, "unknown.event.type");
++}
++
++{
++  const engine = resetEngine();
++  const accepted = event({ eventId: "duplicate-conflict-event" });
++  const first = engine.commitEventResult(accepted, { log: false });
++  assert.equal(first.status, "accepted");
++
++  const beforeRevision = engine.getSnapshot().revision;
++  const beforeJournalCount = engine.getPersistenceView().replayCheck.eventCount;
++
++  const conflict = event({
++    eventId: "duplicate-conflict-event",
++    timestamp: accepted.timestamp,
++    payload: {
++      symbol: "BTCUSDT",
++      price: 101,
++      bid: 100,
++      ask: 102,
++      volume: 1,
++      provider: "test"
++    } as any
++  });
++
++  const result = engine.commitEventResult(conflict, { log: false });
++  assert.equal(result.ok, false);
++  assert.equal(result.status, "duplicate_conflict");
++  assertNoMutation(engine, beforeRevision, beforeJournalCount);
++
++  const quarantine = engine.getQuarantineView();
++  assert.equal(quarantine.count, 1, "idempotency conflict quarantined");
++  assert.equal(quarantine.records[0].source, "idempotency_conflict");
++  assert.equal(quarantine.records[0].recoverable, true);
++  assert.equal(engine.getIdempotencyView().conflictCount, 1);
++}
++
++{
++  const engine = resetEngine();
++  const bad = event({ payload: { symbol: "BTCUSDT", price: -10, bid: 99, ask: 101, volume: 1, provider: "test" } as any });
++  const replayBefore = engine.replayCheck();
++  engine.commitEventResult(bad, { log: false });
++  const replayAfter = engine.replayCheck();
++
++  const report = engine.getCoreTrustReport();
++  const metadata = report.metadata as Record<string, unknown>;
++  const quarantine = metadata.quarantine as { count: number };
++  assert.equal(quarantine.count, 1, "quarantine count available to CoreTrustReport metadata");
++  assert.equal(replayAfter.eventCount, replayBefore.eventCount, "quarantine does not add replay events");
++  assert.equal(replayAfter.currentRevision, replayBefore.currentRevision, "quarantine does not change replay revision");
++  assert.equal(replayAfter.eventCount, engine.getSnapshot().revision, "quarantine records are outside replay event count");
++}
++
++console.log("core quarantine checks passed");
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/tests/scenarios/recovery-planner.ts project/tests/scenarios/recovery-planner.ts
+--- base/mbg-core-v0.1-alpha4/tests/scenarios/recovery-planner.ts	1970-01-01 00:00:00.000000000 +0000
++++ project/tests/scenarios/recovery-planner.ts	2026-05-07 13:37:13.533784833 +0000
+@@ -0,0 +1,247 @@
++import assert from "node:assert/strict";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { EVENT_TYPE, type DomainEvent } from "../../core/contracts/src/events.js";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++import { KERNEL_TRUST_STATE } from "../../core/kernel/kernel-constitution.js";
++import { type CoreTrustReport } from "../../core/kernel/core-trust-report.js";
++import {
++  planRecovery,
++  RECOVERY_ACTION_TYPE,
++  RECOVERY_PLANNER_VERSION
++} from "../../core/recovery/recovery-planner.js";
++
++const nowMs = Date.now();
++const freshPast = new Date(nowMs - 100).toISOString();
++
++function event<TPayload>(
++  eventType: string,
++  payload: TPayload,
++  eventId: string,
++  timestamp = freshPast,
++  source = "recovery-planner-test"
++): DomainEvent<TPayload> {
++  return {
++    eventId,
++    eventType: eventType as any,
++    timestamp,
++    source,
++    schemaVersion: "1",
++    payload
++  };
++}
++
++function reset() {
++  runtimeEngine.clearPersistenceAndReset();
++}
++
++function commitTrustedRuntime(prefix: string) {
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "recovery-planner-test"
++  }, `${prefix}-market`));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange"
++  }, `${prefix}-position`));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "loading" }, `${prefix}-bootstrap-loading`));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "replay" }, `${prefix}-bootstrap-replay`));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "awaiting" }, `${prefix}-bootstrap-awaiting`));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "reconciled" }, `${prefix}-bootstrap-reconciled`));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    provider: "recovery-planner-test",
++    lastAccountReconcileAt: freshPast,
++    lastPositionReconcileAt: freshPast,
++    lastOrderReconcileAt: freshPast,
++    lastFillSyncAt: freshPast,
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }, `${prefix}-exchange-truth`, freshPast, "exchange"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected",
++    source: "recovery-planner-test"
++  }, `${prefix}-health`));
++}
++
++function trustedReport(): CoreTrustReport {
++  reset();
++  commitTrustedRuntime("trusted-recovery-planner");
++  const report = runtimeEngine.getCoreTrustReport({ test: "recovery-planner-trusted" });
++  assert.equal(report.trustState, KERNEL_TRUST_STATE.TRUSTED);
++  return report;
++}
++
++function cloneReport(report: CoreTrustReport): CoreTrustReport {
++  return structuredClone(report) as CoreTrustReport;
++}
++
++function testColdStartSuggestsPositionAndExchangeReconcile() {
++  reset();
++  const report = runtimeEngine.getCoreTrustReport({ test: "recovery-planner-cold-start" });
++  const plan = planRecovery({ coreTrustReport: report });
++
++  assert.equal(plan.plannerVersion, RECOVERY_PLANNER_VERSION);
++  assert.equal(plan.required, true);
++  assert.ok(plan.nextActions.includes(RECOVERY_ACTION_TYPE.RECONCILE_POSITION));
++  assert.ok(plan.nextActions.includes(RECOVERY_ACTION_TYPE.RECONCILE_ORDERS));
++  assert.ok(plan.reasons.includes("position_unknown"));
++  assert.ok(plan.reasons.includes("exchange_truth_unknown"));
++  assert.ok(plan.forbiddenActions.includes("PLACE_ORDER"));
++  assert.ok(plan.forbiddenActions.includes("BYPASS_ACTION_GATE"));
++}
++
++function testMarketStaleSuggestsRefreshMarketData() {
++  const report = cloneReport(trustedReport());
++  report.trustState = KERNEL_TRUST_STATE.RECOVERABLE;
++  report.freshness.marketDataFreshness.status = "stale";
++  report.freshness.marketDataFreshness.reason = "market_data_stale";
++  report.freshness.blockingReasons = ["market_data_stale"];
++  report.freshness.okForNormalTrading = false;
++  report.blockingReasons = [{
++    code: "market_data_stale",
++    domain: "freshness",
++    severity: "blocking",
++    message: "Market data is stale."
++  }];
++
++  const plan = planRecovery({ coreTrustReport: report });
++
++  assert.equal(plan.required, true);
++  assert.ok(plan.nextActions.includes(RECOVERY_ACTION_TYPE.REFRESH_MARKET_DATA));
++  assert.ok(plan.reasons.includes("market_data_stale"));
++}
++
++function testHealthUnknownSuggestsCheckHealth() {
++  const report = cloneReport(trustedReport());
++  report.trustState = KERNEL_TRUST_STATE.UNCERTAIN;
++  report.healthTruth.healthTruthComplete = false;
++  report.healthTruth.wsConnected = "unknown";
++  report.healthTruth.healthTruthDiagnostics = ["health_truth_unknown"];
++  report.blockingReasons = [{
++    code: "health_truth_unknown",
++    domain: "healthTruth",
++    severity: "blocking",
++    message: "Health truth is unknown."
++  }];
++
++  const plan = planRecovery({ coreTrustReport: report });
++
++  assert.equal(plan.required, true);
++  assert.ok(plan.nextActions.includes(RECOVERY_ACTION_TYPE.CHECK_HEALTH));
++  assert.ok(plan.reasons.includes("health_truth_unknown"));
++}
++
++function testCompromisedSuggestsReplayCheckAndManualReview() {
++  const report = cloneReport(trustedReport());
++  report.trustState = KERNEL_TRUST_STATE.COMPROMISED;
++  report.replay = { ok: false, mismatch: true, reason: "replay mismatch" };
++  report.blockingReasons = [{
++    code: "replay_mismatch",
++    domain: "replay",
++    severity: "critical",
++    message: "Replay mismatch."
++  }];
++
++  const plan = planRecovery({ coreTrustReport: report });
++
++  assert.equal(plan.required, true);
++  assert.equal(plan.mode, "forensic_review");
++  assert.ok(plan.nextActions.includes(RECOVERY_ACTION_TYPE.RUN_REPLAY_CHECK));
++  assert.ok(plan.nextActions.includes(RECOVERY_ACTION_TYPE.MANUAL_REVIEW));
++  assert.equal(plan.manualReviewRequired, true);
++}
++
++function testPanicSuggestsHaltRuntimeAndManualReview() {
++  const report = cloneReport(trustedReport());
++  report.trustState = KERNEL_TRUST_STATE.PANIC;
++  report.blockingReasons = [{
++    code: "critical_corruption",
++    domain: "system",
++    severity: "panic",
++    message: "Critical corruption detected."
++  }];
++
++  const plan = planRecovery({ coreTrustReport: report });
++
++  assert.equal(plan.required, true);
++  assert.equal(plan.mode, "panic_halt");
++  assert.equal(plan.priority, "critical");
++  assert.ok(plan.nextActions.includes(RECOVERY_ACTION_TYPE.HALT_RUNTIME));
++  assert.ok(plan.nextActions.includes(RECOVERY_ACTION_TYPE.MANUAL_REVIEW));
++  assert.equal(plan.manualReviewRequired, true);
++}
++
++function testTrustedDoesNotRequireRecovery() {
++  const report = trustedReport();
++  const plan = planRecovery({ coreTrustReport: report });
++
++  assert.equal(plan.required, false);
++  assert.equal(plan.mode, "none");
++  assert.deepEqual(plan.nextActions, []);
++  assert.equal(plan.priority, "none");
++  assert.equal(plan.manualReviewRequired, false);
++}
++
++function testQuarantineSuggestsInspection() {
++  const report = trustedReport();
++  const plan = planRecovery({
++    coreTrustReport: report,
++    quarantineSummary: {
++      count: 1,
++      reasons: ["invalid_event_quarantined"]
++    }
++  });
++
++  assert.equal(plan.required, true);
++  assert.ok(plan.nextActions.includes(RECOVERY_ACTION_TYPE.INSPECT_QUARANTINE));
++  assert.ok(plan.reasons.includes("quarantine_items_present"));
++}
++
++function testPlannerDoesNotMutateSnapshot() {
++  reset();
++  const beforeSnapshot = structuredClone(runtimeEngine.getSnapshot());
++  const report = runtimeEngine.getCoreTrustReport({ test: "recovery-planner-purity" });
++  const beforeReport = structuredClone(report);
++
++  planRecovery({
++    coreTrustReport: report,
++    lastActionGateVerdict: runtimeEngine.evaluateAction({ type: ACTION_TYPE.PLACE_ORDER })
++  });
++
++  assert.deepEqual(runtimeEngine.getSnapshot(), beforeSnapshot);
++  assert.deepEqual(report, beforeReport);
++}
++
++testColdStartSuggestsPositionAndExchangeReconcile();
++testMarketStaleSuggestsRefreshMarketData();
++testHealthUnknownSuggestsCheckHealth();
++testCompromisedSuggestsReplayCheckAndManualReview();
++testPanicSuggestsHaltRuntimeAndManualReview();
++testTrustedDoesNotRequireRecovery();
++testQuarantineSuggestsInspection();
++testPlannerDoesNotMutateSnapshot();
++
++console.log(JSON.stringify({
++  name: "recovery_planner",
++  ok: true,
++  plannerVersion: RECOVERY_PLANNER_VERSION
++}, null, 2));
+diff -ruN '--exclude=node_modules' '--exclude=data' base/mbg-core-v0.1-alpha4/tests/scenarios/wave5-scenario-audit.ts project/tests/scenarios/wave5-scenario-audit.ts
+--- base/mbg-core-v0.1-alpha4/tests/scenarios/wave5-scenario-audit.ts	1970-01-01 00:00:00.000000000 +0000
++++ project/tests/scenarios/wave5-scenario-audit.ts	2026-05-07 13:37:13.918928512 +0000
+@@ -0,0 +1,540 @@
++import assert from "node:assert/strict";
++import fs from "node:fs";
++import os from "node:os";
++import path from "node:path";
++
++const dataDir = path.join(os.tmpdir(), `mbg-core-wave5-scenario-audit-${process.pid}-${Date.now()}`);
++process.env.GENESIS_DATA_DIR = dataDir;
++process.env.PERSISTENCE_ENABLED = "true";
++process.env.MBG_HEALTH_CONNECTION_STATUS_TTL_MS = "15000";
++process.env.MBG_EVENT_FUTURE_TOLERANCE_MS = "5000";
++
++const { runtimeEngine } = await import("../../core/runtime/src/runtime-engine.js");
++const { ACTION_TYPE } = await import("../../core/contracts/src/actions.js");
++const { EVENT_TYPE } = await import("../../core/contracts/src/events.js");
++
++type ScenarioResult = {
++  name: string;
++  covers: string[];
++  ok: boolean;
++  detail?: string;
++};
++
++type CommitResult = {
++  ok?: boolean;
++  status?: string;
++  eventId?: string;
++  eventType?: string;
++  snapshotRevision?: number;
++  snapshot?: unknown;
++  diagnostic?: unknown;
++  [key: string]: unknown;
++};
++
++type RuntimeLike = typeof runtimeEngine & {
++  commitEventResult?: (event: Record<string, unknown>, options?: { log?: boolean }) => CommitResult;
++  getQuarantineView?: () => unknown;
++  getQuarantineRecords?: () => unknown;
++  getQuarantine?: () => unknown;
++  getQuarantinedEvents?: () => unknown;
++  getPermissionLedgerView?: () => unknown;
++  getPermissionLedger?: () => unknown;
++  getPermissionsLedgerView?: () => unknown;
++  getRecoveryPlan?: (input?: unknown) => unknown;
++  getRecoveryPlannerView?: (input?: unknown) => unknown;
++  getRecoverySuggestions?: (input?: unknown) => unknown;
++  planRecovery?: (input?: unknown) => unknown;
++};
++
++const engine = runtimeEngine as RuntimeLike;
++const results: ScenarioResult[] = [];
++
++function scenario(name: string, covers: string[], body: () => void) {
++  try {
++    runtimeEngine.clearPersistenceAndReset();
++    body();
++    results.push({ name, covers, ok: true });
++  } catch (err) {
++    results.push({
++      name,
++      covers,
++      ok: false,
++      detail: err instanceof Error ? err.message : String(err)
++    });
++  }
++}
++
++function isoNow() {
++  return new Date().toISOString();
++}
++
++function isoPast(msAgo: number) {
++  return new Date(Date.now() - msAgo).toISOString();
++}
++
++function event(
++  eventType: string,
++  payload: Record<string, unknown>,
++  eventId: string,
++  timestamp = isoNow(),
++  source = "wave5-scenario-audit"
++) {
++  return {
++    eventId,
++    eventType,
++    timestamp,
++    source,
++    schemaVersion: "1",
++    payload
++  };
++}
++
++function clone<T>(value: T): T {
++  return structuredClone(value);
++}
++
++function canonicalizeSnapshot(value: unknown): unknown {
++  const snapshot = clone(value);
++  return snapshot;
++}
++
++function commitResult(eventToCommit: Record<string, unknown>) {
++  assert.equal(typeof engine.commitEventResult, "function", "runtimeEngine.commitEventResult(event, { log: false }) is required");
++  return engine.commitEventResult!(eventToCommit, { log: false });
++}
++
++function commitOk(eventToCommit: Record<string, unknown>, message: string) {
++  const result = commitResult(eventToCommit);
++  assert.equal(result.ok, true, `${message}: expected accepted event, got ${JSON.stringify(result)}`);
++  assert.ok(
++    result.status === "accepted" || result.status === "duplicate_ignored",
++    `${message}: unexpected status ${String(result.status)}`
++  );
++  return result;
++}
++
++function invalidMarketTick(eventId: string) {
++  return event(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: -1,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "wave5-scenario-audit"
++  }, eventId, isoNow(), "market-data");
++}
++
++function validMarketTick(eventId: string, timestamp = isoNow()) {
++  return event(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "wave5-scenario-audit"
++  }, eventId, timestamp, "market-data");
++}
++
++function conflictingMarketTick(eventId: string) {
++  return event(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65050,
++    bid: 65049,
++    ask: 65051,
++    volume: 2,
++    provider: "wave5-scenario-audit"
++  }, eventId, isoNow(), "market-data");
++}
++
++function bootstrapEvent(eventType: string, eventId: string) {
++  return event(eventType, {
++    reason: eventType.replace(".", "_"),
++    provider: "wave5-scenario-audit",
++    source: "wave5-scenario-audit"
++  }, eventId, isoNow(), "core");
++}
++
++function positionReconciled(eventId: string) {
++  return event(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange",
++    provider: "wave5-scenario-audit"
++  }, eventId, isoNow(), "exchange");
++}
++
++function exchangeTruthFresh(eventId: string, timestamp = isoNow()) {
++  return event(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    provider: "wave5-scenario-audit",
++    lastAccountReconcileAt: timestamp,
++    lastPositionReconcileAt: timestamp,
++    lastOrderReconcileAt: timestamp,
++    lastFillSyncAt: timestamp,
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }, eventId, timestamp, "exchange");
++}
++
++function healthConnected(eventId: string, timestamp = isoNow()) {
++  return event(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected",
++    source: "wave5-scenario-audit"
++  }, eventId, timestamp, "core");
++}
++
++function healthUnknown(eventId: string) {
++  return event(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "unknown",
++    reason: "wave5_health_unknown",
++    source: "wave5-scenario-audit"
++  }, eventId, isoNow(), "core");
++}
++
++function completeBootstrap(prefix: string) {
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, `${prefix}-bootstrap-loading`), "bootstrap.loading_snapshot");
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, `${prefix}-bootstrap-replaying`), "bootstrap.replaying_tail");
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, `${prefix}-bootstrap-awaiting-exchange-truth`), "bootstrap.awaiting_exchange_truth");
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, `${prefix}-bootstrap-reconciled`), "bootstrap.reconciled");
++}
++
++function prepareReadyState(prefix: string, marketTimestamp = isoNow()) {
++  commitOk(validMarketTick(`${prefix}-market`, marketTimestamp), "market.tick.received");
++  commitOk(positionReconciled(`${prefix}-position`), "position.reconciled");
++  completeBootstrap(prefix);
++  commitOk(exchangeTruthFresh(`${prefix}-exchange-truth`), "exchange_truth.reconcile_succeeded");
++  commitOk(healthConnected(`${prefix}-health`), "system.health.changed");
++}
++
++function getCanonicalEventIds() {
++  return new Set(runtimeEngine.getEvents(5000).map((entry: { eventId: string }) => entry.eventId));
++}
++
++function flattenUnknown(value: unknown): unknown[] {
++  const items: unknown[] = [];
++  const seen = new Set<unknown>();
++
++  function visit(current: unknown) {
++    if (current === null || current === undefined) return;
++    if (typeof current !== "object") {
++      items.push(current);
++      return;
++    }
++    if (seen.has(current)) return;
++    seen.add(current);
++
++    if (Array.isArray(current)) {
++      for (const item of current) visit(item);
++      return;
++    }
++
++    items.push(current);
++    for (const nested of Object.values(current as Record<string, unknown>)) {
++      visit(nested);
++    }
++  }
++
++  visit(value);
++  return items;
++}
++
++function asText(value: unknown): string {
++  if (typeof value === "string") return value;
++  try {
++    return JSON.stringify(value);
++  } catch {
++    return String(value);
++  }
++}
++
++function viewRecords(view: unknown): unknown[] {
++  if (Array.isArray(view)) return view;
++  if (!view || typeof view !== "object") return [];
++  const object = view as Record<string, unknown>;
++  const candidates = [
++    object.records,
++    object.entries,
++    object.events,
++    object.items,
++    object.rejected,
++    object.quarantined,
++    object.diagnostics,
++    object.decisions
++  ];
++  for (const candidate of candidates) {
++    if (Array.isArray(candidate)) return candidate;
++  }
++  return flattenUnknown(view).filter((item) => item && typeof item === "object");
++}
++
++function getQuarantineViewStrict() {
++  const candidates = [
++    engine.getQuarantineView,
++    engine.getQuarantineRecords,
++    engine.getQuarantine,
++    engine.getQuarantinedEvents
++  ];
++
++  for (const candidate of candidates) {
++    if (typeof candidate === "function") {
++      return candidate.call(engine);
++    }
++  }
++
++  throw new Error("Wave 5 quarantine API is not available");
++}
++
++function getPermissionLedgerViewStrict() {
++  const candidates = [
++    engine.getPermissionLedgerView,
++    engine.getPermissionLedger,
++    engine.getPermissionsLedgerView
++  ];
++
++  for (const candidate of candidates) {
++    if (typeof candidate === "function") {
++      return candidate.call(engine);
++    }
++  }
++
++  throw new Error("Wave 5 Permission Ledger API is not available");
++}
++
++function getRecoveryPlanStrict(input?: unknown) {
++  const candidates = [
++    engine.getRecoveryPlan,
++    engine.getRecoveryPlannerView,
++    engine.getRecoverySuggestions,
++    engine.planRecovery
++  ];
++
++  for (const candidate of candidates) {
++    if (typeof candidate === "function") {
++      return candidate.call(engine, input);
++    }
++  }
++
++  throw new Error("Wave 5 Recovery Planner API is not available");
++}
++
++function assertViewContains(view: unknown, fragments: string[], message: string) {
++  const lower = fragments.map((fragment) => fragment.toLowerCase());
++  const records = viewRecords(view);
++  assert.ok(records.length > 0, `${message}: view has no records. View=${JSON.stringify(view)}`);
++  assert.ok(
++    records.some((record) => {
++      const text = asText(record).toLowerCase();
++      return lower.every((fragment) => text.includes(fragment));
++    }),
++    `${message}: expected fragments ${fragments.join(", ")}. View=${JSON.stringify(view)}`
++  );
++}
++
++function assertSuggestion(plan: unknown, expectedCodes: string[], message: string) {
++  const text = asText(plan).toUpperCase();
++  assert.ok(
++    expectedCodes.some((code) => text.includes(code.toUpperCase())),
++    `${message}: expected one of ${expectedCodes.join(", ")}. Plan=${JSON.stringify(plan)}`
++  );
++}
++
++function evaluatePlaceOrder() {
++  return runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  });
++}
++
++function evaluateDiagnosticAction() {
++  return runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.RECONCILE_POSITION,
++    symbol: "BTCUSDT"
++  });
++}
++
++scenario(
++  "invalid event -> quarantine record created",
++  ["Quarantine", "Event Validation"],
++  () => {
++    const badEvent = invalidMarketTick("wave5-invalid-quarantine-created");
++    const result = commitResult(badEvent);
++
++    assert.equal(result.ok, false, `invalid event must be rejected. Result=${JSON.stringify(result)}`);
++    const quarantine = getQuarantineViewStrict();
++    assertViewContains(quarantine, [badEvent.eventId, "rejected"], "invalid event must create quarantine record");
++  }
++);
++
++scenario(
++  "invalid event -> not in canonical journal",
++  ["Quarantine", "Canonical Journal Safety"],
++  () => {
++    const badEvent = invalidMarketTick("wave5-invalid-not-canonical");
++    const result = commitResult(badEvent);
++
++    assert.equal(result.ok, false, `invalid event must be rejected. Result=${JSON.stringify(result)}`);
++    assert.ok(!getCanonicalEventIds().has(badEvent.eventId), "invalid event must not enter canonical journal");
++  }
++);
++
++scenario(
++  "invalid event -> snapshot revision unchanged",
++  ["Quarantine", "Snapshot Safety"],
++  () => {
++    const badEvent = invalidMarketTick("wave5-invalid-revision-unchanged");
++    const beforeRevision = runtimeEngine.getSnapshot().revision;
++    const beforeSnapshot = canonicalizeSnapshot(runtimeEngine.getSnapshot());
++    const result = commitResult(badEvent);
++
++    assert.equal(result.ok, false, `invalid event must be rejected. Result=${JSON.stringify(result)}`);
++    assert.equal(runtimeEngine.getSnapshot().revision, beforeRevision, "invalid event must not bump snapshot revision");
++    assert.deepEqual(canonicalizeSnapshot(runtimeEngine.getSnapshot()), beforeSnapshot, "invalid event must not mutate snapshot");
++  }
++);
++
++scenario(
++  "idempotency conflict -> quarantine or diagnostic record",
++  ["Quarantine", "Event Idempotency"],
++  () => {
++    const first = validMarketTick("wave5-idempotency-conflict");
++    commitOk(first, "first event before idempotency conflict");
++
++    const beforeRevision = runtimeEngine.getSnapshot().revision;
++    const beforeSnapshot = canonicalizeSnapshot(runtimeEngine.getSnapshot());
++    const conflict = conflictingMarketTick("wave5-idempotency-conflict");
++    const result = commitResult(conflict);
++
++    assert.equal(result.ok, false, `idempotency conflict must not be accepted. Result=${JSON.stringify(result)}`);
++    assert.equal(result.status, "duplicate_conflict", `expected duplicate_conflict. Result=${JSON.stringify(result)}`);
++    assert.equal(runtimeEngine.getSnapshot().revision, beforeRevision, "idempotency conflict must not bump revision");
++    assert.deepEqual(canonicalizeSnapshot(runtimeEngine.getSnapshot()), beforeSnapshot, "idempotency conflict must not mutate snapshot");
++    assert.ok(!getCanonicalEventIds().has(conflict.eventId) || runtimeEngine.getEvents(5000).filter((entry: { eventId: string }) => entry.eventId === conflict.eventId).length === 1, "conflicting duplicate must not be appended as a new canonical event");
++
++    let diagnosticSeen = asText(runtimeEngine.getIdempotencyView()).includes("duplicate_conflict");
++    try {
++      const quarantine = getQuarantineViewStrict();
++      diagnosticSeen = diagnosticSeen || asText(quarantine).includes("duplicate_conflict") || asText(quarantine).includes(conflict.eventId);
++    } catch {
++      // Scenario allows quarantine OR diagnostic record.
++    }
++
++    assert.ok(diagnosticSeen, `idempotency conflict must create quarantine or diagnostic record. Result=${JSON.stringify(result)}`);
++  }
++);
++
++scenario(
++  "denied PLACE_ORDER -> Permission Ledger record exists",
++  ["Permission Ledger", "ActionGate Verdict v2"],
++  () => {
++    const beforeRevision = runtimeEngine.getSnapshot().revision;
++    const verdict = evaluatePlaceOrder();
++
++    assert.equal(verdict.allowed, false, `cold-start PLACE_ORDER must be denied. Verdict=${JSON.stringify(verdict)}`);
++    assert.equal(runtimeEngine.getSnapshot().revision, beforeRevision, "permission evaluation must not mutate snapshot");
++    const ledger = getPermissionLedgerViewStrict();
++    assertViewContains(ledger, [ACTION_TYPE.PLACE_ORDER, "deny"], "denied PLACE_ORDER must be written to Permission Ledger");
++  }
++);
++
++scenario(
++  "allowed diagnostic action -> Permission Ledger record exists",
++  ["Permission Ledger", "ActionGate Verdict v2"],
++  () => {
++    const verdict = evaluateDiagnosticAction();
++
++    assert.equal(verdict.allowed, true, `RECONCILE_POSITION diagnostic/recovery action should be allowed. Verdict=${JSON.stringify(verdict)}`);
++    const ledger = getPermissionLedgerViewStrict();
++    assertViewContains(ledger, [ACTION_TYPE.RECONCILE_POSITION, "allow"], "allowed diagnostic action must be written to Permission Ledger");
++  }
++);
++
++scenario(
++  "cold start -> Recovery Planner suggests RECONCILE_POSITION / RECONCILE_ORDERS",
++  ["Recovery Planner", "Cold Start"],
++  () => {
++    const beforeSnapshot = canonicalizeSnapshot(runtimeEngine.getSnapshot());
++    const plan = getRecoveryPlanStrict({ reason: "cold_start" });
++    const afterSnapshot = canonicalizeSnapshot(runtimeEngine.getSnapshot());
++
++    assert.deepEqual(afterSnapshot, beforeSnapshot, "Recovery Planner must not mutate snapshot");
++    assertSuggestion(plan, ["RECONCILE_POSITION", ACTION_TYPE.RECONCILE_POSITION], "cold start plan must suggest position reconciliation");
++    assertSuggestion(plan, ["RECONCILE_ORDERS", "RECONCILE_ORDER", ACTION_TYPE.RECONCILE_ORDER], "cold start plan must suggest order reconciliation");
++  }
++);
++
++scenario(
++  "market stale -> Recovery Planner suggests REFRESH_MARKET_DATA",
++  ["Recovery Planner", "Freshness Guard"],
++  () => {
++    prepareReadyState("wave5-market-stale", isoPast(120_000));
++    const plan = getRecoveryPlanStrict({ reason: "market_stale" });
++
++    assertSuggestion(plan, ["REFRESH_MARKET_DATA", "MARKET_DATA"], "market stale plan must suggest refreshing market data");
++  }
++);
++
++scenario(
++  "health unknown -> Recovery Planner suggests CHECK_HEALTH",
++  ["Recovery Planner", "Health Truth"],
++  () => {
++    commitOk(validMarketTick("wave5-health-unknown-market"), "market.tick.received");
++    commitOk(positionReconciled("wave5-health-unknown-position"), "position.reconciled");
++    completeBootstrap("wave5-health-unknown");
++    commitOk(exchangeTruthFresh("wave5-health-unknown-exchange-truth"), "exchange_truth.reconcile_succeeded");
++    commitOk(healthUnknown("wave5-health-unknown-health"), "system.health.changed");
++
++    const plan = getRecoveryPlanStrict({ reason: "health_unknown" });
++
++    assertSuggestion(plan, ["CHECK_HEALTH", "HEALTH"], "health unknown plan must suggest CHECK_HEALTH");
++  }
++);
++
++scenario(
++  "Recovery Planner does not mutate snapshot",
++  ["Recovery Planner", "Snapshot Safety"],
++  () => {
++    commitOk(validMarketTick("wave5-planner-no-mutation-market"), "market.tick.received");
++    const beforeRevision = runtimeEngine.getSnapshot().revision;
++    const beforeSnapshot = canonicalizeSnapshot(runtimeEngine.getSnapshot());
++
++    getRecoveryPlanStrict({ reason: "no_mutation_probe" });
++
++    assert.equal(runtimeEngine.getSnapshot().revision, beforeRevision, "Recovery Planner must not bump snapshot revision");
++    assert.deepEqual(canonicalizeSnapshot(runtimeEngine.getSnapshot()), beforeSnapshot, "Recovery Planner must not mutate snapshot");
++  }
++);
++
++const failed = results.filter((result) => !result.ok);
++const summary = {
++  name: "wave5_scenario_audit",
++  total: results.length,
++  passed: results.length - failed.length,
++  failed: failed.length,
++  results
++};
++
++console.log(JSON.stringify(summary, null, 2));
++
++try {
++  fs.rmSync(dataDir, { recursive: true, force: true });
++} catch {
++  // Best-effort cleanup only.
++}
++
++if (failed.length > 0) {
++  process.exitCode = 1;
++}

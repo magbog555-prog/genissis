@@ -1,0 +1,549 @@
+{
+  "traceId": "trace-000134",
+  "apiVersion": "core-computation-trace-v0.6",
+  "generatedAt": "2026-05-07T18:27:14.000Z",
+  "machine": {
+    "status": "RUNNING",
+    "statusRu": "работает",
+    "trustState": "UNCERTAIN",
+    "trustStateRu": "неопределённое",
+    "runtimeMode": "RECOVERY_ONLY",
+    "runtimeModeRu": "только восстановление",
+    "tradingAllowed": false,
+    "revision": 134,
+    "lastEventType": "market.tick.received",
+    "lastTransition": "133 -> 134",
+    "mainReason": "exchange_truth_unknown",
+    "mainReasonRu": "Биржевая истина неизвестна"
+  },
+  "event": {
+    "eventId": "evt-987654",
+    "eventType": "market.tick.received",
+    "source": "mock",
+    "receivedAt": "2026-05-07T18:27:11.247Z",
+    "eventTime": "2026-05-07T18:27:11.120Z",
+    "sequence": 134,
+    "payloadHash": "a12bc34d",
+    "payloadPreview": {
+      "symbol": "BTCUSDT",
+      "price": 102.2,
+      "bid": 102.19,
+      "ask": 102.21,
+      "volume": 12.45
+    },
+    "adapterMode": "mock",
+    "sourceMode": "simulated",
+    "providerFormat": "binance-like",
+    "liveExchangeConnected": false
+  },
+  "pipeline": [
+    {
+      "stepId": "event_input",
+      "label": "Event Input",
+      "labelRu": "Вход события",
+      "status": "pass",
+      "latencyMs": 0.21,
+      "counter": 134,
+      "revision": 133,
+      "summary": "Event received",
+      "summaryRu": "Событие получено"
+    },
+    {
+      "stepId": "validation",
+      "label": "Validation",
+      "labelRu": "Проверка события",
+      "status": "pass",
+      "latencyMs": 0.38,
+      "counter": 134,
+      "revision": 133,
+      "summary": "Schema and domain checks passed",
+      "summaryRu": "Проверки пройдены"
+    },
+    {
+      "stepId": "idempotency",
+      "label": "Idempotency",
+      "labelRu": "Проверка повтора",
+      "status": "pass",
+      "latencyMs": 0.17,
+      "counter": 134,
+      "revision": 133,
+      "summary": "Event is unique",
+      "summaryRu": "Событие уникально"
+    },
+    {
+      "stepId": "journal",
+      "label": "Journal Decision",
+      "labelRu": "Решение по журналу",
+      "status": "pass",
+      "latencyMs": 1.12,
+      "counter": 133,
+      "revision": 133,
+      "summary": "Event appended to canonical journal",
+      "summaryRu": "Событие записано"
+    },
+    {
+      "stepId": "reducer",
+      "label": "Reducer Computation",
+      "labelRu": "Вычисление редуктора",
+      "status": "applied",
+      "latencyMs": 2.41,
+      "counter": 134,
+      "revision": 134,
+      "summary": "Snapshot changed",
+      "summaryRu": "Снимок изменён"
+    },
+    {
+      "stepId": "snapshot",
+      "label": "Snapshot Diff",
+      "labelRu": "Разница снимка",
+      "status": "applied",
+      "latencyMs": 1.87,
+      "counter": 134,
+      "revision": 134,
+      "summary": "Revision 134 produced",
+      "summaryRu": "Создана ревизия 134"
+    },
+    {
+      "stepId": "kernel_authority",
+      "label": "Kernel Authority",
+      "labelRu": "Орган доверия ядра",
+      "status": "fail",
+      "latencyMs": 1.28,
+      "counter": 134,
+      "revision": 134,
+      "summary": "Trust state remains UNCERTAIN",
+      "summaryRu": "Доверие неопределённое",
+      "reason": "exchange_truth_unknown",
+      "reasonRu": "Биржевая истина неизвестна"
+    },
+    {
+      "stepId": "action_gate",
+      "label": "ActionGate Decision",
+      "labelRu": "Решение ворот действия",
+      "status": "denied",
+      "latencyMs": 0.64,
+      "counter": 134,
+      "revision": 134,
+      "summary": "PLACE_ORDER denied",
+      "summaryRu": "Размещение ордера запрещено",
+      "reason": "trustState != TRUSTED",
+      "reasonRu": "Ядро не находится в доверенном состоянии"
+    },
+    {
+      "stepId": "permission_ledger",
+      "label": "Permission Ledger",
+      "labelRu": "Журнал разрешений",
+      "status": "pass",
+      "latencyMs": 0.98,
+      "counter": 92,
+      "revision": 134,
+      "summary": "Decision recorded",
+      "summaryRu": "Решение записано"
+    }
+  ],
+  "checks": {
+    "validation": [
+      {
+        "checkId": "schema_required_fields",
+        "label": "Required fields",
+        "labelRu": "Обязательные поля",
+        "status": "pass",
+        "expression": "symbol && price && bid && ask && eventTime",
+        "actual": "all present",
+        "result": true
+      },
+      {
+        "checkId": "price_positive",
+        "label": "Price positive",
+        "labelRu": "Цена положительная",
+        "status": "pass",
+        "expression": "price > 0",
+        "actual": "102.2 > 0",
+        "result": true
+      },
+      {
+        "checkId": "spread_valid",
+        "label": "Spread valid",
+        "labelRu": "Спред корректный",
+        "status": "pass",
+        "expression": "bid <= ask",
+        "actual": "102.19 <= 102.21",
+        "result": true
+      }
+    ],
+    "idempotency": [
+      {
+        "checkId": "event_key_unique",
+        "label": "Event key unique",
+        "labelRu": "Ключ события уникален",
+        "status": "pass",
+        "expression": "not exists(eventKey)",
+        "actual": "market.tick.received:BTCUSDT:134",
+        "result": "unique"
+      }
+    ],
+    "reducer": [
+      {
+        "checkId": "market_last_price",
+        "label": "Market last price",
+        "labelRu": "Последняя цена рынка",
+        "status": "applied",
+        "expression": "snapshot.market.lastPrice = event.price",
+        "actual": "102.15 -> 102.20",
+        "result": "applied"
+      },
+      {
+        "checkId": "freshness_age",
+        "label": "Freshness age",
+        "labelRu": "Возраст свежести",
+        "status": "applied",
+        "expression": "nowMs - lastMarketEventAtMs",
+        "actual": "1715077634000 - 1715077633880",
+        "result": "120 ms"
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "formulaId": "market_freshness_age_ms",
+      "domain": "freshness",
+      "label": "Market freshness age",
+      "labelRu": "Возраст рыночных данных",
+      "status": "applied",
+      "inputs": {
+        "nowMs": 1715077634000,
+        "lastMarketEventAtMs": 1715077633880
+      },
+      "expression": "nowMs - lastMarketEventAtMs",
+      "intermediate": {
+        "ageMs": 120
+      },
+      "threshold": {
+        "freshMaxMs": 5000
+      },
+      "result": "120 ms → fresh",
+      "resultRu": "120 мс → свежее",
+      "explanationRu": "Возраст рыночных данных меньше порога свежести, поэтому статус рынка стал fresh.",
+      "explanation": "Market data age is below freshness threshold, so market status became fresh."
+    },
+    {
+      "formulaId": "market_freshness_status",
+      "domain": "freshness",
+      "label": "Market freshness status",
+      "labelRu": "Статус свежести рынка",
+      "status": "applied",
+      "inputs": {
+        "ageMs": 120,
+        "freshMaxMs": 5000
+      },
+      "expression": "ageMs <= freshMaxMs",
+      "intermediate": {
+        "comparison": "120 <= 5000"
+      },
+      "threshold": {
+        "freshMaxMs": 5000
+      },
+      "result": "fresh",
+      "resultRu": "свежее",
+      "explanationRu": "Рынок считается свежим.",
+      "explanation": "Market is considered fresh."
+    },
+    {
+      "formulaId": "trust_state_evaluation",
+      "domain": "kernelAuthority",
+      "label": "Trust state evaluation",
+      "labelRu": "Оценка состояния доверия",
+      "status": "fail",
+      "inputs": {
+        "bootstrapReconciled": true,
+        "exchangeTruthStatus": "unknown",
+        "marketFreshness": "fresh",
+        "healthTruthComplete": true
+      },
+      "expression": "exchangeTruthStatus == fresh && bootstrapReconciled && healthTruthComplete",
+      "intermediate": {
+        "exchangeTruthFresh": false
+      },
+      "threshold": {},
+      "result": "UNCERTAIN",
+      "resultRu": "неопределённое",
+      "explanationRu": "Биржевая истина неизвестна, поэтому ядро не может стать TRUSTED.",
+      "explanation": "Exchange truth is unknown, so the core cannot become TRUSTED."
+    },
+    {
+      "formulaId": "action_gate_normal_trade",
+      "domain": "actionGate",
+      "label": "Normal trade gate rule",
+      "labelRu": "Правило ворот для обычной торговли",
+      "status": "denied",
+      "inputs": {
+        "action": "PLACE_ORDER",
+        "trustState": "UNCERTAIN",
+        "requiredTrustState": "TRUSTED"
+      },
+      "expression": "action == PLACE_ORDER && trustState == TRUSTED",
+      "intermediate": {
+        "trustState == TRUSTED": false
+      },
+      "threshold": {},
+      "result": "denied",
+      "resultRu": "запрещено",
+      "explanationRu": "Обычное торговое действие требует TRUSTED, но ядро UNCERTAIN.",
+      "explanation": "Normal trading action requires TRUSTED, but the core is UNCERTAIN."
+    }
+  ],
+  "rules": {
+    "kernelAuthority": [
+      {
+        "ruleId": "KA-01",
+        "label": "Bootstrap reconciled",
+        "labelRu": "Запуск должен быть завершён",
+        "status": "pass",
+        "condition": "bootstrap.reconciled == true",
+        "actual": "true",
+        "effect": "trust evaluation may continue",
+        "effectRu": "оценка доверия продолжается",
+        "severity": "info"
+      },
+      {
+        "ruleId": "KA-02",
+        "label": "Health truth complete",
+        "labelRu": "Честное здоровье должно быть полным",
+        "status": "pass",
+        "condition": "healthTruth.complete == true",
+        "actual": "true",
+        "effect": "health does not block trust",
+        "effectRu": "здоровье не блокирует доверие",
+        "severity": "info"
+      },
+      {
+        "ruleId": "KA-07",
+        "label": "Exchange truth fresh",
+        "labelRu": "Биржевая истина должна быть свежей",
+        "status": "fail",
+        "condition": "exchangeTruth.status == fresh",
+        "actual": "unknown",
+        "effect": "trustState cannot be TRUSTED",
+        "effectRu": "ядро не может быть доверенным",
+        "severity": "block"
+      },
+      {
+        "ruleId": "KA-09",
+        "label": "Market data fresh",
+        "labelRu": "Рыночные данные должны быть свежими",
+        "status": "pass",
+        "condition": "freshness.market.status == fresh",
+        "actual": "fresh",
+        "effect": "market freshness accepted",
+        "effectRu": "свежесть рынка принята",
+        "severity": "info"
+      },
+      {
+        "ruleId": "KA-12",
+        "label": "Replay check passed",
+        "labelRu": "Проверка replay должна пройти",
+        "status": "pass",
+        "condition": "replay.status == passed",
+        "actual": "passed",
+        "effect": "replay does not block trust",
+        "effectRu": "повторное проигрывание не блокирует доверие",
+        "severity": "info"
+      }
+    ],
+    "actionGate": [
+      {
+        "ruleId": "AG-01",
+        "label": "Action known",
+        "labelRu": "Действие известно ядру",
+        "status": "pass",
+        "condition": "action in registeredActions",
+        "actual": "PLACE_ORDER",
+        "effect": "gate evaluation may continue",
+        "effectRu": "оценка ворот продолжается",
+        "severity": "info"
+      },
+      {
+        "ruleId": "AG-03",
+        "label": "Trusted core required for normal trading",
+        "labelRu": "Обычная торговля требует доверенное ядро",
+        "status": "fail",
+        "condition": "trustState == TRUSTED",
+        "actual": "UNCERTAIN",
+        "effect": "PLACE_ORDER denied",
+        "effectRu": "размещение ордера запрещено",
+        "severity": "block"
+      },
+      {
+        "ruleId": "AG-05",
+        "label": "Recovery actions allowed",
+        "labelRu": "Восстановительные действия разрешены",
+        "status": "pass",
+        "condition": "actionClass == RECOVERY implies allowed",
+        "actual": "current actionClass=NORMAL",
+        "effect": "not applicable to PLACE_ORDER",
+        "effectRu": "не применяется к PLACE_ORDER",
+        "severity": "info"
+      },
+      {
+        "ruleId": "AG-08",
+        "label": "Ledger record required",
+        "labelRu": "Решение должно быть записано",
+        "status": "pass",
+        "condition": "decision must be recorded",
+        "actual": "perm-000134",
+        "effect": "permission record saved",
+        "effectRu": "запись решения сохранена",
+        "severity": "info"
+      }
+    ]
+  },
+  "snapshotDiff": {
+    "fromRevision": 133,
+    "toRevision": 134,
+    "changedDomains": [
+      "market",
+      "freshness"
+    ],
+    "changes": [
+      {
+        "path": "market.lastPrice",
+        "labelRu": "Последняя цена рынка",
+        "label": "Market last price",
+        "before": 102.15,
+        "after": 102.2,
+        "delta": 0.05
+      },
+      {
+        "path": "freshness.market.status",
+        "labelRu": "Свежесть рынка",
+        "label": "Market freshness",
+        "before": "stale",
+        "after": "fresh"
+      },
+      {
+        "path": "freshness.market.ageMs",
+        "labelRu": "Возраст рыночных данных",
+        "label": "Market data age",
+        "before": 6000,
+        "after": 120,
+        "delta": -5880
+      },
+      {
+        "path": "trustState",
+        "labelRu": "Состояние доверия",
+        "label": "Trust state",
+        "before": "UNCERTAIN",
+        "after": "UNCERTAIN"
+      },
+      {
+        "path": "blockingReasons.count",
+        "labelRu": "Количество причин блокировки",
+        "label": "Blocking reasons count",
+        "before": 3,
+        "after": 1,
+        "delta": -2
+      }
+    ]
+  },
+  "gateVerdict": {
+    "action": "PLACE_ORDER",
+    "actionRu": "разместить ордер",
+    "allowed": false,
+    "result": "DENIED",
+    "resultRu": "запрещено",
+    "kernelTrustState": "UNCERTAIN",
+    "blockingReasons": [
+      {
+        "code": "exchange_truth_unknown",
+        "domain": "exchangeTruth",
+        "messageRu": "Биржевая истина неизвестна",
+        "message": "Exchange truth is unknown",
+        "severity": "block"
+      }
+    ],
+    "gateVersion": "action-gate-v2"
+  },
+  "ledger": {
+    "recorded": true,
+    "permissionId": "perm-000134",
+    "decisionHash": "d98ab12c"
+  },
+  "quarantine": {
+    "recorded": false,
+    "quarantineId": null
+  },
+  "gateLedgerTrace": [
+    {
+      "id": "gate_input",
+      "label": "Gate input",
+      "labelRu": "Вход ворот",
+      "status": "pass",
+      "summary": "Action request received",
+      "summaryRu": "Запрос действия получен"
+    },
+    {
+      "id": "evaluate_ag_rules",
+      "label": "Evaluate ActionGate rules",
+      "labelRu": "Оценка правил ActionGate",
+      "status": "denied",
+      "summary": "AG-03 failed: trustState is UNCERTAIN",
+      "summaryRu": "AG-03 не прошёл: trustState = UNCERTAIN"
+    },
+    {
+      "id": "build_verdict",
+      "label": "Build verdict",
+      "labelRu": "Сборка вердикта",
+      "status": "denied",
+      "summary": "PLACE_ORDER denied",
+      "summaryRu": "Размещение ордера запрещено"
+    },
+    {
+      "id": "ledger_record",
+      "label": "Permission ledger record",
+      "labelRu": "Запись в журнал разрешений",
+      "status": "pass",
+      "summary": "Decision recorded as perm-000134",
+      "summaryRu": "Решение записано как perm-000134"
+    },
+    {
+      "id": "quarantine_result",
+      "label": "Quarantine result",
+      "labelRu": "Результат карантина",
+      "status": "waiting",
+      "summary": "No quarantine record for this event",
+      "summaryRu": "Для этого события записи карантина нет"
+    },
+    {
+      "id": "recovery_hint",
+      "label": "Recovery hint",
+      "labelRu": "Подсказка восстановления",
+      "status": "waiting",
+      "summary": "Recovery planner suggests reconcile exchange truth",
+      "summaryRu": "Планировщик предлагает сверить биржевую истину"
+    }
+  ],
+  "recoveryPlan": {
+    "required": true,
+    "mode": "RECOVERY_ONLY",
+    "nextActions": [
+      {
+        "code": "RECONCILE_POSITION",
+        "label": "Reconcile position",
+        "labelRu": "сверить позицию",
+        "priority": "high"
+      },
+      {
+        "code": "RECONCILE_ORDERS",
+        "label": "Reconcile orders",
+        "labelRu": "сверить ордера",
+        "priority": "high"
+      },
+      {
+        "code": "CHECK_HEALTH",
+        "label": "Check health",
+        "labelRu": "проверить здоровье системы",
+        "priority": "medium"
+      }
+    ]
+  }
+}

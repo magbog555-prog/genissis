@@ -1,0 +1,14 @@
+Browser validation console capture
+Mode: Chromium headless, inline production bundle because this execution environment blocks localhost navigation with ERR_BLOCKED_BY_ADMINISTRATOR.
+
+Fatal application/runtime errors: 0
+React ErrorBoundary panels: 0
+#root innerHTML length: 67826
+Window count: 16
+Scenario option count: 19
+Workspace tab count: 10
+
+Console notes:
+- ApiAdapter mode was toggled while Core API was not running in this environment.
+- Browser console emitted network ERR_CONNECTION_REFUSED for http://localhost:3011/* API reads.
+- These are non-fatal and the UI displayed API_FAILURE_FALLBACK instead of blank screen.

@@ -1,0 +1,3595 @@
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/CORE_CONSTITUTION.md /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/CORE_CONSTITUTION.md
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/CORE_CONSTITUTION.md	2026-05-07 12:51:29.134141322 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/CORE_CONSTITUTION.md	2026-05-07 12:12:10.098193521 +0000
+@@ -2,7 +2,7 @@
+ 
+ Status: normative draft for Trust Kernel Hardening  
+ Scope: MBG Core v0.1 only  
+-Base code: `mbg-core-v0.1-alpha2`
++Base code: `mbg-core-v0.1-alpha3`
+ 
+ This document defines the non-negotiable laws of the Core Trust Kernel.
+ 
+@@ -10,7 +10,7 @@
+ 
+ ## 1. Authority boundary
+ 
+-The Kernel Authority is the only authority for the trusted runtime state.
++The Kernel Authority is the canonical trust evaluator for MBG Core v0.1. It is the only authority allowed to evaluate kernel trust state and produce the canonical trust output.
+ 
+ The following are not authority:
+ 
+@@ -22,7 +22,7 @@
+ - decision engine;
+ - local memory when it conflicts with exchange truth.
+ 
+-A component outside the kernel may request an action or submit an event. It may not declare the core trusted, override an invariant, bypass replay, or force a trading action.
++A component outside the kernel may request an action or submit an event. It may not calculate core trust, declare the core trusted, override an invariant, bypass replay, or force a trading action.
+ 
+ Current/future modules:
+ 
+@@ -128,9 +128,9 @@
+ 
+ ### CoreTrustReport
+ 
+-`CoreTrustReport` is the core's explanation of trust.
++`CoreTrustReport` is the canonical trust output of MBG Core v0.1.
+ 
+-It must expose enough evidence to show why the core is `TRUSTED`, `RECOVERABLE`, `UNCERTAIN`, `COMPROMISED`, `HALTED`, or `PANIC`. It must include failed checks, forbidden actions, reason codes, and available recovery actions.
++It must expose enough evidence to show why the core is `TRUSTED`, `RECOVERABLE`, `UNCERTAIN`, `COMPROMISED`, `HALTED`, or `PANIC`. It must include failed checks, forbidden actions, machine-readable reason codes, allowed/forbidden action classes, and available recovery hints.
+ 
+ Current/future modules:
+ 
+@@ -816,11 +816,179 @@
+ - tests: `tests/scenarios/*`
+ 
+ 
++### LAW-031 — Kernel Authority is the canonical trust evaluator
++
++The Kernel Authority is the canonical evaluator of MBG Core trust.
++
++No frontend, V1/V2 component, strategy, signal layer, decision engine, API convenience field, or local runtime shortcut may calculate or override core trust.
++
++Required proof:
++
++- trust state is evaluated by Kernel Authority rules;
++- other components consume the trust result instead of recalculating it;
++- trust inputs are explicit and traceable;
++- scenario tests prove external layers cannot act as trust authority.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/kernel/kernel-authority.ts`
++- future: `core/trust/core-trust-report.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-032 — Kernel Authority must be pure
++
++Kernel Authority must be a pure evaluator.
++
++It may read accepted kernel evidence and return trust evaluation. It must not mutate runtime snapshot, journal, bootstrap state, exchange truth, freshness state, health truth, ActionGate state, or any other core state.
++
++Required proof:
++
++- Kernel Authority has no write path to canonical journal;
++- Kernel Authority has no reducer side effects;
++- repeated evaluation over the same inputs returns the same report;
++- scenario tests or contract tests prove evaluation does not change revision or snapshot.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/system/journal.ts`
++- current: `core/transitions/src/reducers.ts`
++- future: `core/kernel/kernel-authority.ts`
++- future: `core/trust/core-trust-report.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-033 — CoreTrustReport is the canonical trust output
++
++CoreTrustReport is the canonical output of kernel trust.
++
++It must be the single report used to explain whether the core is trusted now, why it is or is not trusted, which action classes are allowed or denied, and what recovery hints are available.
++
++Required proof:
++
++- report includes kernel trust state;
++- report includes failed checks and machine-readable reasons;
++- report includes allowed and denied action classes;
++- report does not hide unknown, stale, conflicted, or unreconciled evidence.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- current: `core/runtime/src/runtime-engine.ts`
++- future: `core/kernel/kernel-authority.ts`
++- future: `core/trust/core-trust-report.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-034 — Frontend must not calculate trust
++
++Frontend must not calculate, infer, cache, override, or display invented core trust.
++
++Frontend may display CoreTrustReport and ActionGate verdicts produced by the core. It may not turn API availability, websocket status, button state, or local UI state into trust.
++
++Required proof:
++
++- frontend is not a trust authority;
++- UI state is not a trust input unless represented as a valid accepted kernel event;
++- frontend cannot approve a denied action;
++- scenario tests prove trust comes from core outputs.
++
++Current/future modules:
++
++- current: `apps/runtime-api/src/app.ts`
++- future: `core/kernel/kernel-authority.ts`
++- future: `core/trust/core-trust-report.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-035 — V1 must not calculate core trust
++
++V1 must not calculate, certify, override, or backfill MBG Core v0.1 trust.
++
++Any future V1/V2 integration must remain downstream of kernel trust and may only submit valid events or consume core reports through explicit adapters.
++
++Required proof:
++
++- MBG Core v0.1 does not import V1/V2 as trust authority;
++- V1/V2 cannot declare `TRUSTED`;
++- V1/V2 cannot bypass ActionGate;
++- scenario tests prove V1/V2 are not trust sources.
++
++Current/future modules:
++
++- future: `core/kernel/kernel-authority.ts`
++- future: `core/trust/core-trust-report.ts`
++- future: `core/adapters/v1-input-adapter.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-036 — Every denied action must have machine-readable reasons
++
++Every denied action must return machine-readable reasons.
++
++A denial without structured reason codes is not an acceptable kernel verdict because it cannot be audited, replayed, tested, or used by recovery tooling.
++
++Required proof:
++
++- denied ActionGate verdicts include stable reason codes;
++- denied verdicts identify the blocking law or domain where possible;
++- human text is optional, machine-readable reason codes are mandatory;
++- scenario tests assert denial reasons, not only boolean denial.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- future: `core/kernel/kernel-authority.ts`
++- future: `core/trust/core-trust-report.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-037 — Trust state must be explainable
++
++Every kernel trust state must be explainable from accepted evidence.
++
++The core may not report `TRUSTED`, `RECOVERABLE`, `UNCERTAIN`, `COMPROMISED`, `HALTED`, or `PANIC` without the evidence and reasons that justify that state.
++
++Required proof:
++
++- each trust state has reason codes;
++- unknown evidence produces `UNCERTAIN` or stricter state, not fake `TRUSTED`;
++- integrity failure produces `COMPROMISED` or `PANIC`;
++- halted state is distinguishable from healthy trusted state.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/invariants/engine.invariants.ts`
++- current: `core/system/state-hash.ts`
++- future: `core/kernel/kernel-authority.ts`
++- future: `core/trust/core-trust-report.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-038 — ActionGate must use kernel trust state
++
++ActionGate must use kernel trust state when evaluating unsafe actions.
++
++Normal trading or other unsafe action classes must not be allowed unless Kernel Authority evidence permits the required trust state and the action-specific gate checks also pass.
++
++Required proof:
++
++- ActionGate consumes kernel trust state or equivalent canonical trust evaluation;
++- unsafe actions are denied for `RECOVERABLE`, `UNCERTAIN`, `COMPROMISED`, `HALTED`, and `PANIC`;
++- ActionGate Verdict v2 includes denial reasons and trust state evidence;
++- scenario tests prove unsafe actions cannot bypass Kernel Authority evaluation.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- current: `core/state/src/types.ts`
++- future: `core/kernel/kernel-authority.ts`
++- future: `core/trust/core-trust-report.ts`
++- tests: `tests/scenarios/*`
++
++
+ ## 5. Review rule
+ 
+ A change is acceptable only if it increases the provability of the kernel or preserves it while making the implementation clearer.
+ 
+-A change is not acceptable when it makes the system more convenient by hiding uncertainty, skipping validation, weakening replay, bypassing the gate, accepting invalid events, silently trusting local memory, or allowing frontend/V1/strategy authority.
++A change is not acceptable when it makes the system more convenient by hiding uncertainty, skipping validation, weakening replay, bypassing the gate, accepting invalid events, silently trusting local memory, hiding denial reasons, mutating state from Kernel Authority, or allowing frontend/V1/V2/strategy authority.
+ 
+ ## 6. Required evidence for task delivery
+ 
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/DELIVERY_REPORT_WAVE4_ACTION_GATE_VERDICT.md /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE4_ACTION_GATE_VERDICT.md
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/DELIVERY_REPORT_WAVE4_ACTION_GATE_VERDICT.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE4_ACTION_GATE_VERDICT.md	2026-05-07 12:12:10.214993512 +0000
+@@ -0,0 +1,106 @@
++# MBG Core v0.1 — Wave 4 — Role 6 Delivery Report
++
++## Task
++
++ActionGate Verdict v2 — расширенный вердикт ворот действия.
++
++## Canonical base
++
++`mbg-core-v0.1-alpha3.zip`
++
++## Summary
++
++Implemented ActionGate Verdict v2 while preserving backward-compatible ActionGate fields.
++
++The canonical gate response is now a verdict object containing:
++
++- `action`
++- `allowed`
++- `actionClass`
++- `severity`
++- `snapshotRevision`
++- `kernelTrustState`
++- `blockingReasons`
++- `allowedAlternatives`
++- `relatedInvariants`
++- `gateVersion`
++
++Legacy compatibility fields are still present:
++
++- `actionId`
++- `actionType`
++- `decision`
++- `reason`
++- `blockingStates`
++
++## Implemented behavior
++
++- `PLACE_ORDER` remains denied in unsafe states.
++- Denied normal actions now expose all relevant blocking reasons, not only a single legacy reason.
++- ExchangeTruth unknown/stale/conflicted/unavailable are exposed as verdict reasons.
++- Freshness failures expose reasons such as `market_data_stale`, `exchange_truth_stale`, and `connection_state_unknown`.
++- Health unknown remains visible through ActionGate verdict diagnostics.
++- Recovery/risk-reducing actions remain allowed when normal trading is denied, preserving existing behavior.
++- `gateVersion` is fixed to `action-gate-v2`.
++
++## Action classes
++
++- `PLACE_ORDER` -> `NORMAL`
++- `CANCEL_ORDER` -> `RISK_REDUCING`
++- `RECONCILE_ORDER`, `RECONCILE_POSITION`, `PAUSE_RUNTIME` -> `RECOVERY`
++- `RESUME_RUNTIME` -> `ADMIN`
++
++## Tests
++
++Added:
++
++```bash
++npm run test:core:action-gate-verdict
++```
++
++Covered scenarios:
++
++1. cold start `PLACE_ORDER` -> denied with reason;
++2. exchangeTruth unknown -> denied with reason;
++3. freshness stale -> denied with reason;
++4. health unknown -> denied with reason;
++5. trusted state -> allow with verdict;
++6. recovery action allowed even when normal trading denied;
++7. verdict contains `snapshotRevision` and `gateVersion`.
++
++## Command results
++
++```txt
++npm run typecheck
++EXIT=0
++
++npm test
++EXIT=0
++
++npm run test:core:action-gate-verdict
++EXIT=0
++```
++
++## Changed files
++
++- `package.json`
++- `core/contracts/src/actions.ts`
++- `core/gates/src/action-gate.ts`
++- `tests/scenarios/core-action-gate-verdict.ts`
++- `DELIVERY_REPORT_WAVE4_ACTION_GATE_VERDICT.md`
++- `SCENARIO_AUDIT_WAVE4_ACTION_GATE_VERDICT.md`
++
++## Risks
++
++- `kernelTrustState` is derived locally from alpha3 state/freshness because full Kernel Authority is not implemented in this task.
++- Diagnostic action class is modeled, but no new diagnostic action type was added because adding new action contracts outside scope could affect integrations.
++- The legacy `reason` remains a single prioritized reason for compatibility; the canonical v2 field is `blockingReasons`.
++
++## Intentionally not done
++
++- Did not implement full Kernel Authority.
++- Did not implement full CoreTrustReport.
++- Did not change state inside ActionGate.
++- Did not connect V1/V2.
++- Did not add Signal Layer, Decision Engine, strategy logic, UI, live trading, or real exchange keys.
++- Did not weaken ActionGate decisions or allow unsafe normal actions.
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/DELIVERY_REPORT_WAVE4_CORE_TRUST_REPORT.md /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE4_CORE_TRUST_REPORT.md
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/DELIVERY_REPORT_WAVE4_CORE_TRUST_REPORT.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE4_CORE_TRUST_REPORT.md	2026-05-07 12:12:10.168237126 +0000
+@@ -0,0 +1,124 @@
++# Delivery Report — Wave 4 / Role 5 — CoreTrustReport
++
++Canonical base: `mbg-core-v0.1-alpha3.zip`
++
++Role: Role 5  
++Task: CoreTrustReport / отчёт доверия ядра
++
++## Summary
++
++Implemented a read-only CoreTrustReport structure and builder as the unified core trust answer. The report aggregates current runtime evidence and explains whether normal trading is allowed, why it is blocked, which action classes are allowed, and what recovery actions are suggested.
++
++CoreTrustReport does not execute recovery, call an exchange, connect V1/V2, add strategy logic, mutate reducers, or change snapshot state.
++
++## Files changed
++
++- `core/kernel/core-trust-report.ts`
++- `core/runtime/src/runtime-engine.ts`
++- `tests/scenarios/core-trust-report.ts`
++- `package.json`
++- `CORE_CONSTITUTION.md`
++- `DELIVERY_REPORT_WAVE4_CORE_TRUST_REPORT.md`
++
++## Implemented
++
++- Added `CoreTrustReport` type.
++- Added `BlockingReason` type with:
++  - `code`
++  - `domain`
++  - `severity`
++  - `message`
++  - `evidence`
++- Added `AllowedActionClass`:
++  - `NORMAL`
++  - `RISK_REDUCING`
++  - `RECOVERY`
++  - `DIAGNOSTIC`
++  - `ADMIN`
++  - `NONE`
++- Added `buildCoreTrustReport()`.
++- Added `RuntimeEngine.getCoreTrustReport()`.
++- Report includes:
++  - `revision`
++  - `trustState`
++  - `runtimeMode`
++  - `tradingAllowed`
++  - `allowedActionClasses`
++  - `blockingReasons`
++  - `nextRecoveryActions`
++  - `bootstrap`
++  - `exchangeTruth`
++  - `freshness`
++  - `healthTruth`
++  - `replay`
++  - `invariants`
++  - `metadata`
++  - `lastEvent`
++  - `lastTransition`
++
++## Read-only behavior
++
++The report builder is read-only. It composes current snapshot/runtime evidence and gate decisions. It does not append events, call reducers, mutate snapshot, perform recovery, or call a real exchange.
++
++## New script
++
++```bash
++npm run test:core:trust-report
++```
++
++## Command results
++
++```text
++npm run typecheck
++PASS
++
++npm test
++PASS
++
++npm run test:core:trust-report
++PASS
++```
++
++Focused test output:
++
++```text
++core trust report checks passed
++```
++
++## Tests added
++
++`tests/scenarios/core-trust-report.ts` covers:
++
++1. report contains `trustState`;
++2. report contains structured `blockingReasons`;
++3. cold start report has `tradingAllowed === false`;
++4. trusted report can set `tradingAllowed === true` only when ActionGate allows `PLACE_ORDER`;
++5. report contains `bootstrap`, `exchangeTruth`, `freshness`, and `healthTruth`;
++6. report is sufficient for frontend trust display without frontend-side trust recomputation.
++
++## Risks / integration notes
++
++- This task implements CoreTrustReport, not the full Kernel Authority module.
++- `RuntimeEngine.getCoreTrustReport()` currently evaluates permissions directly through existing `ActionGate.evaluateAll()` and does not push decisions into runtime decision history.
++- Trust classification is intentionally conservative:
++  - replay mismatch becomes `COMPROMISED`;
++  - halted system becomes `HALTED`;
++  - conflicted exchange truth becomes `COMPROMISED`;
++  - blocked but recoverable evidence becomes `RECOVERABLE`;
++  - full allow with no blockers becomes `TRUSTED`.
++- Future ActionGate Verdict v2 may provide richer verdict evidence; CoreTrustReport should consume that after integration merge if applicable.
++- Constitution changes are minimal and may need semantic merge with the dedicated Constitution role.
++
++## Intentionally not done
++
++- V1 not connected.
++- V2 not connected.
++- Signal Layer not implemented.
++- Decision Engine not implemented.
++- Strategy logic not added.
++- UI not added.
++- Live trading not enabled.
++- Real exchange keys not added.
++- Recovery Planner not implemented.
++- Kernel Authority as a full separate module not implemented.
++- No state mutation inside CoreTrustReport.
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/DELIVERY_REPORT_WAVE4_KERNEL_AUTHORITY.md /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE4_KERNEL_AUTHORITY.md
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/DELIVERY_REPORT_WAVE4_KERNEL_AUTHORITY.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE4_KERNEL_AUTHORITY.md	2026-05-07 12:12:10.135122834 +0000
+@@ -0,0 +1,135 @@
++# MBG Core v0.1 — Wave 4 / Kernel Authority Delivery Report
++
++## Role
++
++Role 4 — Kernel Authority.
++
++## Canonical base
++
++`mbg-core-v0.1-alpha3.zip`
++
++## Scope delivered
++
++Implemented a pure Kernel Authority evaluator in:
++
++`core/kernel/kernel-authority.ts`
++
++The module evaluates current trust state from supplied runtime evidence and does not mutate state.
++
++## Trust states
++
++Implemented trust state modes:
++
++- `TRUSTED`
++- `RECOVERABLE`
++- `UNCERTAIN`
++- `COMPROMISED`
++- `HALTED`
++- `PANIC`
++
++## Main behavior
++
++Kernel Authority accepts:
++
++- runtime snapshot;
++- freshness report;
++- health truth report;
++- replay status;
++- invariant status;
++- optional ActionGate status;
++- optional critical corruption flag.
++
++Kernel Authority returns:
++
++- trust state;
++- trusted boolean;
++- blockers;
++- recovery hints;
++- allowed/denied action summary;
++- evidence summary.
++
++## Laws implemented
++
++- Cold start evaluates to `UNCERTAIN`.
++- Bootstrap not reconciled is not `TRUSTED`.
++- Non-fresh exchangeTruth is not `TRUSTED`.
++- Stale exchangeTruth evaluates to non-trusted recoverable/uncertain state.
++- Unknown/incomplete healthTruth is not `TRUSTED`.
++- Replay mismatch evaluates to `COMPROMISED`.
++- System halted evaluates to `HALTED`.
++- Critical corruption evaluates to `PANIC`.
++- Everything fresh/reconciled/healthy with clean replay and invariants evaluates to `TRUSTED`.
++
++## Changed files
++
++```text
++core/kernel/kernel-authority.ts
++package.json
++tests/scenarios/kernel-authority.ts
++DELIVERY_REPORT_WAVE4_KERNEL_AUTHORITY.md
++```
++
++## Added npm script
++
++```text
++npm run test:core:kernel-authority
++```
++
++Script definition:
++
++```text
++npm run typecheck && tsx tests/scenarios/kernel-authority.ts
++```
++
++## Test coverage
++
++Added scenario test:
++
++`tests/scenarios/kernel-authority.ts`
++
++Covered cases:
++
++1. cold start -> `UNCERTAIN`;
++2. bootstrap not reconciled -> not `TRUSTED`;
++3. exchangeTruth stale -> `RECOVERABLE` or `UNCERTAIN`;
++4. health unknown -> not `TRUSTED`;
++5. replay mismatch -> `COMPROMISED`;
++6. system halted -> `HALTED`;
++7. everything fresh/reconciled/healthy -> `TRUSTED`.
++
++## Command results
++
++```text
++npm run typecheck
++PASS
++
++npm test
++PASS
++
++npm run test:core:kernel-authority
++PASS
++```
++
++## Risks
++
++- Kernel Authority currently consumes supplied freshness, healthTruth, replay and invariant reports. It intentionally does not calculate or mutate those reports itself.
++- If Integration Owner changes ActionGate Verdict v2 shape, `ActionGateStatusInput` may need a semantic merge while preserving read-only behavior.
++- `HealthTruthSnapshot` is imported as a type from runtime-engine; if Wave 4 later extracts health truth contracts, this type import should be moved to the canonical contract location.
++
++## Intentionally not done
++
++The following were explicitly not implemented:
++
++- V1 integration;
++- V2 integration;
++- Signal Layer;
++- Decision Engine;
++- strategy logic;
++- UI;
++- live trading;
++- real exchange keys;
++- Recovery Planner as a separate large system;
++- state mutation inside Kernel Authority;
++- exchange calls;
++- API calls;
++- event writes.
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/DELIVERY_REPORT_WAVE4_SCENARIO_AUDIT.md /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE4_SCENARIO_AUDIT.md
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/DELIVERY_REPORT_WAVE4_SCENARIO_AUDIT.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/DELIVERY_REPORT_WAVE4_SCENARIO_AUDIT.md	2026-05-07 12:12:10.238203872 +0000
+@@ -0,0 +1,99 @@
++# Delivery Report — Wave 4 Scenario Audit
++
++Role: 7 — Scenario Audit / Test Owner  
++Canonical base: `mbg-core-v0.1-alpha3.zip`  
++Target integration: `mbg-core-v0.1-alpha4`
++
++## Scope
++
++Added a Wave 4 scenario audit suite for Kernel Authority, CoreTrustReport, and ActionGate Verdict v2 integration.
++
++This delivery does not implement Kernel Authority, CoreTrustReport, or ActionGate Verdict v2. It only tests the expected integrated behavior.
++
++## Changed files
++
++- `package.json`
++- `tests/scenarios/wave4-scenario-audit.ts`
++- `DELIVERY_REPORT_WAVE4_SCENARIO_AUDIT.md`
++
++## Added script
++
++```bash
++npm run test:wave4:scenario-audit
++```
++
++The script runs:
++
++```bash
++npm run typecheck && tsx tests/scenarios/wave4-scenario-audit.ts
++```
++
++## Scenario coverage
++
++1. cold start -> CoreTrustReport `trustState = UNCERTAIN`, `tradingAllowed = false`.
++2. bootstrap not reconciled -> not `TRUSTED`.
++3. exchangeTruth stale -> not `TRUSTED`, blocking reason exists.
++4. health unknown -> not `TRUSTED`.
++5. replay mismatch -> `COMPROMISED`.
++6. halted system -> `HALTED`.
++7. full ready state -> `TRUSTED`.
++8. ActionGate denied verdict contains machine-readable reason.
++9. CoreTrustReport contains bootstrap/exchangeTruth/freshness/healthTruth sections.
++10. frontend should not need to calculate trust from raw flags.
++
++## Wave 4 tasks covered
++
++- Kernel Authority
++- CoreTrustReport
++- ActionGate Verdict v2
++- Wave 4 Scenario Audit
++
++## Commands and results on alpha3
++
++```bash
++npm install
++npm run typecheck
++npm run test:wave4:scenario-audit
++```
++
++Observed on `mbg-core-v0.1-alpha3`:
++
++- `npm install`: passed
++- `npm run typecheck`: passed
++- `npm run test:wave4:scenario-audit`: fails on expected Wave 4 implementation gaps
++
++The primary expected alpha3 gap is absence of `runtimeEngine.getCoreTrustReport()`.
++
++## Expected result after alpha4 integration
++
++```json
++{
++  "name": "wave4_scenario_audit",
++  "total": 10,
++  "passed": 10,
++  "failed": 0
++}
++```
++
++## Risks and gaps
++
++- The audit assumes the integrated Wave 4 runtime API exposes `runtimeEngine.getCoreTrustReport()`.
++- The replay mismatch scenario creates a real journal/snapshot mismatch by appending an uncommitted event to the segmented event journal in the test data directory. This is test-only corruption and does not modify runtime code.
++- The audit checks that Kernel Authority does not mutate snapshot state or revision while producing reports.
++- ActionGate Verdict v2 is expected to expose machine-readable deny reasons either directly or through structured report action verdicts.
++
++## Intentionally not done
++
++- Did not change `CORE_CONSTITUTION.md`.
++- Did not change runtime behavior.
++- Did not implement Kernel Authority.
++- Did not implement CoreTrustReport.
++- Did not implement ActionGate Verdict v2.
++- Did not connect V1 or V2.
++- Did not add Signal Layer.
++- Did not add Decision Engine.
++- Did not add strategy logic.
++- Did not add UI.
++- Did not enable live trading.
++- Did not add real exchange keys.
++- Did not make real exchange calls.
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/INTEGRATION_REPORT_ALPHA4.md /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/INTEGRATION_REPORT_ALPHA4.md
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/INTEGRATION_REPORT_ALPHA4.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/INTEGRATION_REPORT_ALPHA4.md	2026-05-07 12:51:48.316179610 +0000
+@@ -0,0 +1,220 @@
++# INTEGRATION REPORT ALPHA4
++
++## Package
++
++- Base archive: `mbg-core-v0.1-alpha3.zip`
++- Output package: `mbg-core-v0.1-alpha4.zip`
++- Integration owner: role 8 / Integration Owner / Merge Engineer
++- Integration mode: semantic merge, not archive replacement
++
++## Merged roles
++
++- Role 2.4 — Constitution Update
++  - `CORE_CONSTITUTION.md`
++  - `core/kernel/kernel-constitution.ts`
++  - constitution test/script updates
++- Role 4.4 — Kernel Authority
++  - `core/kernel/kernel-authority.ts`
++  - `tests/scenarios/kernel-authority.ts`
++  - `test:core:kernel-authority`
++  - `DELIVERY_REPORT_WAVE4_KERNEL_AUTHORITY.md`
++- Role 5.4 — CoreTrustReport
++  - `core/kernel/core-trust-report.ts`
++  - `RuntimeEngine.getCoreTrustReport()`
++  - `tests/scenarios/core-trust-report.ts`
++  - `test:core:trust-report`
++- Role 6.4 — ActionGate Verdict v2
++  - `core/contracts/src/actions.ts`
++  - `core/gates/src/action-gate.ts`
++  - `tests/scenarios/core-action-gate-verdict.ts`
++  - `test:core:action-gate-verdict`
++- Role 7 — Wave 4 Scenario Audit
++  - `tests/scenarios/wave4-scenario-audit.ts`
++  - `test:wave4:scenario-audit`
++  - delivery report
++
++## Canonical trust chain
++
++The final alpha4 trust chain is:
++
++```text
++snapshot + runtime evidence
++→ Kernel Authority
++→ CoreTrustReport
++→ ActionGate Verdict v2
++```
++
++Kernel Authority is the only organ of core trust. It is a pure evaluator only:
++
++- no event writes;
++- no state mutation;
++- no exchange calls;
++- no recovery execution;
++- no trading enablement.
++
++CoreTrustReport displays the Kernel Authority result. It does not compute a second trust state.
++
++ActionGate Verdict v2 uses Kernel Authority canonical trust state and explains action decisions. It does not replace Kernel Authority.
++
++## Canonical trust states
++
++Only the Kernel Authority canonical trust states are used:
++
++```text
++TRUSTED
++RECOVERABLE
++UNCERTAIN
++COMPROMISED
++HALTED
++PANIC
++```
++
++Previous role-local states were removed from canonical expectations:
++
++```text
++trusted / restricted / untrusted / unknown
++```
++
++## Event commit pipeline preserved
++
++Alpha2/alpha3 event safety pipeline remains intact:
++
++```text
++validate event
++→ idempotency check
++→ append journal
++→ record idempotency
++→ reduce snapshot
++```
++
++Invalid events still do not mutate journal, idempotency index, or snapshot.
++
++Duplicate events still do not append journal, do not mutate snapshot, and do not change revision.
++
++## Conflicts and semantic decisions
++
++### 1. Cold start blocking states
++
++Alpha4 ActionGate Verdict v2 returns a fuller machine-readable denial. Cold start now includes `market` / freshness as an additional blocking state because no fresh market data is proven yet.
++
++Decision:
++
++```text
++cold start blockingStates:
++bootstrap, exchangeTruth, position, risk, market
++```
++
++The system was not weakened:
++
++- market/freshness blocking was not removed;
++- market was not made fresh by default;
++- ActionGate was not loosened.
++
++### 2. ActionGate Verdict trust state casing/model
++
++Alpha4 standardizes ActionGate Verdict trust state on Kernel Authority canonical states:
++
++```text
++TRUSTED, RECOVERABLE, UNCERTAIN, COMPROMISED, HALTED, PANIC
++```
++
++Previous role-6 local states `trusted/restricted/untrusted/unknown` were removed from canonical expectations.
++
++### 3. Cold start replay semantics
++
++Alpha4 distinguishes unknown/uninitialized replay from proven replay mismatch.
++
++Empty cold start without journal/snapshot corruption is:
++
++```text
++UNCERTAIN
++```
++
++not:
++
++```text
++COMPROMISED
++```
++
++`COMPROMISED` requires evidence of replay mismatch, corrupted persistence, journal gap, impossible revision, idempotency conflict, or invariant breach after applied state.
++
++Trading remains denied in cold start. This change only distinguishes “unknown truth” from “proven corruption.”
++
++### 4. Existing alpha3 readiness model preserved
++
++Alpha3 readiness remains enforced:
++
++```text
++bootstrap reconciled
+++ position reconciled
+++ exchangeTruth fresh
+++ freshness ok
+++ health truth acceptable
+++ ActionGate allow
++```
++
++No tests were made easier by weakening runtime trust.
++
++## Package scripts
++
++Alpha4 package scripts include:
++
++- `test:core:kernel-authority`
++- `test:core:trust-report`
++- `test:core:action-gate-verdict`
++- `test:wave4:scenario-audit`
++
++`npm run verify` includes all alpha1-alpha4 key checks.
++
++## Verification results
++
++All required commands were executed and passed:
++
++```text
++npm ci: PASS
++npm run typecheck: PASS
++npm test: PASS
++npm run test:core-constitution: PASS
++npm run test:core:cold-start: PASS
++npm run test:core:bootstrap: PASS
++npm run test:core:event-validation: PASS
++npm run test:core:idempotency: PASS
++npm run test:wave2:scenario-audit: PASS
++npm run test:core:exchange-truth: PASS
++npm run test:core:freshness: PASS
++npm run test:core:health-truth: PASS
++npm run test:wave3:scenario-audit: PASS
++npm run test:core:kernel-authority: PASS
++npm run test:core:trust-report: PASS
++npm run test:core:action-gate-verdict: PASS
++npm run test:wave4:scenario-audit: PASS 10/10
++npm run audit:runtime: PASS
++npm run verify: PASS / exit code 0
++```
++
++## Acceptance confirmations
++
++Confirmed:
++
++- `test:wave4:scenario-audit` passes 10/10.
++- CoreTrustReport exists and contains the main trust conclusion.
++- Kernel Authority determines `trustState`.
++- ActionGate Verdict contains machine-readable denial reasons.
++- Frontend does not need to calculate trust from raw flags.
++- Kernel Authority does not mutate state.
++- CoreTrustReport is not a second trust authority.
++- ActionGate does not replace Kernel Authority.
++
++## Explicit exclusions
++
++Not added:
++
++- V1;
++- V2;
++- Signal Layer;
++- Decision Engine;
++- strategy logic;
++- UI;
++- live trading;
++- real exchange keys;
++- Recovery Planner as a separate large system.
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/SCENARIO_AUDIT_WAVE4_ACTION_GATE_VERDICT.md /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/SCENARIO_AUDIT_WAVE4_ACTION_GATE_VERDICT.md
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/SCENARIO_AUDIT_WAVE4_ACTION_GATE_VERDICT.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/SCENARIO_AUDIT_WAVE4_ACTION_GATE_VERDICT.md	2026-05-07 12:12:10.215159195 +0000
+@@ -0,0 +1,98 @@
++# MBG Core v0.1 — Wave 4 Scenario Audit — ActionGate Verdict v2
++
++## Scope
++
++Role 6 scenario audit for ActionGate Verdict v2.
++
++## AGV2-001 — Cold start normal action denied
++
++Given a cold runtime snapshot.  
++When `PLACE_ORDER` is evaluated.  
++Then the verdict is denied and includes:
++
++- `allowed=false`
++- `decision=deny`
++- `reason=bootstrap_not_reconciled`
++- `blockingReasons` includes `bootstrap_not_reconciled`
++- `blockingReasons` includes `exchange_truth_unknown`
++- `blockingReasons` includes `connection_state_unknown`
++- `gateVersion=action-gate-v2`
++- `snapshotRevision`
++
++Evidence: `tests/scenarios/core-action-gate-verdict.ts`
++
++## AGV2-002 — ExchangeTruth unknown denied
++
++Given bootstrap and position are reconciled, but ExchangeTruth remains unknown.  
++When `PLACE_ORDER` is evaluated.  
++Then the verdict is denied and includes:
++
++- `reason=exchange_truth_unknown`
++- `blockingReasons` includes `exchange_truth_unknown`
++- related invariant `exchange_truth_must_be_fresh_before_normal_action`
++
++Evidence: `tests/scenarios/core-action-gate-verdict.ts`
++
++## AGV2-003 — Freshness stale denied
++
++Given otherwise trusted state with stale market data.  
++When `PLACE_ORDER` is evaluated.  
++Then the verdict is denied and includes:
++
++- `reason=market_data_stale`
++- `blockingReasons` includes `market_data_stale`
++- related invariant `market_data_must_be_fresh_before_normal_action`
++
++Evidence: `tests/scenarios/core-action-gate-verdict.ts`
++
++## AGV2-004 — Health unknown denied
++
++Given bootstrap, position, market data, and ExchangeTruth are ready, but websocket health truth is unknown.  
++When `PLACE_ORDER` is evaluated.  
++Then the verdict is denied and includes:
++
++- `reason=connection_state_unknown`
++- `blockingReasons` includes `connection_state_unknown`
++- related invariant `health_truth_must_be_known_before_normal_action`
++
++Evidence: `tests/scenarios/core-action-gate-verdict.ts`
++
++## AGV2-005 — Trusted state allows normal action
++
++Given bootstrap reconciled, ExchangeTruth fresh, market data fresh, position known, risk clear, and health truth connected.  
++When `PLACE_ORDER` is evaluated.  
++Then the verdict allows the action and includes:
++
++- `allowed=true`
++- `decision=allow`
++- `gateVersion=action-gate-v2`
++- `kernelTrustState=trusted`
++- empty `blockingReasons`
++
++Evidence: `tests/scenarios/core-action-gate-verdict.ts`
++
++## AGV2-006 — Recovery action remains allowed
++
++Given cold start where normal trading is denied.  
++When `RECONCILE_POSITION` is evaluated.  
++Then the verdict allows the action and includes:
++
++- `actionClass=RECOVERY`
++- `allowed=true`
++- `gateVersion=action-gate-v2`
++- `snapshotRevision`
++
++Evidence: `tests/scenarios/core-action-gate-verdict.ts`
++
++## Command evidence
++
++```txt
++npm run typecheck
++EXIT=0
++
++npm test
++EXIT=0
++
++npm run test:core:action-gate-verdict
++EXIT=0
++```
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/contracts/src/actions.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/contracts/src/actions.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/contracts/src/actions.ts	2026-05-07 12:51:29.203769582 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/contracts/src/actions.ts	2026-05-07 12:14:00.211501991 +0000
+@@ -11,6 +11,10 @@
+ 
+ export type ActionType = typeof ACTION_TYPE[keyof typeof ACTION_TYPE];
+ 
++export type ActionClass = "NORMAL" | "RISK_REDUCING" | "RECOVERY" | "DIAGNOSTIC" | "ADMIN";
++export type GateSeverity = "info" | "warning" | "critical";
++export type KernelTrustState = "TRUSTED" | "RECOVERABLE" | "UNCERTAIN" | "COMPROMISED" | "HALTED" | "PANIC";
++
+ export const ActionRequestSchema = z.object({
+   type: z.enum([
+     ACTION_TYPE.PLACE_ORDER,
+@@ -28,11 +32,27 @@
+ 
+ export type ActionRequest = z.infer<typeof ActionRequestSchema>;
+ 
+-export interface GateDecision {
++export interface ActionGateVerdict {
++  action: {
++    actionId: string;
++    actionType: ActionType;
++    request: ActionRequest;
++  };
++  allowed: boolean;
++  actionClass: ActionClass;
++  severity: GateSeverity;
++  snapshotRevision: number;
++  kernelTrustState: KernelTrustState;
++  blockingReasons: string[];
++  allowedAlternatives: ActionType[];
++  relatedInvariants: string[];
++  gateVersion: "action-gate-v2";
++}
++
++export interface GateDecision extends ActionGateVerdict {
+   actionId: string;
+   actionType: ActionType;
+   decision: "allow" | "deny";
+   reason?: string;
+   blockingStates?: string[];
+-  snapshotRevision: number;
+ }
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/gates/src/action-gate.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/gates/src/action-gate.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/gates/src/action-gate.ts	2026-05-07 12:51:29.204762308 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/gates/src/action-gate.ts	2026-05-07 12:14:00.212543427 +0000
+@@ -1,4 +1,12 @@
+-import { ACTION_TYPE, ActionRequest, ActionType, GateDecision } from "../../contracts/src/actions.js";
++import {
++  ACTION_TYPE,
++  ActionClass,
++  ActionRequest,
++  ActionType,
++  GateDecision,
++  GateSeverity,
++  KernelTrustState
++} from "../../contracts/src/actions.js";
+ import { RuntimeSnapshot } from "../../state/src/types.js";
+ import { calculateSnapshotFreshness, type FreshnessConfig, type FreshnessReport } from "../../runtime/src/freshness.js";
+ 
+@@ -14,111 +22,242 @@
+   freshness?: FreshnessReport;
+ }
+ 
++const GATE_VERSION = "action-gate-v2" as const;
++
++function unique<T>(values: T[]): T[] {
++  return Array.from(new Set(values));
++}
++
++function classifyAction(actionType: ActionType): ActionClass {
++  switch (actionType) {
++    case ACTION_TYPE.PLACE_ORDER:
++      return "NORMAL";
++    case ACTION_TYPE.CANCEL_ORDER:
++      return "RISK_REDUCING";
++    case ACTION_TYPE.RECONCILE_ORDER:
++    case ACTION_TYPE.RECONCILE_POSITION:
++    case ACTION_TYPE.PAUSE_RUNTIME:
++      return "RECOVERY";
++    case ACTION_TYPE.RESUME_RUNTIME:
++      return "ADMIN";
++    default:
++      return "DIAGNOSTIC";
++  }
++}
++
++function severityFor(actionClass: ActionClass, blocked: boolean): GateSeverity {
++  if (!blocked) return "info";
++  if (actionClass === "NORMAL") return "critical";
++  if (actionClass === "ADMIN") return "warning";
++  return "warning";
++}
++
++function kernelTrustState(snapshot: RuntimeSnapshot, freshness?: FreshnessReport): KernelTrustState {
++  const trusted =
++    snapshot.bootstrap.status === "reconciled" &&
++    snapshot.exchangeTruth.status === "fresh" &&
++    snapshot.position.status !== "unknown" &&
++    snapshot.risk.status === "clear" &&
++    snapshot.system.status === "healthy" &&
++    (!freshness || freshness.okForNormalTrading);
++
++  if (trusted) return "TRUSTED";
++  if (snapshot.system.status === "halted") return "HALTED";
++  if (snapshot.exchangeTruth.status === "conflicted") return "COMPROMISED";
++  if (snapshot.system.status === "degraded") return "RECOVERABLE";
++  if (snapshot.bootstrap.status === "cold" || snapshot.exchangeTruth.status === "unknown" || snapshot.position.status === "unknown") return "UNCERTAIN";
++  return "RECOVERABLE";
++}
++
++function exchangeTruthReason(snapshot: RuntimeSnapshot) {
++  if (snapshot.exchangeTruth.status === "fresh") return undefined;
++  if (snapshot.exchangeTruth.status === "stale") return "exchange_truth_stale";
++  if (snapshot.exchangeTruth.status === "conflicted") return "exchange_truth_conflicted";
++  if (snapshot.exchangeTruth.status === "unavailable") return "exchange_truth_unavailable";
++  return "exchange_truth_unknown";
++}
++
++function bootstrapReason(snapshot: RuntimeSnapshot) {
++  if (snapshot.bootstrap.status === "reconciled") return undefined;
++  if (snapshot.bootstrap.status === "failed") return "bootstrap_failed";
++  if (snapshot.bootstrap.status === "awaiting_exchange_truth") return "bootstrap_awaiting_exchange_truth";
++  return "bootstrap_not_reconciled";
++}
++
++function relatedInvariantsFor(reasons: string[]): string[] {
++  const invariants: string[] = [];
++  for (const reason of reasons) {
++    if (reason.startsWith("bootstrap_")) invariants.push("bootstrap_must_be_reconciled_before_normal_action");
++    if (reason.startsWith("exchange_truth_")) invariants.push("exchange_truth_must_be_fresh_before_normal_action");
++    if (reason === "market_data_stale" || reason === "freshness_unknown") invariants.push("market_data_must_be_fresh_before_normal_action");
++    if (reason === "connection_state_unknown" || reason === "health_truth_partial" || reason === "ws_status_unknown") invariants.push("health_truth_must_be_known_before_normal_action");
++    if (reason === "position_unknown" || reason === "bootstrap_position_not_reconciled") invariants.push("position_must_be_known_before_normal_action");
++    if (reason === "risk_blocked") invariants.push("risk_must_be_clear_before_normal_action");
++    if (reason === "order_uncertain_requires_reconcile") invariants.push("uncertain_orders_require_reconcile");
++    if (reason === "system_halted" || reason === "system_degraded") invariants.push("system_must_be_healthy_before_normal_action");
++  }
++  return unique(invariants);
++}
++
++function allowedAlternativesFor(actionClass: ActionClass, blocked: boolean): ActionType[] {
++  if (!blocked) return [];
++  if (actionClass === "NORMAL") {
++    return [
++      ACTION_TYPE.RECONCILE_POSITION,
++      ACTION_TYPE.RECONCILE_ORDER,
++      ACTION_TYPE.PAUSE_RUNTIME
++    ];
++  }
++  if (actionClass === "ADMIN") {
++    return [
++      ACTION_TYPE.RECONCILE_POSITION,
++      ACTION_TYPE.RECONCILE_ORDER
++    ];
++  }
++  return [];
++}
++
++function primaryReason(reasons: string[]): string | undefined {
++  const priority = [
++    "invalid_action_type",
++    "bootstrap_failed",
++    "bootstrap_awaiting_exchange_truth",
++    "bootstrap_not_reconciled",
++    "exchange_truth_conflicted",
++    "exchange_truth_unknown",
++    "exchange_truth_unavailable",
++    "exchange_truth_stale",
++    "market_data_stale",
++    "connection_state_unknown",
++    "freshness_unknown",
++    "order_uncertain_requires_reconcile",
++    "position_unknown",
++    "bootstrap_position_not_reconciled",
++    "risk_blocked",
++    "system_halted",
++    "system_degraded",
++    "market_not_open",
++    "cannot_resume_until_recovered",
++    "unsafe_state_requires_reconcile"
++  ];
++  return priority.find((reason) => reasons.includes(reason)) ?? reasons[0];
++}
++
+ export class ActionGate {
+   evaluate(action: CompatActionRequest, snapshot: RuntimeSnapshot, options: ActionGateOptions = {}): GateDecision {
+     const actionType = (action.type ?? action.actionType) as ActionType;
+     const actionId = action.actionId ?? `probe:${actionType}`;
++    const actionClass = classifyAction(actionType);
+     const blockingStates: string[] = [];
+-    let reason: string | undefined;
++    const blockingReasons: string[] = [];
++
++    const freshness =
++      options.enforceFreshness || options.freshness
++        ? options.freshness ?? calculateSnapshotFreshness(snapshot, {
++            now: options.now ?? new Date(),
++            config: options.freshnessConfig
++          })
++        : undefined;
++
++    const bootstrapBlock = bootstrapReason(snapshot);
++    if (bootstrapBlock) {
++      blockingReasons.push(bootstrapBlock);
++      blockingStates.push("bootstrap");
++    }
++
++    const exchangeBlock = exchangeTruthReason(snapshot);
++    if (exchangeBlock) {
++      blockingReasons.push(exchangeBlock);
++      blockingStates.push("exchangeTruth");
++    }
++
++    if (snapshot.order.status === "uncertain") {
++      blockingReasons.push("order_uncertain_requires_reconcile");
++      blockingStates.push("order");
++    }
++
++    if (snapshot.position.status === "unknown") {
++      blockingReasons.push("position_unknown");
++      blockingStates.push("position");
++    }
++
++    if (snapshot.risk.reasons.includes("bootstrap_position_not_reconciled")) {
++      blockingReasons.push("bootstrap_position_not_reconciled");
++      blockingStates.push("risk");
++    } else if (snapshot.risk.status === "blocked") {
++      blockingReasons.push("risk_blocked");
++      blockingStates.push("risk");
++    }
+ 
+-    const bootstrapBlocked = snapshot.bootstrap.status !== "reconciled";
+-    const bootstrapReason =
+-      snapshot.bootstrap.status === "failed"
+-        ? "bootstrap_failed"
+-        : snapshot.bootstrap.status === "awaiting_exchange_truth"
+-          ? "bootstrap_awaiting_exchange_truth"
+-          : "bootstrap_not_reconciled";
+-
+-    const exchangeTruthBlocked = snapshot.exchangeTruth.status !== "fresh";
+-    const exchangeTruthReason =
+-      snapshot.exchangeTruth.status === "stale"
+-        ? "exchange_truth_stale"
+-        : snapshot.exchangeTruth.status === "conflicted"
+-          ? "exchange_truth_conflicted"
+-          : snapshot.exchangeTruth.status === "unavailable"
+-            ? "exchange_truth_unavailable"
+-            : "exchange_truth_unknown";
+-
+-    const unsafeRuntime =
+-      bootstrapBlocked ||
+-      exchangeTruthBlocked ||
+-      snapshot.order.status === "uncertain" ||
+-      snapshot.position.status === "unknown" ||
+-      snapshot.risk.status === "blocked" ||
+-      snapshot.system.status === "degraded" ||
+-      snapshot.system.status === "halted";
+-
+-    const isRecoveryAction =
+-      actionType === ACTION_TYPE.RECONCILE_ORDER ||
+-      actionType === ACTION_TYPE.RECONCILE_POSITION ||
+-      actionType === ACTION_TYPE.PAUSE_RUNTIME;
++    if (snapshot.system.status === "halted") {
++      blockingReasons.push("system_halted");
++      blockingStates.push("system");
++    } else if (snapshot.system.status === "degraded") {
++      blockingReasons.push("system_degraded");
++      blockingStates.push("system");
++    }
++
++    if (freshness && !freshness.okForNormalTrading) {
++      blockingReasons.push(...freshness.blockingReasons);
++      if (freshness.marketDataFreshness.status !== "fresh") blockingStates.push("market", "freshness");
++      if (freshness.exchangeTruthFreshness.status !== "fresh") blockingStates.push("exchangeTruth", "freshness");
++      if (freshness.connectionFreshness.status !== "fresh") blockingStates.push("connection", "freshness");
++    }
++
++    const normalRuntimeBlocked = blockingReasons.length > 0;
++    const isRecoveryAction = actionClass === "RECOVERY" || actionClass === "RISK_REDUCING" || actionClass === "DIAGNOSTIC";
+ 
+     if (!actionType) {
+-      reason = "invalid_action_type";
++      blockingReasons.push("invalid_action_type");
+       blockingStates.push("action");
+-    } else if (unsafeRuntime && !isRecoveryAction) {
+-      if (bootstrapBlocked) blockingStates.push("bootstrap");
+-      if (exchangeTruthBlocked) blockingStates.push("exchangeTruth");
+-      if (snapshot.order.status === "uncertain") blockingStates.push("order");
+-      if (snapshot.position.status === "unknown") blockingStates.push("position");
+-      if (snapshot.risk.status === "blocked") blockingStates.push("risk");
+-      if (snapshot.system.status === "degraded" || snapshot.system.status === "halted") blockingStates.push("system");
+-      reason = bootstrapBlocked
+-        ? bootstrapReason
+-        : exchangeTruthBlocked
+-          ? exchangeTruthReason
+-          : snapshot.risk.reasons.includes("bootstrap_position_not_reconciled")
+-            ? "bootstrap_position_not_reconciled"
+-            : "unsafe_state_requires_reconcile";
+-    } else if (actionType === ACTION_TYPE.PLACE_ORDER) {
+-      if (options.enforceFreshness) {
+-        const freshness = options.freshness ?? calculateSnapshotFreshness(snapshot, {
+-          now: options.now ?? new Date(),
+-          config: options.freshnessConfig
+-        });
+-
+-        if (!freshness.okForNormalTrading) {
+-          const primaryReason = freshness.blockingReasons[0] ?? "freshness_unknown";
+-          reason = primaryReason;
+-          if (freshness.marketDataFreshness.status !== "fresh") blockingStates.push("market", "freshness");
+-          if (freshness.exchangeTruthFreshness.status !== "fresh") blockingStates.push("exchangeTruth", "freshness");
+-          if (freshness.connectionFreshness.status !== "fresh") blockingStates.push("connection", "freshness");
+-        }
+-      }
++    }
+ 
+-      if (!reason && snapshot.exchangeTruth.status !== "fresh") {
+-        reason = exchangeTruthReason;
+-        blockingStates.push("exchangeTruth");
+-      } else if (!reason && snapshot.market.status !== "open") {
+-        reason = "market_not_open";
+-        blockingStates.push("market");
+-      } else if (!reason && snapshot.system.status === "halted") {
+-        reason = "system_halted";
+-        blockingStates.push("system");
+-      } else if (!reason && snapshot.order.status === "uncertain") {
+-        reason = "order_uncertain_requires_reconcile";
+-        blockingStates.push("order");
+-      } else if (!reason && snapshot.position.status === "unknown") {
+-        reason = "position_unknown";
+-        blockingStates.push("position");
+-      } else if (!reason && snapshot.risk.status === "blocked") {
+-        reason = "risk_blocked";
+-        blockingStates.push("risk");
+-      }
+-    } else if (actionType === ACTION_TYPE.RESUME_RUNTIME) {
+-      if (snapshot.system.status === "degraded" || snapshot.risk.status === "blocked") {
+-        reason = "cannot_resume_until_recovered";
+-        blockingStates.push("system", "risk");
+-      }
++    if (actionType === ACTION_TYPE.PLACE_ORDER && snapshot.market.status !== "open") {
++      blockingReasons.push("market_not_open");
++      blockingStates.push("market");
+     }
+ 
++    if (actionType === ACTION_TYPE.RESUME_RUNTIME && (snapshot.system.status === "degraded" || snapshot.risk.status === "blocked")) {
++      blockingReasons.push("cannot_resume_until_recovered");
++      blockingStates.push("system", "risk");
++    }
++
++    const uniqueBlockingReasons = unique(blockingReasons);
++    const blocked =
++      !actionType ||
++      (normalRuntimeBlocked && !isRecoveryAction) ||
++      actionType === ACTION_TYPE.PLACE_ORDER && uniqueBlockingReasons.length > 0 ||
++      actionType === ACTION_TYPE.RESUME_RUNTIME && uniqueBlockingReasons.includes("cannot_resume_until_recovered");
++
++    const reason = blocked ? primaryReason(uniqueBlockingReasons) ?? "action_gate_denied" : undefined;
++    const allowed = !blocked;
++
+     return {
++      action: {
++        actionId,
++        actionType,
++        request: {
++          type: actionType,
++          symbol: action.symbol,
++          side: action.side,
++          quantity: action.quantity,
++          price: action.price
++        }
++      },
++      allowed,
++      actionClass,
++      severity: severityFor(actionClass, blocked),
++      snapshotRevision: snapshot.revision,
++      kernelTrustState: kernelTrustState(snapshot, freshness),
++      blockingReasons: blocked ? uniqueBlockingReasons : [],
++      allowedAlternatives: allowedAlternativesFor(actionClass, blocked),
++      relatedInvariants: blocked ? relatedInvariantsFor(uniqueBlockingReasons) : [],
++      gateVersion: GATE_VERSION,
+       actionId,
+       actionType,
+-      decision: reason ? "deny" : "allow",
++      decision: allowed ? "allow" : "deny",
+       reason,
+-      blockingStates: blockingStates.length ? Array.from(new Set(blockingStates)) : undefined,
+-      snapshotRevision: snapshot.revision
++      blockingStates: blocked && blockingStates.length ? unique(blockingStates) : undefined
+     };
+   }
+ 
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/kernel/core-trust-report.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/kernel/core-trust-report.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/kernel/core-trust-report.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/kernel/core-trust-report.ts	2026-05-07 12:18:49.830651256 +0000
+@@ -0,0 +1,169 @@
++import type { GateDecision } from "../contracts/src/actions.js";
++import type { DomainEvent } from "../contracts/src/events.js";
++import type { FreshnessReport } from "../runtime/src/freshness.js";
++import type { HealthTruthSnapshot, InvariantCheck, TransitionTrace } from "../runtime/src/runtime-engine.js";
++import type { RuntimeSnapshot } from "../state/src/types.js";
++import { KERNEL_TRUST_STATE, type KernelTrustState } from "./kernel-constitution.js";
++import { evaluateKernelTrust, type KernelAuthorityVerdict, type TrustBlocker } from "./kernel-authority.js";
++
++export type RuntimeMode = "bootstrapping" | "readonly" | "normal" | "degraded" | "halted";
++
++export type AllowedActionClass =
++  | "NORMAL"
++  | "RISK_REDUCING"
++  | "RECOVERY"
++  | "DIAGNOSTIC"
++  | "ADMIN"
++  | "NONE";
++
++export type BlockingReasonSeverity = "info" | "warning" | "blocking" | "critical" | "panic";
++
++export interface BlockingReason {
++  code: string;
++  domain: string;
++  severity: BlockingReasonSeverity;
++  message: string;
++  evidence?: Record<string, unknown>;
++}
++
++export interface CoreTrustReport {
++  [key: string]: unknown;
++  revision: number;
++  trustState: KernelTrustState;
++  runtimeMode: RuntimeMode;
++  tradingAllowed: boolean;
++  allowedActionClasses: AllowedActionClass[];
++  blockingReasons: BlockingReason[];
++  nextRecoveryActions: string[];
++  recoveryHints: string[];
++  recoveryActions: string[];
++  bootstrap: RuntimeSnapshot["bootstrap"];
++  exchangeTruth: RuntimeSnapshot["exchangeTruth"];
++  freshness: FreshnessReport;
++  healthTruth: HealthTruthSnapshot;
++  replay: Record<string, unknown>;
++  invariants: InvariantCheck[];
++  actionVerdicts: Record<string, GateDecision>;
++  actions: Record<string, GateDecision>;
++  allowedActions: GateDecision[];
++  deniedActions: GateDecision[];
++  kernelAuthority: KernelAuthorityVerdict;
++  metadata?: Record<string, unknown>;
++  lastEvent?: DomainEvent;
++  lastTransition?: TransitionTrace;
++}
++
++export interface CoreTrustReportInput {
++  snapshot: RuntimeSnapshot;
++  permissions: {
++    tradingAllowed: boolean;
++    actions: Record<string, GateDecision>;
++  };
++  freshness: FreshnessReport;
++  healthTruth: HealthTruthSnapshot;
++  replay: Record<string, unknown> & { ok?: boolean };
++  invariants: InvariantCheck[];
++  lastEvent?: DomainEvent;
++  lastTransition?: TransitionTrace;
++  metadata?: Record<string, unknown>;
++}
++
++function unique(values: string[]): string[] {
++  return Array.from(new Set(values.filter((value) => value.trim().length > 0)));
++}
++
++function toBlockingReason(blocker: TrustBlocker): BlockingReason {
++  return {
++    code: blocker.reasonCode,
++    domain: blocker.domain,
++    severity: blocker.severity,
++    message: blocker.explanation,
++    evidence: blocker.recoveryHint ? { recoveryHint: blocker.recoveryHint } : undefined
++  };
++}
++
++function uniqueActionClasses(classes: AllowedActionClass[]): AllowedActionClass[] {
++  const ordered: AllowedActionClass[] = ["NORMAL", "RISK_REDUCING", "RECOVERY", "DIAGNOSTIC", "ADMIN", "NONE"];
++  const set = new Set(classes);
++  if (set.size === 0) set.add("NONE");
++  if (set.size > 1) set.delete("NONE");
++  return ordered.filter((value) => set.has(value));
++}
++
++function runtimeMode(snapshot: RuntimeSnapshot, healthTruth: HealthTruthSnapshot, trustState: KernelTrustState): RuntimeMode {
++  if (trustState === KERNEL_TRUST_STATE.HALTED || snapshot.system.status === "halted") return "halted";
++  if (snapshot.bootstrap.status !== "reconciled") return "bootstrapping";
++  if (snapshot.system.status === "degraded" || !healthTruth.healthTruthComplete) return "degraded";
++  if (snapshot.risk.status === "blocked") return "readonly";
++  return "normal";
++}
++
++function actionClassFromDecision(decision: GateDecision): AllowedActionClass {
++  return decision.actionClass ?? (
++    decision.actionType === "place_order"
++      ? "NORMAL"
++      : decision.actionType === "cancel_order"
++        ? "RISK_REDUCING"
++        : decision.actionType === "resume_runtime"
++          ? "ADMIN"
++          : "RECOVERY"
++  );
++}
++
++function allowedClasses(actions: Record<string, GateDecision>, tradingAllowed: boolean): AllowedActionClass[] {
++  const classes: AllowedActionClass[] = ["DIAGNOSTIC"];
++  if (tradingAllowed) classes.push("NORMAL");
++  for (const decision of Object.values(actions)) {
++    if (decision.decision === "allow") classes.push(actionClassFromDecision(decision));
++  }
++  return uniqueActionClasses(classes);
++}
++
++export function buildCoreTrustReport(input: CoreTrustReportInput): CoreTrustReport {
++  const actions = input.permissions.actions;
++  const placeOrderDecision = actions.place_order;
++  const authority = evaluateKernelTrust({
++    snapshot: input.snapshot,
++    freshness: input.freshness,
++    healthTruth: input.healthTruth,
++    replay: typeof input.replay.ok === "boolean" ? input.replay as any : undefined,
++    invariants: input.invariants,
++    actionGate: {
++      placeOrder: placeOrderDecision,
++      actions
++    }
++  });
++
++  const blockingReasons = authority.blockers.map(toBlockingReason);
++  const tradingAllowed = authority.trustState === KERNEL_TRUST_STATE.TRUSTED && placeOrderDecision?.decision === "allow";
++  const recoveryHints = unique(authority.recoveryHints);
++  const decisions = Object.values(actions);
++  const allowedActions = decisions.filter((decision) => decision.decision === "allow");
++  const deniedActions = decisions.filter((decision) => decision.decision === "deny");
++
++  return {
++    revision: input.snapshot.revision,
++    trustState: authority.trustState,
++    runtimeMode: runtimeMode(input.snapshot, input.healthTruth, authority.trustState),
++    tradingAllowed,
++    allowedActionClasses: allowedClasses(actions, tradingAllowed),
++    blockingReasons,
++    nextRecoveryActions: recoveryHints.length ? recoveryHints : ["continue_monitoring"],
++    recoveryHints: recoveryHints.length ? recoveryHints : ["continue_monitoring"],
++    recoveryActions: recoveryHints.length ? recoveryHints : ["continue_monitoring"],
++    bootstrap: input.snapshot.bootstrap,
++    exchangeTruth: input.snapshot.exchangeTruth,
++    freshness: input.freshness,
++    healthTruth: input.healthTruth,
++    replay: typeof input.replay.ok === "boolean" ? input.replay as any : undefined,
++    invariants: input.invariants,
++    actionVerdicts: actions,
++    actions,
++    allowedActions,
++    deniedActions,
++    kernelAuthority: authority,
++    metadata: input.metadata,
++    lastEvent: input.lastEvent,
++    lastTransition: input.lastTransition
++  };
++}
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/kernel/kernel-authority.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/kernel/kernel-authority.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/kernel/kernel-authority.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/kernel/kernel-authority.ts	2026-05-07 12:47:21.898388621 +0000
+@@ -0,0 +1,355 @@
++import type { GateDecision } from "../contracts/src/actions.js";
++import type { RuntimeSnapshot } from "../state/src/types.js";
++import type { FreshnessReport } from "../runtime/src/freshness.js";
++import type { HealthTruthSnapshot } from "../runtime/src/runtime-engine.js";
++import { KERNEL_TRUST_STATE, type KernelTrustState } from "./kernel-constitution.js";
++export { KERNEL_TRUST_STATE };
++
++export type TrustBlockerSeverity = "info" | "warning" | "blocking" | "critical" | "panic";
++
++export type TrustBlockerDomain =
++  | "bootstrap"
++  | "position"
++  | "order"
++  | "risk"
++  | "system"
++  | "exchangeTruth"
++  | "freshness"
++  | "healthTruth"
++  | "replay"
++  | "invariants"
++  | "actionGate";
++
++export interface ReplayStatusInput {
++  ok: boolean;
++  mismatch?: unknown;
++  conflictCount?: number;
++  eventCount?: number;
++  currentRevision?: number;
++  replayRevision?: number;
++  currentCommittedAt?: string;
++  replayCommittedAt?: string;
++  reason?: string;
++}
++
++export interface InvariantStatusInput {
++  ok: boolean;
++  name?: string;
++  severity?: TrustBlockerSeverity;
++  details?: string;
++}
++
++export interface ActionGateStatusInput {
++  placeOrder?: GateDecision;
++  actions?: Record<string, GateDecision>;
++}
++
++export interface KernelAuthorityInput {
++  snapshot: RuntimeSnapshot;
++  freshness?: FreshnessReport;
++  healthTruth?: HealthTruthSnapshot;
++  replay?: ReplayStatusInput;
++  invariants?: InvariantStatusInput[];
++  actionGate?: ActionGateStatusInput;
++  criticalCorruption?: boolean;
++}
++
++export interface TrustBlocker {
++  domain: TrustBlockerDomain;
++  reasonCode: string;
++  explanation: string;
++  severity: TrustBlockerSeverity;
++  recoveryHint?: string;
++}
++
++export interface KernelAuthorityVerdict {
++  trustState: KernelTrustState;
++  trusted: boolean;
++  snapshotRevision: number;
++  evaluatedAt: string;
++  blockers: TrustBlocker[];
++  allowedActions: string[];
++  deniedActions: string[];
++  recoveryHints: string[];
++  evidence: {
++    bootstrapStatus: RuntimeSnapshot["bootstrap"]["status"];
++    exchangeTruthStatus: RuntimeSnapshot["exchangeTruth"]["status"];
++    freshnessOkForNormalTrading?: boolean;
++    healthTruthComplete?: boolean;
++    replayOk?: boolean;
++    invariantFailures: number;
++    systemStatus: RuntimeSnapshot["system"]["status"];
++  };
++}
++
++function unique(values: string[]): string[] {
++  return Array.from(new Set(values.filter((value) => value.trim().length > 0)));
++}
++
++function pushBlocker(blockers: TrustBlocker[], blocker: TrustBlocker) {
++  blockers.push(blocker);
++}
++
++function hasProvenReplayMismatch(replay: ReplayStatusInput): boolean {
++  if (replay.ok) return false;
++
++  const conflictCount = replay.conflictCount ?? 0;
++  const eventCount = replay.eventCount ?? 0;
++  const currentRevision = replay.currentRevision ?? 0;
++  const replayRevision = replay.replayRevision ?? 0;
++
++  if (conflictCount > 0) return true;
++  if (currentRevision !== replayRevision) return true;
++  if (eventCount > 0 || currentRevision > 0 || replayRevision > 0) return true;
++
++  const reason = replay.reason?.toLowerCase() ?? "";
++  if (
++    reason.includes("corrupt") ||
++    reason.includes("journal gap") ||
++    reason.includes("impossible revision") ||
++    reason.includes("mismatch proved") ||
++    reason.includes("replay mismatch")
++  ) {
++    return true;
++  }
++
++  return false;
++}
++
++
++function classifyNonTerminal(blockers: TrustBlocker[]): KernelTrustState {
++  const hasCritical = blockers.some((b) => b.severity === "critical");
++  if (hasCritical) return KERNEL_TRUST_STATE.COMPROMISED;
++
++  const hasUnknownTruth = blockers.some((b) =>
++    b.reasonCode.includes("unknown") ||
++    b.reasonCode === "freshness_unknown" ||
++    b.reasonCode === "health_truth_unknown" ||
++    b.reasonCode === "position_unknown"
++  );
++  if (hasUnknownTruth) return KERNEL_TRUST_STATE.UNCERTAIN;
++
++  const recoverableReasons = new Set([
++    "exchange_truth_stale",
++    "exchange_truth_unavailable",
++    "freshness_stale",
++    "freshness_expired",
++    "health_truth_partial",
++    "bootstrap_not_reconciled",
++    "risk_blocked"
++  ]);
++
++  const hasRecoverable = blockers.some((b) => recoverableReasons.has(b.reasonCode));
++  return hasRecoverable ? KERNEL_TRUST_STATE.RECOVERABLE : KERNEL_TRUST_STATE.UNCERTAIN;
++}
++
++export function evaluateKernelTrust(input: KernelAuthorityInput, now: string | Date = new Date()): KernelAuthorityVerdict {
++  const { snapshot } = input;
++  const blockers: TrustBlocker[] = [];
++
++  if (input.criticalCorruption) {
++    pushBlocker(blockers, {
++      domain: "system",
++      reasonCode: "critical_corruption",
++      explanation: "Critical corruption was reported by an upstream check.",
++      severity: "panic",
++      recoveryHint: "Stop normal actions and enter manual recovery/quarantine."
++    });
++  }
++
++  if (snapshot.system.status === "halted") {
++    pushBlocker(blockers, {
++      domain: "system",
++      reasonCode: "system_halted",
++      explanation: "System state is halted.",
++      severity: "critical",
++      recoveryHint: "Resolve halt reason before evaluating normal trading."
++    });
++  }
++
++  const provenReplayMismatch = input.replay ? hasProvenReplayMismatch(input.replay) : false;
++  if (input.replay && !input.replay.ok && provenReplayMismatch) {
++    pushBlocker(blockers, {
++      domain: "replay",
++      reasonCode: "replay_mismatch",
++      explanation: input.replay.reason ?? "Replay status does not match the current snapshot.",
++      severity: "critical",
++      recoveryHint: "Quarantine runtime state and rebuild from canonical journal/snapshot."
++    });
++  }
++
++  for (const invariant of input.invariants ?? []) {
++    if (!invariant.ok) {
++      pushBlocker(blockers, {
++        domain: "invariants",
++        reasonCode: invariant.name ? `invariant_failed:${invariant.name}` : "invariant_failed",
++        explanation: invariant.details ?? "An invariant failed.",
++        severity: invariant.severity ?? "blocking",
++        recoveryHint: "Inspect failed invariant and block unsafe actions until resolved."
++      });
++    }
++  }
++
++  if (snapshot.bootstrap.status !== "reconciled") {
++    pushBlocker(blockers, {
++      domain: "bootstrap",
++      reasonCode: snapshot.bootstrap.status === "failed" ? "bootstrap_failed" : "bootstrap_not_reconciled",
++      explanation: `Bootstrap status is ${snapshot.bootstrap.status}; reconciled is required for TRUSTED state.`,
++      severity: snapshot.bootstrap.status === "failed" ? "critical" : "blocking",
++      recoveryHint: "Complete bootstrap lifecycle and exchange reconciliation."
++    });
++  }
++
++  if (snapshot.exchangeTruth.status !== "fresh") {
++    const reasonCode =
++      snapshot.exchangeTruth.status === "stale"
++        ? "exchange_truth_stale"
++        : snapshot.exchangeTruth.status === "conflicted"
++          ? "exchange_truth_conflicted"
++          : snapshot.exchangeTruth.status === "unavailable"
++            ? "exchange_truth_unavailable"
++            : "exchange_truth_unknown";
++    pushBlocker(blockers, {
++      domain: "exchangeTruth",
++      reasonCode,
++      explanation: `ExchangeTruth status is ${snapshot.exchangeTruth.status}; fresh is required for TRUSTED state.`,
++      severity: snapshot.exchangeTruth.status === "conflicted" ? "critical" : "blocking",
++      recoveryHint: "Refresh exchange reconciliation and resolve any exchange/local drift."
++    });
++  }
++
++  if (input.freshness) {
++    if (!input.freshness.okForNormalTrading) {
++      for (const reason of input.freshness.blockingReasons.length > 0 ? input.freshness.blockingReasons : ["freshness_unknown"]) {
++        pushBlocker(blockers, {
++          domain: "freshness",
++          reasonCode: reason,
++          explanation: "Freshness report is not valid for normal trading.",
++          severity: reason.includes("unknown") ? "blocking" : "blocking",
++          recoveryHint: "Refresh market, exchange and connection observations."
++        });
++      }
++    }
++  } else {
++    pushBlocker(blockers, {
++      domain: "freshness",
++      reasonCode: "freshness_unknown",
++      explanation: "Freshness report was not supplied to Kernel Authority.",
++      severity: "blocking",
++      recoveryHint: "Calculate freshness before claiming TRUSTED state."
++    });
++  }
++
++  if (input.healthTruth) {
++    if (!input.healthTruth.healthTruthComplete || input.healthTruth.systemState === "degraded") {
++      const diagnostics = input.healthTruth.healthTruthDiagnostics.length > 0
++        ? input.healthTruth.healthTruthDiagnostics
++        : ["health_truth_partial"];
++      for (const diagnostic of diagnostics) {
++        pushBlocker(blockers, {
++          domain: "healthTruth",
++          reasonCode: diagnostic,
++          explanation: "Health truth is incomplete, partial, stale, unknown or degraded.",
++          severity: input.healthTruth.systemState === "halted" ? "critical" : "blocking",
++          recoveryHint: "Provide fresh and explicit health observations; unknown connection is not healthy."
++        });
++      }
++    }
++    if (input.healthTruth.systemState === "halted") {
++      pushBlocker(blockers, {
++        domain: "healthTruth",
++        reasonCode: "health_truth_halted",
++        explanation: "Health truth reports halted system state.",
++        severity: "critical",
++        recoveryHint: "Resolve halted health state before normal actions."
++      });
++    }
++  } else {
++    pushBlocker(blockers, {
++      domain: "healthTruth",
++      reasonCode: "health_truth_unknown",
++      explanation: "Health truth report was not supplied to Kernel Authority.",
++      severity: "blocking",
++      recoveryHint: "Calculate health truth before claiming TRUSTED state."
++    });
++  }
++
++  if (snapshot.position.status === "unknown") {
++    pushBlocker(blockers, {
++      domain: "position",
++      reasonCode: "position_unknown",
++      explanation: "Position is unknown.",
++      severity: "blocking",
++      recoveryHint: "Reconcile position from exchange truth."
++    });
++  }
++
++  if (snapshot.order.status === "uncertain") {
++    pushBlocker(blockers, {
++      domain: "order",
++      reasonCode: "order_uncertain",
++      explanation: "Order state is uncertain.",
++      severity: "blocking",
++      recoveryHint: "Reconcile open orders before normal actions."
++    });
++  }
++
++  if (snapshot.risk.status === "blocked") {
++    pushBlocker(blockers, {
++      domain: "risk",
++      reasonCode: "risk_blocked",
++      explanation: `Risk is blocked: ${snapshot.risk.reasons.join(", ") || "no reason supplied"}.`,
++      severity: "blocking",
++      recoveryHint: "Clear risk block only through accepted reconciliation events and reducers."
++    });
++  }
++
++  const placeOrder = input.actionGate?.placeOrder ?? input.actionGate?.actions?.place_order;
++  const allowedActions: string[] = [];
++  const deniedActions: string[] = [];
++  if (placeOrder) {
++    if (placeOrder.decision === "allow") allowedActions.push(placeOrder.actionType);
++    else {
++      deniedActions.push(placeOrder.actionType);
++      pushBlocker(blockers, {
++        domain: "actionGate",
++        reasonCode: placeOrder.reason ?? "action_gate_denied",
++        explanation: `ActionGate denied ${placeOrder.actionType}.`,
++        severity: "blocking",
++        recoveryHint: "Do not bypass ActionGate; resolve its blocking states."
++      });
++    }
++  }
++
++  let trustState: KernelTrustState;
++  if (blockers.some((b) => b.severity === "panic")) trustState = KERNEL_TRUST_STATE.PANIC;
++  else if (snapshot.system.status === "halted" || blockers.some((b) => b.reasonCode === "health_truth_halted")) trustState = KERNEL_TRUST_STATE.HALTED;
++  else if (provenReplayMismatch) trustState = KERNEL_TRUST_STATE.COMPROMISED;
++  else if (blockers.some((b) => b.reasonCode === "exchange_truth_conflicted")) trustState = KERNEL_TRUST_STATE.COMPROMISED;
++  else if (blockers.length === 0) trustState = KERNEL_TRUST_STATE.TRUSTED;
++  else trustState = classifyNonTerminal(blockers);
++
++  return {
++    trustState,
++    trusted: trustState === KERNEL_TRUST_STATE.TRUSTED,
++    snapshotRevision: snapshot.revision,
++    evaluatedAt: typeof now === "string" ? now : now.toISOString(),
++    blockers,
++    allowedActions: unique(allowedActions),
++    deniedActions: unique(deniedActions),
++    recoveryHints: unique(blockers.map((b) => b.recoveryHint ?? "")),
++    evidence: {
++      bootstrapStatus: snapshot.bootstrap.status,
++      exchangeTruthStatus: snapshot.exchangeTruth.status,
++      freshnessOkForNormalTrading: input.freshness?.okForNormalTrading,
++      healthTruthComplete: input.healthTruth?.healthTruthComplete,
++      replayOk: input.replay?.ok,
++      invariantFailures: (input.invariants ?? []).filter((invariant) => !invariant.ok).length,
++      systemStatus: snapshot.system.status
++    }
++  };
++}
++
++export const KernelAuthority = {
++  evaluate: evaluateKernelTrust
++} as const;
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/kernel/kernel-constitution.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/kernel/kernel-constitution.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/kernel/kernel-constitution.ts	2026-05-07 12:51:29.210302766 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/kernel/kernel-constitution.ts	2026-05-07 12:12:10.122511131 +0000
+@@ -52,7 +52,15 @@
+   HEALTH_MUST_NOT_REPORT_FAKE_TRUTH: "LAW-027",
+   UNKNOWN_CONNECTION_STATE_IS_NOT_CONNECTED: "LAW-028",
+   LOCAL_FLAT_POSITION_REQUIRES_FRESH_EXCHANGE_RECONCILE: "LAW-029",
+-  FRESHNESS_UNKNOWN_IS_STALE_FOR_NORMAL_TRADING: "LAW-030"
++  FRESHNESS_UNKNOWN_IS_STALE_FOR_NORMAL_TRADING: "LAW-030",
++  KERNEL_AUTHORITY_CANONICAL_TRUST_EVALUATOR: "LAW-031",
++  KERNEL_AUTHORITY_MUST_BE_PURE: "LAW-032",
++  CORE_TRUST_REPORT_CANONICAL_TRUST_OUTPUT: "LAW-033",
++  FRONTEND_MUST_NOT_CALCULATE_TRUST: "LAW-034",
++  V1_MUST_NOT_CALCULATE_CORE_TRUST: "LAW-035",
++  DENIED_ACTION_REQUIRES_MACHINE_READABLE_REASONS: "LAW-036",
++  TRUST_STATE_MUST_BE_EXPLAINABLE: "LAW-037",
++  ACTION_GATE_MUST_USE_KERNEL_TRUST_STATE: "LAW-038"
+ } as const;
+ 
+ export type CoreLawId = typeof CORE_LAW_ID[keyof typeof CORE_LAW_ID];
+@@ -362,7 +370,80 @@
+     currentModules: ["core/runtime/src/runtime-engine.ts", "core/gates/src/action-gate.ts"],
+     futureModules: ["core/freshness/freshness-guard.ts", "core/health/runtime-health-snapshot.ts", "core/kernel/kernel-authority.ts"],
+     testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.KERNEL_AUTHORITY_CANONICAL_TRUST_EVALUATOR,
++    title: "Kernel Authority is the canonical trust evaluator",
++    statement: "Kernel Authority is the canonical evaluator of core trust; frontend, V1/V2, strategies, signals, decision engines, API fields, and local shortcuts cannot calculate or override trust.",
++    severity: "blocking",
++    currentModules: ["core/state/src/types.ts", "core/gates/src/action-gate.ts"],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.KERNEL_AUTHORITY_MUST_BE_PURE,
++    title: "Kernel Authority must be pure",
++    statement: "Kernel Authority reads accepted evidence and returns trust evaluation; it must not mutate snapshot, journal, bootstrap, exchange truth, freshness, health, or gate state.",
++    severity: "panic",
++    currentModules: ["core/state/src/types.ts", "core/system/journal.ts", "core/transitions/src/reducers.ts"],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.CORE_TRUST_REPORT_CANONICAL_TRUST_OUTPUT,
++    title: "CoreTrustReport is the canonical trust output",
++    statement: "CoreTrustReport is the single canonical output explaining current trust state, reasons, allowed actions, denied actions, and recovery hints.",
++    severity: "blocking",
++    currentModules: ["core/gates/src/action-gate.ts", "core/runtime/src/runtime-engine.ts"],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.FRONTEND_MUST_NOT_CALCULATE_TRUST,
++    title: "Frontend must not calculate trust",
++    statement: "Frontend may display core reports and verdicts, but must not calculate, infer, cache, override, or invent core trust.",
++    severity: "blocking",
++    currentModules: ["apps/runtime-api/src/app.ts"],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.V1_MUST_NOT_CALCULATE_CORE_TRUST,
++    title: "V1 must not calculate core trust",
++    statement: "V1 and V2 must not calculate, certify, override, or backfill MBG Core v0.1 trust; future integrations stay downstream of kernel trust.",
++    severity: "blocking",
++    currentModules: [],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts", "core/adapters/v1-input-adapter.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.DENIED_ACTION_REQUIRES_MACHINE_READABLE_REASONS,
++    title: "Every denied action must have machine-readable reasons",
++    statement: "Every denied action must return stable machine-readable reason codes; human text alone is not an acceptable kernel verdict.",
++    severity: "blocking",
++    currentModules: ["core/gates/src/action-gate.ts"],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.TRUST_STATE_MUST_BE_EXPLAINABLE,
++    title: "Trust state must be explainable",
++    statement: "Every trust state must be justified by accepted evidence and machine-readable reasons; unknown evidence cannot become fake TRUSTED.",
++    severity: "blocking",
++    currentModules: ["core/state/src/types.ts", "core/invariants/engine.invariants.ts", "core/system/state-hash.ts"],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.ACTION_GATE_MUST_USE_KERNEL_TRUST_STATE,
++    title: "ActionGate must use kernel trust state",
++    statement: "ActionGate must consume kernel trust state or equivalent canonical trust evaluation when evaluating unsafe actions.",
++    severity: "blocking",
++    currentModules: ["core/gates/src/action-gate.ts", "core/state/src/types.ts"],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
+   }
++
+ ] as const;
+ 
+ export const CORE_REVIEW_RULE =
+@@ -467,6 +548,69 @@
+ } as const;
+ 
+ 
++
++export const WAVE4_CONSTITUTION_SCOPE = {
++  IMPLEMENTS_RUNTIME_BEHAVIOR: false,
++  IMPLEMENTS_KERNEL_AUTHORITY_CODE: false,
++  IMPLEMENTS_CORE_TRUST_REPORT_CODE: false,
++  IMPLEMENTS_RECOVERY_PLANNER: false,
++  CONNECTS_V1: false,
++  CONNECTS_V2: false,
++  TOUCHES_SIGNAL_LAYER: false,
++  TOUCHES_DECISION_ENGINE: false,
++  TOUCHES_STRATEGIES: false,
++  TOUCHES_UI: false,
++  ENABLES_LIVE_TRADING: false,
++  ADDS_REAL_EXCHANGE_KEYS: false
++} as const;
++
++export const WAVE4_MODULE_MAPPING = {
++  KERNEL_AUTHORITY: {
++    currentModules: ["core/state/src/types.ts", "core/gates/src/action-gate.ts"],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  CORE_TRUST_REPORT: {
++    currentModules: ["core/gates/src/action-gate.ts", "core/runtime/src/runtime-engine.ts"],
++    futureModules: ["core/trust/core-trust-report.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  ACTION_GATE_VERDICT_V2: {
++    currentModules: ["core/gates/src/action-gate.ts"],
++    futureModules: ["core/kernel/kernel-authority.ts", "core/trust/core-trust-report.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  SCENARIO_AUDIT: {
++    currentModules: ["tests/scenarios/*"],
++    futureModules: [],
++    testModules: SCENARIO_TESTS
++  }
++} as const;
++
++export const ACTION_GATE_VERDICT_V2_REQUIREMENT = {
++  DENIED_ACTION_REQUIRES_MACHINE_READABLE_REASONS: "denied_action_requires_machine_readable_reasons",
++  DENIED_ACTION_IDENTIFIES_TRUST_STATE: "denied_action_identifies_trust_state",
++  DENIED_ACTION_IDENTIFIES_BLOCKING_DOMAIN: "denied_action_identifies_blocking_domain",
++  HUMAN_TEXT_IS_NOT_AUTHORITY: "human_text_is_not_authority"
++} as const;
++
++export const CORE_TRUST_REPORT_REQUIREMENT = {
++  CANONICAL_TRUST_OUTPUT: "canonical_trust_output",
++  MUST_INCLUDE_TRUST_STATE: "must_include_trust_state",
++  MUST_INCLUDE_MACHINE_READABLE_REASONS: "must_include_machine_readable_reasons",
++  MUST_INCLUDE_ALLOWED_AND_DENIED_ACTIONS: "must_include_allowed_and_denied_actions",
++  MUST_NOT_HIDE_UNKNOWN_STALE_CONFLICTED_OR_UNRECONCILED_EVIDENCE: "must_not_hide_unknown_stale_conflicted_or_unreconciled_evidence"
++} as const;
++
++export const KERNEL_AUTHORITY_REQUIREMENT = {
++  CANONICAL_TRUST_EVALUATOR: "canonical_trust_evaluator",
++  PURE_EVALUATOR_NO_STATE_MUTATION: "pure_evaluator_no_state_mutation",
++  FRONTEND_NOT_TRUST_CALCULATOR: "frontend_not_trust_calculator",
++  V1_NOT_TRUST_CALCULATOR: "v1_not_trust_calculator",
++  ACTION_GATE_USES_KERNEL_TRUST_STATE: "action_gate_uses_kernel_trust_state"
++} as const;
++
++
+ export function getCoreLaw(id: CoreLawId): CoreLawDefinition {
+   const law = CORE_LAWS.find((candidate) => candidate.id === id);
+   if (!law) {
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/runtime/src/runtime-engine.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/runtime/src/runtime-engine.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/core/runtime/src/runtime-engine.ts	2026-05-07 12:51:29.207338713 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/core/runtime/src/runtime-engine.ts	2026-05-07 12:16:49.843851088 +0000
+@@ -7,6 +7,7 @@
+ import { FileRuntimePersistence } from "./persistence.js";
+ import { EventIdempotencyIndex, type IdempotencyDiagnostic } from "./idempotency.js";
+ import { calculateFreshness, DEFAULT_FRESHNESS_CONFIG } from "./freshness.js";
++import { buildCoreTrustReport, type CoreTrustReport } from "../../kernel/core-trust-report.js";
+ 
+ type StateDomain = "bootstrap" | "exchangeTruth" | "market" | "trade" | "order" | "position" | "risk" | "system";
+ 
+@@ -817,6 +818,40 @@
+     return decision;
+   }
+ 
++
++  getCoreTrustReport(metadata: Record<string, unknown> = {}): CoreTrustReport {
++    const now = new Date();
++    const freshness = this.getFreshness(now);
++    const actions = this.gate.evaluateAll(this.snapshot, {
++      enforceFreshness: true,
++      now,
++      freshness,
++      freshnessConfig: DEFAULT_FRESHNESS_CONFIG
++    });
++    const healthTruth = this.getHealthSnapshot();
++    const replay = this.replayCheck();
++    const invariants = this.getInvariants();
++
++    return buildCoreTrustReport({
++      snapshot: this.snapshot,
++      permissions: {
++        tradingAllowed: actions.place_order.decision === "allow",
++        actions
++      },
++      freshness,
++      healthTruth,
++      replay,
++      invariants,
++      lastEvent: this.events.at(-1),
++      lastTransition: this.transitions.at(-1),
++      metadata: {
++        runtime: this.getRuntimeView(),
++        idempotency: this.getIdempotencyView(),
++        ...metadata
++      }
++    });
++  }
++
+   getMetrics(): RuntimeMetrics {
+     const now = Date.now();
+     const uptimeMs = now - this.startedAt;
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/package-lock.json /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/package-lock.json
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/package-lock.json	2026-05-07 12:51:29.131809247 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/package-lock.json	2026-05-07 12:51:20.626468091 +0000
+@@ -1,12 +1,12 @@
+ {
+-  "name": "mbg-core-v0.1-alpha3",
+-  "version": "1.0.3",
++  "name": "mbg-core-v0.1-alpha4",
++  "version": "1.0.4",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+-      "name": "mbg-core-v0.1-alpha3",
+-      "version": "1.0.3",
++      "name": "mbg-core-v0.1-alpha4",
++      "version": "1.0.4",
+       "dependencies": {
+         "cors": "^2.8.5",
+         "dotenv": "^16.4.5",
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/package.json /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/package.json
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/package.json	2026-05-07 12:51:29.130813683 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/package.json	2026-05-07 12:51:20.624226489 +0000
+@@ -1,6 +1,6 @@
+ {
+-  "name": "mbg-core-v0.1-alpha3",
+-  "version": "1.0.3",
++  "name": "mbg-core-v0.1-alpha4",
++  "version": "1.0.4",
+   "type": "module",
+   "scripts": {
+     "dev": "tsx apps/runtime-api/src/server.ts",
+@@ -21,7 +21,7 @@
+     "test:pr33:pnl": "npm run typecheck && tsx tests/scenarios/pr33-pnl-engine.ts",
+     "test:pr33.2:pnl-hardening": "npm run typecheck && tsx tests/scenarios/pr33-2-pnl-hardening.ts",
+     "test:pr35:metadata": "npm run typecheck && tsx tests/scenarios/pr35-metadata-pipeline.ts",
+-    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && npm run test:core:cold-start && npm run test:core:bootstrap && npm run test:core:event-validation && npm run test:core:idempotency && npm run test:wave2:scenario-audit && npm run test:core:exchange-truth && npm run test:core:freshness && npm run test:core:health-truth && npm run test:wave3:scenario-audit && npm run audit:runtime",
++    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && npm run test:core:cold-start && npm run test:core:bootstrap && npm run test:core:event-validation && npm run test:core:idempotency && npm run test:wave2:scenario-audit && npm run test:core:exchange-truth && npm run test:core:freshness && npm run test:core:health-truth && npm run test:wave3:scenario-audit && npm run test:core:kernel-authority && npm run test:core:trust-report && npm run test:core:action-gate-verdict && npm run test:wave4:scenario-audit && npm run audit:runtime",
+     "reset:runtime": "node -e \"const fs=require('node:fs'); fs.rmSync('data/runtime',{recursive:true,force:true}); fs.rmSync('data/journal',{recursive:true,force:true}); fs.mkdirSync('data/runtime/events',{recursive:true}); fs.mkdirSync('data/runtime/transitions',{recursive:true}); fs.mkdirSync('data/journal',{recursive:true}); fs.writeFileSync('data/journal/.gitkeep', ''); console.log('runtime state reset: data/runtime and data/journal recreated empty')\"",
+     "core:status": "PERSISTENCE_ENABLED=false tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.getRuntimeView(), null, 2));\"",
+     "replay:check": "tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.replayCheck(), null, 2));\"",
+@@ -34,7 +34,11 @@
+     "test:core:exchange-truth": "npm run typecheck && tsx tests/scenarios/exchange-truth.ts",
+     "test:core:freshness": "npm run typecheck && tsx tests/scenarios/core-freshness.ts",
+     "test:core:health-truth": "npm run typecheck && tsx tests/scenarios/core-health-truth.ts",
+-    "test:wave3:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave3-scenario-audit.ts"
++    "test:wave3:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave3-scenario-audit.ts",
++    "test:core:kernel-authority": "npm run typecheck && tsx tests/scenarios/kernel-authority.ts",
++    "test:core:trust-report": "npm run typecheck && tsx tests/scenarios/core-trust-report.ts",
++    "test:core:action-gate-verdict": "npm run typecheck && tsx tests/scenarios/core-action-gate-verdict.ts",
++    "test:wave4:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave4-scenario-audit.ts"
+   },
+   "dependencies": {
+     "cors": "^2.8.5",
+@@ -53,5 +57,5 @@
+     "tsx": "^4.7.1",
+     "typescript": "^5.4.3"
+   },
+-  "description": "MBG Core v0.1 clean package based on PR35 metadata lifecycle fix v2; trust-kernel-only baseline."
++  "description": "MBG Core v0.1 alpha4 canonical package with Kernel Authority, CoreTrustReport, and ActionGate Verdict v2."
+ }
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/role7_wave4_retry_20260507_v4_retry_delivery_report.md /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/role7_wave4_retry_20260507_v4_retry_delivery_report.md
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/role7_wave4_retry_20260507_v4_retry_delivery_report.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/role7_wave4_retry_20260507_v4_retry_delivery_report.md	2026-05-07 12:12:00.718487380 +0000
+@@ -0,0 +1,99 @@
++# Delivery Report — Wave 4 Scenario Audit
++
++Role: 7 — Scenario Audit / Test Owner  
++Canonical base: `mbg-core-v0.1-alpha3.zip`  
++Target integration: `mbg-core-v0.1-alpha4`
++
++## Scope
++
++Added a Wave 4 scenario audit suite for Kernel Authority, CoreTrustReport, and ActionGate Verdict v2 integration.
++
++This delivery does not implement Kernel Authority, CoreTrustReport, or ActionGate Verdict v2. It only tests the expected integrated behavior.
++
++## Changed files
++
++- `package.json`
++- `tests/scenarios/wave4-scenario-audit.ts`
++- `DELIVERY_REPORT_WAVE4_SCENARIO_AUDIT.md`
++
++## Added script
++
++```bash
++npm run test:wave4:scenario-audit
++```
++
++The script runs:
++
++```bash
++npm run typecheck && tsx tests/scenarios/wave4-scenario-audit.ts
++```
++
++## Scenario coverage
++
++1. cold start -> CoreTrustReport `trustState = UNCERTAIN`, `tradingAllowed = false`.
++2. bootstrap not reconciled -> not `TRUSTED`.
++3. exchangeTruth stale -> not `TRUSTED`, blocking reason exists.
++4. health unknown -> not `TRUSTED`.
++5. replay mismatch -> `COMPROMISED`.
++6. halted system -> `HALTED`.
++7. full ready state -> `TRUSTED`.
++8. ActionGate denied verdict contains machine-readable reason.
++9. CoreTrustReport contains bootstrap/exchangeTruth/freshness/healthTruth sections.
++10. frontend should not need to calculate trust from raw flags.
++
++## Wave 4 tasks covered
++
++- Kernel Authority
++- CoreTrustReport
++- ActionGate Verdict v2
++- Wave 4 Scenario Audit
++
++## Commands and results on alpha3
++
++```bash
++npm install
++npm run typecheck
++npm run test:wave4:scenario-audit
++```
++
++Observed on `mbg-core-v0.1-alpha3`:
++
++- `npm install`: passed
++- `npm run typecheck`: passed
++- `npm run test:wave4:scenario-audit`: fails on expected Wave 4 implementation gaps
++
++The primary expected alpha3 gap is absence of `runtimeEngine.getCoreTrustReport()`.
++
++## Expected result after alpha4 integration
++
++```json
++{
++  "name": "wave4_scenario_audit",
++  "total": 10,
++  "passed": 10,
++  "failed": 0
++}
++```
++
++## Risks and gaps
++
++- The audit assumes the integrated Wave 4 runtime API exposes `runtimeEngine.getCoreTrustReport()`.
++- The replay mismatch scenario creates a real journal/snapshot mismatch by appending an uncommitted event to the segmented event journal in the test data directory. This is test-only corruption and does not modify runtime code.
++- The audit checks that Kernel Authority does not mutate snapshot state or revision while producing reports.
++- ActionGate Verdict v2 is expected to expose machine-readable deny reasons either directly or through structured report action verdicts.
++
++## Intentionally not done
++
++- Did not change `CORE_CONSTITUTION.md`.
++- Did not change runtime behavior.
++- Did not implement Kernel Authority.
++- Did not implement CoreTrustReport.
++- Did not implement ActionGate Verdict v2.
++- Did not connect V1 or V2.
++- Did not add Signal Layer.
++- Did not add Decision Engine.
++- Did not add strategy logic.
++- Did not add UI.
++- Did not enable live trading.
++- Did not add real exchange keys.
++- Did not make real exchange calls.
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/cold-start-unknown.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/cold-start-unknown.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/cold-start-unknown.ts	2026-05-07 12:51:29.214098147 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/cold-start-unknown.ts	2026-05-07 12:24:02.719320276 +0000
+@@ -30,7 +30,7 @@
+   const decision = placeOrderProbe(snapshot);
+   assert.equal(decision.decision, "deny");
+   assert.equal(decision.reason, "bootstrap_not_reconciled");
+-  assert.deepEqual(decision.blockingStates, ["bootstrap", "exchangeTruth", "position", "risk"]);
++  assert.deepEqual(decision.blockingStates, ["bootstrap", "exchangeTruth", "position", "risk", "market"]);
+ }
+ 
+ function testPositionReconciledZeroBecomesFlatOnlyAfterExchangeReconcile() {
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/core-action-gate-verdict.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/core-action-gate-verdict.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/core-action-gate-verdict.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/core-action-gate-verdict.ts	2026-05-07 12:36:37.300893354 +0000
+@@ -0,0 +1,271 @@
++import assert from "node:assert/strict";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { EVENT_TYPE, type DomainEvent } from "../../core/contracts/src/events.js";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++
++const nowMs = Date.now();
++const now = new Date(nowMs).toISOString();
++const freshPast = new Date(nowMs - 100).toISOString();
++const stalePast = new Date(nowMs - 120_000).toISOString();
++
++function event<TPayload>(
++  eventType: string,
++  payload: TPayload,
++  eventId: string,
++  timestamp = freshPast,
++  source = "action-gate-verdict-test"
++): DomainEvent<TPayload> {
++  return {
++    eventId,
++    eventType: eventType as any,
++    timestamp,
++    source,
++    schemaVersion: "1",
++    payload
++  };
++}
++
++function reset() {
++  runtimeEngine.clearPersistenceAndReset();
++}
++
++function commitReady(prefix: string, timestamps: {
++  market?: string;
++  exchange?: string;
++  health?: string;
++} = {}) {
++  const marketTimestamp = timestamps.market ?? freshPast;
++  const exchangeTimestamp = timestamps.exchange ?? freshPast;
++  const healthTimestamp = timestamps.health ?? freshPast;
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "action-gate-verdict-test"
++  }, `${prefix}-market`, marketTimestamp, "market-data"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange"
++  }, `${prefix}-position`, exchangeTimestamp, "exchange"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: `${prefix}-loading` }, `${prefix}-bootstrap-loading`, exchangeTimestamp, "core"));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: `${prefix}-replay` }, `${prefix}-bootstrap-replay`, exchangeTimestamp, "core"));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: `${prefix}-awaiting` }, `${prefix}-bootstrap-awaiting`, exchangeTimestamp, "core"));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: `${prefix}-reconciled` }, `${prefix}-bootstrap-reconciled`, exchangeTimestamp, "core"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    provider: "action-gate-verdict-test",
++    lastAccountReconcileAt: exchangeTimestamp,
++    lastPositionReconcileAt: exchangeTimestamp,
++    lastOrderReconcileAt: exchangeTimestamp,
++    lastFillSyncAt: exchangeTimestamp,
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }, `${prefix}-exchange-truth`, exchangeTimestamp, "exchange"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected",
++    source: "action-gate-verdict-test"
++  }, `${prefix}-health`, healthTimestamp, "core"));
++}
++
++function placeOrder() {
++  return runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  });
++}
++
++function assertVerdictShape(verdict: ReturnType<typeof placeOrder>) {
++  assert.equal(verdict.gateVersion, "action-gate-v2");
++  assert.equal(verdict.action.actionType, ACTION_TYPE.PLACE_ORDER);
++  assert.equal(verdict.actionClass, "NORMAL");
++  assert.equal(typeof verdict.allowed, "boolean");
++  assert.equal(verdict.snapshotRevision, runtimeEngine.getSnapshot().revision);
++  assert.ok(Array.isArray(verdict.blockingReasons));
++  assert.ok(Array.isArray(verdict.allowedAlternatives));
++  assert.ok(Array.isArray(verdict.relatedInvariants));
++}
++
++function testColdStartPlaceOrderDeniedWithReason() {
++  reset();
++  const verdict = placeOrder();
++
++  assertVerdictShape(verdict);
++  assert.equal(verdict.allowed, false);
++  assert.equal(verdict.decision, "deny");
++  assert.equal(verdict.reason, "bootstrap_not_reconciled");
++  assert.ok(verdict.blockingReasons.includes("bootstrap_not_reconciled"));
++  assert.ok(verdict.blockingReasons.includes("exchange_truth_unknown"));
++  assert.ok(verdict.blockingReasons.includes("connection_state_unknown"));
++  assert.ok(verdict.allowedAlternatives.includes(ACTION_TYPE.RECONCILE_POSITION));
++  assert.ok(verdict.relatedInvariants.includes("bootstrap_must_be_reconciled_before_normal_action"));
++}
++
++function testExchangeTruthUnknownDeniedWithReason() {
++  reset();
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "action-gate-verdict-test"
++  }, "exchange-unknown-market"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange"
++  }, "exchange-unknown-position"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "loading" }, "exchange-unknown-bootstrap-loading"));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "replay" }, "exchange-unknown-bootstrap-replay"));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "awaiting" }, "exchange-unknown-bootstrap-awaiting"));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "reconciled" }, "exchange-unknown-bootstrap-reconciled"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected"
++  }, "exchange-unknown-health"));
++
++  const verdict = placeOrder();
++
++  assertVerdictShape(verdict);
++  assert.equal(verdict.allowed, false);
++  assert.equal(verdict.reason, "exchange_truth_unknown");
++  assert.ok(verdict.blockingReasons.includes("exchange_truth_unknown"));
++  assert.ok(verdict.relatedInvariants.includes("exchange_truth_must_be_fresh_before_normal_action"));
++}
++
++function testFreshnessStaleDeniedWithReason() {
++  reset();
++  commitReady("stale-market", { market: stalePast, exchange: freshPast, health: freshPast });
++
++  const verdict = placeOrder();
++
++  assertVerdictShape(verdict);
++  assert.equal(verdict.allowed, false);
++  assert.equal(verdict.reason, "market_data_stale");
++  assert.ok(verdict.blockingReasons.includes("market_data_stale"));
++  assert.ok(verdict.relatedInvariants.includes("market_data_must_be_fresh_before_normal_action"));
++}
++
++function testHealthUnknownDeniedWithReason() {
++  reset();
++  const prefix = "health-unknown";
++  const exchangeTimestamp = freshPast;
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "action-gate-verdict-test"
++  }, `${prefix}-market`, freshPast, "market-data"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange"
++  }, `${prefix}-position`, exchangeTimestamp, "exchange"));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "loading" }, `${prefix}-bootstrap-loading`));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "replay" }, `${prefix}-bootstrap-replay`));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "awaiting" }, `${prefix}-bootstrap-awaiting`));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "reconciled" }, `${prefix}-bootstrap-reconciled`));
++
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    lastAccountReconcileAt: exchangeTimestamp,
++    lastPositionReconcileAt: exchangeTimestamp,
++    lastOrderReconcileAt: exchangeTimestamp,
++    lastFillSyncAt: exchangeTimestamp,
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }, `${prefix}-exchange-truth`, exchangeTimestamp, "exchange"));
++
++  const verdict = placeOrder();
++
++  assertVerdictShape(verdict);
++  assert.equal(verdict.allowed, false);
++  assert.equal(verdict.reason, "connection_state_unknown");
++  assert.ok(verdict.blockingReasons.includes("connection_state_unknown"));
++  assert.ok(verdict.relatedInvariants.includes("health_truth_must_be_known_before_normal_action"));
++}
++
++function testTrustedStateAllowsWithVerdict() {
++  reset();
++  commitReady("trusted");
++
++  const verdict = placeOrder();
++
++  assertVerdictShape(verdict);
++  assert.equal(verdict.allowed, true);
++  assert.equal(verdict.decision, "allow");
++  assert.equal(verdict.reason, undefined);
++  assert.deepEqual(verdict.blockingReasons, []);
++  assert.equal(verdict.gateVersion, "action-gate-v2");
++  assert.equal(verdict.kernelTrustState, "TRUSTED");
++}
++
++function testRecoveryActionAllowedWhenNormalTradingDenied() {
++  reset();
++  const verdict = runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.RECONCILE_POSITION
++  });
++
++  assert.equal(verdict.gateVersion, "action-gate-v2");
++  assert.equal(verdict.actionClass, "RECOVERY");
++  assert.equal(verdict.allowed, true);
++  assert.equal(verdict.decision, "allow");
++  assert.equal(verdict.snapshotRevision, runtimeEngine.getSnapshot().revision);
++}
++
++testColdStartPlaceOrderDeniedWithReason();
++testExchangeTruthUnknownDeniedWithReason();
++testFreshnessStaleDeniedWithReason();
++testHealthUnknownDeniedWithReason();
++testTrustedStateAllowsWithVerdict();
++testRecoveryActionAllowedWhenNormalTradingDenied();
++
++console.log(JSON.stringify({
++  name: "core_action_gate_verdict_v2",
++  ok: true,
++  gateVersion: "action-gate-v2"
++}, null, 2));
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/core-trust-report.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/core-trust-report.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/core-trust-report.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/core-trust-report.ts	2026-05-07 12:12:10.202078126 +0000
+@@ -0,0 +1,189 @@
++import assert from "node:assert/strict";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { DomainEvent, EVENT_TYPE } from "../../core/contracts/src/events.js";
++import { KERNEL_TRUST_STATE } from "../../core/kernel/kernel-constitution.js";
++
++function isoNow() {
++  return new Date().toISOString();
++}
++
++function event<TPayload>(
++  eventType: string,
++  eventId: string,
++  payload: TPayload,
++  source = "core-trust-report-test",
++  timestamp = isoNow()
++): DomainEvent<TPayload> {
++  return {
++    eventId,
++    eventType: eventType as any,
++    timestamp,
++    source,
++    schemaVersion: "1",
++    payload
++  } as DomainEvent<TPayload>;
++}
++
++function commit(e: DomainEvent, message: string) {
++  const result = runtimeEngine.commitEventResult(e, { log: false });
++  assert.equal(result.ok, true, `${message}: ${JSON.stringify(result)}`);
++}
++
++function bootstrap(eventType: string, id: string) {
++  commit(event(eventType, id, {
++    source: "core",
++    provider: "core",
++    reason: id
++  }, "core"), `commit ${eventType}`);
++}
++
++function marketTick(id: string) {
++  commit(event(EVENT_TYPE.MARKET_TICK_RECEIVED, id, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "core-trust-report-test",
++    source: "market-data"
++  }, "market-data"), "commit market tick");
++}
++
++function positionReconciled(id: string) {
++  commit(event(EVENT_TYPE.POSITION_RECONCILED, id, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    quantity: 0,
++    free: 0,
++    locked: 0,
++    exposure: 0,
++    markPrice: 65000,
++    source: "exchange",
++    provider: "core-trust-report-test"
++  }, "exchange"), "commit position reconciled");
++}
++
++function exchangeTruthSucceeded(id: string) {
++  const now = isoNow();
++  commit(event(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, id, {
++    source: "exchange",
++    provider: "core-trust-report-test",
++    reason: "exchange_truth_reconciled",
++    lastAccountReconcileAt: now,
++    lastPositionReconcileAt: now,
++    lastOrderReconcileAt: now,
++    lastFillSyncAt: now,
++    drift: {},
++    conflicts: []
++  }, "exchange", now), "commit exchange truth succeeded");
++}
++
++function healthConnected(id: string) {
++  const now = isoNow();
++  commit(event(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, id, {
++    source: "system",
++    provider: "core-trust-report-test",
++    status: "healthy",
++    connection: "websocket",
++    connectionState: "connected",
++    wsConnected: true,
++    receivedAt: now,
++    lastConnectionHeartbeatAt: now,
++    reason: "websocket_connected"
++  }, "system", now), "commit health connected");
++}
++
++function prepareTrustedRuntime() {
++  runtimeEngine.clearPersistenceAndReset();
++  bootstrap(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, "trust-report-bootstrap-loading");
++  bootstrap(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, "trust-report-bootstrap-replay");
++  bootstrap(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, "trust-report-bootstrap-awaiting");
++  positionReconciled("trust-report-position-reconciled");
++  exchangeTruthSucceeded("trust-report-exchange-truth-fresh");
++  healthConnected("trust-report-health-connected");
++  marketTick("trust-report-market-fresh");
++  bootstrap(EVENT_TYPE.BOOTSTRAP_RECONCILED, "trust-report-bootstrap-reconciled");
++}
++
++function testReportContainsTrustState() {
++  runtimeEngine.clearPersistenceAndReset();
++  const report = runtimeEngine.getCoreTrustReport({ test: "contains-trust-state" });
++
++  assert.equal(typeof report.trustState, "string");
++  assert.ok(Object.values(KERNEL_TRUST_STATE).includes(report.trustState));
++  assert.equal(report.revision, runtimeEngine.getSnapshot().revision);
++}
++
++function testReportContainsBlockingReasons() {
++  runtimeEngine.clearPersistenceAndReset();
++  const report = runtimeEngine.getCoreTrustReport({ test: "contains-blocking-reasons" });
++
++  assert.ok(Array.isArray(report.blockingReasons));
++  assert.ok(report.blockingReasons.length > 0);
++  const first = report.blockingReasons[0];
++  assert.equal(typeof first.code, "string");
++  assert.equal(typeof first.domain, "string");
++  assert.equal(typeof first.severity, "string");
++  assert.equal(typeof first.message, "string");
++}
++
++function testColdStartTradingDenied() {
++  runtimeEngine.clearPersistenceAndReset();
++  const report = runtimeEngine.getCoreTrustReport({ test: "cold-start-denied" });
++
++  assert.equal(report.tradingAllowed, false);
++  assert.notEqual(report.trustState, KERNEL_TRUST_STATE.TRUSTED);
++  assert.ok(report.blockingReasons.some((reason) => reason.code === "bootstrap_not_reconciled"));
++}
++
++function testTrustedReportDependsOnActionGateAllow() {
++  prepareTrustedRuntime();
++
++  const directDecision = runtimeEngine.evaluateAction({ type: ACTION_TYPE.PLACE_ORDER });
++  const report = runtimeEngine.getCoreTrustReport({ test: "trusted-action-gate" });
++
++  assert.equal(report.tradingAllowed, directDecision.decision === "allow");
++  if (report.tradingAllowed) {
++    assert.equal(report.trustState, KERNEL_TRUST_STATE.TRUSTED);
++    assert.ok(report.allowedActionClasses.includes("NORMAL"));
++  }
++}
++
++function testReportContainsCoreEvidenceBlocks() {
++  runtimeEngine.clearPersistenceAndReset();
++  const report = runtimeEngine.getCoreTrustReport({ test: "evidence-blocks" });
++
++  assert.ok(report.bootstrap);
++  assert.ok(report.exchangeTruth);
++  assert.ok(report.freshness);
++  assert.ok(report.healthTruth);
++  assert.ok(report.replay);
++  assert.ok(Array.isArray(report.invariants));
++}
++
++function testReportIsSufficientForFrontendTrustDisplay() {
++  runtimeEngine.clearPersistenceAndReset();
++  const report = runtimeEngine.getCoreTrustReport({ test: "frontend-does-not-compute-trust" });
++
++  assert.equal(typeof report.tradingAllowed, "boolean");
++  assert.ok(Array.isArray(report.allowedActionClasses));
++  assert.ok(Array.isArray(report.nextRecoveryActions));
++  assert.ok(report.nextRecoveryActions.length > 0);
++  assert.ok(report.blockingReasons.every((reason) =>
++    typeof reason.code === "string" &&
++    typeof reason.domain === "string" &&
++    typeof reason.severity === "string" &&
++    typeof reason.message === "string"
++  ));
++}
++
++testReportContainsTrustState();
++testReportContainsBlockingReasons();
++testColdStartTradingDenied();
++testTrustedReportDependsOnActionGateAllow();
++testReportContainsCoreEvidenceBlocks();
++testReportIsSufficientForFrontendTrustDisplay();
++
++console.log("core trust report checks passed");
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/kernel-authority.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/kernel-authority.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/kernel-authority.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/kernel-authority.ts	2026-05-07 12:12:10.148009767 +0000
+@@ -0,0 +1,289 @@
++import assert from "node:assert/strict";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { EVENT_TYPE, makeEvent } from "../../core/contracts/src/events.js";
++import { ActionGate } from "../../core/gates/src/action-gate.js";
++import { evaluateKernelTrust, KERNEL_TRUST_STATE, type ReplayStatusInput } from "../../core/kernel/kernel-authority.js";
++import { calculateFreshness } from "../../core/runtime/src/freshness.js";
++import { RuntimeEngine, reduceSnapshot } from "../../core/runtime/src/runtime-engine.js";
++import { initialSnapshot, RuntimeSnapshot } from "../../core/state/src/types.js";
++
++const now = new Date();
++const nowIso = now.toISOString();
++
++function event(eventType: string, payload: unknown, eventId: string) {
++  return {
++    eventId,
++    eventType: eventType as any,
++    timestamp: nowIso,
++    source: "kernel-authority-test",
++    schemaVersion: "1",
++    payload
++  };
++}
++
++function bootstrapReconciled(snapshot: RuntimeSnapshot) {
++  const loading = reduceSnapshot(snapshot, makeEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "kernel-test" }));
++  const replaying = reduceSnapshot(loading, makeEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "kernel-test" }));
++  const awaiting = reduceSnapshot(replaying, makeEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "kernel-test" }));
++  return reduceSnapshot(awaiting, makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "kernel-test" }));
++}
++
++function marketAndPosition(snapshot: RuntimeSnapshot) {
++  const afterMarket = reduceSnapshot(snapshot, makeEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "kernel-authority-test"
++  }));
++
++  return reduceSnapshot(afterMarket, makeEvent(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange"
++  }));
++}
++
++function exchangeTruthFresh(snapshot: RuntimeSnapshot) {
++  return reduceSnapshot(snapshot, makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "kernel-authority-test",
++    lastAccountReconcileAt: nowIso,
++    lastPositionReconcileAt: nowIso,
++    lastOrderReconcileAt: nowIso,
++    lastFillSyncAt: nowIso,
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }));
++}
++
++function trustedEngine() {
++  const engine = new RuntimeEngine();
++  engine.clearPersistenceAndReset();
++  engine.commitEventSilent(event(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "kernel-authority-test"
++  }, "ka-market"));
++
++  engine.commitEventSilent(event(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange"
++  }, "ka-position"));
++
++  engine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "kernel-test" }, "ka-bootstrap-loading"));
++  engine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "kernel-test" }, "ka-bootstrap-replay"));
++  engine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "kernel-test" }, "ka-bootstrap-awaiting"));
++  engine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "kernel-test" }, "ka-bootstrap-reconciled"));
++
++  engine.commitEventSilent(event(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "kernel-authority-test",
++    lastAccountReconcileAt: nowIso,
++    lastPositionReconcileAt: nowIso,
++    lastOrderReconcileAt: nowIso,
++    lastFillSyncAt: nowIso,
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }, "ka-exchange-truth"));
++
++  engine.commitEventSilent(event(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected",
++    source: "kernel-authority-test"
++  }, "ka-health"));
++
++  return engine;
++}
++
++function evaluateFromEngine(engine: RuntimeEngine, replay: ReplayStatusInput = { ok: true }) {
++  const gate = new ActionGate();
++  return evaluateKernelTrust({
++    snapshot: engine.getSnapshot(),
++    freshness: engine.getFreshness(now),
++    healthTruth: engine.getHealthSnapshot(),
++    replay,
++    invariants: engine.getInvariants().map((check) => ({ ok: check.ok, name: check.name, details: check.details })),
++    actionGate: {
++      placeOrder: gate.evaluate({
++        type: ACTION_TYPE.PLACE_ORDER,
++        symbol: "BTCUSDT",
++        side: "buy",
++        quantity: 0.01,
++        price: 65000
++      }, engine.getSnapshot(), { enforceFreshness: true, now, freshness: engine.getFreshness(now) })
++    }
++  }, now);
++}
++
++function minimalFreshness(snapshot: RuntimeSnapshot, okForNormalTrading: boolean) {
++  return calculateFreshness({
++    lastMarketEventAt: snapshot.market.lastTickAt,
++    lastBookTickerAt: snapshot.market.lastTickAt,
++    lastExchangeReconcileAt: snapshot.exchangeTruth.lastPositionReconcileAt,
++    exchangeTruthStatus: snapshot.exchangeTruth.status,
++    lastConnectionHeartbeatAt: nowIso,
++    connectionStatus: true,
++    maxMarketAgeMs: 15_000,
++    maxExchangeAgeMs: 60_000,
++    maxConnectionAgeMs: 30_000
++  }, { now, config: { maxMarketAgeMs: 15_000, maxExchangeAgeMs: 60_000, maxConnectionAgeMs: 30_000 } });
++}
++
++function completeHealth(snapshot: RuntimeSnapshot) {
++  return {
++    systemState: snapshot.system.status,
++    wsConnected: true as const,
++    connections: {
++      websocket: {
++        status: true as const,
++        observedAt: nowIso,
++        sourceEventId: "synthetic-health"
++      }
++    },
++    healthTruthComplete: true,
++    healthTruthDiagnostics: [],
++    reconcileFresh: true as const,
++    positionMatchesFills: true as const,
++    openOrders: 0,
++    unknownOrders: 0,
++    driftDetected: false,
++    reconcileLatencyMs: 0,
++    wsReconnects: "unknown" as const,
++    timestamp: nowIso
++  };
++}
++
++function testColdStartUncertain() {
++  const snapshot = initialSnapshot();
++  const verdict = evaluateKernelTrust({ snapshot }, now);
++  assert.equal(verdict.trustState, KERNEL_TRUST_STATE.UNCERTAIN);
++  assert.equal(verdict.trusted, false);
++  assert.ok(verdict.blockers.some((b) => b.reasonCode === "bootstrap_not_reconciled"));
++  assert.ok(verdict.blockers.some((b) => b.reasonCode === "exchange_truth_unknown"));
++}
++
++function testBootstrapNotReconciledNotTrusted() {
++  const snapshot = marketAndPosition(initialSnapshot());
++  const verdict = evaluateKernelTrust({
++    snapshot,
++    freshness: minimalFreshness(snapshot, false),
++    healthTruth: completeHealth(snapshot),
++    replay: { ok: true },
++    invariants: []
++  }, now);
++
++  assert.notEqual(verdict.trustState, KERNEL_TRUST_STATE.TRUSTED);
++  assert.equal(verdict.trusted, false);
++  assert.ok(verdict.blockers.some((b) => b.domain === "bootstrap"));
++}
++
++function testExchangeTruthStaleRecoverableOrUncertain() {
++  const fresh = exchangeTruthFresh(bootstrapReconciled(marketAndPosition(initialSnapshot())));
++  const stale = reduceSnapshot(fresh, makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_STALE_DETECTED, {
++    reason: "ttl exceeded",
++    source: "kernel-authority-test"
++  }));
++
++  const verdict = evaluateKernelTrust({
++    snapshot: stale,
++    freshness: minimalFreshness(stale, false),
++    healthTruth: completeHealth(stale),
++    replay: { ok: true },
++    invariants: []
++  }, now);
++
++  assert.ok((new Set<string>([KERNEL_TRUST_STATE.RECOVERABLE, KERNEL_TRUST_STATE.UNCERTAIN])).has(verdict.trustState));
++  assert.equal(verdict.trusted, false);
++  assert.ok(verdict.blockers.some((b) => b.reasonCode === "exchange_truth_stale"));
++}
++
++function testHealthUnknownNotTrusted() {
++  const engine = trustedEngine();
++  const snapshot = engine.getSnapshot();
++  const verdict = evaluateKernelTrust({
++    snapshot,
++    freshness: engine.getFreshness(now),
++    healthTruth: {
++      ...engine.getHealthSnapshot(),
++      wsConnected: "unknown",
++      connections: { websocket: { status: "unknown", reason: "ws_status_unknown" } },
++      healthTruthComplete: false,
++      healthTruthDiagnostics: ["connection_state_unknown", "ws_status_unknown", "health_truth_partial"]
++    },
++    replay: { ok: true },
++    invariants: []
++  }, now);
++
++  assert.notEqual(verdict.trustState, KERNEL_TRUST_STATE.TRUSTED);
++  assert.equal(verdict.trusted, false);
++  assert.ok(verdict.blockers.some((b) => b.reasonCode === "ws_status_unknown"));
++}
++
++function testReplayMismatchCompromised() {
++  const engine = trustedEngine();
++  const verdict = evaluateFromEngine(engine, { ok: false, reason: "forced replay mismatch" });
++  assert.equal(verdict.trustState, KERNEL_TRUST_STATE.COMPROMISED);
++  assert.equal(verdict.trusted, false);
++  assert.ok(verdict.blockers.some((b) => b.reasonCode === "replay_mismatch"));
++}
++
++function testSystemHalted() {
++  const engine = trustedEngine();
++  engine.commitEventSilent(event(EVENT_TYPE.SYSTEM_HALTED, { reason: "operator halt" }, "ka-system-halted"));
++  const verdict = evaluateFromEngine(engine, { ok: true });
++  assert.equal(verdict.trustState, KERNEL_TRUST_STATE.HALTED);
++  assert.equal(verdict.trusted, false);
++}
++
++function testEverythingFreshReconciledHealthyTrusted() {
++  const engine = trustedEngine();
++  const verdict = evaluateFromEngine(engine, { ok: true });
++  assert.equal(verdict.trustState, KERNEL_TRUST_STATE.TRUSTED);
++  assert.equal(verdict.trusted, true);
++  assert.equal(verdict.blockers.length, 0);
++  assert.ok(verdict.allowedActions.includes(ACTION_TYPE.PLACE_ORDER));
++}
++
++testColdStartUncertain();
++testBootstrapNotReconciledNotTrusted();
++testExchangeTruthStaleRecoverableOrUncertain();
++testHealthUnknownNotTrusted();
++testReplayMismatchCompromised();
++testSystemHalted();
++testEverythingFreshReconciledHealthyTrusted();
++
++console.log(JSON.stringify({
++  name: "core_kernel_authority",
++  ok: true,
++  cases: [
++    "cold_start_uncertain",
++    "bootstrap_not_reconciled_not_trusted",
++    "exchange_truth_stale_recoverable_or_uncertain",
++    "health_unknown_not_trusted",
++    "replay_mismatch_compromised",
++    "system_halted",
++    "everything_fresh_reconciled_healthy_trusted"
++  ]
++}, null, 2));
+diff -ruN '--exclude=node_modules' '--exclude=.git' /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/wave4-scenario-audit.ts /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/wave4-scenario-audit.ts
+--- /mnt/data/alpha4_stage/mbg-core-v0.1-alpha3/tests/scenarios/wave4-scenario-audit.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/alpha4_stage/mbg-core-v0.1-alpha4/tests/scenarios/wave4-scenario-audit.ts	2026-05-07 12:12:10.249541121 +0000
+@@ -0,0 +1,477 @@
++import assert from "node:assert/strict";
++import fs from "node:fs";
++import os from "node:os";
++import path from "node:path";
++
++const dataDir = path.join(os.tmpdir(), `mbg-core-wave4-scenario-audit-${process.pid}-${Date.now()}`);
++process.env.GENESIS_DATA_DIR = dataDir;
++process.env.PERSISTENCE_ENABLED = "true";
++process.env.MBG_HEALTH_CONNECTION_STATUS_TTL_MS = "15000";
++process.env.MBG_EVENT_FUTURE_TOLERANCE_MS = "5000";
++
++const { runtimeEngine } = await import("../../core/runtime/src/runtime-engine.js");
++const { ACTION_TYPE } = await import("../../core/contracts/src/actions.js");
++const { EVENT_TYPE } = await import("../../core/contracts/src/events.js");
++
++type ScenarioResult = {
++  name: string;
++  covers: string[];
++  ok: boolean;
++  detail?: string;
++};
++
++type CommitResult = {
++  ok: boolean;
++  status?: string;
++  snapshot?: unknown;
++  snapshotRevision?: number;
++  diagnostic?: unknown;
++};
++
++type CoreTrustReport = {
++  trustState?: string;
++  tradingAllowed?: boolean;
++  blockingReasons?: unknown[];
++  reasons?: unknown[];
++  sections?: Record<string, unknown>;
++  bootstrap?: unknown;
++  exchangeTruth?: unknown;
++  freshness?: unknown;
++  healthTruth?: unknown;
++  actionVerdicts?: unknown;
++  allowedActions?: unknown;
++  deniedActions?: unknown;
++  recoveryActions?: unknown;
++  requiredRecovery?: unknown;
++  recoveryHints?: unknown;
++  [key: string]: unknown;
++};
++
++type Wave4Runtime = typeof runtimeEngine & {
++  commitEventResult?: (event: Record<string, unknown>, options?: { log?: boolean }) => CommitResult;
++  getCoreTrustReport?: (options?: Record<string, unknown>) => CoreTrustReport;
++  getHealthSnapshot?: () => Record<string, unknown>;
++  replayCheck?: () => Record<string, unknown>;
++};
++
++const engine = runtimeEngine as Wave4Runtime;
++const results: ScenarioResult[] = [];
++
++function scenario(name: string, covers: string[], body: () => void) {
++  try {
++    runtimeEngine.clearPersistenceAndReset();
++    body();
++    results.push({ name, covers, ok: true });
++  } catch (err) {
++    results.push({
++      name,
++      covers,
++      ok: false,
++      detail: err instanceof Error ? err.message : String(err)
++    });
++  }
++}
++
++function isoNow() {
++  return new Date().toISOString();
++}
++
++function isoPast(msAgo: number) {
++  return new Date(Date.now() - msAgo).toISOString();
++}
++
++function fixedEvent(
++  eventType: string,
++  payload: Record<string, unknown>,
++  eventId: string,
++  source = "wave4-scenario-audit",
++  timestamp = isoNow()
++) {
++  return {
++    eventId,
++    eventType,
++    timestamp,
++    source,
++    schemaVersion: 1,
++    payload
++  };
++}
++
++function commitOk(event: Record<string, unknown>, message: string) {
++  assert.equal(typeof engine.commitEventResult, "function", "runtimeEngine.commitEventResult(event, { log: false }) is required");
++  const result = engine.commitEventResult!(event, { log: false });
++  assert.equal(result.ok, true, `${message}: expected accepted event, got ${JSON.stringify(result)}`);
++  assert.ok(result.status === "accepted" || result.status === "duplicate_ignored", `${message}: unexpected status ${String(result.status)}`);
++  return result;
++}
++
++function bootstrapEvent(eventType: string, eventId: string, reason = eventType.replace(".", "_")) {
++  return fixedEvent(eventType, {
++    source: "wave4-scenario-audit",
++    provider: "wave4-scenario-audit",
++    reason
++  }, eventId, "core");
++}
++
++function completeBootstrap(prefix = "w4-bootstrap") {
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, `${prefix}-loading`), "bootstrap.loading_snapshot");
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, `${prefix}-replaying`), "bootstrap.replaying_tail");
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, `${prefix}-awaiting-exchange-truth`), "bootstrap.awaiting_exchange_truth");
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, `${prefix}-reconciled`), "bootstrap.reconciled");
++}
++
++function validMarketTick(eventId: string, timestamp = isoNow()) {
++  return fixedEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "wave4-scenario-audit",
++    source: "market-data",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp
++  }, eventId, "market-data", timestamp);
++}
++
++function validPositionReconciled(eventId: string, quantity = 0, timestamp = isoNow()) {
++  return fixedEvent(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    quantity,
++    free: quantity,
++    locked: 0,
++    markPrice: 65000,
++    exposure: Math.abs(quantity * 65000),
++    provider: "wave4-scenario-audit",
++    source: "exchange",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp
++  }, eventId, "exchange", timestamp);
++}
++
++function validOrderReconciled(eventId: string, timestamp = isoNow()) {
++  return fixedEvent(EVENT_TYPE.ORDER_RECONCILED, {
++    orderId: `${eventId}:order`,
++    clientOrderId: `${eventId}:client`,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    filledQuantity: 0,
++    provider: "wave4-scenario-audit",
++    source: "exchange",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp
++  }, eventId, "exchange", timestamp);
++}
++
++function exchangeTruthFresh(eventId: string, timestamp = isoNow()) {
++  return fixedEvent(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    provider: "wave4-scenario-audit",
++    lastAccountReconcileAt: timestamp,
++    lastPositionReconcileAt: timestamp,
++    lastOrderReconcileAt: timestamp,
++    lastFillSyncAt: timestamp,
++    drift: {},
++    conflicts: [],
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0
++  }, eventId, "exchange", timestamp);
++}
++
++function exchangeTruthStale(eventId: string, timestamp = isoPast(60000)) {
++  return fixedEvent(EVENT_TYPE.EXCHANGE_TRUTH_STALE_DETECTED, {
++    source: "exchange",
++    provider: "wave4-scenario-audit",
++    reason: "exchange_truth_stale",
++    lastAccountReconcileAt: timestamp,
++    lastPositionReconcileAt: timestamp,
++    lastOrderReconcileAt: timestamp,
++    lastFillSyncAt: timestamp,
++    staleAfterMs: 15000
++  }, eventId, "exchange", timestamp);
++}
++
++function healthChanged(
++  eventId: string,
++  status: "connected" | "disconnected" | "unknown",
++  timestamp = isoNow()
++) {
++  return fixedEvent(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status,
++    connectionState: status,
++    wsConnected: status === "connected" ? true : status === "disconnected" ? false : "unknown",
++    provider: "wave4-scenario-audit",
++    source: "health-truth",
++    reason: status === "connected" ? "connection_healthy" : "connection_state_unknown",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp
++  }, eventId, "health-truth", timestamp);
++}
++
++function systemHalted(eventId: string) {
++  return fixedEvent(EVENT_TYPE.SYSTEM_HALTED, {
++    source: "core",
++    provider: "wave4-scenario-audit",
++    reason: "manual_halt_for_wave4_audit"
++  }, eventId, "core");
++}
++
++function prepareReadyState(prefix = "w4-ready") {
++  const now = isoNow();
++  commitOk(validMarketTick(`${prefix}-market`, now), "market.tick.received");
++  commitOk(validPositionReconciled(`${prefix}-position`, 0, now), "position.reconciled");
++  commitOk(validOrderReconciled(`${prefix}-order`, now), "order.reconciled");
++  commitOk(healthChanged(`${prefix}-health`, "connected", now), "system.health.changed connected");
++  completeBootstrap(`${prefix}-bootstrap`);
++  commitOk(exchangeTruthFresh(`${prefix}-exchange-truth`, now), "exchange_truth.reconcile_succeeded");
++}
++
++function getReport(message = "CoreTrustReport") {
++  assert.equal(typeof engine.getCoreTrustReport, "function", "runtimeEngine.getCoreTrustReport() is required for Wave 4 Kernel Authority audit");
++  const before = JSON.stringify(runtimeEngine.getSnapshot());
++  const beforeRevision = runtimeEngine.getSnapshot().revision;
++  const report = engine.getCoreTrustReport!({
++    actions: [ACTION_TYPE.PLACE_ORDER, ACTION_TYPE.RECONCILE_POSITION, ACTION_TYPE.RECONCILE_ORDER, ACTION_TYPE.PAUSE_RUNTIME]
++  });
++  const after = JSON.stringify(runtimeEngine.getSnapshot());
++  assert.equal(runtimeEngine.getSnapshot().revision, beforeRevision, `${message}: Kernel Authority must not mutate snapshot revision`);
++  assert.equal(after, before, `${message}: Kernel Authority must not mutate runtime state`);
++  assert.ok(report && typeof report === "object", `${message}: report must be an object`);
++  return report;
++}
++
++function assertTrustState(report: CoreTrustReport, expected: string, message: string) {
++  assert.equal(report.trustState, expected, `${message}: expected trustState=${expected}, got ${String(report.trustState)} in ${JSON.stringify(report)}`);
++}
++
++function assertNotTrusted(report: CoreTrustReport, message: string) {
++  assert.notEqual(report.trustState, "TRUSTED", `${message}: report must not be TRUSTED`);
++  assert.equal(report.tradingAllowed, false, `${message}: tradingAllowed must be false`);
++}
++
++function reasonValues(report: CoreTrustReport) {
++  const values: string[] = [];
++  const collect = (value: unknown) => {
++    if (typeof value === "string") values.push(value);
++    else if (value && typeof value === "object") {
++      const record = value as Record<string, unknown>;
++      for (const key of ["code", "reason", "reasonCode", "id", "message"]) {
++        if (typeof record[key] === "string") values.push(record[key] as string);
++      }
++    }
++  };
++
++  if (Array.isArray(report.blockingReasons)) report.blockingReasons.forEach(collect);
++  if (Array.isArray(report.reasons)) report.reasons.forEach(collect);
++  for (const sectionName of ["bootstrap", "exchangeTruth", "freshness", "healthTruth"]) {
++    const section = (report as Record<string, unknown>)[sectionName];
++    if (section && typeof section === "object") {
++      const record = section as Record<string, unknown>;
++      collect(record.reason);
++      collect(record.status);
++      if (Array.isArray(record.reasons)) record.reasons.forEach(collect);
++      if (Array.isArray(record.blockingReasons)) record.blockingReasons.forEach(collect);
++      if (Array.isArray(record.diagnostics)) record.diagnostics.forEach(collect);
++    }
++  }
++  return Array.from(new Set(values));
++}
++
++function assertHasReason(report: CoreTrustReport, expected: string, message: string) {
++  const reasons = reasonValues(report);
++  assert.ok(reasons.includes(expected) || reasons.some((reason) => reason.includes(expected)), `${message}: expected reason ${expected}, got ${JSON.stringify(reasons)} in ${JSON.stringify(report)}`);
++}
++
++function assertRequiredSections(report: CoreTrustReport) {
++  for (const section of ["bootstrap", "exchangeTruth", "freshness", "healthTruth"]) {
++    const direct = (report as Record<string, unknown>)[section];
++    const nested = report.sections?.[section];
++    assert.ok(direct || nested, `CoreTrustReport must contain ${section} section`);
++  }
++}
++
++function actionDecisionFromReport(report: CoreTrustReport, actionType: string): Record<string, unknown> | undefined {
++  const candidates = [report.actionVerdicts, report.allowedActions, report.deniedActions, report.actions];
++  for (const candidate of candidates) {
++    if (!candidate) continue;
++    if (Array.isArray(candidate)) {
++      const found = candidate.find((item) => item && typeof item === "object" && ((item as any).actionType === actionType || (item as any).type === actionType));
++      if (found) return found as Record<string, unknown>;
++    }
++    if (typeof candidate === "object") {
++      const record = candidate as Record<string, unknown>;
++      const direct = record[actionType];
++      if (direct && typeof direct === "object") return direct as Record<string, unknown>;
++    }
++  }
++  return undefined;
++}
++
++function assertMachineReadableDeniedVerdict(decision: Record<string, unknown>, message: string) {
++  assert.equal(decision.decision, "deny", `${message}: expected deny decision, got ${JSON.stringify(decision)}`);
++  const reasons = [
++    decision.reason,
++    decision.reasonCode,
++    ...(Array.isArray(decision.reasons) ? decision.reasons : []),
++    ...(Array.isArray(decision.blockingReasons) ? decision.blockingReasons : [])
++  ];
++  const hasMachineReason = reasons.some((reason) => {
++    if (typeof reason === "string") return /^[a-z0-9_.:-]+$/.test(reason);
++    if (reason && typeof reason === "object") {
++      const record = reason as Record<string, unknown>;
++      return typeof record.code === "string" || typeof record.reasonCode === "string";
++    }
++    return false;
++  });
++  assert.ok(hasMachineReason, `${message}: denied verdict must contain machine-readable reason/code, got ${JSON.stringify(decision)}`);
++}
++
++function assertFrontendCanUseReport(report: CoreTrustReport) {
++  assert.ok(typeof report.trustState === "string", "frontend must receive top-level trustState");
++  assert.ok(typeof report.tradingAllowed === "boolean", "frontend must receive top-level tradingAllowed");
++  assert.ok(Array.isArray(report.blockingReasons) || Array.isArray(report.reasons), "frontend must receive top-level blocking reasons / reasons");
++  assert.ok(report.actionVerdicts || report.allowedActions || report.deniedActions || report.actions, "frontend must receive action verdicts/permissions, not compute them from raw flags");
++  assert.ok(report.requiredRecovery || report.recoveryHints || report.recoveryActions, "frontend must receive recovery-oriented output/hints");
++}
++
++function appendUncommittedTailEventForReplayMismatch() {
++  const eventsDir = path.join(dataDir, "events");
++  fs.mkdirSync(eventsDir, { recursive: true });
++  const segment = path.join(eventsDir, "segment-00000000.jsonl");
++  const extra = validMarketTick(`w4-replay-mismatch-tail-${Date.now()}`, isoNow());
++  fs.appendFileSync(segment, `${JSON.stringify(extra)}\n`, "utf8");
++}
++
++scenario("cold start -> CoreTrustReport trustState=UNCERTAIN and tradingAllowed=false", ["Kernel Authority", "CoreTrustReport"], () => {
++  const report = getReport("cold start report");
++  assertTrustState(report, "UNCERTAIN", "cold start");
++  assert.equal(report.tradingAllowed, false);
++  assertRequiredSections(report);
++});
++
++scenario("bootstrap not reconciled -> not TRUSTED", ["Bootstrap", "Kernel Authority"], () => {
++  const now = isoNow();
++  commitOk(validMarketTick("w4-bootstrap-block-market", now), "market.tick.received");
++  commitOk(validPositionReconciled("w4-bootstrap-block-position", 0, now), "position.reconciled");
++  commitOk(healthChanged("w4-bootstrap-block-health", "connected", now), "system.health.changed connected");
++  commitOk(exchangeTruthFresh("w4-bootstrap-block-exchange", now), "exchange_truth.reconcile_succeeded");
++
++  const report = getReport("bootstrap not reconciled report");
++  assertNotTrusted(report, "bootstrap not reconciled");
++  assertHasReason(report, "bootstrap_not_reconciled", "bootstrap not reconciled");
++});
++
++scenario("exchangeTruth stale -> not TRUSTED with blocking reason", ["ExchangeTruth", "Kernel Authority"], () => {
++  prepareReadyState("w4-stale");
++  commitOk(exchangeTruthStale("w4-stale-detected"), "exchange_truth.stale_detected");
++
++  const report = getReport("stale exchange truth report");
++  assertNotTrusted(report, "exchangeTruth stale");
++  assertHasReason(report, "exchange_truth_stale", "exchangeTruth stale");
++});
++
++scenario("health unknown -> not TRUSTED", ["Health Truth", "Kernel Authority"], () => {
++  const now = isoNow();
++  commitOk(validMarketTick("w4-health-unknown-market", now), "market.tick.received");
++  commitOk(validPositionReconciled("w4-health-unknown-position", 0, now), "position.reconciled");
++  commitOk(exchangeTruthFresh("w4-health-unknown-exchange", now), "exchange_truth.reconcile_succeeded");
++  completeBootstrap("w4-health-unknown-bootstrap");
++  commitOk(healthChanged("w4-health-unknown-event", "unknown", now), "system.health.changed unknown");
++
++  const report = getReport("health unknown report");
++  assertNotTrusted(report, "health unknown");
++  assertHasReason(report, "connection_state_unknown", "health unknown");
++});
++
++scenario("replay mismatch -> COMPROMISED", ["Replay Check", "Kernel Authority"], () => {
++  prepareReadyState("w4-replay");
++  appendUncommittedTailEventForReplayMismatch();
++  assert.equal(typeof engine.replayCheck, "function", "runtimeEngine.replayCheck() is required");
++  const replay = engine.replayCheck!();
++  assert.equal(replay.ok, false, `audit setup must create replay mismatch, got ${JSON.stringify(replay)}`);
++
++  const report = getReport("replay mismatch report");
++  assertTrustState(report, "COMPROMISED", "replay mismatch");
++  assert.equal(report.tradingAllowed, false);
++  assertHasReason(report, "replay_mismatch", "replay mismatch");
++});
++
++scenario("halted system -> HALTED", ["System Halt", "Kernel Authority"], () => {
++  prepareReadyState("w4-halted");
++  commitOk(systemHalted("w4-system-halted"), "system.halted");
++
++  const report = getReport("halted system report");
++  assertTrustState(report, "HALTED", "halted system");
++  assert.equal(report.tradingAllowed, false);
++  assertHasReason(report, "system_halted", "halted system");
++});
++
++scenario("full ready state -> TRUSTED", ["Kernel Authority", "ActionGate Verdict v2"], () => {
++  prepareReadyState("w4-full-ready");
++
++  const report = getReport("full ready report");
++  assertTrustState(report, "TRUSTED", "full ready state");
++  assert.equal(report.tradingAllowed, true, `full ready state must allow trading at trust level when ActionGate allows: ${JSON.stringify(report)}`);
++});
++
++scenario("ActionGate denied verdict contains machine-readable reason", ["ActionGate Verdict v2"], () => {
++  const decision = runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  }) as unknown as Record<string, unknown>;
++
++  assertMachineReadableDeniedVerdict(decision, "direct ActionGate denied verdict");
++
++  const report = getReport("denied action verdict report");
++  const reportDecision = actionDecisionFromReport(report, ACTION_TYPE.PLACE_ORDER);
++  assert.ok(reportDecision, `CoreTrustReport must include PLACE_ORDER verdict, got ${JSON.stringify(report)}`);
++  assertMachineReadableDeniedVerdict(reportDecision!, "CoreTrustReport PLACE_ORDER verdict");
++});
++
++scenario("CoreTrustReport contains bootstrap/exchangeTruth/freshness/healthTruth sections", ["CoreTrustReport"], () => {
++  const report = getReport("section report");
++  assertRequiredSections(report);
++});
++
++scenario("frontend should not need to calculate trust from raw flags", ["CoreTrustReport", "Kernel Authority"], () => {
++  prepareReadyState("w4-frontend");
++  const report = getReport("frontend-ready report");
++  assertFrontendCanUseReport(report);
++});
++
++const failed = results.filter((result) => !result.ok);
++
++console.log(JSON.stringify({
++  name: "wave4_scenario_audit",
++  total: results.length,
++  passed: results.length - failed.length,
++  failed: failed.length,
++  scenarios: results,
++  expectedOnAlpha4: {
++    total: 10,
++    passed: 10,
++    failed: 0
++  }
++}, null, 2));
++
++try {
++  fs.rmSync(dataDir, { recursive: true, force: true });
++} catch {
++  // best effort cleanup only
++}
++
++if (failed.length > 0) {
++  process.exitCode = 1;
++}

@@ -1,0 +1,3793 @@
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/CORE_CONSTITUTION.md /mnt/data/mbg-alpha3-merge/CORE_CONSTITUTION.md
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/CORE_CONSTITUTION.md	2026-05-07 08:32:42.286573394 +0000
++++ /mnt/data/mbg-alpha3-merge/CORE_CONSTITUTION.md	2026-05-07 06:58:31.580096161 +0000
+@@ -2,7 +2,7 @@
+ 
+ Status: normative draft for Trust Kernel Hardening  
+ Scope: MBG Core v0.1 only  
+-Base code: `mbg-core-v0.1-alpha1-followup`
++Base code: `mbg-core-v0.1-alpha2`
+ 
+ This document defines the non-negotiable laws of the Core Trust Kernel.
+ 
+@@ -177,6 +177,49 @@
+ - future: `core/runtime/event-index.ts`
+ - tests: `tests/scenarios/*`
+ 
++### ExchangeTruth
++
++ExchangeTruth is the core domain that represents what the exchange is known to have reported about account, position, order, execution, and connectivity state.
++
++ExchangeTruth is not a strategy signal and not a trading decision. It is evidence used by the core to decide whether local memory may be trusted for normal trading readiness.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/transitions/src/reducers.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/exchange/exchange-truth.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### Freshness Guard
++
++Freshness Guard is the core rule set that decides whether exchange truth, market data, and connectivity evidence are recent enough to be used for normal trading readiness.
++
++Freshness must fail closed. Missing timestamps, unknown age, stale age, or conflicting clocks cannot be treated as fresh.
++
++Current/future modules:
++
++- current: `core/runtime/src/runtime-engine.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/freshness/freshness-guard.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### Health truth
++
++Health truth is the runtime/API health representation of what the core can prove.
++
++Health may report `unknown`, `uncertain`, `degraded`, `blocked`, or equivalent explicit states. It must not report connected, fresh, reconciled, flat, trusted, or healthy unless that fact is proven by core evidence.
++
++Current/future modules:
++
++- current: `core/runtime/src/runtime-engine.ts`
++- current: `apps/runtime-api/src/app.ts`
++- future: `core/health/runtime-health-snapshot.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
+ ## 4. Laws of the core
+ 
+ ### LAW-001 — No event, no state change
+@@ -288,9 +331,9 @@
+ - future: `core/bootstrap/bootstrap-fsm.ts`
+ - future: `core/trust/core-trust-report.ts`
+ 
+-### LAW-007 — Stale exchange truth forbids trading
++### LAW-007 — Exchange truth not fresh forbids trading
+ 
+-Trading is forbidden when exchange truth is absent, stale, or not reconciled.
++Normal trading is forbidden when exchange truth is absent, unknown, stale, conflicted, or not reconciled. Stale exchange truth forbids trading remains part of this law.
+ 
+ Fresh local memory is not a substitute for fresh exchange truth.
+ 
+@@ -415,10 +458,12 @@
+ 
+ Current/future modules:
+ 
+-- current: `application/exchange/*`
++- current: `core/state/src/types.ts`
++- current: `core/transitions/src/reducers.ts`
++- current: `core/gates/src/action-gate.ts`
+ - current: `tests/scenarios/position-reconcile.ts`
+ - future: `core/exchange/exchange-truth.ts`
+-- future: `core/kernel/reconcile-policy.ts`
++- future: `core/kernel/kernel-authority.ts`
+ 
+ ### LAW-014 — Frontend is not authority
+ 
+@@ -591,6 +636,186 @@
+ - future: `core/kernel/kernel-authority.ts`
+ - tests: `tests/scenarios/*`
+ 
++
++### LAW-023 — ExchangeTruth unknown forbids normal trading
++
++Normal trading is forbidden when exchange truth is unknown.
++
++Unknown exchange truth includes missing account truth, missing position truth, missing open-order truth, missing execution truth, unknown connection state, or any equivalent absence of exchange evidence required by the requested action.
++
++Required proof:
++
++- exchange truth state is explicit, not inferred from local snapshot defaults;
++- unknown exchange truth blocks normal trading through `ActionGate`;
++- diagnostic and recovery actions remain distinguishable from normal trading;
++- scenario tests prove unknown exchange truth cannot be treated as trusted.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/transitions/src/reducers.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/exchange/exchange-truth.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-024 — ExchangeTruth stale forbids normal trading
++
++Normal trading is forbidden when exchange truth is stale.
++
++A stale exchange truth record is not fresh evidence. It may remain useful for diagnostics or recovery, but it must not be used to authorize ordinary trading actions.
++
++Required proof:
++
++- exchange truth freshness age or expiry is explicit;
++- stale exchange truth blocks normal trading through `ActionGate`;
++- stale evidence is not upgraded to fresh by API reachability, frontend state, V1, strategy output, or local memory;
++- scenario tests prove stale exchange truth blocks normal trading.
++
++Current/future modules:
++
++- current: `core/runtime/src/runtime-engine.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/exchange/exchange-truth.ts`
++- future: `core/freshness/freshness-guard.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-025 — ExchangeTruth conflicted forbids normal trading
++
++Normal trading is forbidden when exchange truth conflicts with local memory, replayed state, order state, position state, or another accepted exchange truth record.
++
++Conflict is an integrity signal. The core must block and expose the conflict for diagnostics or recovery instead of choosing the convenient state.
++
++Required proof:
++
++- exchange truth conflict state is explicit;
++- conflicting truth blocks normal trading through `ActionGate`;
++- conflict cannot be hidden by local snapshot defaults;
++- scenario tests prove conflicted exchange truth blocks normal trading.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/transitions/src/reducers.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/exchange/exchange-truth.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-026 — Market data stale forbids normal trading
++
++Normal trading is forbidden when required market data is stale, missing, or of unknown age.
++
++Market data freshness is not proven by process uptime or websocket connection state alone. The core must have fresh market evidence for actions that depend on market price, spread, liquidity, or risk valuation.
++
++Required proof:
++
++- market data freshness is explicit;
++- stale market data blocks normal trading through `ActionGate`;
++- unknown market data age is treated as stale for normal trading;
++- scenario tests prove stale market data blocks normal trading.
++
++Current/future modules:
++
++- current: `application/market/*`
++- current: `core/runtime/src/runtime-engine.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/freshness/freshness-guard.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-027 — Health must not report fake truth
++
++Runtime health and API health must report only what the core can prove.
++
++Health must not report connected, reconciled, fresh, flat, healthy, trusted, or safe when the underlying state is unknown, stale, conflicted, unreconciled, bootstrapping, or blocked.
++
++Required proof:
++
++- health fields distinguish proven facts from unknown facts;
++- unknown connection state is not reported as connected;
++- local flat position is not reported as trusted without fresh exchange reconcile;
++- health cannot become authority over `ActionGate`;
++- scenario tests prove health truth cleanup cases.
++
++Current/future modules:
++
++- current: `core/runtime/src/runtime-engine.ts`
++- current: `apps/runtime-api/src/app.ts`
++- future: `core/health/runtime-health-snapshot.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-028 — Unknown connection state is not connected
++
++Unknown connection state must not be treated as connected.
++
++A missing heartbeat, missing exchange status, uninitialized connector, failed connector probe, or unknown connector lifecycle state is blocked evidence, not a connected state.
++
++Required proof:
++
++- connection state has explicit unknown/not connected semantics;
++- unknown connection state prevents normal trading where exchange connectivity is required;
++- health does not report unknown connection as connected;
++- scenario tests prove unknown connection state is not connected.
++
++Current/future modules:
++
++- current: `application/exchange/*`
++- current: `core/runtime/src/runtime-engine.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/health/runtime-health-snapshot.ts`
++- future: `core/freshness/freshness-guard.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-029 — Local flat position is not trusted without fresh exchange reconcile
++
++A local flat position is not trusted merely because the local snapshot says zero.
++
++Normal trading may rely on a flat position only after a fresh exchange reconcile proves that the exchange position is also flat or otherwise reconciled according to the core policy.
++
++Required proof:
++
++- local flat position and exchange-reconciled flat position are distinct states;
++- flat local memory does not unblock risk by itself;
++- fresh exchange reconcile is required before normal trading uses flatness;
++- scenario tests prove local flat without fresh reconcile remains blocked.
++
++Current/future modules:
++
++- current: `core/state/src/types.ts`
++- current: `core/transitions/src/reducers.ts`
++- current: `core/gates/src/action-gate.ts`
++- current: `tests/scenarios/position-reconcile.ts`
++- future: `core/exchange/exchange-truth.ts`
++- future: `core/freshness/freshness-guard.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++### LAW-030 — Freshness unknown is stale for normal trading
++
++Unknown freshness is not fresh.
++
++When the core cannot prove the freshness of exchange truth, market data, health inputs, or connection evidence, normal trading must be forbidden until a fresh accepted event or recovery process establishes current evidence.
++
++Required proof:
++
++- freshness state distinguishes fresh, stale, unknown, and conflicted where applicable;
++- unknown freshness blocks normal trading through `ActionGate`;
++- runtime health does not convert unknown freshness into healthy;
++- scenario tests prove unknown freshness blocks normal trading.
++
++Current/future modules:
++
++- current: `core/runtime/src/runtime-engine.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `core/freshness/freshness-guard.ts`
++- future: `core/health/runtime-health-snapshot.ts`
++- future: `core/kernel/kernel-authority.ts`
++- tests: `tests/scenarios/*`
++
++
+ ## 5. Review rule
+ 
+ A change is acceptable only if it increases the provability of the kernel or preserves it while making the implementation clearer.
+@@ -622,6 +847,10 @@
+ 10. Should `CoreTrustReport` be a pure function over evidence, or may it read runtime state directly?
+ 11. For Wave 2, should failed bootstrap recovery events have a dedicated event type or reuse an existing system event envelope?
+ 12. What exact event identity fields are canonical for duplicate detection beyond `eventId`?
++13. What TTLs are canonical for each ExchangeTruth source: account, position, open orders, fills, and connectivity?
++14. What TTLs are canonical for market data by symbol and market venue?
++15. Which health state vocabulary is canonical for API health: `unknown`, `blocked`, `degraded`, `healthy`, or a stricter enum?
++16. Which future event type records a successful fresh exchange reconcile without implementing Metadata as Events in Wave 3?
+ 
+ ## 8. Machine-readable companion
+ 
+@@ -629,4 +858,4 @@
+ 
+ - `core/kernel/kernel-constitution.ts`
+ 
+-It contains stable law ids, trust states, authority exclusions, law-to-module mappings, and Wave 2 constitution markers. It does not change runtime behavior.
++It contains stable law ids, trust states, authority exclusions, law-to-module mappings, Wave 2 constitution markers, and Wave 3 ExchangeTruth/freshness/health-truth markers. It does not change runtime behavior.
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/DELIVERY_REPORT_WAVE3_EXCHANGE_TRUTH.md /mnt/data/mbg-alpha3-merge/DELIVERY_REPORT_WAVE3_EXCHANGE_TRUTH.md
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/DELIVERY_REPORT_WAVE3_EXCHANGE_TRUTH.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/DELIVERY_REPORT_WAVE3_EXCHANGE_TRUTH.md	2026-05-07 06:58:31.643169987 +0000
+@@ -0,0 +1,137 @@
++# MBG Core v0.1 — Wave 3 Delivery Report
++## Task: ExchangeTruth Domain
++
++Canonical base: `mbg-core-v0.1-alpha2`
++
++## Summary
++
++Implemented a dedicated `exchangeTruth` state domain that records whether local core state is confirmed by exchange-derived truth.
++
++The domain starts as `unknown` on cold start and blocks normal trading unless it is `fresh`.
++
++No real exchange client, Binance client, live trading, UI, V1/V2 integration, Signal Layer, Decision Engine, strategy logic, Kernel Authority, or CoreTrustReport module was added.
++
++## Implemented
++
++- Added `ExchangeTruthState` and `ExchangeTruthStatus`.
++- Added `exchangeTruth` to `RuntimeSnapshot`.
++- Added cold-start state:
++  - `exchangeTruth.status = "unknown"`
++  - `exchangeTruth.reason = "exchange_truth_unknown"`
++- Added ExchangeTruth events:
++  - `exchange_truth.reconcile_started`
++  - `exchange_truth.reconcile_succeeded`
++  - `exchange_truth.reconcile_failed`
++  - `exchange_truth.stale_detected`
++  - `exchange_truth.conflict_detected`
++  - `exchange_truth.unavailable_detected`
++- Added payload schemas:
++  - `ExchangeTruthPayloadSchema`
++  - `ExchangeTruthDriftSchema`
++  - `ExchangeTruthConflictSchema`
++- Added event validation for ExchangeTruth events.
++- Added `reduceExchangeTruthState`.
++- Integrated ExchangeTruth into `reduceSnapshot`, transition traces, runtime views, entity views, health snapshot, and invariants.
++- Added ActionGate blocking for non-fresh exchange truth.
++- Added `npm run test:core:exchange-truth`.
++- Updated existing cold-start/bootstrap/gate scenarios so they remain compatible with the new ExchangeTruth law.
++
++## Core laws enforced
++
++1. Cold start has `exchangeTruth.status = "unknown"`.
++2. `PLACE_ORDER` is denied when ExchangeTruth is:
++   - `unknown`
++   - `stale`
++   - `conflicted`
++   - `unavailable`
++3. Local flat / exchange open mismatch becomes `exchangeTruth.status = "conflicted"`.
++4. Stale detection becomes `exchangeTruth.status = "stale"`.
++5. Fresh ExchangeTruth does not bypass Bootstrap FSM.
++6. Normal trading requires both:
++   - `bootstrap.status === "reconciled"`
++   - `exchangeTruth.status === "fresh"`
++   - plus the existing ActionGate requirements.
++
++## Changed files
++
++- `CORE_CONSTITUTION.md`
++- `RUNBOOK.md`
++- `package.json`
++- `core/contracts/src/events.ts`
++- `core/events/validate-domain-event.ts`
++- `core/gates/src/action-gate.ts`
++- `core/runtime/src/runtime-engine.ts`
++- `core/state/src/types.ts`
++- `core/transitions/src/reducers.ts`
++- `tests/scenarios/bootstrap-fsm.ts`
++- `tests/scenarios/cold-start-unknown.ts`
++- `tests/scenarios/gate-scenarios.ts`
++- `tests/scenarios/exchange-truth.ts`
++- `DELIVERY_REPORT_WAVE3_EXCHANGE_TRUTH.md`
++
++## Tests
++
++### Requested commands
++
++```bash
++npm run typecheck
++```
++
++Result: PASS
++
++```bash
++npm test
++```
++
++Result: PASS
++
++```bash
++npm run test:core:exchange-truth
++```
++
++Result: PASS
++
++### Compatibility checks also run
++
++```bash
++npm run test:core:cold-start
++```
++
++Result: PASS
++
++```bash
++npm run test:core:bootstrap
++```
++
++Result: PASS
++
++## Command output summary
++
++- `npm run typecheck` exited with code `0`.
++- `npm test` exited with code `0`.
++- `npm run test:core:exchange-truth` exited with code `0`.
++- `npm run test:core:cold-start` exited with code `0`.
++- `npm run test:core:bootstrap` exited with code `0`.
++
++## Risks
++
++- `RuntimeSnapshot` now has an additional state domain: `exchangeTruth`. Any integration code that assumes the previous exact list of domains must be semantically merged.
++- `ActionGate` now denies normal trading after bootstrap reconciliation if ExchangeTruth is not `fresh`. This intentionally changes previous alpha2 scenarios that allowed trading after bootstrap + position/market reconcile alone.
++- `ExchangeTruthPayloadSchema` is intentionally minimal and does not imply a real exchange adapter contract.
++- Conflict detection currently supports the mandatory local-flat / exchange-open law and explicit conflict payloads. Broader drift semantics are left for later Wave 3/Kernel Authority work.
++
++## Intentionally not done
++
++- No V1 integration.
++- No V2 integration.
++- No Signal Layer.
++- No Decision Engine.
++- No strategy logic.
++- No UI.
++- No live trading.
++- No real exchange keys.
++- No Binance client.
++- No full Kernel Authority module.
++- No CoreTrustReport module.
++- No Freshness Guard beyond explicit `exchange_truth.stale_detected` event handling.
++- No real exchange polling/reconcile adapter.
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/DELIVERY_REPORT_WAVE3_HEALTH_TRUTH.md /mnt/data/mbg-alpha3-merge/DELIVERY_REPORT_WAVE3_HEALTH_TRUTH.md
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/DELIVERY_REPORT_WAVE3_HEALTH_TRUTH.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/DELIVERY_REPORT_WAVE3_HEALTH_TRUTH.md	2026-05-07 06:58:31.821936791 +0000
+@@ -0,0 +1,76 @@
++# Delivery Report — Wave 3 / Health Truth Cleanup
++
++## Task
++Wave 3 — Health Truth Cleanup from canonical base `mbg-core-v0.1-alpha2`.
++
++## Goal
++Remove false health defaults and make runtime health report only what the core actually knows.
++
++Primary law: **unknown is better than fake true**.
++
++## Implemented
++
++- Replaced fake `wsConnected: true` with explicit connection truth:
++  - `true` — explicit accepted health event says websocket is connected;
++  - `false` — explicit accepted health event says websocket is disconnected;
++  - `unknown` — no observed websocket truth exists;
++  - `stale` — observed websocket truth exists but is older than `MBG_HEALTH_CONNECTION_STATUS_TTL_MS`.
++- Added `HealthTruthSnapshot` returned by `RuntimeEngine.getHealthSnapshot()`.
++- Added `healthTruthComplete` and `healthTruthDiagnostics`.
++- Added diagnostics:
++  - `connection_state_unknown`;
++  - `health_truth_partial`;
++  - `ws_status_unknown`;
++  - `connection_state_stale`.
++- `/health` endpoint now returns runtime health truth instead of a static `{ ok: true }`.
++- `wsReconnects` is now `"unknown"` unless real reconnect tracking is implemented later.
++- Explicit `system.health.changed` events can update websocket health truth, without connecting a real WebSocket and without enabling live trading.
++
++## Files Changed
++
++- `apps/runtime-api/src/app.ts`
++- `core/runtime/src/runtime-engine.ts`
++- `package.json`
++- `tests/scenarios/core-health-truth.ts`
++- `SCENARIO_AUDIT_WAVE3_HEALTH_TRUTH.md`
++- `DELIVERY_REPORT_WAVE3_HEALTH_TRUTH.md`
++
++## Test Script Added
++
++```bash
++npm run test:core:health-truth
++```
++
++## Command Results
++
++```text
++npm run typecheck
++EXIT=0
++
++npm test
++EXIT=0
++
++npm run test:core:health-truth
++EXIT=0
++```
++
++## Risks
++
++- Connection truth is currently derived only from accepted `system.health.changed` events. No real WebSocket instrumentation was added by design.
++- `healthTruthComplete` may remain false in normal cold runtime because reconcile/position and connection truth are intentionally unknown.
++- `stale` threshold defaults to 30 seconds via `MBG_HEALTH_CONNECTION_STATUS_TTL_MS`; future ExchangeTruth/Freshness Guard work may want to centralize TTL policy.
++- `/health` now returns an honest partial health object; any external caller that assumed static `ok: true` must adapt.
++
++## Intentionally Not Done
++
++- Did not connect V1 or V2.
++- Did not add Signal Layer.
++- Did not add Decision Engine.
++- Did not add strategy logic.
++- Did not add UI.
++- Did not enable live trading.
++- Did not add real exchange keys.
++- Did not implement Kernel Authority or CoreTrustReport as a separate module.
++- Did not implement ExchangeTruth Domain.
++- Did not implement Freshness Guard.
++- Did not modify Constitution directly; law proposal should be handed to the Constitution owner.
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/DELIVERY_REPORT_WAVE3_SCENARIO_AUDIT_V2.md /mnt/data/mbg-alpha3-merge/DELIVERY_REPORT_WAVE3_SCENARIO_AUDIT_V2.md
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/DELIVERY_REPORT_WAVE3_SCENARIO_AUDIT_V2.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/DELIVERY_REPORT_WAVE3_SCENARIO_AUDIT_V2.md	2026-05-07 06:58:31.887638299 +0000
+@@ -0,0 +1,120 @@
++# MBG Core v0.1 — Wave 3 Scenario Audit v2 Delivery Report
++
++Role: 7 — Scenario Audit / Test Owner  
++Canonical base: `mbg-core-v0.1-alpha2`  
++Target: alpha3 acceptance after Wave 3 runtime roles are merged
++
++## Scope
++
++This delivery updates the Wave 3 scenario audit to test the approved runtime contracts from roles 4, 5, and 6.
++
++The audit does not introduce new runtime behavior and does not define new event aliases in the core.
++
++## Corrected Event Contracts
++
++Removed from the scenario audit:
++
++- `exchange.truth.reported`
++- `exchange.connection.changed`
++
++Used approved Wave 3 contracts instead:
++
++- `exchange_truth.reconcile_succeeded`
++- `exchange_truth.stale_detected`
++- `exchange_truth.conflict_detected`
++- `exchange_truth.unavailable_detected`
++- `system.health.changed`
++
++## Changed Files
++
++- `package.json`
++- `tests/scenarios/wave3-scenario-audit.ts`
++- `DELIVERY_REPORT_WAVE3_SCENARIO_AUDIT_V2.md`
++
++## Added Script
++
++```bash
++npm run test:wave3:scenario-audit
++```
++
++The script runs:
++
++```bash
++npm run typecheck && tsx tests/scenarios/wave3-scenario-audit.ts
++```
++
++## Scenario Coverage
++
++1. cold start -> exchangeTruth unknown -> PLACE_ORDER denied
++2. bootstrap reconciled, but exchangeTruth unknown -> denied
++3. exchangeTruth stale -> denied
++4. exchangeTruth conflicted -> denied
++5. exchangeTruth unavailable -> denied
++6. market data stale -> denied
++7. connection state unknown -> not healthy / denied where applicable
++8. wsConnected unknown is not true
++9. bootstrap reconciled + exchangeTruth fresh + market fresh + valid position -> allow only if ActionGate allows
++10. local flat position + exchange conflict -> denied
++
++## Wave 3 Areas Covered
++
++- ExchangeTruth Domain
++- Freshness Guard
++- Health Truth Cleanup
++- Combined safety
++- ActionGate integration boundary
++
++## Commands Run
++
++On the available `mbg-core-v0.1-alpha2` base:
++
++```bash
++npm install
++npm run typecheck
++npm run test:wave3:scenario-audit
++```
++
++Observed alpha2 result:
++
++- `npm install`: passed
++- `npm run typecheck`: passed
++- `npm run test:wave3:scenario-audit`: fails on expected Wave 3 integration gaps in alpha2
++
++Expected alpha3 result after merging roles 4, 5, and 6:
++
++```json
++{
++  "name": "wave3_scenario_audit",
++  "total": 10,
++  "passed": 10,
++  "failed": 0
++}
++```
++
++## Known Alpha2 Gaps Exposed by This Audit
++
++- `RuntimeSnapshot.exchangeTruth` is not present in alpha2.
++- `exchange_truth.reconcile_succeeded` is not present in alpha2 contracts.
++- `exchange_truth.stale_detected` is not present in alpha2 contracts.
++- `exchange_truth.conflict_detected` is not present in alpha2 contracts.
++- `exchange_truth.unavailable_detected` is not present in alpha2 contracts.
++- `system.health.changed` exists in alpha2 but Health Truth Cleanup is not complete.
++- `getHealthSnapshot().wsConnected` is still not governed by the Wave 3 health truth contract in alpha2.
++
++## Risks and Gaps
++
++- The test uses rich payloads for ExchangeTruth events to satisfy likely role 5 validation requirements. If role 4/5 finalize narrower field names, the payload helper may need a small compatibility adjustment without changing scenario intent.
++- The positive allow scenario intentionally asserts that `PLACE_ORDER` can be allowed only after bootstrap, ExchangeTruth, market freshness, position, and health inputs are all valid. If ActionGate adds additional blocking requirements in alpha3, that scenario should be updated to reflect the final ActionGate contract rather than bypassing it.
++- This audit does not implement ExchangeTruth, Freshness Guard, Health Truth Cleanup, CoreTrustReport, Kernel Authority, UI, V1/V2, Signal Layer, Decision Engine, strategy logic, live trading, or exchange connectivity.
++
++## Intentionally Not Done
++
++- Did not modify `CORE_CONSTITUTION.md`.
++- Did not modify runtime behavior.
++- Did not add runtime event aliases.
++- Did not add strategy logic.
++- Did not connect V1 or V2.
++- Did not add UI.
++- Did not enable live trading.
++- Did not add real exchange keys.
++- Did not implement Kernel Authority / CoreTrustReport.
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/INTEGRATION_REPORT_ALPHA3.md /mnt/data/mbg-alpha3-merge/INTEGRATION_REPORT_ALPHA3.md
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/INTEGRATION_REPORT_ALPHA3.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/INTEGRATION_REPORT_ALPHA3.md	2026-05-07 08:33:27.486552718 +0000
+@@ -0,0 +1,227 @@
++# INTEGRATION_REPORT_ALPHA3
++
++## Status
++
++`mbg-core-v0.1-alpha3` integration is complete.
++
++Canonical base: `mbg-core-v0.1-alpha2.zip`
++
++Integration owner: role 8 / Integration Owner / Merge Engineer.
++
++## Inputs merged
++
++- Role 2.3 — Constitution Update.
++- Role 4.3 — ExchangeTruth Domain.
++- Role 5.3 — Freshness Guard.
++- Role 6.3 — Health Truth Cleanup.
++- Role 7.3.1 — Wave 3 Scenario Audit v2.
++
++## Scope boundaries
++
++No V1, V2, Signal Layer, Decision Engine, UI, strategy logic, live trading, real exchange keys, Kernel Authority or CoreTrustReport module was added.
++
++Existing base files outside the Wave 3 scope were preserved unless required by semantic integration.
++
++## Constitution source
++
++`CORE_CONSTITUTION.md` and `core/kernel/kernel-constitution.ts` were taken from Role 2.3 only.
++
++Constitution changes from other roles were not accepted directly.
++
++## Semantic merge decisions
++
++### Alpha3 readiness model
++
++Wave 3 expands normal trading readiness.
++
++Normal trading / `PLACE_ORDER` requires:
++
++- bootstrap reconciled;
++- position reconciled;
++- exchangeTruth fresh;
++- market data fresh;
++- freshness guard OK;
++- health truth acceptable;
++- websocket/connection truth connected;
++- ActionGate allow.
++
++Tests that previously expected allow after bootstrap reconcile were updated to establish fresh exchange truth, fresh market data and truthful healthy connection state before expecting ActionGate allow.
++
++### Runtime audit readiness
++
++Alpha3 updates runtime audit readiness model. Runtime audit must establish fresh exchange truth, fresh market data and acceptable health truth before expecting ActionGate allow or pending order state.
++
++### Health Truth
++
++Wave3 Health Truth makes unknown/stale/false connection state non-healthy. Allow scenarios must explicitly establish acceptable health truth before expecting ActionGate allow.
++
++`clearPersistenceAndReset()` now resets websocketTruth / health truth / connection truth so connection state cannot leak between scenarios.
++
++### ExchangeTruth + Freshness
++
++ExchangeTruth domain from Role 4 is the source of exchange truth.
++
++Freshness Guard from Role 5 calculates exchange freshness from exchangeTruth timestamps/status and connection freshness from Health Truth.
++
++Freshness Guard was not disabled.
++
++ExchangeTruth is not fresh by default.
++
++`wsConnected` is not true by default.
++
++ActionGate does not allow without exchangeTruth and health truth.
++
++## Final event commit pipeline
++
++The alpha2 pipeline remains intact:
++
++```text
++validate event
++→ idempotency check
++→ append journal
++→ record idempotency
++→ reduce snapshot
++```
++
++Invalid event:
++
++```text
++no journal
++no snapshot mutation
++no idempotency mutation
++```
++
++Duplicate event:
++
++```text
++no journal
++no snapshot mutation
++revision unchanged
++```
++
++## Conflicts and resolutions
++
++### `runtime-engine.ts`
++
++Conflict: Roles 4/5/6 all changed runtime state, ActionGate inputs, health snapshot and reset/replay semantics.
++
++Resolution: semantic merge preserving alpha2 validation/idempotency pipeline while adding:
++
++- ExchangeTruth state reduction;
++- Freshness Guard inputs;
++- Health Truth snapshot;
++- websocketTruth tracking;
++- reset cleanup for connection truth;
++- ActionGate freshness enforcement.
++
++### `action-gate.ts`
++
++Conflict: Bootstrap gating from alpha2 needed to coexist with ExchangeTruth, Freshness and Health Truth gates.
++
++Resolution: bootstrap denial remains first readiness block where applicable; after bootstrap/position reconcile, normal trading is additionally blocked by exchangeTruth/freshness/health reasons.
++
++### `package.json`
++
++Conflict: Roles added separate test scripts and verify requirements.
++
++Resolution: package scripts include all alpha2 and alpha3 tests. `npm run verify` runs the complete alpha3 scope.
++
++### Tests and runtime audit
++
++Conflict: alpha2 tests/audit expected allow after bootstrap/position reconcile.
++
++Resolution: tests were updated to the alpha3 readiness model; the system was not weakened to satisfy old expectations.
++
++## Package scripts included
++
++- `verify`
++- `test:core-constitution`
++- `test:core:cold-start`
++- `test:core:bootstrap`
++- `test:core:event-validation`
++- `test:core:idempotency`
++- `test:wave2:scenario-audit`
++- `test:core:exchange-truth`
++- `test:core:freshness`
++- `test:core:health-truth`
++- `test:wave3:scenario-audit`
++- `audit:runtime`
++
++## Verification results
++
++All required checks passed.
++
++```text
++npm ci: PASS
++npm run typecheck: PASS
++npm test: PASS
++npm run test:core-constitution: PASS
++npm run test:core:cold-start: PASS
++npm run test:core:bootstrap: PASS
++npm run test:core:event-validation: PASS
++npm run test:core:idempotency: PASS
++npm run test:wave2:scenario-audit: PASS
++npm run test:core:exchange-truth: PASS
++npm run test:core:freshness: PASS
++npm run test:core:health-truth: PASS
++npm run test:wave3:scenario-audit: PASS 10/10
++npm run audit:runtime: PASS
++npm run verify: PASS (exit code 0)
++```
++
++Final `npm run verify` was executed after updating package metadata to `mbg-core-v0.1-alpha3` / `1.0.3`.
++
++## Safety confirmation
++
++Confirmed:
++
++- Freshness Guard was not disabled.
++- ExchangeTruth is not fresh by default.
++- `wsConnected` is not true by default.
++- ActionGate does not allow without ExchangeTruth.
++- ActionGate does not allow without Health Truth.
++- V1 was not added.
++- V2 was not added.
++- Signal Layer was not added.
++- Decision Engine was not added.
++- UI was not added.
++- strategy logic was not added.
++- live trading was not added.
++- real exchange keys were not added.
++- Kernel Authority / CoreTrustReport was not added.
++
++## Changed file summary
++
++Added:
++
++- `DELIVERY_REPORT_WAVE3_EXCHANGE_TRUTH.md`
++- `DELIVERY_REPORT_WAVE3_HEALTH_TRUTH.md`
++- `DELIVERY_REPORT_WAVE3_SCENARIO_AUDIT_V2.md`
++- `SCENARIO_AUDIT_WAVE3_HEALTH_TRUTH.md`
++- `core/runtime/src/freshness.ts`
++- `tests/scenarios/core-freshness.ts`
++- `tests/scenarios/core-health-truth.ts`
++- `tests/scenarios/exchange-truth.ts`
++- `tests/scenarios/wave3-scenario-audit.ts`
++
++Modified:
++
++- `CORE_CONSTITUTION.md`
++- `apps/runtime-api/src/app.ts`
++- `core/contracts/src/events.ts`
++- `core/events/validate-domain-event.ts`
++- `core/gates/src/action-gate.ts`
++- `core/kernel/kernel-constitution.ts`
++- `core/runtime/src/runtime-engine.ts`
++- `core/state/src/types.ts`
++- `core/transitions/src/reducers.ts`
++- `package-lock.json`
++- `package.json`
++- `tests/scenarios/audit-runtime.ts`
++- `tests/scenarios/bootstrap-fsm.ts`
++- `tests/scenarios/cold-start-unknown.ts`
++- `tests/scenarios/core-constitution.test.mjs`
++- `tests/scenarios/gate-scenarios.ts`
++- `tests/scenarios/wave2-scenario-audit.ts`
++
++Removed: none.
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/SCENARIO_AUDIT_WAVE3_HEALTH_TRUTH.md /mnt/data/mbg-alpha3-merge/SCENARIO_AUDIT_WAVE3_HEALTH_TRUTH.md
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/SCENARIO_AUDIT_WAVE3_HEALTH_TRUTH.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/SCENARIO_AUDIT_WAVE3_HEALTH_TRUTH.md	2026-05-07 06:58:31.822630812 +0000
+@@ -0,0 +1,58 @@
++# Scenario Audit — Wave 3 / Health Truth Cleanup
++
++## Law
++Unknown is better than fake true. Health must report only what the runtime has actually observed.
++
++## Scenario HT-001 — Cold runtime has unknown websocket status
++
++Given a new runtime with empty persistence.  
++When `getHealthSnapshot()` is called before any health event.  
++Then `wsConnected` is `unknown`, not `true`.  
++And `healthTruthComplete` is `false`.  
++And diagnostics include `connection_state_unknown`, `ws_status_unknown`, and `health_truth_partial`.
++
++Evidence: `tests/scenarios/core-health-truth.ts`
++
++## Scenario HT-002 — Explicit connected event sets websocket true
++
++Given runtime health truth is unknown.  
++When a valid `system.health.changed` event is committed with `connection=websocket` and `status=connected`.  
++Then `wsConnected` is `true`.  
++And the connection source event id is recorded.
++
++Evidence: `tests/scenarios/core-health-truth.ts`
++
++## Scenario HT-003 — Explicit disconnected event sets websocket false
++
++Given websocket truth was previously known.  
++When a valid `system.health.changed` event is committed with `connection=websocket` and `status=disconnected`.  
++Then `wsConnected` is `false`.  
++And the connection source event id is recorded.
++
++Evidence: `tests/scenarios/core-health-truth.ts`
++
++## Scenario HT-004 — Old connection observation becomes stale
++
++Given a connection observation exists.  
++When its timestamp is older than `MBG_HEALTH_CONNECTION_STATUS_TTL_MS`.  
++Then `wsConnected` is `stale`.  
++And diagnostics include `connection_state_stale` and `health_truth_partial`.
++
++Evidence: `tests/scenarios/core-health-truth.ts`
++
++## Scenario HT-005 — Health endpoint does not report fake true
++
++Given the runtime API `/health` endpoint.  
++When `/health` is requested from a cold runtime.  
++Then response health has `wsConnected=unknown`, not `true`.  
++And `healthTruthComplete=false`.
++
++Evidence: `tests/scenarios/core-health-truth.ts`
++
++## Scenario HT-006 — Existing tests still pass
++
++Given the Wave 3 health cleanup patch.  
++When the existing default scenario test is executed.  
++Then it passes.
++
++Evidence: `npm test`, exit 0.
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/apps/runtime-api/src/app.ts /mnt/data/mbg-alpha3-merge/apps/runtime-api/src/app.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/apps/runtime-api/src/app.ts	2026-05-07 08:32:42.320584731 +0000
++++ /mnt/data/mbg-alpha3-merge/apps/runtime-api/src/app.ts	2026-05-07 07:07:12.297793970 +0000
+@@ -1150,7 +1150,13 @@
+   app.use(express.json());
+ 
+   app.get("/health", (_req, res) => {
+-    res.json({ ok: true, service: "genesis-v1-runtime-api", time: new Date().toISOString() });
++    const health = runtimeEngine.getHealthSnapshot();
++    res.json({
++      ok: health.healthTruthComplete && health.systemState === "healthy",
++      service: "mbg-core-runtime-api",
++      time: new Date().toISOString(),
++      health
++    });
+   });
+ 
+   app.get("/live/market", (_req, res) => {
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/contracts/src/events.ts /mnt/data/mbg-alpha3-merge/core/contracts/src/events.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/contracts/src/events.ts	2026-05-07 08:32:42.322139561 +0000
++++ /mnt/data/mbg-alpha3-merge/core/contracts/src/events.ts	2026-05-07 06:58:31.648316733 +0000
+@@ -16,6 +16,12 @@
+   BOOTSTRAP_RECONCILED: "bootstrap.reconciled",
+   BOOTSTRAP_FAILED: "bootstrap.failed",
+   BOOTSTRAP_RECOVERY_STARTED: "bootstrap.recovery_started",
++  EXCHANGE_TRUTH_RECONCILE_STARTED: "exchange_truth.reconcile_started",
++  EXCHANGE_TRUTH_RECONCILE_SUCCEEDED: "exchange_truth.reconcile_succeeded",
++  EXCHANGE_TRUTH_RECONCILE_FAILED: "exchange_truth.reconcile_failed",
++  EXCHANGE_TRUTH_STALE_DETECTED: "exchange_truth.stale_detected",
++  EXCHANGE_TRUTH_CONFLICT_DETECTED: "exchange_truth.conflict_detected",
++  EXCHANGE_TRUTH_UNAVAILABLE_DETECTED: "exchange_truth.unavailable_detected",
+   SYSTEM_HEALTH_CHANGED: "system.health.changed",
+   SYSTEM_HALTED: "system.halted"
+ } as const;
+@@ -61,6 +67,32 @@
+ export type BootstrapPayload = z.infer<typeof BootstrapPayloadSchema>;
+ 
+ 
++export const ExchangeTruthConflictSchema = z.object({
++  code: z.string().min(1),
++  local: z.string().optional(),
++  exchange: z.string().optional(),
++  details: z.string().optional()
++});
++
++export const ExchangeTruthDriftSchema = z.record(z.union([z.number(), z.string(), z.boolean(), z.undefined()])).default({});
++
++export const ExchangeTruthPayloadSchema = z.object({
++  reason: z.string().optional(),
++  source: z.string().optional(),
++  lastAccountReconcileAt: z.string().optional(),
++  lastPositionReconcileAt: z.string().optional(),
++  lastOrderReconcileAt: z.string().optional(),
++  lastFillSyncAt: z.string().optional(),
++  drift: ExchangeTruthDriftSchema.optional(),
++  conflicts: z.array(ExchangeTruthConflictSchema).optional(),
++  localPositionStatus: z.enum(["unknown", "flat", "open", "reconcile"]).optional(),
++  exchangePositionStatus: z.enum(["unknown", "flat", "open", "reconcile"]).optional(),
++  exchangePositionQuantity: z.number().optional(),
++  staleAfterMs: z.number().nonnegative().optional()
++});
++
++export type ExchangeTruthPayload = z.infer<typeof ExchangeTruthPayloadSchema>;
++
+ export function makeEvent<T>(eventType: EventType, payload: T): DomainEvent<T> {
+   return {
+     eventId: crypto.randomUUID(),
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/events/validate-domain-event.ts /mnt/data/mbg-alpha3-merge/core/events/validate-domain-event.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/events/validate-domain-event.ts	2026-05-07 08:32:42.413277497 +0000
++++ /mnt/data/mbg-alpha3-merge/core/events/validate-domain-event.ts	2026-05-07 06:58:31.675025686 +0000
+@@ -150,6 +150,54 @@
+   }
+ }
+ 
++
++function validateIsoIfPresent(value: unknown, path: string, issues: DomainEventValidationIssue[]) {
++  if (value === undefined) return;
++  if (!nonEmptyString(value) || Number.isNaN(Date.parse(String(value)))) {
++    issues.push(issue("payload_invalid", path, `${path} must be an ISO-compatible timestamp when provided`));
++  }
++}
++
++function validateExchangeTruth(event: DomainEvent, payload: Record<string, unknown>, issues: DomainEventValidationIssue[]) {
++  if (!hasKnownSource(event, payload) && !nonEmptyString(payload.reason)) {
++    issues.push(issue("source_missing", "source", `${event.eventType} source/provider or diagnostic reason is required`));
++  }
++
++  validateIsoIfPresent(payload.lastAccountReconcileAt, "payload.lastAccountReconcileAt", issues);
++  validateIsoIfPresent(payload.lastPositionReconcileAt, "payload.lastPositionReconcileAt", issues);
++  validateIsoIfPresent(payload.lastOrderReconcileAt, "payload.lastOrderReconcileAt", issues);
++  validateIsoIfPresent(payload.lastFillSyncAt, "payload.lastFillSyncAt", issues);
++
++  if (payload.drift !== undefined && !isRecord(payload.drift)) {
++    issues.push(issue("payload_invalid", "payload.drift", "exchange truth drift must be an object when provided"));
++  }
++
++  if (payload.conflicts !== undefined) {
++    if (!Array.isArray(payload.conflicts)) {
++      issues.push(issue("payload_invalid", "payload.conflicts", "exchange truth conflicts must be an array when provided"));
++    } else {
++      payload.conflicts.forEach((conflict, index) => {
++        if (!isRecord(conflict) || !nonEmptyString(conflict.code)) {
++          issues.push(issue("payload_invalid", `payload.conflicts.${index}.code`, "exchange truth conflict code is required"));
++        }
++      });
++    }
++  }
++
++  if (payload.localPositionStatus !== undefined && !["unknown", "flat", "open", "reconcile"].includes(String(payload.localPositionStatus))) {
++    issues.push(issue("payload_invalid", "payload.localPositionStatus", "localPositionStatus must be unknown, flat, open, or reconcile"));
++  }
++
++  if (payload.exchangePositionStatus !== undefined && !["unknown", "flat", "open", "reconcile"].includes(String(payload.exchangePositionStatus))) {
++    issues.push(issue("payload_invalid", "payload.exchangePositionStatus", "exchangePositionStatus must be unknown, flat, open, or reconcile"));
++  }
++
++  if (payload.exchangePositionQuantity !== undefined && (typeof payload.exchangePositionQuantity !== "number" || !Number.isFinite(payload.exchangePositionQuantity))) {
++    issues.push(issue("payload_invalid", "payload.exchangePositionQuantity", "exchangePositionQuantity must be finite when provided"));
++  }
++}
++
++
+ function validateSignal(payload: Record<string, unknown>, issues: DomainEventValidationIssue[]) {
+   if (!nonEmptyString(payload.symbol)) {
+     issues.push(issue("payload_invalid", "payload.symbol", "signal symbol is required"));
+@@ -222,6 +270,18 @@
+     case EVENT_TYPE.BOOTSTRAP_RECONCILED:
+     case EVENT_TYPE.BOOTSTRAP_FAILED:
+     case EVENT_TYPE.BOOTSTRAP_RECOVERY_STARTED:
++      if (!hasKnownSource(event, payload) && !nonEmptyString(payload.reason)) {
++        issues.push(issue("source_missing", "source", `${event.eventType} source/provider or diagnostic reason is required`));
++      }
++      break;
++    case EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_STARTED:
++    case EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED:
++    case EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_FAILED:
++    case EVENT_TYPE.EXCHANGE_TRUTH_STALE_DETECTED:
++    case EVENT_TYPE.EXCHANGE_TRUTH_CONFLICT_DETECTED:
++    case EVENT_TYPE.EXCHANGE_TRUTH_UNAVAILABLE_DETECTED:
++      validateExchangeTruth(event, payload, issues);
++      break;
+     case EVENT_TYPE.ORDER_UNCERTAIN:
+     case EVENT_TYPE.POSITION_UNKNOWN:
+     case EVENT_TYPE.SYSTEM_HEALTH_CHANGED:
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/gates/src/action-gate.ts /mnt/data/mbg-alpha3-merge/core/gates/src/action-gate.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/gates/src/action-gate.ts	2026-05-07 08:32:42.326605351 +0000
++++ /mnt/data/mbg-alpha3-merge/core/gates/src/action-gate.ts	2026-05-07 07:05:23.685074426 +0000
+@@ -1,13 +1,21 @@
+ import { ACTION_TYPE, ActionRequest, ActionType, GateDecision } from "../../contracts/src/actions.js";
+ import { RuntimeSnapshot } from "../../state/src/types.js";
++import { calculateSnapshotFreshness, type FreshnessConfig, type FreshnessReport } from "../../runtime/src/freshness.js";
+ 
+ type CompatActionRequest = ActionRequest & {
+   actionType?: ActionType;
+   actionId?: string;
+ };
+ 
++export interface ActionGateOptions {
++  enforceFreshness?: boolean;
++  now?: string | Date;
++  freshnessConfig?: Partial<FreshnessConfig>;
++  freshness?: FreshnessReport;
++}
++
+ export class ActionGate {
+-  evaluate(action: CompatActionRequest, snapshot: RuntimeSnapshot): GateDecision {
++  evaluate(action: CompatActionRequest, snapshot: RuntimeSnapshot, options: ActionGateOptions = {}): GateDecision {
+     const actionType = (action.type ?? action.actionType) as ActionType;
+     const actionId = action.actionId ?? `probe:${actionType}`;
+     const blockingStates: string[] = [];
+@@ -21,8 +29,19 @@
+           ? "bootstrap_awaiting_exchange_truth"
+           : "bootstrap_not_reconciled";
+ 
++    const exchangeTruthBlocked = snapshot.exchangeTruth.status !== "fresh";
++    const exchangeTruthReason =
++      snapshot.exchangeTruth.status === "stale"
++        ? "exchange_truth_stale"
++        : snapshot.exchangeTruth.status === "conflicted"
++          ? "exchange_truth_conflicted"
++          : snapshot.exchangeTruth.status === "unavailable"
++            ? "exchange_truth_unavailable"
++            : "exchange_truth_unknown";
++
+     const unsafeRuntime =
+       bootstrapBlocked ||
++      exchangeTruthBlocked ||
+       snapshot.order.status === "uncertain" ||
+       snapshot.position.status === "unknown" ||
+       snapshot.risk.status === "blocked" ||
+@@ -39,29 +58,50 @@
+       blockingStates.push("action");
+     } else if (unsafeRuntime && !isRecoveryAction) {
+       if (bootstrapBlocked) blockingStates.push("bootstrap");
++      if (exchangeTruthBlocked) blockingStates.push("exchangeTruth");
+       if (snapshot.order.status === "uncertain") blockingStates.push("order");
+       if (snapshot.position.status === "unknown") blockingStates.push("position");
+       if (snapshot.risk.status === "blocked") blockingStates.push("risk");
+       if (snapshot.system.status === "degraded" || snapshot.system.status === "halted") blockingStates.push("system");
+       reason = bootstrapBlocked
+         ? bootstrapReason
+-        : snapshot.risk.reasons.includes("bootstrap_position_not_reconciled")
+-          ? "bootstrap_position_not_reconciled"
+-          : "unsafe_state_requires_reconcile";
++        : exchangeTruthBlocked
++          ? exchangeTruthReason
++          : snapshot.risk.reasons.includes("bootstrap_position_not_reconciled")
++            ? "bootstrap_position_not_reconciled"
++            : "unsafe_state_requires_reconcile";
+     } else if (actionType === ACTION_TYPE.PLACE_ORDER) {
+-      if (snapshot.market.status !== "open") {
++      if (options.enforceFreshness) {
++        const freshness = options.freshness ?? calculateSnapshotFreshness(snapshot, {
++          now: options.now ?? new Date(),
++          config: options.freshnessConfig
++        });
++
++        if (!freshness.okForNormalTrading) {
++          const primaryReason = freshness.blockingReasons[0] ?? "freshness_unknown";
++          reason = primaryReason;
++          if (freshness.marketDataFreshness.status !== "fresh") blockingStates.push("market", "freshness");
++          if (freshness.exchangeTruthFreshness.status !== "fresh") blockingStates.push("exchangeTruth", "freshness");
++          if (freshness.connectionFreshness.status !== "fresh") blockingStates.push("connection", "freshness");
++        }
++      }
++
++      if (!reason && snapshot.exchangeTruth.status !== "fresh") {
++        reason = exchangeTruthReason;
++        blockingStates.push("exchangeTruth");
++      } else if (!reason && snapshot.market.status !== "open") {
+         reason = "market_not_open";
+         blockingStates.push("market");
+-      } else if (snapshot.system.status === "halted") {
++      } else if (!reason && snapshot.system.status === "halted") {
+         reason = "system_halted";
+         blockingStates.push("system");
+-      } else if (snapshot.order.status === "uncertain") {
++      } else if (!reason && snapshot.order.status === "uncertain") {
+         reason = "order_uncertain_requires_reconcile";
+         blockingStates.push("order");
+-      } else if (snapshot.position.status === "unknown") {
++      } else if (!reason && snapshot.position.status === "unknown") {
+         reason = "position_unknown";
+         blockingStates.push("position");
+-      } else if (snapshot.risk.status === "blocked") {
++      } else if (!reason && snapshot.risk.status === "blocked") {
+         reason = "risk_blocked";
+         blockingStates.push("risk");
+       }
+@@ -82,7 +122,7 @@
+     };
+   }
+ 
+-  evaluateAll(snapshot: RuntimeSnapshot): Record<string, GateDecision> {
++  evaluateAll(snapshot: RuntimeSnapshot, options: ActionGateOptions = {}): Record<string, GateDecision> {
+     const actions = [
+       { type: ACTION_TYPE.PLACE_ORDER },
+       { type: ACTION_TYPE.CANCEL_ORDER },
+@@ -91,6 +131,6 @@
+       { type: ACTION_TYPE.PAUSE_RUNTIME },
+       { type: ACTION_TYPE.RESUME_RUNTIME }
+     ];
+-    return Object.fromEntries(actions.map(a => [a.type, this.evaluate(a as any, snapshot)]));
++    return Object.fromEntries(actions.map(a => [a.type, this.evaluate(a as any, snapshot, options)]));
+   }
+ }
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/kernel/kernel-constitution.ts /mnt/data/mbg-alpha3-merge/core/kernel/kernel-constitution.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/kernel/kernel-constitution.ts	2026-05-07 08:32:42.412570630 +0000
++++ /mnt/data/mbg-alpha3-merge/core/kernel/kernel-constitution.ts	2026-05-07 06:58:31.617446629 +0000
+@@ -44,7 +44,15 @@
+   REDUCERS_REMAIN_PURE: "LAW-019",
+   DUPLICATE_EVENT_CANNOT_MUTATE_STATE: "LAW-020",
+   INVALID_EVENT_NEVER_ENTERS_CANONICAL_JOURNAL: "LAW-021",
+-  BOOTSTRAP_FAILED_REQUIRES_RECOVERY_EVENT: "LAW-022"
++  BOOTSTRAP_FAILED_REQUIRES_RECOVERY_EVENT: "LAW-022",
++  EXCHANGE_TRUTH_UNKNOWN_FORBIDS_NORMAL_TRADING: "LAW-023",
++  EXCHANGE_TRUTH_STALE_FORBIDS_NORMAL_TRADING: "LAW-024",
++  EXCHANGE_TRUTH_CONFLICTED_FORBIDS_NORMAL_TRADING: "LAW-025",
++  MARKET_DATA_STALE_FORBIDS_NORMAL_TRADING: "LAW-026",
++  HEALTH_MUST_NOT_REPORT_FAKE_TRUTH: "LAW-027",
++  UNKNOWN_CONNECTION_STATE_IS_NOT_CONNECTED: "LAW-028",
++  LOCAL_FLAT_POSITION_REQUIRES_FRESH_EXCHANGE_RECONCILE: "LAW-029",
++  FRESHNESS_UNKNOWN_IS_STALE_FOR_NORMAL_TRADING: "LAW-030"
+ } as const;
+ 
+ export type CoreLawId = typeof CORE_LAW_ID[keyof typeof CORE_LAW_ID];
+@@ -282,6 +290,78 @@
+     ],
+     futureModules: ["core/bootstrap/bootstrap-fsm.ts", "core/kernel/kernel-authority.ts"],
+     testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.EXCHANGE_TRUTH_UNKNOWN_FORBIDS_NORMAL_TRADING,
++    title: "ExchangeTruth unknown forbids normal trading",
++    statement: "Normal trading is forbidden when exchange truth is unknown, missing, or otherwise unproven.",
++    severity: "blocking",
++    currentModules: ["core/state/src/types.ts", "core/transitions/src/reducers.ts", "core/gates/src/action-gate.ts"],
++    futureModules: ["core/exchange/exchange-truth.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.EXCHANGE_TRUTH_STALE_FORBIDS_NORMAL_TRADING,
++    title: "ExchangeTruth stale forbids normal trading",
++    statement: "Normal trading is forbidden when exchange truth is stale or has unknown freshness.",
++    severity: "blocking",
++    currentModules: ["core/runtime/src/runtime-engine.ts", "core/gates/src/action-gate.ts"],
++    futureModules: ["core/exchange/exchange-truth.ts", "core/freshness/freshness-guard.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.EXCHANGE_TRUTH_CONFLICTED_FORBIDS_NORMAL_TRADING,
++    title: "ExchangeTruth conflicted forbids normal trading",
++    statement: "Normal trading is forbidden when exchange truth conflicts with local memory or other accepted evidence.",
++    severity: "panic",
++    currentModules: ["core/state/src/types.ts", "core/transitions/src/reducers.ts", "core/gates/src/action-gate.ts"],
++    futureModules: ["core/exchange/exchange-truth.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.MARKET_DATA_STALE_FORBIDS_NORMAL_TRADING,
++    title: "Market data stale forbids normal trading",
++    statement: "Normal trading is forbidden when required market data is stale, missing, or of unknown age.",
++    severity: "blocking",
++    currentModules: ["application/market/*", "core/runtime/src/runtime-engine.ts", "core/gates/src/action-gate.ts"],
++    futureModules: ["core/freshness/freshness-guard.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.HEALTH_MUST_NOT_REPORT_FAKE_TRUTH,
++    title: "Health must not report fake truth",
++    statement: "Runtime health and API health must report only what the core can prove.",
++    severity: "blocking",
++    currentModules: ["core/runtime/src/runtime-engine.ts", "apps/runtime-api/src/app.ts"],
++    futureModules: ["core/health/runtime-health-snapshot.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.UNKNOWN_CONNECTION_STATE_IS_NOT_CONNECTED,
++    title: "Unknown connection state is not connected",
++    statement: "Unknown connection state must not be treated as connected or used to authorize normal trading.",
++    severity: "blocking",
++    currentModules: ["application/exchange/*", "core/runtime/src/runtime-engine.ts", "core/gates/src/action-gate.ts"],
++    futureModules: ["core/health/runtime-health-snapshot.ts", "core/freshness/freshness-guard.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.LOCAL_FLAT_POSITION_REQUIRES_FRESH_EXCHANGE_RECONCILE,
++    title: "Local flat position is not trusted without fresh exchange reconcile",
++    statement: "A local flat position is not trusted for normal trading unless fresh exchange reconcile proves it.",
++    severity: "blocking",
++    currentModules: ["core/state/src/types.ts", "core/transitions/src/reducers.ts", "core/gates/src/action-gate.ts", "tests/scenarios/position-reconcile.ts"],
++    futureModules: ["core/exchange/exchange-truth.ts", "core/freshness/freshness-guard.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  {
++    id: CORE_LAW_ID.FRESHNESS_UNKNOWN_IS_STALE_FOR_NORMAL_TRADING,
++    title: "Freshness unknown is stale for normal trading",
++    statement: "Unknown freshness is not fresh; normal trading is forbidden until fresh evidence is proven.",
++    severity: "blocking",
++    currentModules: ["core/runtime/src/runtime-engine.ts", "core/gates/src/action-gate.ts"],
++    futureModules: ["core/freshness/freshness-guard.ts", "core/health/runtime-health-snapshot.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
+   }
+ ] as const;
+ 
+@@ -324,6 +404,69 @@
+   }
+ } as const;
+ 
++
++export const WAVE3_CONSTITUTION_SCOPE = {
++  IMPLEMENTS_RUNTIME_BEHAVIOR: false,
++  IMPLEMENTS_KERNEL_AUTHORITY: false,
++  IMPLEMENTS_CORE_TRUST_REPORT: false,
++  CONNECTS_V1: false,
++  CONNECTS_V2: false,
++  TOUCHES_SIGNAL_LAYER: false,
++  TOUCHES_DECISION_ENGINE: false,
++  TOUCHES_STRATEGIES: false,
++  TOUCHES_UI: false,
++  ENABLES_LIVE_TRADING: false,
++  ADDS_REAL_EXCHANGE_KEYS: false
++} as const;
++
++export const WAVE3_MODULE_MAPPING = {
++  EXCHANGE_TRUTH: {
++    currentModules: [
++      "core/state/src/types.ts",
++      "core/transitions/src/reducers.ts",
++      "core/gates/src/action-gate.ts"
++    ],
++    futureModules: ["core/exchange/exchange-truth.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  FRESHNESS: {
++    currentModules: ["core/runtime/src/runtime-engine.ts", "core/gates/src/action-gate.ts"],
++    futureModules: ["core/freshness/freshness-guard.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  HEALTH_TRUTH: {
++    currentModules: ["core/runtime/src/runtime-engine.ts", "apps/runtime-api/src/app.ts"],
++    futureModules: ["core/health/runtime-health-snapshot.ts", "core/kernel/kernel-authority.ts"],
++    testModules: SCENARIO_TESTS
++  },
++  SCENARIO_AUDIT: {
++    currentModules: ["tests/scenarios/*"],
++    futureModules: [],
++    testModules: SCENARIO_TESTS
++  }
++} as const;
++
++export const EXCHANGE_TRUTH_STATUS = {
++  UNKNOWN: "unknown",
++  FRESH: "fresh",
++  STALE: "stale",
++  CONFLICTED: "conflicted"
++} as const;
++
++export const FRESHNESS_STATUS = {
++  UNKNOWN: "unknown",
++  FRESH: "fresh",
++  STALE: "stale",
++  CONFLICTED: "conflicted"
++} as const;
++
++export const HEALTH_TRUTH_RULE = {
++  UNKNOWN_CONNECTION_IS_NOT_CONNECTED: "unknown_connection_is_not_connected",
++  LOCAL_FLAT_REQUIRES_FRESH_EXCHANGE_RECONCILE: "local_flat_requires_fresh_exchange_reconcile",
++  HEALTH_MUST_NOT_REPORT_UNPROVEN_TRUTH: "health_must_not_report_unproven_truth"
++} as const;
++
++
+ export function getCoreLaw(id: CoreLawId): CoreLawDefinition {
+   const law = CORE_LAWS.find((candidate) => candidate.id === id);
+   if (!law) {
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/runtime/src/freshness.ts /mnt/data/mbg-alpha3-merge/core/runtime/src/freshness.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/runtime/src/freshness.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/core/runtime/src/freshness.ts	2026-05-07 07:04:56.484904851 +0000
+@@ -0,0 +1,217 @@
++import { RuntimeSnapshot } from "../../state/src/types.js";
++
++export type FreshnessStatus = "unknown" | "fresh" | "stale" | "expired" | "unavailable";
++
++export type FreshnessDenyReason =
++  | "market_data_stale"
++  | "exchange_truth_stale"
++  | "connection_state_unknown"
++  | "freshness_unknown";
++
++export interface FreshnessConfig {
++  maxMarketAgeMs: number;
++  maxExchangeAgeMs: number;
++  maxConnectionAgeMs: number;
++}
++
++export interface FreshnessInputs {
++  lastMarketEventAt?: string | null;
++  lastBookTickerAt?: string | null;
++  lastExchangeReconcileAt?: string | null;
++  exchangeTruthStatus?: string | null;
++  lastConnectionHeartbeatAt?: string | null;
++  connectionStatus?: true | false | "unknown" | "stale" | null;
++  maxMarketAgeMs?: number;
++  maxExchangeAgeMs?: number;
++  maxConnectionAgeMs?: number;
++}
++
++export interface FreshnessCheck {
++  status: FreshnessStatus;
++  lastObservedAt?: string;
++  ageMs?: number;
++  maxAgeMs: number;
++  reason?: FreshnessDenyReason;
++}
++
++export interface FreshnessReport {
++  asOf: string;
++  marketDataFreshness: FreshnessCheck;
++  exchangeTruthFreshness: FreshnessCheck;
++  connectionFreshness: FreshnessCheck;
++  blockingReasons: FreshnessDenyReason[];
++  okForNormalTrading: boolean;
++}
++
++export const DEFAULT_FRESHNESS_CONFIG: FreshnessConfig = {
++  maxMarketAgeMs: Number(process.env.MBG_MAX_MARKET_AGE_MS ?? 15_000),
++  maxExchangeAgeMs: Number(process.env.MBG_MAX_EXCHANGE_AGE_MS ?? 60_000),
++  maxConnectionAgeMs: Number(process.env.MBG_MAX_CONNECTION_AGE_MS ?? 30_000)
++};
++
++function parseTimestamp(value: string | null | undefined): number | undefined {
++  if (value === null) return undefined;
++  if (typeof value !== "string" || value.trim().length === 0) return undefined;
++  const parsed = Date.parse(value);
++  return Number.isFinite(parsed) ? parsed : undefined;
++}
++
++function latestTimestamp(values: Array<string | null | undefined>): string | undefined {
++  let selected: { raw: string; ms: number } | undefined;
++  for (const value of values) {
++    const ms = parseTimestamp(value);
++    if (ms === undefined || typeof value !== "string") continue;
++    if (!selected || ms > selected.ms) selected = { raw: value, ms };
++  }
++  return selected?.raw;
++}
++
++function classifyTimestamp(
++  value: string | null | undefined,
++  nowMs: number,
++  maxAgeMs: number,
++  staleReason: FreshnessDenyReason,
++  unknownReason: FreshnessDenyReason = "freshness_unknown"
++): FreshnessCheck {
++  if (value === null) {
++    return { status: "unavailable", maxAgeMs, reason: staleReason };
++  }
++
++  const observedMs = parseTimestamp(value);
++  if (observedMs === undefined || typeof value !== "string") {
++    return { status: "unknown", maxAgeMs, reason: unknownReason };
++  }
++
++  const ageMs = nowMs - observedMs;
++
++  if (ageMs < 0) {
++    return {
++      status: "unknown",
++      lastObservedAt: value,
++      ageMs,
++      maxAgeMs,
++      reason: unknownReason
++    };
++  }
++
++  if (ageMs <= maxAgeMs) {
++    return {
++      status: "fresh",
++      lastObservedAt: value,
++      ageMs,
++      maxAgeMs
++    };
++  }
++
++  return {
++    status: ageMs > maxAgeMs * 2 ? "expired" : "stale",
++    lastObservedAt: value,
++    ageMs,
++    maxAgeMs,
++    reason: staleReason
++  };
++}
++
++export function collectFreshnessInputs(snapshot: RuntimeSnapshot): FreshnessInputs {
++  return {
++    lastMarketEventAt: snapshot.market.lastTickAt,
++    lastBookTickerAt: snapshot.market.bid !== undefined && snapshot.market.ask !== undefined ? snapshot.market.lastTickAt : undefined,
++    lastExchangeReconcileAt: snapshot.exchangeTruth.lastPositionReconcileAt ?? snapshot.exchangeTruth.lastAccountReconcileAt ?? snapshot.exchangeTruth.lastOrderReconcileAt ?? snapshot.exchangeTruth.lastFillSyncAt,
++    exchangeTruthStatus: snapshot.exchangeTruth.status,
++    lastConnectionHeartbeatAt: snapshot.system.lastConnectionHeartbeatAt,
++    maxMarketAgeMs: DEFAULT_FRESHNESS_CONFIG.maxMarketAgeMs,
++    maxExchangeAgeMs: DEFAULT_FRESHNESS_CONFIG.maxExchangeAgeMs,
++    maxConnectionAgeMs: DEFAULT_FRESHNESS_CONFIG.maxConnectionAgeMs
++  };
++}
++
++export function calculateFreshness(
++  inputs: FreshnessInputs,
++  options: { now: string | Date; config?: Partial<FreshnessConfig> }
++): FreshnessReport {
++  const nowMs = options.now instanceof Date ? options.now.getTime() : Date.parse(options.now);
++  if (!Number.isFinite(nowMs)) {
++    throw new Error(`Invalid freshness evaluation timestamp: ${String(options.now)}`);
++  }
++
++  const config: FreshnessConfig = {
++    ...DEFAULT_FRESHNESS_CONFIG,
++    ...options.config,
++    maxMarketAgeMs: inputs.maxMarketAgeMs ?? options.config?.maxMarketAgeMs ?? DEFAULT_FRESHNESS_CONFIG.maxMarketAgeMs,
++    maxExchangeAgeMs: inputs.maxExchangeAgeMs ?? options.config?.maxExchangeAgeMs ?? DEFAULT_FRESHNESS_CONFIG.maxExchangeAgeMs,
++    maxConnectionAgeMs: inputs.maxConnectionAgeMs ?? options.config?.maxConnectionAgeMs ?? DEFAULT_FRESHNESS_CONFIG.maxConnectionAgeMs
++  };
++
++  const marketObservedAt = latestTimestamp([inputs.lastMarketEventAt, inputs.lastBookTickerAt]);
++
++  const marketDataFreshness = classifyTimestamp(
++    marketObservedAt,
++    nowMs,
++    config.maxMarketAgeMs,
++    "market_data_stale",
++    "freshness_unknown"
++  );
++
++  const exchangeTruthFreshness =
++    inputs.exchangeTruthStatus && inputs.exchangeTruthStatus !== "fresh"
++      ? {
++          status: inputs.exchangeTruthStatus === "unavailable" ? "unavailable" : inputs.exchangeTruthStatus === "stale" ? "stale" : "unknown",
++          maxAgeMs: config.maxExchangeAgeMs,
++          reason: inputs.exchangeTruthStatus === "stale" ? "exchange_truth_stale" : "exchange_truth_stale"
++        } as FreshnessCheck
++      : classifyTimestamp(
++          inputs.lastExchangeReconcileAt,
++          nowMs,
++          config.maxExchangeAgeMs,
++          "exchange_truth_stale",
++          "freshness_unknown"
++        );
++
++  const connectionFreshness =
++    inputs.connectionStatus === true
++      ? classifyTimestamp(
++          inputs.lastConnectionHeartbeatAt,
++          nowMs,
++          config.maxConnectionAgeMs,
++          "connection_state_unknown",
++          "connection_state_unknown"
++        )
++      : inputs.connectionStatus === false || inputs.connectionStatus === "unknown" || inputs.connectionStatus === "stale"
++        ? {
++            status: inputs.connectionStatus === "stale" ? "stale" : "unknown",
++            maxAgeMs: config.maxConnectionAgeMs,
++            reason: "connection_state_unknown"
++          } as FreshnessCheck
++        : classifyTimestamp(
++            inputs.lastConnectionHeartbeatAt,
++            nowMs,
++            config.maxConnectionAgeMs,
++            "connection_state_unknown",
++            "connection_state_unknown"
++          );
++
++  const blockingReasons = [
++    marketDataFreshness.reason,
++    exchangeTruthFreshness.reason,
++    connectionFreshness.reason
++  ].filter((reason): reason is FreshnessDenyReason => Boolean(reason));
++
++  return {
++    asOf: new Date(nowMs).toISOString(),
++    marketDataFreshness,
++    exchangeTruthFreshness,
++    connectionFreshness,
++    blockingReasons: Array.from(new Set(blockingReasons)),
++    okForNormalTrading:
++      marketDataFreshness.status === "fresh" &&
++      exchangeTruthFreshness.status === "fresh" &&
++      connectionFreshness.status === "fresh"
++  };
++}
++
++export function calculateSnapshotFreshness(
++  snapshot: RuntimeSnapshot,
++  options: { now: string | Date; config?: Partial<FreshnessConfig> }
++): FreshnessReport {
++  return calculateFreshness(collectFreshnessInputs(snapshot), options);
++}
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/runtime/src/runtime-engine.ts /mnt/data/mbg-alpha3-merge/core/runtime/src/runtime-engine.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/runtime/src/runtime-engine.ts	2026-05-07 08:32:42.399730599 +0000
++++ /mnt/data/mbg-alpha3-merge/core/runtime/src/runtime-engine.ts	2026-05-07 08:13:51.004326724 +0000
+@@ -1,13 +1,14 @@
+ import { DomainEvent, EVENT_TYPE, makeEvent, MarketTickPayload, SignalPayload } from "../../contracts/src/events.js";
+ import { ActionRequest, ACTION_TYPE, GateDecision } from "../../contracts/src/actions.js";
+ import { initialSnapshot, RuntimeSnapshot } from "../../state/src/types.js";
+-import { reduceBootstrapState, reduceMarketState, reduceTradeState, reduceOrderState, reducePositionState, reduceRiskState, reduceSystemState } from "../../transitions/src/reducers.js";
++import { reduceBootstrapState, reduceExchangeTruthState, reduceMarketState, reduceTradeState, reduceOrderState, reducePositionState, reduceRiskState, reduceSystemState } from "../../transitions/src/reducers.js";
+ import { validateDomainEvent, type DomainEventValidationRejected } from "../../events/validate-domain-event.js";
+ import { ActionGate } from "../../gates/src/action-gate.js";
+ import { FileRuntimePersistence } from "./persistence.js";
+ import { EventIdempotencyIndex, type IdempotencyDiagnostic } from "./idempotency.js";
++import { calculateFreshness, DEFAULT_FRESHNESS_CONFIG } from "./freshness.js";
+ 
+-type StateDomain = "bootstrap" | "market" | "trade" | "order" | "position" | "risk" | "system";
++type StateDomain = "bootstrap" | "exchangeTruth" | "market" | "trade" | "order" | "position" | "risk" | "system";
+ 
+ export interface TransitionTrace {
+   transitionId: string;
+@@ -81,6 +82,82 @@
+   diagnostic: IdempotencyDiagnostic;
+ }
+ 
++export type ConnectionTruthStatus = true | false | "unknown" | "stale";
++
++export interface ConnectionTruth {
++  status: ConnectionTruthStatus;
++  observedAt?: string;
++  sourceEventId?: string;
++  reason?: string;
++}
++
++export interface HealthTruthSnapshot {
++  [key: string]: unknown;
++  systemState: RuntimeSnapshot["system"]["status"];
++  wsConnected: ConnectionTruthStatus;
++  connections: {
++    websocket: ConnectionTruth;
++  };
++  healthTruthComplete: boolean;
++  healthTruthDiagnostics: string[];
++  reconcileFresh: boolean | "unknown";
++  positionMatchesFills: boolean | "unknown";
++  openOrders: number;
++  unknownOrders: number;
++  driftDetected: boolean;
++  reconcileLatencyMs: number;
++  wsReconnects: number | "unknown";
++  timestamp: string;
++}
++
++const CONNECTION_STATUS_TTL_MS = Number(process.env.MBG_HEALTH_CONNECTION_STATUS_TTL_MS ?? 30000);
++
++function connectionStatusFromHealthEvent(event: DomainEvent): ConnectionTruth | undefined {
++  if (event.eventType !== EVENT_TYPE.SYSTEM_HEALTH_CHANGED) return undefined;
++
++  const payload: any = event.payload ?? {};
++  const target = String(payload.connection ?? payload.channel ?? payload.component ?? "").toLowerCase();
++  const hasExplicitWsTruth = Object.prototype.hasOwnProperty.call(payload, "wsConnected")
++    || Object.prototype.hasOwnProperty.call(payload, "connectionState")
++    || Object.prototype.hasOwnProperty.call(payload, "connected");
++
++  if (target && !["ws", "websocket", "exchange_ws", "exchange-websocket"].includes(target)) return undefined;
++  if (!target && !hasExplicitWsTruth) return undefined;
++
++  const rawStatus = String(payload.wsConnected ?? payload.connected ?? payload.connectionState ?? payload.status ?? payload.state ?? "").toLowerCase();
++  let status: true | false | "unknown";
++  if (payload.wsConnected === true || payload.connected === true || ["connected", "true", "up", "open", "healthy"].includes(rawStatus)) status = true;
++  else if (payload.wsConnected === false || payload.connected === false || ["disconnected", "false", "down", "closed", "unhealthy"].includes(rawStatus)) status = false;
++  else if (payload.wsConnected === "unknown" || ["unknown", "degraded", "partial"].includes(rawStatus)) status = "unknown";
++  else return undefined;
++
++  return {
++    status,
++    observedAt: event.timestamp,
++    sourceEventId: event.eventId,
++    reason: typeof payload.reason === "string" ? payload.reason : undefined
++  };
++}
++
++function normalizeConnectionTruth(connection?: ConnectionTruth): ConnectionTruth {
++  if (!connection) return { status: "unknown", reason: "ws_status_unknown" };
++
++  if (connection.status === true || connection.status === false) {
++    const observedMs = connection.observedAt ? Date.parse(connection.observedAt) : NaN;
++    if (!Number.isFinite(observedMs)) {
++      return { ...connection, status: "unknown", reason: connection.reason ?? "ws_status_unknown" };
++    }
++
++    if (Date.now() - observedMs > CONNECTION_STATUS_TTL_MS) {
++      return { ...connection, status: "stale", reason: "connection_state_stale" };
++    }
++  }
++
++  return connection;
++}
++
++
++
+ export interface RuntimeMetrics {
+   startedAt: string;
+   uptimeMs: number;
+@@ -125,13 +202,17 @@
+   const nextPosition = reducePositionState(prev.position, event);
+   const temp2: RuntimeSnapshot = { ...temp1, order: nextOrder, position: nextPosition };
+ 
+-  const nextRisk = reduceRiskState(prev.risk, event, temp2);
+-  const temp3: RuntimeSnapshot = { ...temp2, risk: nextRisk };
++  const nextExchangeTruth = reduceExchangeTruthState(prev.exchangeTruth, event, temp2);
++  const tempExchange: RuntimeSnapshot = { ...temp2, exchangeTruth: nextExchangeTruth };
++
++  const nextRisk = reduceRiskState(prev.risk, event, tempExchange);
++  const temp3: RuntimeSnapshot = { ...tempExchange, risk: nextRisk };
+ 
+   const nextSystem = reduceSystemState(prev.system, event, temp3);
+ 
+   return {
+     bootstrap: nextBootstrap,
++    exchangeTruth: nextExchangeTruth,
+     market: nextMarket,
+     trade: nextTrade,
+     order: nextOrder,
+@@ -150,6 +231,7 @@
+ function makeTrace(cur: RuntimeSnapshot, next: RuntimeSnapshot, event: DomainEvent): TransitionTrace {
+   const domains = {
+     bootstrap: domainTrace("bootstrap", cur.bootstrap, next.bootstrap),
++    exchangeTruth: domainTrace("exchangeTruth", cur.exchangeTruth, next.exchangeTruth),
+     market: domainTrace("market", cur.market, next.market),
+     trade: domainTrace("trade", cur.trade, next.trade),
+     order: domainTrace("order", cur.order, next.order),
+@@ -187,6 +269,7 @@
+   return {
+     ...snapshot,
+     bootstrap: normalizeMeta(snapshot.bootstrap),
++    exchangeTruth: normalizeMeta(snapshot.exchangeTruth),
+     market: normalizeMeta(snapshot.market),
+     trade: normalizeMeta(snapshot.trade),
+     order: normalizeMeta(snapshot.order),
+@@ -260,29 +343,71 @@
+   private uncertaintyTransitionCount = 0;
+   private gateTransitionCount = 0;
+   private persistence = new FileRuntimePersistence();
++  private websocketTruth?: ConnectionTruth;
+ 
+   constructor() {
+     this.recoverFromDisk();
+   }
+-  
+-  getHealthSnapshot() {
+-  const metrics = this.getMetrics();
+ 
+-  return {
+-    systemState: this.snapshot.system.status,
+-    wsConnected: true, // TODO: hook real ws state 
+-    reconcileFresh: (metrics.timeSinceLastCommitMs ?? 0) < 15000,
+-    positionMatchesFills: this.snapshot.position.status !== "unknown",
+-    openOrders: this.snapshot.order.status === "pending" ? 1 : 0,
+-    unknownOrders: this.snapshot.order.status === "uncertain" ? 1 : 0,
+-    driftDetected:
+-      this.snapshot.position.status === "unknown" ||
+-      this.snapshot.order.status === "uncertain",
+-    reconcileLatencyMs: metrics.commitLatencyMs.last,
+-    wsReconnects: 0,
+-    timestamp: new Date().toISOString()
+-  };
+-}
++  getHealthSnapshot(): HealthTruthSnapshot {
++    const metrics = this.getMetrics();
++    const websocket = normalizeConnectionTruth(this.websocketTruth);
++    const diagnostics = new Set<string>();
++
++    if (websocket.status === "unknown") {
++      diagnostics.add("connection_state_unknown");
++      diagnostics.add("ws_status_unknown");
++    }
++    if (websocket.status === "stale") diagnostics.add("connection_state_stale");
++    if (this.snapshot.exchangeTruth.status !== "fresh") diagnostics.add(this.snapshot.exchangeTruth.reason ?? `exchange_truth_${this.snapshot.exchangeTruth.status}`);
++
++    const reconcileFresh: boolean | "unknown" =
++      this.snapshot.exchangeTruth.status === "fresh"
++        ? true
++        : this.snapshot.exchangeTruth.status === "unknown"
++          ? "unknown"
++          : false;
++    if (reconcileFresh === "unknown") diagnostics.add("health_truth_partial");
++
++    const positionMatchesFills: boolean | "unknown" =
++      this.snapshot.position.status === "unknown"
++        ? "unknown"
++        : this.snapshot.exchangeTruth.status === "conflicted"
++          ? false
++          : true;
++    if (positionMatchesFills === "unknown") diagnostics.add("health_truth_partial");
++
++    if (websocket.status === false) diagnostics.add("connection_state_disconnected");
++    if (websocket.status === "unknown" || websocket.status === "stale" || websocket.status === false) diagnostics.add("health_truth_partial");
++
++    const healthTruthComplete = diagnostics.size === 0;
++    const systemState: RuntimeSnapshot["system"]["status"] =
++      !healthTruthComplete || websocket.status !== true
++        ? (this.snapshot.system.status === "halted" ? "halted" : "degraded")
++        : this.snapshot.system.status;
++
++    return {
++      systemState,
++      wsConnected: websocket.status,
++      connections: { websocket },
++      healthTruthComplete,
++      healthTruthDiagnostics: Array.from(diagnostics).sort(),
++      reconcileFresh,
++      positionMatchesFills,
++      openOrders: this.snapshot.order.status === "pending" ? 1 : 0,
++      unknownOrders: this.snapshot.order.status === "uncertain" ? 1 : 0,
++      driftDetected:
++        this.snapshot.position.status === "unknown" ||
++        this.snapshot.order.status === "uncertain" ||
++        this.snapshot.exchangeTruth.status === "conflicted" ||
++        this.snapshot.exchangeTruth.status === "unavailable" ||
++        websocket.status === "unknown" ||
++        websocket.status === "stale",
++      reconcileLatencyMs: metrics.commitLatencyMs.last,
++      wsReconnects: "unknown",
++      timestamp: new Date().toISOString()
++    };
++  }
+ 
+   private recordIdempotencyDiagnostic(diagnostic: IdempotencyDiagnostic) {
+     this.idempotencyDiagnostics.push(diagnostic);
+@@ -306,6 +431,9 @@
+ 
+     this.idempotencyIndex.recordAccepted(event);
+ 
++    const connectionTruth = connectionStatusFromHealthEvent(event);
++    if (connectionTruth) this.websocketTruth = connectionTruth;
++
+     this.events.push(event);
+     if (this.events.length > 5000) {
+       const removed = this.events.shift();
+@@ -580,6 +708,7 @@
+     this.idempotencyDiagnostics = [];
+     this.duplicateEventCount = 0;
+     this.idempotencyConflictCount = 0;
++    this.websocketTruth = undefined;
+     return this.getRuntimeView();
+   }
+ 
+@@ -592,7 +721,7 @@
+   }
+ 
+   dispatchAction(action: ActionRequest) {
+-    const decision = this.gate.evaluate(action, this.snapshot);
++    const decision = this.gate.evaluate(action, this.snapshot, { enforceFreshness: true, now: new Date(), freshness: this.getFreshness(new Date()), freshnessConfig: DEFAULT_FRESHNESS_CONFIG });
+     this.gateTransitionCount += 1;
+     this.decisions.push(decision);
+     if (this.decisions.length > 500) this.decisions.shift();
+@@ -650,9 +779,30 @@
+     return this.getMetrics();
+   }
+ 
++
++  getFreshness(now: string | Date = new Date()) {
++    const health = this.getHealthSnapshot();
++    return calculateFreshness({
++      lastMarketEventAt: this.snapshot.market.lastTickAt,
++      lastBookTickerAt: this.snapshot.market.bid !== undefined && this.snapshot.market.ask !== undefined ? this.snapshot.market.lastTickAt : undefined,
++      lastExchangeReconcileAt: this.snapshot.exchangeTruth.lastPositionReconcileAt ?? this.snapshot.exchangeTruth.lastAccountReconcileAt ?? this.snapshot.exchangeTruth.lastOrderReconcileAt ?? this.snapshot.exchangeTruth.lastFillSyncAt,
++      exchangeTruthStatus: this.snapshot.exchangeTruth.status,
++      lastConnectionHeartbeatAt: health.connections.websocket.observedAt ?? this.snapshot.system.lastConnectionHeartbeatAt,
++      connectionStatus: health.connections.websocket.status,
++      maxMarketAgeMs: DEFAULT_FRESHNESS_CONFIG.maxMarketAgeMs,
++      maxExchangeAgeMs: DEFAULT_FRESHNESS_CONFIG.maxExchangeAgeMs,
++      maxConnectionAgeMs: DEFAULT_FRESHNESS_CONFIG.maxConnectionAgeMs
++    }, {
++      now,
++      config: DEFAULT_FRESHNESS_CONFIG
++    });
++  }
++
+   getPermissions() {
+-    const actions = this.gate.evaluateAll(this.snapshot);
+-    const permissions = { snapshotRevision: this.snapshot.revision, tradingAllowed: actions.place_order.decision === "allow", actions };
++    const now = new Date();
++    const freshness = this.getFreshness(now);
++    const actions = this.gate.evaluateAll(this.snapshot, { enforceFreshness: true, now, freshness, freshnessConfig: DEFAULT_FRESHNESS_CONFIG });
++    const permissions = { snapshotRevision: this.snapshot.revision, tradingAllowed: actions.place_order.decision === "allow", freshness, actions };
+     this.gateTransitionCount += Object.values(permissions.actions).length;
+     this.decisions.push(...Object.values(permissions.actions));
+     if (this.decisions.length > 500) this.decisions = this.decisions.slice(-500);
+@@ -660,7 +810,7 @@
+   }
+ 
+   evaluateAction(action: ActionRequest) {
+-    const decision = this.gate.evaluate(action, this.snapshot);
++    const decision = this.gate.evaluate(action, this.snapshot, { enforceFreshness: true, now: new Date(), freshness: this.getFreshness(new Date()), freshnessConfig: DEFAULT_FRESHNESS_CONFIG });
+     this.gateTransitionCount += 1;
+     this.decisions.push(decision);
+     if (this.decisions.length > 500) this.decisions.shift();
+@@ -718,6 +868,7 @@
+       decisionCount: this.decisions.length,
+       stateDomains: {
+         bootstrap: this.snapshot.bootstrap.status,
++        exchangeTruth: this.snapshot.exchangeTruth.status,
+         market: this.snapshot.market.status,
+         trade: this.snapshot.trade.status,
+         order: this.snapshot.order.status,
+@@ -735,6 +886,7 @@
+       currentState: this.snapshot,
+       stateDomains: {
+         BootstrapState: this.snapshot.bootstrap,
++        ExchangeTruthState: this.snapshot.exchangeTruth,
+         MarketState: this.snapshot.market,
+         TradeState: this.snapshot.trade,
+         OrderState: this.snapshot.order,
+@@ -793,6 +945,16 @@
+         details: `bootstrap.status=${s.bootstrap.status}, place_order_reason=${this.gate.evaluateAll(s).place_order.reason ?? "none"}`
+       },
+       {
++        name: "exchange_truth_blocks_place_order_until_fresh",
++        ok: s.exchangeTruth.status === "fresh" || this.gate.evaluateAll(s).place_order.decision === "deny",
++        details: `exchangeTruth.status=${s.exchangeTruth.status}, place_order=${this.gate.evaluateAll(s).place_order.decision}`
++      },
++      {
++        name: "risk_blocks_non_fresh_exchange_truth",
++        ok: s.exchangeTruth.status === "fresh" || s.risk.status === "blocked",
++        details: `exchangeTruth.status=${s.exchangeTruth.status}, risk.status=${s.risk.status}`
++      },
++      {
+         name: "risk_blocks_unknown_position",
+         ok: s.position.status !== "unknown" || s.risk.status === "blocked",
+         details: `position.status=${s.position.status}, risk.status=${s.risk.status}`
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/state/src/types.ts /mnt/data/mbg-alpha3-merge/core/state/src/types.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/state/src/types.ts	2026-05-07 08:32:42.401492575 +0000
++++ /mnt/data/mbg-alpha3-merge/core/state/src/types.ts	2026-05-07 07:04:56.397286961 +0000
+@@ -1,4 +1,4 @@
+-export type DomainStatus = "unknown" | "idle" | "open" | "closed" | "ready" | "pending" | "flat" | "clear" | "blocked" | "healthy" | "degraded" | "halted" | "uncertain" | "reconcile";
++export type DomainStatus = "unknown" | "idle" | "open" | "closed" | "ready" | "pending" | "flat" | "clear" | "blocked" | "healthy" | "degraded" | "halted" | "uncertain" | "reconcile" | "fresh" | "stale" | "conflicted" | "unavailable";
+ 
+ export type BootstrapStatus =
+   | "cold"
+@@ -15,6 +15,41 @@
+   meta: StateMeta;
+ }
+ 
++export type ExchangeTruthStatus =
++  | "unknown"
++  | "fresh"
++  | "stale"
++  | "conflicted"
++  | "unavailable";
++
++export interface ExchangeTruthDrift {
++  positionQuantity?: number;
++  positionExposure?: number;
++  orderCount?: number;
++  fillCount?: number;
++  [key: string]: number | string | boolean | undefined;
++}
++
++export interface ExchangeTruthConflict {
++  code: string;
++  local?: string;
++  exchange?: string;
++  details?: string;
++}
++
++export interface ExchangeTruthState {
++  status: ExchangeTruthStatus;
++  lastAccountReconcileAt?: string;
++  lastPositionReconcileAt?: string;
++  lastOrderReconcileAt?: string;
++  lastFillSyncAt?: string;
++  source?: string;
++  drift: ExchangeTruthDrift;
++  conflicts: ExchangeTruthConflict[];
++  reason?: string;
++  meta: StateMeta;
++}
++
+ export interface StateMeta {
+   revision: number;
+   updatedAt: string;
+@@ -83,11 +118,13 @@
+   status: "bootstrapping" | "healthy" | "degraded" | "halted";
+   reasons: string[];
+   startedAt: string;
++  lastConnectionHeartbeatAt?: string;
+   meta: StateMeta;
+ }
+ 
+ export interface RuntimeSnapshot {
+   bootstrap: BootstrapState;
++  exchangeTruth: ExchangeTruthState;
+   market: MarketState;
+   trade: TradeState;
+   order: OrderState;
+@@ -109,6 +146,13 @@
+       reasons: ["bootstrap_not_reconciled"],
+       meta: { revision: 0, updatedAt: t }
+     },
++    exchangeTruth: {
++      status: "unknown",
++      drift: {},
++      conflicts: [],
++      reason: "exchange_truth_unknown",
++      meta: { revision: 0, updatedAt: t }
++    },
+     market: { status: "unknown", meta: { revision: 0, updatedAt: t } },
+     trade: { status: "idle", meta: { revision: 0, updatedAt: t } },
+     order: { status: "none", filledQuantity: 0, meta: { revision: 0, updatedAt: t } },
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/transitions/src/reducers.ts /mnt/data/mbg-alpha3-merge/core/transitions/src/reducers.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/core/transitions/src/reducers.ts	2026-05-07 08:32:42.410732232 +0000
++++ /mnt/data/mbg-alpha3-merge/core/transitions/src/reducers.ts	2026-05-07 07:04:56.482731141 +0000
+@@ -1,5 +1,5 @@
+-import { DomainEvent, EVENT_TYPE, MarketTickPayload, SignalPayload } from "../../contracts/src/events.js";
+-import { RuntimeSnapshot, BootstrapState, MarketState, TradeState, OrderState, PositionState, RiskState, SystemState } from "../../state/src/types.js";
++import { DomainEvent, EVENT_TYPE, ExchangeTruthPayload, MarketTickPayload, SignalPayload } from "../../contracts/src/events.js";
++import { RuntimeSnapshot, BootstrapState, ExchangeTruthState, MarketState, TradeState, OrderState, PositionState, RiskState, SystemState } from "../../state/src/types.js";
+ 
+ function meta(prevRev: number, event: DomainEvent) {
+   return { revision: prevRev + 1, updatedAt: event.timestamp, sourceEventId: event.eventId };
+@@ -81,6 +81,128 @@
+   return prev;
+ }
+ 
++
++function exchangeTruthBlockReason(status: ExchangeTruthState["status"]) {
++  if (status === "fresh") return undefined;
++  if (status === "stale") return "exchange_truth_stale";
++  if (status === "conflicted") return "exchange_truth_conflicted";
++  if (status === "unavailable") return "exchange_truth_unavailable";
++  return "exchange_truth_unknown";
++}
++
++function toIso(value: unknown, fallback: string) {
++  return typeof value === "string" && !Number.isNaN(Date.parse(value)) ? value : fallback;
++}
++
++function payloadConflicts(payload: ExchangeTruthPayload | any) {
++  return Array.isArray(payload.conflicts) ? payload.conflicts : [];
++}
++
++function payloadDrift(payload: ExchangeTruthPayload | any) {
++  return payload.drift && typeof payload.drift === "object" && !Array.isArray(payload.drift) ? payload.drift : {};
++}
++
++function positionConflictFromPayload(ctx: RuntimeSnapshot, payload: ExchangeTruthPayload | any) {
++  const exchangeStatus = payload.exchangePositionStatus;
++  const localStatus = payload.localPositionStatus ?? ctx.position.status;
++  const exchangeQuantity = Number(payload.exchangePositionQuantity ?? 0);
++  const exchangeOpen = exchangeStatus === "open" || Math.abs(exchangeQuantity) > 0;
++  const localFlat = localStatus === "flat" || (ctx.position.status === "flat" && Math.abs(Number(ctx.position.quantity ?? 0)) === 0);
++
++  if (localFlat && exchangeOpen) {
++    return {
++      code: "local_flat_exchange_open",
++      local: "flat",
++      exchange: "open",
++      details: "local position is flat while exchange reports an open position"
++    };
++  }
++
++  return undefined;
++}
++
++export function reduceExchangeTruthState(prev: ExchangeTruthState, event: DomainEvent, ctx: RuntimeSnapshot): ExchangeTruthState {
++  const p = (event.payload ?? {}) as ExchangeTruthPayload | any;
++  const t = event.timestamp;
++  const base = {
++    lastAccountReconcileAt: prev.lastAccountReconcileAt,
++    lastPositionReconcileAt: prev.lastPositionReconcileAt,
++    lastOrderReconcileAt: prev.lastOrderReconcileAt,
++    lastFillSyncAt: prev.lastFillSyncAt,
++    source: p.source ?? event.source ?? prev.source,
++    drift: payloadDrift(p),
++    conflicts: payloadConflicts(p),
++    reason: p.reason ?? prev.reason,
++    meta: meta(prev.meta.revision, event)
++  };
++
++  if (event.eventType === EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_STARTED) {
++    return {
++      ...prev,
++      source: p.source ?? event.source ?? prev.source,
++      reason: p.reason ?? "exchange_truth_reconcile_started",
++      meta: meta(prev.meta.revision, event)
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED) {
++    const derivedConflict = positionConflictFromPayload(ctx, p);
++    const conflicts = derivedConflict ? [...payloadConflicts(p), derivedConflict] : payloadConflicts(p);
++    const status = conflicts.length > 0 ? "conflicted" : "fresh";
++    return {
++      status,
++      lastAccountReconcileAt: toIso(p.lastAccountReconcileAt, t),
++      lastPositionReconcileAt: toIso(p.lastPositionReconcileAt, t),
++      lastOrderReconcileAt: toIso(p.lastOrderReconcileAt, t),
++      lastFillSyncAt: toIso(p.lastFillSyncAt, t),
++      source: p.source ?? event.source ?? "exchange_reconcile",
++      drift: payloadDrift(p),
++      conflicts,
++      reason: status === "conflicted" ? "exchange_truth_conflicted" : undefined,
++      meta: meta(prev.meta.revision, event)
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_FAILED) {
++    return {
++      ...base,
++      status: "unavailable",
++      reason: p.reason ?? "exchange_truth_reconcile_failed"
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.EXCHANGE_TRUTH_STALE_DETECTED) {
++    return {
++      ...base,
++      status: "stale",
++      reason: p.reason ?? "exchange_truth_stale"
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.EXCHANGE_TRUTH_CONFLICT_DETECTED) {
++    const derivedConflict = positionConflictFromPayload(ctx, p);
++    const conflicts = derivedConflict ? [...payloadConflicts(p), derivedConflict] : payloadConflicts(p);
++    return {
++      ...base,
++      status: "conflicted",
++      conflicts: conflicts.length ? conflicts : [{ code: "exchange_truth_conflict", details: p.reason ?? "exchange truth conflict detected" }],
++      reason: p.reason ?? "exchange_truth_conflicted"
++    };
++  }
++
++  if (event.eventType === EVENT_TYPE.EXCHANGE_TRUTH_UNAVAILABLE_DETECTED) {
++    return {
++      ...base,
++      status: "unavailable",
++      reason: p.reason ?? "exchange_truth_unavailable"
++    };
++  }
++
++  return prev;
++}
++
++export { exchangeTruthBlockReason };
++
+ export function reduceMarketState(prev: MarketState, event: DomainEvent): MarketState {
+   if (event.eventType !== EVENT_TYPE.MARKET_TICK_RECEIVED) return prev;
+   const p = event.payload as MarketTickPayload;
+@@ -260,6 +382,10 @@
+     const reason = bootstrapReason(ctx.bootstrap.status);
+     if (reason) reasons.push(reason);
+   }
++  if (ctx.exchangeTruth.status !== "fresh") {
++    const reason = exchangeTruthBlockReason(ctx.exchangeTruth.status);
++    if (reason) reasons.push(reason);
++  }
+   if (ctx.market.status !== "open") reasons.push("market_not_open");
+   if (ctx.order.status === "uncertain") reasons.push("order_uncertain");
+   if (ctx.position.status === "unknown") {
+@@ -285,6 +411,34 @@
+       status: "halted",
+       reasons: [String(p.reason ?? "system_halted")],
+       startedAt: prev.startedAt,
++      lastConnectionHeartbeatAt: prev.lastConnectionHeartbeatAt,
++      meta: { revision: prev.meta.revision + 1, updatedAt: t, sourceEventId: event.eventId }
++    };
++  }
++
++
++  if (event.eventType === EVENT_TYPE.SYSTEM_HEALTH_CHANGED) {
++    const p: any = event.payload ?? {};
++    const connectionState = String(p.connectionState ?? p.status ?? p.state ?? "").toLowerCase();
++    const wsConnected = p.wsConnected ?? p.connected;
++    const isConnected = wsConnected === true || ["connected", "true", "up", "open"].includes(connectionState);
++    const isDisconnected = wsConnected === false || ["disconnected", "false", "down", "closed"].includes(connectionState);
++    const isUnknown = wsConnected === "unknown" || connectionState === "unknown";
++    const lastConnectionHeartbeatAt =
++      typeof p.lastConnectionHeartbeatAt === "string"
++        ? p.lastConnectionHeartbeatAt
++        : typeof p.heartbeatAt === "string"
++          ? p.heartbeatAt
++          : typeof p.receivedAt === "string" && isConnected
++            ? p.receivedAt
++            : isConnected
++              ? event.timestamp
++              : prev.lastConnectionHeartbeatAt;
++    const reasons = isDisconnected || isUnknown ? Array.from(new Set([...prev.reasons, "connection_state_unknown"])) : prev.reasons;
++    return {
++      ...prev,
++      reasons,
++      lastConnectionHeartbeatAt,
+       meta: { revision: prev.meta.revision + 1, updatedAt: t, sourceEventId: event.eventId }
+     };
+   }
+@@ -296,8 +450,12 @@
+   const reasons: string[] = [];
+   if (ctx.bootstrap.status === "failed") reasons.push("bootstrap_failed");
+   else if (ctx.bootstrap.status !== "reconciled") reasons.push(bootstrapReason(ctx.bootstrap.status) ?? "bootstrap_not_reconciled");
++  if (ctx.exchangeTruth.status !== "fresh") {
++    const reason = exchangeTruthBlockReason(ctx.exchangeTruth.status);
++    if (reason) reasons.push(reason);
++  }
+   if (ctx.risk.status === "blocked") reasons.push("risk_blocked");
+   if (ctx.market.status === "unknown") reasons.push("market_unknown");
+   const status = ctx.bootstrap.status === "failed" ? "halted" : reasons.length ? "degraded" : "healthy";
+-  return { status, reasons, startedAt: prev.startedAt, meta: { revision: prev.meta.revision + 1, updatedAt: t } };
++  return { status, reasons, startedAt: prev.startedAt, lastConnectionHeartbeatAt: prev.lastConnectionHeartbeatAt, meta: { revision: prev.meta.revision + 1, updatedAt: t } };
+ }
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/package-lock.json /mnt/data/mbg-alpha3-merge/package-lock.json
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/package-lock.json	2026-05-07 08:32:42.278895125 +0000
++++ /mnt/data/mbg-alpha3-merge/package-lock.json	2026-05-07 08:32:30.701303908 +0000
+@@ -1,12 +1,12 @@
+ {
+-  "name": "mbg-core-v0.1-alpha2",
+-  "version": "1.0.2",
++  "name": "mbg-core-v0.1-alpha3",
++  "version": "1.0.3",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+-      "name": "mbg-core-v0.1-alpha2",
+-      "version": "1.0.2",
++      "name": "mbg-core-v0.1-alpha3",
++      "version": "1.0.3",
+       "dependencies": {
+         "cors": "^2.8.5",
+         "dotenv": "^16.4.5",
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/package.json /mnt/data/mbg-alpha3-merge/package.json
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/package.json	2026-05-07 08:32:42.210622370 +0000
++++ /mnt/data/mbg-alpha3-merge/package.json	2026-05-07 08:29:46.178251564 +0000
+@@ -1,6 +1,6 @@
+ {
+-  "name": "mbg-core-v0.1-alpha2",
+-  "version": "1.0.2",
++  "name": "mbg-core-v0.1-alpha3",
++  "version": "1.0.3",
+   "type": "module",
+   "scripts": {
+     "dev": "tsx apps/runtime-api/src/server.ts",
+@@ -21,7 +21,7 @@
+     "test:pr33:pnl": "npm run typecheck && tsx tests/scenarios/pr33-pnl-engine.ts",
+     "test:pr33.2:pnl-hardening": "npm run typecheck && tsx tests/scenarios/pr33-2-pnl-hardening.ts",
+     "test:pr35:metadata": "npm run typecheck && tsx tests/scenarios/pr35-metadata-pipeline.ts",
+-    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && npm run test:core:cold-start && npm run test:core:bootstrap && npm run test:core:event-validation && npm run test:core:idempotency && npm run test:wave2:scenario-audit && npm run audit:runtime",
++    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && npm run test:core:cold-start && npm run test:core:bootstrap && npm run test:core:event-validation && npm run test:core:idempotency && npm run test:wave2:scenario-audit && npm run test:core:exchange-truth && npm run test:core:freshness && npm run test:core:health-truth && npm run test:wave3:scenario-audit && npm run audit:runtime",
+     "reset:runtime": "node -e \"const fs=require('node:fs'); fs.rmSync('data/runtime',{recursive:true,force:true}); fs.rmSync('data/journal',{recursive:true,force:true}); fs.mkdirSync('data/runtime/events',{recursive:true}); fs.mkdirSync('data/runtime/transitions',{recursive:true}); fs.mkdirSync('data/journal',{recursive:true}); fs.writeFileSync('data/journal/.gitkeep', ''); console.log('runtime state reset: data/runtime and data/journal recreated empty')\"",
+     "core:status": "PERSISTENCE_ENABLED=false tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.getRuntimeView(), null, 2));\"",
+     "replay:check": "tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.replayCheck(), null, 2));\"",
+@@ -30,7 +30,11 @@
+     "test:core:bootstrap": "npm run typecheck && tsx tests/scenarios/bootstrap-fsm.ts",
+     "test:core:event-validation": "npm run typecheck && tsx tests/scenarios/core-event-validation.ts",
+     "test:core:idempotency": "npm run typecheck && tsx tests/scenarios/core-idempotency.ts",
+-    "test:wave2:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave2-scenario-audit.ts"
++    "test:wave2:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave2-scenario-audit.ts",
++    "test:core:exchange-truth": "npm run typecheck && tsx tests/scenarios/exchange-truth.ts",
++    "test:core:freshness": "npm run typecheck && tsx tests/scenarios/core-freshness.ts",
++    "test:core:health-truth": "npm run typecheck && tsx tests/scenarios/core-health-truth.ts",
++    "test:wave3:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave3-scenario-audit.ts"
+   },
+   "dependencies": {
+     "cors": "^2.8.5",
+@@ -50,4 +54,4 @@
+     "typescript": "^5.4.3"
+   },
+   "description": "MBG Core v0.1 clean package based on PR35 metadata lifecycle fix v2; trust-kernel-only baseline."
+-}
+\ No newline at end of file
++}
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/audit-runtime.ts /mnt/data/mbg-alpha3-merge/tests/scenarios/audit-runtime.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/audit-runtime.ts	2026-05-07 08:32:42.414908687 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/audit-runtime.ts	2026-05-07 08:18:38.885914144 +0000
+@@ -1,5 +1,6 @@
+ import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
+ import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { EVENT_TYPE, makeEvent } from "../../core/contracts/src/events.js";
+ 
+ function assert(name: string, ok: boolean, details?: unknown) {
+   if (!ok) {
+@@ -10,12 +11,71 @@
+   console.log(`PASS ${name}`);
+ }
+ 
++function placeOrderProbe() {
++  return runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  });
++}
++
++function commitBootstrapReconciled() {
++  runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "audit", source: "core" }));
++  runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "audit", source: "core" }));
++  runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "audit", source: "core" }));
++  runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "audit", source: "core" }));
++}
++
++function commitPositionReconciled() {
++  runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange",
++    provider: "audit"
++  }));
++}
++
++function commitExchangeTruthFresh() {
++  const ts = new Date().toISOString();
++  runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    provider: "audit",
++    lastAccountReconcileAt: ts,
++    lastPositionReconcileAt: ts,
++    lastOrderReconcileAt: ts,
++    lastFillSyncAt: ts,
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }));
++}
++
++function commitHealthConnected() {
++  runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected",
++    wsConnected: true,
++    source: "audit",
++    provider: "audit"
++  }));
++}
++
+ console.log("Genesis v1 runtime audit");
+ 
+ runtimeEngine.clearPersistenceAndReset();
+ 
+ const initial = runtimeEngine.getRuntimeView();
+-assert("initial has all six state domains", Object.keys(initial.stateDomains).length === 7, initial.stateDomains);
++assert("initial has all eight state domains", Object.keys(initial.stateDomains).length === 8, initial.stateDomains);
+ assert("initial position is unknown", initial.stateDomains.position === "unknown", initial.stateDomains);
+ assert("initial risk is blocked", initial.stateDomains.risk === "blocked", initial.stateDomains);
+ 
+@@ -43,58 +103,32 @@
+ const afterSignal = runtimeEngine.getSnapshot();
+ assert("trade signal ready", afterSignal.trade.status === "signal_ready", afterSignal.trade);
+ 
+-let decision = runtimeEngine.evaluateAction({ type: ACTION_TYPE.PLACE_ORDER, symbol: "BTCUSDT", side: "buy", quantity: 0.01, price: 65000 });
++let decision = placeOrderProbe();
+ assert("gate uses current snapshot", decision.snapshotRevision === runtimeEngine.getSnapshot().revision, decision);
+ assert("gate denies before position reconcile", decision.decision === "deny", decision);
+ assert("gate explains bootstrap block", decision.reason === "bootstrap_not_reconciled", decision);
+ 
+-runtimeEngine.commitEvent({
+-  eventId: crypto.randomUUID(),
+-  eventType: "position.reconciled",
+-  timestamp: new Date().toISOString(),
+-  payload: {
+-    symbol: "BTCUSDT",
+-    asset: "BTC",
+-    quoteAsset: "USDT",
+-    free: 0,
+-    locked: 0,
+-    quantity: 0,
+-    markPrice: 65000,
+-    exposure: 0,
+-    source: "exchange"
+-  }
+-} as any);
++commitPositionReconciled();
+ 
+-decision = runtimeEngine.evaluateAction({ type: ACTION_TYPE.PLACE_ORDER, symbol: "BTCUSDT", side: "buy", quantity: 0.01, price: 65000 });
++decision = placeOrderProbe();
+ assert("gate stays denied until bootstrap reconcile", decision.decision === "deny" && decision.reason === "bootstrap_not_reconciled", decision);
+ 
+-runtimeEngine.commitEvent({
+-  eventId: crypto.randomUUID(),
+-  eventType: "bootstrap.loading_snapshot",
+-  timestamp: new Date().toISOString(),
+-  payload: { reason: "audit" }
+-} as any);
+-runtimeEngine.commitEvent({
+-  eventId: crypto.randomUUID(),
+-  eventType: "bootstrap.replaying_tail",
+-  timestamp: new Date().toISOString(),
+-  payload: { reason: "audit" }
+-} as any);
+-runtimeEngine.commitEvent({
+-  eventId: crypto.randomUUID(),
+-  eventType: "bootstrap.awaiting_exchange_truth",
+-  timestamp: new Date().toISOString(),
+-  payload: { reason: "audit" }
+-} as any);
+-runtimeEngine.commitEvent({
+-  eventId: crypto.randomUUID(),
+-  eventType: "bootstrap.reconciled",
+-  timestamp: new Date().toISOString(),
+-  payload: { reason: "audit" }
+-} as any);
++commitBootstrapReconciled();
++
++decision = placeOrderProbe();
++assert("gate still denies without exchange truth after bootstrap reconcile", decision.decision === "deny", decision);
++assert("gate explains missing exchange truth", decision.reason === "exchange_truth_unknown", decision);
+ 
+-decision = runtimeEngine.evaluateAction({ type: ACTION_TYPE.PLACE_ORDER, symbol: "BTCUSDT", side: "buy", quantity: 0.01, price: 65000 });
+-assert("gate allows only after exchange reconcile and bootstrap reconcile", decision.decision === "allow", decision);
++commitExchangeTruthFresh();
++
++decision = placeOrderProbe();
++assert("gate still denies without health truth after exchange truth", decision.decision === "deny", decision);
++assert("gate explains missing health truth", decision.reason === "connection_state_unknown", decision);
++
++commitHealthConnected();
++
++decision = placeOrderProbe();
++assert("gate allows only after alpha3 readiness is complete", decision.decision === "allow", decision);
+ 
+ runtimeEngine.dispatchAction({ type: ACTION_TYPE.PLACE_ORDER, symbol: "BTCUSDT", side: "buy", quantity: 0.01, price: 65000 });
+ assert("order becomes pending", runtimeEngine.getSnapshot().order.status === "pending", runtimeEngine.getSnapshot().order);
+@@ -107,6 +141,9 @@
+ console.log("Runtime view:");
+ console.dir(runtimeEngine.getRuntimeView(), { depth: null });
+ 
++console.log("Health snapshot:");
++console.dir(runtimeEngine.getHealthSnapshot(), { depth: null });
++
+ console.log("Last transitions:");
+ console.dir(runtimeEngine.getTransitions(10), { depth: null });
+ 
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/bootstrap-fsm.ts /mnt/data/mbg-alpha3-merge/tests/scenarios/bootstrap-fsm.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/bootstrap-fsm.ts	2026-05-07 08:32:42.425152499 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/bootstrap-fsm.ts	2026-05-07 07:41:38.082547963 +0000
+@@ -121,9 +121,32 @@
+   }
+ 
+   const reconciled = reduceSnapshot(awaiting, makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, {}));
+-  const decision = placeOrder(reconciled);
++  const deniedWithoutExchangeTruth = placeOrder(reconciled);
+   assert.equal(reconciled.bootstrap.status, "reconciled");
+-  assert.equal(reconciled.risk.status, "clear");
++  assert.equal(deniedWithoutExchangeTruth.decision, "deny");
++  assert.equal(deniedWithoutExchangeTruth.reason, "exchange_truth_unknown");
++
++  const exchangeFresh = reduceSnapshot(reconciled, makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    lastAccountReconcileAt: new Date().toISOString(),
++    lastPositionReconcileAt: new Date().toISOString(),
++    lastOrderReconcileAt: new Date().toISOString(),
++    lastFillSyncAt: new Date().toISOString(),
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }));
++
++  const healthy = reduceSnapshot(exchangeFresh, makeEvent(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected",
++    source: "bootstrap-test"
++  }));
++
++  const decision = placeOrder(healthy);
++  assert.equal(healthy.risk.status, "clear");
+   assert.equal(decision.decision, "allow");
+ }
+ 
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/cold-start-unknown.ts /mnt/data/mbg-alpha3-merge/tests/scenarios/cold-start-unknown.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/cold-start-unknown.ts	2026-05-07 08:32:42.424122607 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/cold-start-unknown.ts	2026-05-07 07:34:50.989767711 +0000
+@@ -30,7 +30,7 @@
+   const decision = placeOrderProbe(snapshot);
+   assert.equal(decision.decision, "deny");
+   assert.equal(decision.reason, "bootstrap_not_reconciled");
+-  assert.deepEqual(decision.blockingStates, ["bootstrap", "position", "risk"]);
++  assert.deepEqual(decision.blockingStates, ["bootstrap", "exchangeTruth", "position", "risk"]);
+ }
+ 
+ function testPositionReconciledZeroBecomesFlatOnlyAfterExchangeReconcile() {
+@@ -115,11 +115,32 @@
+   const afterBootstrapReconciled = reduceSnapshot(afterBootstrapAwaitingTruth, makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "cold-start-test" }));
+ 
+   assert.equal(afterBootstrapReconciled.bootstrap.status, "reconciled");
+-  assert.equal(afterBootstrapReconciled.risk.status, "clear");
+-  assert.deepEqual(afterBootstrapReconciled.risk.reasons, []);
+-  assert.equal(afterBootstrapReconciled.system.status, "healthy");
+ 
+-  const allowedAfterReconcile = placeOrderProbe(afterBootstrapReconciled);
++  const afterExchangeTruth = reduceSnapshot(afterBootstrapReconciled, makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    lastAccountReconcileAt: new Date().toISOString(),
++    lastPositionReconcileAt: new Date().toISOString(),
++    lastOrderReconcileAt: new Date().toISOString(),
++    lastFillSyncAt: new Date().toISOString(),
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }));
++
++  const afterHealthTruth = reduceSnapshot(afterExchangeTruth, makeEvent(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected",
++    source: "cold-start-test"
++  }));
++
++  assert.equal(afterHealthTruth.exchangeTruth.status, "fresh");
++  assert.equal(afterHealthTruth.risk.status, "clear");
++  assert.deepEqual(afterHealthTruth.risk.reasons, []);
++  assert.equal(afterHealthTruth.system.status, "healthy");
++
++  const allowedAfterReconcile = placeOrderProbe(afterHealthTruth);
+   assert.equal(allowedAfterReconcile.decision, "allow");
+ }
+ 
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/core-constitution.test.mjs /mnt/data/mbg-alpha3-merge/tests/scenarios/core-constitution.test.mjs
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/core-constitution.test.mjs	2026-05-07 08:32:42.423681858 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/core-constitution.test.mjs	2026-05-07 06:58:31.600235259 +0000
+@@ -9,7 +9,7 @@
+ const constitution = fs.readFileSync(constitutionPath, "utf-8");
+ const constants = fs.readFileSync(constantsPath, "utf-8");
+ 
+-const requiredLawIds = Array.from({ length: 15 }, (_, index) => `LAW-${String(index + 1).padStart(3, "0")}`);
++const requiredLawIds = Array.from({ length: 30 }, (_, index) => `LAW-${String(index + 1).padStart(3, "0")}`);
+ const requiredTrustStates = ["TRUSTED", "RECOVERABLE", "UNCERTAIN", "COMPROMISED", "HALTED", "PANIC"];
+ 
+ for (const lawId of requiredLawIds) {
+@@ -49,7 +49,22 @@
+   "Live order without metadata is forbidden",
+   "Exchange truth outranks local memory",
+   "Frontend is not authority",
+-  "V1 is not authority"
++  "V1 is not authority",
++  "Bootstrap FSM governs trading readiness",
++  "Event validation is core responsibility",
++  "Idempotency index is recoverable from journal",
++  "Reducers remain pure",
++  "Duplicate event cannot mutate state",
++  "Invalid event never enters canonical journal",
++  "Bootstrap failed cannot transition to reconciled without recovery event",
++  "ExchangeTruth unknown forbids normal trading",
++  "ExchangeTruth stale forbids normal trading",
++  "ExchangeTruth conflicted forbids normal trading",
++  "Market data stale forbids normal trading",
++  "Health must not report fake truth",
++  "Unknown connection state is not connected",
++  "Local flat position is not trusted without fresh exchange reconcile",
++  "Freshness unknown is stale for normal trading"
+ ];
+ 
+ for (const phrase of requiredPhrases) {
+@@ -67,7 +82,16 @@
+   "core/invariants/engine.invariants.ts",
+   "core/system/journal.ts",
+   "core/system/state-hash.ts",
+-  "core/trust/core-trust-report.ts"
++  "core/trust/core-trust-report.ts",
++  "core/events/validate-domain-event.ts",
++  "core/runtime/event-index.ts",
++  "core/exchange/exchange-truth.ts",
++  "core/freshness/freshness-guard.ts",
++  "core/health/runtime-health-snapshot.ts",
++  "core/kernel/kernel-authority.ts",
++  "core/runtime/src/runtime-engine.ts",
++  "apps/runtime-api/src/app.ts",
++  "tests/scenarios/*"
+ ];
+ 
+ for (const moduleRef of requiredModuleReferences) {
+@@ -98,4 +122,65 @@
+   "kernel-constitution.ts must export CORE_REVIEW_RULE"
+ );
+ 
++
++const requiredWave3Constants = [
++  "WAVE3_CONSTITUTION_SCOPE",
++  "WAVE3_MODULE_MAPPING",
++  "EXCHANGE_TRUTH_STATUS",
++  "FRESHNESS_STATUS",
++  "HEALTH_TRUTH_RULE"
++];
++
++for (const exportedName of requiredWave3Constants) {
++  assert.ok(
++    constants.includes(`export const ${exportedName}`),
++    `kernel-constitution.ts must export ${exportedName}`
++  );
++}
++
++const requiredWave3Mappings = [
++  "EXCHANGE_TRUTH",
++  "FRESHNESS",
++  "HEALTH_TRUTH",
++  "SCENARIO_AUDIT"
++];
++
++for (const mapping of requiredWave3Mappings) {
++  assert.ok(
++    constants.includes(`${mapping}:`),
++    `kernel-constitution.ts must include Wave 3 mapping ${mapping}`
++  );
++}
++
++const forbiddenWave3RuntimeClaims = [
++  /IMPLEMENTS_KERNEL_AUTHORITY:\s*true/,
++  /IMPLEMENTS_CORE_TRUST_REPORT:\s*true/,
++  /CONNECTS_V1:\s*true/,
++  /CONNECTS_V2:\s*true/,
++  /ENABLES_LIVE_TRADING:\s*true/,
++  /ADDS_REAL_EXCHANGE_KEYS:\s*true/
++];
++
++for (const pattern of forbiddenWave3RuntimeClaims) {
++  assert.equal(
++    pattern.test(constants),
++    false,
++    `kernel-constitution.ts must not claim forbidden Wave 3 implementation: ${pattern}`
++  );
++}
++
++const requiredHealthTruthPhrases = [
++  "unknown connection state is not connected",
++  "local flat position is not trusted without fresh exchange reconcile",
++  "Health must not report fake truth"
++];
++
++for (const phrase of requiredHealthTruthPhrases) {
++  assert.ok(
++    constitution.toLowerCase().includes(phrase.toLowerCase()),
++    `CORE_CONSTITUTION.md must document health truth phrase: ${phrase}`
++  );
++}
++
++
+ console.log("✅ Core Constitution checks passed");
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/core-freshness.ts /mnt/data/mbg-alpha3-merge/tests/scenarios/core-freshness.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/core-freshness.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/core-freshness.ts	2026-05-07 07:56:19.394074149 +0000
+@@ -0,0 +1,225 @@
++import assert from "node:assert/strict";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { DomainEvent, EVENT_TYPE } from "../../core/contracts/src/events.js";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++import { calculateFreshness } from "../../core/runtime/src/freshness.js";
++
++const nowMs = Date.now();
++const now = new Date(nowMs).toISOString();
++const freshPast = new Date(nowMs - 100).toISOString();
++const oldPast = new Date(nowMs - 120_000).toISOString();
++
++function event<TPayload>(
++  eventType: string,
++  payload: TPayload,
++  eventId: string,
++  timestamp = freshPast,
++  source = "freshness-test"
++): DomainEvent<TPayload> {
++  return {
++    eventId,
++    eventType: eventType as any,
++    timestamp,
++    source,
++    schemaVersion: "1",
++    payload
++  };
++}
++
++function marketTick(eventId: string, timestamp = freshPast) {
++  return event(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "freshness-test",
++    source: "market-data"
++  }, eventId, timestamp, "market-data");
++}
++
++function positionReconciled(eventId: string, timestamp = freshPast) {
++  return event(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    provider: "freshness-test",
++    source: "exchange"
++  }, eventId, timestamp, "exchange");
++}
++
++function heartbeat(eventId: string, timestamp = freshPast) {
++  return event(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected",
++    source: "core"
++  }, eventId, timestamp, "core");
++}
++
++function exchangeTruthSucceeded(eventId: string, timestamp = freshPast) {
++  return event(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    lastAccountReconcileAt: timestamp,
++    lastPositionReconcileAt: timestamp,
++    lastOrderReconcileAt: timestamp,
++    lastFillSyncAt: timestamp,
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }, eventId, timestamp, "exchange");
++}
++
++function bootstrapReconciled(prefix: string, timestamp = freshPast) {
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: `${prefix}-loading`, source: "core" }, `${prefix}-bootstrap-loading`, timestamp, "core"));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: `${prefix}-replay`, source: "core" }, `${prefix}-bootstrap-replay`, timestamp, "core"));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: `${prefix}-awaiting`, source: "core" }, `${prefix}-bootstrap-awaiting`, timestamp, "core"));
++  runtimeEngine.commitEventSilent(event(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: `${prefix}-reconciled`, source: "core" }, `${prefix}-bootstrap-reconciled`, timestamp, "core"));
++}
++
++function placeOrder() {
++  return runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  });
++}
++
++function reset() {
++  runtimeEngine.clearPersistenceAndReset();
++}
++
++function prepareReadyExceptMarket(prefix: string) {
++  runtimeEngine.commitEventSilent(positionReconciled(`${prefix}-position`));
++  bootstrapReconciled(prefix);
++  runtimeEngine.commitEventSilent(exchangeTruthSucceeded(`${prefix}-exchange-truth`));
++  runtimeEngine.commitEventSilent(heartbeat(`${prefix}-heartbeat`));
++}
++
++function prepareReady(prefix: string, marketTimestamp = freshPast, exchangeTimestamp = freshPast, heartbeatTimestamp = freshPast) {
++  runtimeEngine.commitEventSilent(marketTick(`${prefix}-market`, marketTimestamp));
++  runtimeEngine.commitEventSilent(positionReconciled(`${prefix}-position`, exchangeTimestamp));
++  bootstrapReconciled(prefix);
++  runtimeEngine.commitEventSilent(exchangeTruthSucceeded(`${prefix}-exchange-truth`, exchangeTimestamp));
++  runtimeEngine.commitEventSilent(heartbeat(`${prefix}-heartbeat`, heartbeatTimestamp));
++}
++
++function testNoMarketEventDeniesPlaceOrder() {
++  reset();
++  prepareReadyExceptMarket("no-market");
++
++  const freshness = runtimeEngine.getFreshness(now);
++  assert.equal(freshness.marketDataFreshness.status, "unknown");
++  assert.equal(freshness.okForNormalTrading, false);
++
++  const decision = placeOrder();
++  assert.equal(decision.decision, "deny");
++}
++
++function testFreshMarketEventIsFresh() {
++  const freshness = calculateFreshness({
++    lastMarketEventAt: freshPast,
++    lastBookTickerAt: freshPast,
++    lastExchangeReconcileAt: freshPast,
++    lastConnectionHeartbeatAt: freshPast,
++    maxMarketAgeMs: 15_000,
++    maxExchangeAgeMs: 60_000,
++    maxConnectionAgeMs: 30_000
++  }, { now });
++
++  assert.equal(freshness.marketDataFreshness.status, "fresh");
++  assert.equal(freshness.okForNormalTrading, true);
++}
++
++function testOldMarketEventIsStale() {
++  const freshness = calculateFreshness({
++    lastMarketEventAt: oldPast,
++    lastBookTickerAt: oldPast,
++    lastExchangeReconcileAt: freshPast,
++    lastConnectionHeartbeatAt: freshPast,
++    maxMarketAgeMs: 15_000,
++    maxExchangeAgeMs: 60_000,
++    maxConnectionAgeMs: 30_000
++  }, { now });
++
++  assert.ok(["stale", "expired"].includes(freshness.marketDataFreshness.status));
++  assert.equal(freshness.marketDataFreshness.reason, "market_data_stale");
++  assert.equal(freshness.okForNormalTrading, false);
++}
++
++function testOldExchangeReconcileDeniesPlaceOrder() {
++  reset();
++  prepareReady("old-exchange", freshPast, oldPast, freshPast);
++
++  const freshness = runtimeEngine.getFreshness(now);
++  assert.ok(["stale", "expired"].includes(freshness.exchangeTruthFreshness.status));
++  assert.equal(freshness.exchangeTruthFreshness.reason, "exchange_truth_stale");
++
++  const decision = placeOrder();
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "exchange_truth_stale");
++}
++
++function testConnectionUnknownIsNotConnected() {
++  reset();
++  runtimeEngine.commitEventSilent(marketTick("connection-unknown-market"));
++  runtimeEngine.commitEventSilent(positionReconciled("connection-unknown-position"));
++  bootstrapReconciled("connection-unknown");
++  runtimeEngine.commitEventSilent(exchangeTruthSucceeded("connection-unknown-exchange-truth"));
++
++  const freshness = runtimeEngine.getFreshness(now);
++  assert.equal(freshness.connectionFreshness.status, "unknown");
++  assert.equal(freshness.connectionFreshness.reason, "connection_state_unknown");
++
++  const health = runtimeEngine.getHealthSnapshot();
++  assert.equal(health.wsConnected, "unknown");
++
++  const decision = placeOrder();
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "connection_state_unknown");
++}
++
++function testBootstrapReconciledExchangeFreshMarketStaleDenies() {
++  reset();
++  prepareReady("market-stale", oldPast, freshPast, freshPast);
++
++  const freshness = runtimeEngine.getFreshness(now);
++  assert.ok(["stale", "expired"].includes(freshness.marketDataFreshness.status));
++  assert.equal(freshness.exchangeTruthFreshness.status, "fresh");
++
++  const decision = placeOrder();
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "market_data_stale");
++}
++
++function testAllFreshAllowsOnlyIfActionGateAllows() {
++  reset();
++  prepareReady("all-fresh", freshPast, freshPast, freshPast);
++
++  const freshness = runtimeEngine.getFreshness(now);
++  assert.equal(freshness.marketDataFreshness.status, "fresh");
++  assert.equal(freshness.exchangeTruthFreshness.status, "fresh");
++  assert.equal(freshness.connectionFreshness.status, "fresh");
++  assert.equal(freshness.okForNormalTrading, true);
++
++  const decision = placeOrder();
++  assert.equal(decision.decision, "allow");
++}
++
++testNoMarketEventDeniesPlaceOrder();
++testFreshMarketEventIsFresh();
++testOldMarketEventIsStale();
++testOldExchangeReconcileDeniesPlaceOrder();
++testConnectionUnknownIsNotConnected();
++testBootstrapReconciledExchangeFreshMarketStaleDenies();
++testAllFreshAllowsOnlyIfActionGateAllows();
++
++console.log("core freshness checks passed");
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/core-health-truth.ts /mnt/data/mbg-alpha3-merge/tests/scenarios/core-health-truth.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/core-health-truth.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/core-health-truth.ts	2026-05-07 06:58:31.838427132 +0000
+@@ -0,0 +1,118 @@
++import assert from "node:assert/strict";
++import fs from "node:fs";
++import http from "node:http";
++import os from "node:os";
++import path from "node:path";
++
++const dataDir = path.join(os.tmpdir(), `mbg-core-health-truth-${process.pid}-${Date.now()}`);
++process.env.GENESIS_DATA_DIR = dataDir;
++process.env.PERSISTENCE_ENABLED = "true";
++process.env.MBG_HEALTH_CONNECTION_STATUS_TTL_MS = "1000";
++
++const { RuntimeEngine } = await import("../../core/runtime/src/runtime-engine.js");
++const { EVENT_TYPE } = await import("../../core/contracts/src/events.js");
++
++function makeHealthEvent(eventId: string, status: "connected" | "disconnected" | "unknown", timestamp = new Date().toISOString()) {
++  return {
++    eventId,
++    eventType: EVENT_TYPE.SYSTEM_HEALTH_CHANGED,
++    timestamp,
++    source: "health-truth-test",
++    payload: {
++      connection: "websocket",
++      status,
++      source: "health-truth-test"
++    }
++  };
++}
++
++function clone<T>(value: T): T {
++  return structuredClone(value);
++}
++
++const engine = new RuntimeEngine();
++engine.clearPersistenceAndReset();
++
++const coldHealth = engine.getHealthSnapshot();
++assert.equal(coldHealth.wsConnected, "unknown");
++assert.notEqual(coldHealth.wsConnected, true);
++assert.equal(coldHealth.healthTruthComplete, false);
++assert.ok(coldHealth.healthTruthDiagnostics.includes("connection_state_unknown"));
++assert.ok(coldHealth.healthTruthDiagnostics.includes("ws_status_unknown"));
++assert.ok(coldHealth.healthTruthDiagnostics.includes("health_truth_partial"));
++assert.equal(coldHealth.wsReconnects, "unknown");
++
++const connected = engine.commitEventResult(makeHealthEvent("health-ws-connected-1", "connected"));
++assert.equal(connected.status, "accepted");
++const connectedHealth = engine.getHealthSnapshot();
++assert.equal(connectedHealth.wsConnected, true);
++assert.equal(connectedHealth.connections.websocket.status, true);
++assert.equal(connectedHealth.connections.websocket.sourceEventId, "health-ws-connected-1");
++assert.ok(!connectedHealth.healthTruthDiagnostics.includes("ws_status_unknown"));
++
++const disconnected = engine.commitEventResult(makeHealthEvent("health-ws-disconnected-1", "disconnected"));
++assert.equal(disconnected.status, "accepted");
++const disconnectedHealth = engine.getHealthSnapshot();
++assert.equal(disconnectedHealth.wsConnected, false);
++assert.equal(disconnectedHealth.connections.websocket.status, false);
++assert.equal(disconnectedHealth.connections.websocket.sourceEventId, "health-ws-disconnected-1");
++
++const beforeStale = clone(engine.getSnapshot());
++const staleEvent = makeHealthEvent("health-ws-stale-1", "connected", "2026-05-06T00:00:00.000Z");
++const staleCommit = engine.commitEventResult(staleEvent);
++assert.equal(staleCommit.status, "accepted");
++const staleHealth = engine.getHealthSnapshot();
++assert.equal(staleHealth.wsConnected, "stale");
++assert.equal(staleHealth.connections.websocket.status, "stale");
++assert.equal(staleHealth.connections.websocket.reason, "connection_state_stale");
++assert.ok(staleHealth.healthTruthDiagnostics.includes("connection_state_stale"));
++assert.ok(staleHealth.healthTruthDiagnostics.includes("health_truth_partial"));
++assert.ok(engine.getSnapshot().revision > beforeStale.revision);
++
++const source = fs.readFileSync("core/runtime/src/runtime-engine.ts", "utf8");
++assert.ok(!source.includes("wsConnected: true, // TODO"));
++assert.ok(!source.includes("wsReconnects: 0"));
++
++const { createApp } = await import("../../apps/runtime-api/src/app.js");
++const app = createApp();
++const server = http.createServer(app);
++await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
++try {
++  const address = server.address();
++  assert.equal(typeof address, "object");
++  const port = (address as { port: number }).port;
++  const response = await fetch(`http://127.0.0.1:${port}/health`);
++  assert.equal(response.status, 200);
++  const body: any = await response.json();
++  assert.equal(body.service, "mbg-core-runtime-api");
++  assert.equal(body.health.wsConnected, "unknown");
++  assert.notEqual(body.health.wsConnected, true);
++  assert.equal(body.health.healthTruthComplete, false);
++  assert.ok(body.health.healthTruthDiagnostics.includes("ws_status_unknown"));
++} finally {
++  await new Promise<void>((resolve, reject) => server.close((err) => err ? reject(err) : resolve()));
++}
++
++fs.rmSync(dataDir, { recursive: true, force: true });
++
++console.log(JSON.stringify({
++  name: "core_health_truth",
++  ok: true,
++  cold: {
++    wsConnected: coldHealth.wsConnected,
++    healthTruthComplete: coldHealth.healthTruthComplete,
++    diagnostics: coldHealth.healthTruthDiagnostics
++  },
++  connected: {
++    wsConnected: connectedHealth.wsConnected,
++    sourceEventId: connectedHealth.connections.websocket.sourceEventId
++  },
++  disconnected: {
++    wsConnected: disconnectedHealth.wsConnected,
++    sourceEventId: disconnectedHealth.connections.websocket.sourceEventId
++  },
++  stale: {
++    wsConnected: staleHealth.wsConnected,
++    diagnostics: staleHealth.healthTruthDiagnostics
++  }
++}, null, 2));
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/exchange-truth.ts /mnt/data/mbg-alpha3-merge/tests/scenarios/exchange-truth.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/exchange-truth.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/exchange-truth.ts	2026-05-07 06:58:31.687285138 +0000
+@@ -0,0 +1,176 @@
++import assert from "node:assert/strict";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { EVENT_TYPE, makeEvent } from "../../core/contracts/src/events.js";
++import { ActionGate } from "../../core/gates/src/action-gate.js";
++import { reduceSnapshot } from "../../core/runtime/src/runtime-engine.js";
++import { initialSnapshot, RuntimeSnapshot } from "../../core/state/src/types.js";
++
++function placeOrder(snapshot: RuntimeSnapshot) {
++  return new ActionGate().evaluate({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  }, snapshot);
++}
++
++function applyBootstrapReconciled(snapshot: RuntimeSnapshot) {
++  const loading = reduceSnapshot(snapshot, makeEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, { reason: "exchange-truth-test" }));
++  const replaying = reduceSnapshot(loading, makeEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, { reason: "exchange-truth-test" }));
++  const awaiting = reduceSnapshot(replaying, makeEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "exchange-truth-test" }));
++  return reduceSnapshot(awaiting, makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "exchange-truth-test" }));
++}
++
++function applyMarketAndPosition(snapshot: RuntimeSnapshot) {
++  const afterMarket = reduceSnapshot(snapshot, makeEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price: 65000,
++    bid: 64999,
++    ask: 65001,
++    volume: 1,
++    provider: "exchange-truth-test"
++  }));
++
++  return reduceSnapshot(afterMarket, makeEvent(EVENT_TYPE.POSITION_RECONCILED, {
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: 0,
++    locked: 0,
++    quantity: 0,
++    markPrice: 65000,
++    exposure: 0,
++    source: "exchange"
++  }));
++}
++
++function applyExchangeTruthFresh(snapshot: RuntimeSnapshot) {
++  return reduceSnapshot(snapshot, makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "test_exchange_reconcile",
++    lastAccountReconcileAt: new Date().toISOString(),
++    lastPositionReconcileAt: new Date().toISOString(),
++    lastOrderReconcileAt: new Date().toISOString(),
++    lastFillSyncAt: new Date().toISOString(),
++    drift: {},
++    conflicts: [],
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0
++  }));
++}
++
++function readySnapshot() {
++  return applyExchangeTruthFresh(applyBootstrapReconciled(applyMarketAndPosition(initialSnapshot())));
++}
++
++function testColdStartUnknown() {
++  const snapshot = initialSnapshot();
++  assert.equal(snapshot.exchangeTruth.status, "unknown");
++  assert.equal(snapshot.exchangeTruth.reason, "exchange_truth_unknown");
++
++  const decision = placeOrder(snapshot);
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "bootstrap_not_reconciled");
++  assert.ok(decision.blockingStates?.includes("exchangeTruth"));
++}
++
++function testExchangeTruthUnknownDeniesAfterBootstrapReconciled() {
++  const snapshot = applyBootstrapReconciled(applyMarketAndPosition(initialSnapshot()));
++  assert.equal(snapshot.bootstrap.status, "reconciled");
++  assert.equal(snapshot.exchangeTruth.status, "unknown");
++
++  const decision = placeOrder(snapshot);
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "exchange_truth_unknown");
++  assert.ok(decision.blockingStates?.includes("exchangeTruth"));
++}
++
++function testReconcileSucceededFresh() {
++  const snapshot = applyExchangeTruthFresh(initialSnapshot());
++  assert.equal(snapshot.exchangeTruth.status, "fresh");
++  assert.equal(snapshot.exchangeTruth.conflicts.length, 0);
++  assert.ok(snapshot.exchangeTruth.lastAccountReconcileAt);
++}
++
++function testStaleDetectedDenies() {
++  const fresh = readySnapshot();
++  assert.equal(placeOrder(fresh).decision, "allow");
++
++  const stale = reduceSnapshot(fresh, makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_STALE_DETECTED, {
++    source: "test_exchange_reconcile",
++    reason: "last reconcile exceeded ttl"
++  }));
++
++  assert.equal(stale.exchangeTruth.status, "stale");
++  const decision = placeOrder(stale);
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "exchange_truth_stale");
++}
++
++function testConflictDetectedDenies() {
++  const fresh = readySnapshot();
++  const conflicted = reduceSnapshot(fresh, makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_CONFLICT_DETECTED, {
++    source: "test_exchange_reconcile",
++    reason: "local flat but exchange open",
++    localPositionStatus: "flat",
++    exchangePositionStatus: "open",
++    exchangePositionQuantity: 0.2
++  }));
++
++  assert.equal(conflicted.exchangeTruth.status, "conflicted");
++  assert.ok(conflicted.exchangeTruth.conflicts.some((c) => c.code === "local_flat_exchange_open"));
++  const decision = placeOrder(conflicted);
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "exchange_truth_conflicted");
++}
++
++function testUnavailableDetectedDenies() {
++  const fresh = readySnapshot();
++  const unavailable = reduceSnapshot(fresh, makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_UNAVAILABLE_DETECTED, {
++    source: "test_exchange_reconcile",
++    reason: "exchange api unavailable"
++  }));
++
++  assert.equal(unavailable.exchangeTruth.status, "unavailable");
++  const decision = placeOrder(unavailable);
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "exchange_truth_unavailable");
++}
++
++function testBootstrapStillBlocksFreshExchangeTruth() {
++  const freshTruthButColdBootstrap = applyExchangeTruthFresh(applyMarketAndPosition(initialSnapshot()));
++  assert.equal(freshTruthButColdBootstrap.exchangeTruth.status, "fresh");
++  assert.notEqual(freshTruthButColdBootstrap.bootstrap.status, "reconciled");
++
++  const decision = placeOrder(freshTruthButColdBootstrap);
++  assert.equal(decision.decision, "deny");
++  assert.equal(decision.reason, "bootstrap_not_reconciled");
++  assert.ok(decision.blockingStates?.includes("bootstrap"));
++}
++
++function testAllowOnlyWhenBootstrapAndExchangeTruthAndRuntimeAreValid() {
++  const snapshot = readySnapshot();
++  assert.equal(snapshot.bootstrap.status, "reconciled");
++  assert.equal(snapshot.exchangeTruth.status, "fresh");
++  assert.equal(snapshot.market.status, "open");
++  assert.equal(snapshot.position.status, "flat");
++  assert.equal(snapshot.risk.status, "clear");
++
++  const decision = placeOrder(snapshot);
++  assert.equal(decision.decision, "allow");
++}
++
++testColdStartUnknown();
++testExchangeTruthUnknownDeniesAfterBootstrapReconciled();
++testReconcileSucceededFresh();
++testStaleDetectedDenies();
++testConflictDetectedDenies();
++testUnavailableDetectedDenies();
++testBootstrapStillBlocksFreshExchangeTruth();
++testAllowOnlyWhenBootstrapAndExchangeTruthAndRuntimeAreValid();
++
++console.log(JSON.stringify({
++  name: "exchange_truth_domain",
++  ok: true
++}, null, 2));
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/gate-scenarios.ts /mnt/data/mbg-alpha3-merge/tests/scenarios/gate-scenarios.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/gate-scenarios.ts	2026-05-07 08:32:42.417171570 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/gate-scenarios.ts	2026-05-07 07:24:45.887786346 +0000
+@@ -44,6 +44,27 @@
+ runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, { reason: "test" }));
+ runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, { reason: "test" }));
+ 
++runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++  source: "exchange",
++  provider: "test",
++  lastAccountReconcileAt: new Date().toISOString(),
++  lastPositionReconcileAt: new Date().toISOString(),
++  lastOrderReconcileAt: new Date().toISOString(),
++  lastFillSyncAt: new Date().toISOString(),
++  localPositionStatus: "flat",
++  exchangePositionStatus: "flat",
++  exchangePositionQuantity: 0,
++  drift: {},
++  conflicts: []
++}));
++
++runtimeEngine.commitEvent(makeEvent(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++  connection: "websocket",
++  status: "connected",
++  source: "test"
++}));
++
++
+ p = runtimeEngine.getPermissions();
+ assert.equal(p.tradingAllowed, true);
+ assert.equal(p.actions.place_order.decision, "allow");
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/wave2-scenario-audit.ts /mnt/data/mbg-alpha3-merge/tests/scenarios/wave2-scenario-audit.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/wave2-scenario-audit.ts	2026-05-07 08:32:42.427117790 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/wave2-scenario-audit.ts	2026-05-07 07:49:43.485425216 +0000
+@@ -76,7 +76,7 @@
+   return {
+     eventId,
+     eventType: eventType as any,
+-    timestamp: "2026-05-06T00:00:00.000Z",
++    timestamp: new Date().toISOString(),
+     source,
+     eventVersion: 1,
+     schemaVersion: 1,
+@@ -119,6 +119,31 @@
+   }, eventId, "exchange");
+ }
+ 
++function validExchangeTruthSucceeded(eventId = "evt-exchange-truth-fresh-1") {
++  return fixedEvent(EVENT_TYPE.EXCHANGE_TRUTH_RECONCILE_SUCCEEDED, {
++    source: "exchange",
++    provider: "wave2-scenario-audit",
++    lastAccountReconcileAt: new Date().toISOString(),
++    lastPositionReconcileAt: new Date().toISOString(),
++    lastOrderReconcileAt: new Date().toISOString(),
++    lastFillSyncAt: new Date().toISOString(),
++    localPositionStatus: "flat",
++    exchangePositionStatus: "flat",
++    exchangePositionQuantity: 0,
++    drift: {},
++    conflicts: []
++  }, eventId, "exchange");
++}
++
++function validSystemHealthConnected(eventId = "evt-system-health-connected-1") {
++  return fixedEvent(EVENT_TYPE.SYSTEM_HEALTH_CHANGED, {
++    connection: "websocket",
++    status: "connected",
++    source: "wave2-scenario-audit"
++  }, eventId, "core");
++}
++
++
+ function validOrderReconciled(eventId = "evt-order-reconciled-1") {
+   return fixedEvent(EVENT_TYPE.ORDER_RECONCILED, {
+     orderId: "order-reconcile-1",
+@@ -153,7 +178,7 @@
+     commissionAsset: "USDT",
+     provider: "wave2-scenario-audit",
+     source: "exchange",
+-    reportedAt: "2026-05-06T00:00:00.000Z"
++    reportedAt: new Date().toISOString()
+   }, eventId, "exchange");
+ }
+ 
+@@ -309,6 +334,8 @@
+   commitOk(validMarketTick("evt-market-for-bootstrap-reconciled"), "valid market tick before bootstrap.reconciled");
+   commitOk(validPositionReconciled("evt-position-for-bootstrap-reconciled"), "valid position reconcile before bootstrap.reconciled");
+   commitOk(bootstrapEvent("bootstrap.reconciled", "evt-bootstrap-reconciled", { status: "reconciled" }), "bootstrap.reconciled");
++  commitOk(validExchangeTruthSucceeded("evt-exchange-truth-for-bootstrap-reconciled"), "exchange truth before final allow");
++  commitOk(validSystemHealthConnected("evt-system-health-for-bootstrap-reconciled"), "health truth before final allow");
+ }
+ 
+ scenario(
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=.git' /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/wave3-scenario-audit.ts /mnt/data/mbg-alpha3-merge/tests/scenarios/wave3-scenario-audit.ts
+--- /mnt/data/alpha3_base_clean/mbg-core-v0.1-alpha2/tests/scenarios/wave3-scenario-audit.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/mbg-alpha3-merge/tests/scenarios/wave3-scenario-audit.ts	2026-05-07 06:58:31.933911082 +0000
+@@ -0,0 +1,530 @@
++import assert from "node:assert/strict";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { DomainEvent, EVENT_TYPE } from "../../core/contracts/src/events.js";
++import { RuntimeSnapshot } from "../../core/state/src/types.js";
++
++type ScenarioResult = {
++  name: string;
++  covers: string[];
++  ok: boolean;
++  detail?: string;
++};
++
++type CommitEventResult = {
++  ok: boolean;
++  status?: string;
++  eventId?: string;
++  eventType?: string;
++  reason?: string;
++  error?: string;
++  diagnostic?: unknown;
++  snapshot?: RuntimeSnapshot;
++  snapshotRevision?: number;
++};
++
++type RuntimeEngineWave3 = typeof runtimeEngine & {
++  commitEventResult?: (event: DomainEvent, options?: { log?: boolean }) => CommitEventResult;
++  getHealthSnapshot?: () => Record<string, unknown>;
++};
++
++const engine = runtimeEngine as RuntimeEngineWave3;
++const results: ScenarioResult[] = [];
++
++function scenario(name: string, covers: string[], body: () => void) {
++  try {
++    runtimeEngine.clearPersistenceAndReset();
++    body();
++    results.push({ name, covers, ok: true });
++  } catch (err) {
++    results.push({
++      name,
++      covers,
++      ok: false,
++      detail: err instanceof Error ? err.message : String(err)
++    });
++  }
++}
++
++function isoNow() {
++  return new Date().toISOString();
++}
++
++function isoPast(msAgo: number) {
++  return new Date(Date.now() - msAgo).toISOString();
++}
++
++function stableSnapshot(snapshot: RuntimeSnapshot) {
++  return JSON.stringify(snapshot);
++}
++
++function fixedEvent<TPayload>(
++  eventType: string,
++  payload: TPayload,
++  eventId: string,
++  source = "wave3-scenario-audit",
++  timestamp = isoNow()
++): DomainEvent<TPayload> {
++  return {
++    eventId,
++    eventType: eventType as any,
++    timestamp,
++    source,
++    schemaVersion: 1,
++    payload
++  } as any;
++}
++
++function bootstrapEvent(eventType: string, eventId: string, extra: Record<string, unknown> = {}) {
++  return fixedEvent(eventType, {
++    source: "wave3-scenario-audit",
++    provider: "wave3-scenario-audit",
++    reason: eventType.replace("bootstrap.", "wave3_"),
++    ...extra
++  }, eventId, "core");
++}
++
++function validMarketTick(eventId: string, price = 65000, timestamp = isoNow(), extra: Record<string, unknown> = {}) {
++  return fixedEvent(EVENT_TYPE.MARKET_TICK_RECEIVED, {
++    symbol: "BTCUSDT",
++    price,
++    bid: price - 1,
++    ask: price + 1,
++    volume: 1,
++    provider: "wave3-scenario-audit",
++    source: "market-data",
++    receivedAt: timestamp,
++    asOf: timestamp,
++    ...extra
++  }, eventId, "market-data", timestamp);
++}
++
++function validPositionReconciled(eventId: string, quantity = 0, timestamp = isoNow()) {
++  return fixedEvent(EVENT_TYPE.POSITION_RECONCILED, {
++    reconcileId: `${eventId}:position-reconcile`,
++    symbol: "BTCUSDT",
++    asset: "BTC",
++    quoteAsset: "USDT",
++    free: quantity,
++    locked: 0,
++    quantity,
++    markPrice: 65000,
++    exposure: Math.abs(quantity * 65000),
++    provider: "wave3-scenario-audit",
++    source: "exchange",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp
++  }, eventId, "exchange", timestamp);
++}
++
++function validOrderReconciled(eventId: string, timestamp = isoNow()) {
++  return fixedEvent(EVENT_TYPE.ORDER_RECONCILED, {
++    reconcileId: `${eventId}:order-reconcile`,
++    orderId: "wave3-order-reconcile-1",
++    clientOrderId: "wave3-client-reconcile-1",
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.1,
++    filledQuantity: 0,
++    executedQty: 0,
++    exchangeStatus: "NEW",
++    provider: "wave3-scenario-audit",
++    source: "exchange",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp
++  }, eventId, "exchange", timestamp);
++}
++
++function exchangeTruthReconcileSucceeded(eventId: string, extra: Record<string, unknown> = {}, timestamp = isoNow()) {
++  const quantity = typeof extra.exchangeQuantity === "number" ? extra.exchangeQuantity : 0;
++  return fixedEvent("exchange_truth.reconcile_succeeded", {
++    reconcileId: `${eventId}:exchange-truth-reconcile`,
++    truthId: `${eventId}:exchange-truth`,
++    symbol: "BTCUSDT",
++    status: "fresh",
++    provider: "wave3-scenario-audit",
++    source: "exchange",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp,
++    connectionState: "connected",
++    wsConnected: true,
++    position: {
++      symbol: "BTCUSDT",
++      asset: "BTC",
++      quoteAsset: "USDT",
++      status: Math.abs(quantity) > 0 ? "open" : "flat",
++      quantity,
++      free: quantity,
++      locked: 0,
++      exposure: Math.abs(quantity * 65000),
++      markPrice: 65000,
++      source: "exchange",
++      asOf: timestamp
++    },
++    orders: [],
++    freshness: {
++      status: "fresh",
++      maxAgeMs: 15000,
++      ageMs: 0,
++      asOf: timestamp
++    },
++    ...extra
++  }, eventId, "exchange", timestamp);
++}
++
++function exchangeTruthStaleDetected(eventId: string, extra: Record<string, unknown> = {}, timestamp = isoPast(60000)) {
++  return fixedEvent("exchange_truth.stale_detected", {
++    detectionId: `${eventId}:exchange-truth-stale`,
++    truthId: `${eventId}:exchange-truth`,
++    symbol: "BTCUSDT",
++    status: "stale",
++    provider: "wave3-scenario-audit",
++    source: "exchange",
++    reason: "exchange_truth_stale",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: isoNow(),
++    maxAgeMs: 15000,
++    ageMs: 60000,
++    freshness: {
++      status: "stale",
++      maxAgeMs: 15000,
++      ageMs: 60000,
++      asOf: timestamp
++    },
++    ...extra
++  }, eventId, "exchange", timestamp);
++}
++
++function exchangeTruthConflictDetected(eventId: string, extra: Record<string, unknown> = {}, timestamp = isoNow()) {
++  const exchangeQuantity = typeof extra.exchangeQuantity === "number" ? extra.exchangeQuantity : 1;
++  return fixedEvent("exchange_truth.conflict_detected", {
++    detectionId: `${eventId}:exchange-truth-conflict`,
++    truthId: `${eventId}:exchange-truth`,
++    symbol: "BTCUSDT",
++    status: "conflicted",
++    provider: "wave3-scenario-audit",
++    source: "exchange",
++    reason: "local_position_conflicts_with_exchange_truth",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp,
++    local: {
++      positionStatus: "flat",
++      quantity: 0
++    },
++    exchange: {
++      positionStatus: Math.abs(exchangeQuantity) > 0 ? "open" : "flat",
++      quantity: exchangeQuantity
++    },
++    conflict: {
++      reason: "local_position_conflicts_with_exchange_truth",
++      localQuantity: 0,
++      exchangeQuantity
++    },
++    ...extra
++  }, eventId, "exchange", timestamp);
++}
++
++function exchangeTruthUnavailableDetected(eventId: string, extra: Record<string, unknown> = {}, timestamp = isoNow()) {
++  return fixedEvent("exchange_truth.unavailable_detected", {
++    detectionId: `${eventId}:exchange-truth-unavailable`,
++    truthId: `${eventId}:exchange-truth`,
++    symbol: "BTCUSDT",
++    status: "unavailable",
++    provider: "wave3-scenario-audit",
++    source: "exchange",
++    reason: "exchange_truth_unavailable",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp,
++    connectionState: "disconnected",
++    wsConnected: false,
++    ...extra
++  }, eventId, "exchange", timestamp);
++}
++
++function systemHealthChanged(
++  eventId: string,
++  health: {
++    status?: "healthy" | "degraded" | "unhealthy" | "unknown";
++    connectionState?: "connected" | "disconnected" | "unknown";
++    wsConnected?: boolean | "unknown";
++    reason?: string;
++  },
++  timestamp = isoNow()
++) {
++  return fixedEvent("system.health.changed", {
++    healthId: `${eventId}:health`,
++    provider: "wave3-scenario-audit",
++    source: "system",
++    status: health.status ?? "degraded",
++    healthy: health.status === "healthy",
++    connectionState: health.connectionState ?? "unknown",
++    wsConnected: health.wsConnected ?? "unknown",
++    reason: health.reason ?? "wave3_health_truth_cleanup",
++    asOf: timestamp,
++    reportedAt: timestamp,
++    receivedAt: timestamp
++  }, eventId, "system", timestamp);
++}
++
++function commitResult(event: DomainEvent, message: string) {
++  assert.equal(typeof engine.commitEventResult, "function", "runtimeEngine.commitEventResult(event, { log: false }) is required");
++  const result = engine.commitEventResult!(event, { log: false });
++  assert.notEqual(result.status, "duplicate_conflict", `${message}: unexpected idempotency conflict ${JSON.stringify(result)}`);
++  return result;
++}
++
++function commitOk(event: DomainEvent, message: string) {
++  const result = commitResult(event, message);
++  assert.equal(result.ok, true, `${message}: expected accepted event, got ${JSON.stringify(result)}`);
++  assert.equal(result.status === "accepted" || result.status === "duplicate_ignored", true, `${message}: unexpected status ${String(result.status)}`);
++  return result;
++}
++
++function completeBootstrapReconciled(prefix = "w3-bootstrap") {
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_LOADING_SNAPSHOT, `${prefix}-loading`), "bootstrap.loading_snapshot");
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_REPLAYING_TAIL, `${prefix}-replaying`), "bootstrap.replaying_tail");
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_AWAITING_EXCHANGE_TRUTH, `${prefix}-awaiting-exchange-truth`), "bootstrap.awaiting_exchange_truth");
++  commitOk(bootstrapEvent(EVENT_TYPE.BOOTSTRAP_RECONCILED, `${prefix}-reconciled`), "bootstrap.reconciled");
++}
++
++function prepareLocallyValidState(options: {
++  market?: "fresh" | "stale";
++  positionQuantity?: number;
++  bootstrap?: boolean;
++  idPrefix?: string;
++} = {}) {
++  const market = options.market ?? "fresh";
++  const ts = market === "fresh" ? isoNow() : isoPast(60000);
++  const prefix = options.idPrefix ?? crypto.randomUUID();
++
++  commitOk(validMarketTick(`w3-market-${market}-${prefix}`, 65000, ts, {
++    freshness: {
++      status: market,
++      maxAgeMs: 15000,
++      ageMs: market === "stale" ? 60000 : 0,
++      asOf: ts
++    }
++  }), `${market} market tick`);
++
++  commitOk(validPositionReconciled(`w3-position-${prefix}`, options.positionQuantity ?? 0), "position.reconciled");
++  commitOk(validOrderReconciled(`w3-order-${prefix}`), "order.reconciled");
++
++  if (options.bootstrap !== false) {
++    completeBootstrapReconciled(`w3-bootstrap-${prefix}`);
++  }
++}
++
++function placeOrderDecision() {
++  return runtimeEngine.evaluateAction({
++    type: ACTION_TYPE.PLACE_ORDER,
++    symbol: "BTCUSDT",
++    side: "buy",
++    quantity: 0.01,
++    price: 65000
++  });
++}
++
++function assertPlaceOrderDenied(message: string) {
++  const decision = placeOrderDecision();
++  assert.equal(decision.decision, "deny", `${message}: PLACE_ORDER must be denied, got ${JSON.stringify(decision)}`);
++}
++
++function assertPlaceOrderAllowedOnlyThroughGate(message: string) {
++  const decision = placeOrderDecision();
++  assert.equal(decision.decision, "allow", `${message}: ActionGate must be the only authority to allow PLACE_ORDER; got ${JSON.stringify(decision)}`);
++}
++
++function snapshotRecord() {
++  return runtimeEngine.getSnapshot() as RuntimeSnapshot & Record<string, unknown>;
++}
++
++function objectRecord(value: unknown): Record<string, unknown> | undefined {
++  return value && typeof value === "object" && !Array.isArray(value)
++    ? value as Record<string, unknown>
++    : undefined;
++}
++
++function exchangeTruthRecord(snapshot = snapshotRecord()) {
++  return objectRecord(snapshot.exchangeTruth)
++    ?? objectRecord(snapshot.exchange_truth)
++    ?? objectRecord(snapshot.exchange)
++    ?? objectRecord(snapshot.truth);
++}
++
++function exchangeTruthStatus(snapshot = snapshotRecord()) {
++  const truth = exchangeTruthRecord(snapshot);
++  return typeof truth?.status === "string" ? truth.status : undefined;
++}
++
++function assertExchangeTruthStatus(expected: string, message: string) {
++  const status = exchangeTruthStatus();
++  assert.equal(status, expected, `${message}: expected exchangeTruth.status=${expected}, got ${String(status)} in ${stableSnapshot(snapshotRecord())}`);
++}
++
++function assertHealthNotHealthy(message: string) {
++  assert.equal(typeof engine.getHealthSnapshot, "function", "runtimeEngine.getHealthSnapshot() is required for Health Truth Cleanup audit");
++  const health = engine.getHealthSnapshot!() as Record<string, unknown>;
++
++  const explicitHealthy = health.healthy === true || health.status === "healthy" || health.status === "ok";
++  const systemHealthy = health.systemState === "healthy" || health.system === "healthy";
++  assert.equal(explicitHealthy || systemHealthy, false, `${message}: health must not report healthy/ok, got ${JSON.stringify(health)}`);
++}
++
++function assertWsConnectedIsNotTrue(message: string) {
++  assert.equal(typeof engine.getHealthSnapshot, "function", "runtimeEngine.getHealthSnapshot() is required for wsConnected audit");
++  const health = engine.getHealthSnapshot!() as Record<string, unknown>;
++  assert.notEqual(health.wsConnected, true, `${message}: wsConnected unknown/unverified must not be true; got ${JSON.stringify(health)}`);
++}
++
++scenario(
++  "cold start -> exchangeTruth unknown -> PLACE_ORDER denied",
++  ["ExchangeTruth Domain", "Freshness Guard", "Health Truth Cleanup", "Combined safety"],
++  () => {
++    assert.equal(snapshotRecord().bootstrap.status, "cold");
++    assertExchangeTruthStatus("unknown", "cold start");
++    assertPlaceOrderDenied("cold start with exchangeTruth unknown");
++  }
++);
++
++scenario(
++  "bootstrap reconciled but exchangeTruth unknown -> denied",
++  ["ExchangeTruth Domain", "Combined safety"],
++  () => {
++    prepareLocallyValidState({ market: "fresh", positionQuantity: 0, bootstrap: true, idPrefix: "bootstrap-reconciled-unknown-truth" });
++    assert.equal(snapshotRecord().bootstrap.status, "reconciled");
++    assertExchangeTruthStatus("unknown", "bootstrap reconciled without exchange truth");
++    assertPlaceOrderDenied("bootstrap reconciled but exchangeTruth unknown");
++  }
++);
++
++scenario(
++  "exchangeTruth stale -> denied",
++  ["ExchangeTruth Domain", "Freshness Guard", "Combined safety"],
++  () => {
++    prepareLocallyValidState({ market: "fresh", positionQuantity: 0, bootstrap: true, idPrefix: "truth-stale" });
++    commitOk(exchangeTruthStaleDetected("w3-exchange-truth-stale"), "exchange_truth.stale_detected");
++    assertExchangeTruthStatus("stale", "exchangeTruth stale");
++    assertPlaceOrderDenied("exchangeTruth stale");
++  }
++);
++
++scenario(
++  "exchangeTruth conflicted -> denied",
++  ["ExchangeTruth Domain", "Combined safety"],
++  () => {
++    prepareLocallyValidState({ market: "fresh", positionQuantity: 0, bootstrap: true, idPrefix: "truth-conflict" });
++    commitOk(exchangeTruthConflictDetected("w3-exchange-truth-conflict", { exchangeQuantity: 1 }), "exchange_truth.conflict_detected");
++    assertExchangeTruthStatus("conflicted", "exchangeTruth conflicted");
++    assertPlaceOrderDenied("exchangeTruth conflicted");
++  }
++);
++
++scenario(
++  "exchangeTruth unavailable -> denied",
++  ["ExchangeTruth Domain", "Health Truth Cleanup", "Combined safety"],
++  () => {
++    prepareLocallyValidState({ market: "fresh", positionQuantity: 0, bootstrap: true, idPrefix: "truth-unavailable" });
++    commitOk(exchangeTruthUnavailableDetected("w3-exchange-truth-unavailable"), "exchange_truth.unavailable_detected");
++    assertExchangeTruthStatus("unavailable", "exchangeTruth unavailable");
++    assertPlaceOrderDenied("exchangeTruth unavailable");
++    assertHealthNotHealthy("exchangeTruth unavailable");
++  }
++);
++
++scenario(
++  "market data stale -> denied",
++  ["Freshness Guard", "Combined safety"],
++  () => {
++    prepareLocallyValidState({ market: "stale", positionQuantity: 0, bootstrap: true, idPrefix: "market-stale" });
++    commitOk(exchangeTruthReconcileSucceeded("w3-exchange-truth-fresh-with-stale-market"), "exchange_truth.reconcile_succeeded");
++    assertExchangeTruthStatus("fresh", "exchangeTruth fresh");
++    assertPlaceOrderDenied("market data stale");
++  }
++);
++
++scenario(
++  "connection state unknown -> not healthy and denied where applicable",
++  ["Health Truth Cleanup", "ExchangeTruth Domain", "Combined safety"],
++  () => {
++    prepareLocallyValidState({ market: "fresh", positionQuantity: 0, bootstrap: true, idPrefix: "connection-unknown" });
++    commitOk(exchangeTruthReconcileSucceeded("w3-exchange-truth-fresh-before-unknown-connection"), "exchange_truth.reconcile_succeeded");
++    commitOk(systemHealthChanged("w3-system-health-connection-unknown", {
++      status: "degraded",
++      connectionState: "unknown",
++      wsConnected: "unknown",
++      reason: "connection_state_unknown"
++    }), "system.health.changed");
++    assertHealthNotHealthy("connection state unknown");
++    assertWsConnectedIsNotTrue("connection state unknown");
++    assertPlaceOrderDenied("connection state unknown");
++  }
++);
++
++scenario(
++  "wsConnected unknown is not true",
++  ["Health Truth Cleanup"],
++  () => {
++    commitOk(systemHealthChanged("w3-system-health-ws-unknown", {
++      status: "degraded",
++      connectionState: "unknown",
++      wsConnected: "unknown",
++      reason: "ws_connected_unknown"
++    }), "system.health.changed ws unknown");
++    assertWsConnectedIsNotTrue("wsConnected unknown");
++  }
++);
++
++scenario(
++  "bootstrap reconciled + exchangeTruth fresh + market fresh + valid position -> allow only if ActionGate allows",
++  ["ExchangeTruth Domain", "Freshness Guard", "Combined safety", "ActionGate"],
++  () => {
++    prepareLocallyValidState({ market: "fresh", positionQuantity: 0, bootstrap: true, idPrefix: "fully-valid" });
++    commitOk(exchangeTruthReconcileSucceeded("w3-exchange-truth-fresh-valid"), "exchange_truth.reconcile_succeeded");
++    commitOk(systemHealthChanged("w3-system-health-healthy-valid", {
++      status: "healthy",
++      connectionState: "connected",
++      wsConnected: true,
++      reason: "all_wave3_inputs_fresh"
++    }), "system.health.changed healthy");
++    assertExchangeTruthStatus("fresh", "exchangeTruth fresh and valid state");
++    assertPlaceOrderAllowedOnlyThroughGate("fresh exchangeTruth + fresh market + reconciled bootstrap + valid position");
++  }
++);
++
++scenario(
++  "local flat position + exchange conflict -> denied",
++  ["ExchangeTruth Domain", "Combined safety"],
++  () => {
++    prepareLocallyValidState({ market: "fresh", positionQuantity: 0, bootstrap: true, idPrefix: "local-flat-exchange-conflict" });
++    assert.equal(snapshotRecord().position.status, "flat");
++    commitOk(exchangeTruthConflictDetected("w3-local-flat-exchange-conflict", {
++      exchangeQuantity: 1,
++      conflict: {
++        reason: "local_flat_but_exchange_open",
++        localQuantity: 0,
++        exchangeQuantity: 1
++      }
++    }), "exchange_truth.conflict_detected against local flat position");
++    assertPlaceOrderDenied("local flat position conflicts with exchange truth");
++  }
++);
++
++const failed = results.filter((result) => !result.ok);
++
++console.log(JSON.stringify({
++  name: "wave3_scenario_audit",
++  total: results.length,
++  passed: results.length - failed.length,
++  failed: failed.length,
++  results
++}, null, 2));
++
++if (failed.length > 0) {
++  throw new Error(`wave3 scenario audit failed: ${failed.map((r) => `${r.name}: ${r.detail}`).join("; ")}`);
++}

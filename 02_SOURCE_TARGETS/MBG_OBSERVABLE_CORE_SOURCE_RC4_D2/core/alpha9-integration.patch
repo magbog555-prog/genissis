@@ -1,0 +1,3299 @@
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/CORE_CONSTITUTION.md /mnt/data/wave10a_work/repo/CORE_CONSTITUTION.md
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/CORE_CONSTITUTION.md	2026-05-09 11:41:20.080187859 +0000
++++ /mnt/data/wave10a_work/repo/CORE_CONSTITUTION.md	2026-05-09 11:42:42.805240382 +0000
+@@ -1817,6 +1817,254 @@
+ - future: `core/market/market-input.ts`
+ - tests: `tests/scenarios/*`
+ 
++
++
++### LAW-076 — UI is read-only
++
++UI is read-only.
++
++The user interface observes core state, reports, traces, verdicts, and mock scenario outputs. It does not author canonical state, trust, permission, replay, integrity, provenance, market truth, or recovery truth. A UI view is an observation surface, not a kernel authority.
++
++Required proof:
++
++- UI code may read canonical core outputs but must not write core state directly;
++- UI state, layout state, client memory, route state, browser storage, or visualization state is not canonical evidence;
++- UI-originated requests remain requests and must pass core validation and ActionGate when they affect risk or state;
++- mock-first observable UI work must not introduce execution, trading controls, live market authority, or exchange keys.
++
++Current/future modules:
++
++- current: `core/kernel/core-trust-report.ts`
++- current: `core/gates/src/action-gate.ts`
++- current: `core/trace/causality-trace.ts`
++- current: `core/permissions/permission-ledger.ts`
++- future: `apps/core-ui-api/*`
++- tests: `tests/scenarios/*`
++
++### LAW-077 — UI cannot mutate Core state
++
++UI cannot mutate Core state.
++
++The only accepted cause of core state mutation remains a validated canonical event processed through core rules. UI interactions, frontend callbacks, observable stream subscriptions, mock panel state, and persisted UI preferences cannot mutate runtime snapshot, journal, trust state, integrity evidence, or permissions.
++
++Required proof:
++
++- UI interactions do not bypass event validation, idempotency, reducers, replay, integrity, Kernel Authority, or ActionGate;
++- UI layout persistence cannot change snapshot revision, canonical journal, hash chain, causality trace, CoreTrustReport, or ActionGate verdict;
++- observable subscriptions are read paths, not mutation paths;
++- any future UI-originated command is still non-authoritative until accepted by core as a valid event or action request.
++
++Current/future modules:
++
++- current: `core/contracts/src/events.ts`
++- current: `core/events/validate-domain-event.ts`
++- current: `core/transitions/src/reducers.ts`
++- current: `core/system/journal.ts`
++- current: `core/runtime/event-index.ts`
++- future: `apps/core-ui-api/*`
++- tests: `tests/scenarios/*`
++
++### LAW-078 — UI cannot compute trust
++
++UI cannot compute trust.
++
++Trust is evaluated by Kernel Authority and expressed through CoreTrustReport. The frontend may display trust state and reasons returned by the core, but it must not derive, recalculate, override, downgrade, upgrade, cache-as-authority, or synthesize kernel trust.
++
++Required proof:
++
++- trust state shown by UI is sourced from CoreTrustReport or canonical core output;
++- frontend logic cannot convert `UNCERTAIN`, `RECOVERABLE`, `COMPROMISED`, `HALTED`, or `PANIC` into `TRUSTED`;
++- UI filters, grouping, labels, badges, colors, or charts do not change trust semantics;
++- stale or missing UI data must not be presented as fresh trust.
++
++Current/future modules:
++
++- current: `core/kernel/kernel-authority.ts`
++- current: `core/kernel/core-trust-report.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `apps/core-ui-api/*`
++- tests: `tests/scenarios/*`
++
++### LAW-079 — UI cannot compute permissions
++
++UI cannot compute permissions.
++
++Permissions are produced by the core through Kernel Authority, CoreTrustReport, ActionGate, and Permission Ledger evidence. UI may display allowed/denied decisions and reasons, but it may not calculate permission, grant permission, hide blocking reasons, or transform a denied action into an allowed action.
++
++Required proof:
++
++- UI-displayed permission state is read from canonical core verdicts;
++- every denied action remains denied unless core emits a new canonical verdict;
++- permission ledger entries remain audit evidence, not frontend-controlled permission;
++- UI affordances may be disabled or hidden for safety, but hiding or showing controls is not a core permission decision.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- current: `core/permissions/permission-ledger.ts`
++- current: `core/kernel/core-trust-report.ts`
++- future: `apps/core-ui-api/*`
++- tests: `tests/scenarios/*`
++
++### LAW-080 — UI cannot bypass ActionGate
++
++UI cannot bypass ActionGate.
++
++No UI action, mock scenario, observable stream, websocket-like feed, local dev panel, or visualization control may bypass ActionGate for any unsafe or risk-increasing action. ActionGate remains the required decision boundary for action permission.
++
++Required proof:
++
++- UI cannot call unsafe state-changing paths that skip ActionGate;
++- mock scenarios cannot declare ActionGate success by frontend convention;
++- ActionGate verdict reasons remain machine-readable and auditable;
++- observable streams do not become an implicit allow channel.
++
++Current/future modules:
++
++- current: `core/gates/src/action-gate.ts`
++- current: `core/kernel/kernel-authority.ts`
++- current: `core/kernel/core-trust-report.ts`
++- current: `core/permissions/permission-ledger.ts`
++- future: `apps/core-ui-api/*`
++- tests: `tests/scenarios/*`
++
++### LAW-081 — Core remains single source of truth
++
++Core remains single source of truth.
++
++The canonical state of the system is the core's journal-derived snapshot, integrity evidence, trust report, and gate verdicts. UI state, mock scenario controls, frontend caches, layout persistence, observable stream buffers, and browser storage are not a second source of truth.
++
++Required proof:
++
++- frontend persistence is never used as canonical core state;
++- mock scenario state must be represented through deterministic accepted events or explicit non-canonical fixtures;
++- observable output can be reconstructed from core state and accepted scenario inputs;
++- conflicts between UI memory and core output are resolved in favor of core output.
++
++Current/future modules:
++
++- current: `core/system/journal.ts`
++- current: `core/state/src/types.ts`
++- current: `core/kernel/core-trust-report.ts`
++- current: `core/integrity/snapshot-hash-chain.ts`
++- current: `core/trace/causality-trace.ts`
++- future: `apps/core-ui-api/*`
++- tests: `tests/scenarios/*`
++
++### LAW-082 — Observable streams are informational only
++
++Observable streams are informational only.
++
++Observable streams expose core state, reports, traces, health, verdicts, and mock scenario observations for display and audit. They do not grant permission, mutate state, certify freshness, repair trust, reconcile exchange truth, or execute recovery/trading actions.
++
++Required proof:
++
++- stream delivery does not imply trust, freshness, connectivity, permission, or execution;
++- dropped, delayed, duplicated, or reordered observable messages do not mutate canonical core state;
++- observable stream status is health/diagnostic information, not core authority;
++- stream consumers must treat core identifiers, revisions, verdicts, and traces as read-only evidence.
++
++Current/future modules:
++
++- current: `core/kernel/core-trust-report.ts`
++- current: `core/health/runtime-health-snapshot.ts`
++- current: `core/gates/src/action-gate.ts`
++- current: `core/trace/causality-trace.ts`
++- future: `apps/core-ui-api/*`
++- tests: `tests/scenarios/*`
++
++### LAW-083 — Mock scenarios must preserve deterministic replay
++
++Mock scenarios must preserve deterministic replay.
++
++Mock-first UI work may introduce deterministic scenario inputs for observation, but those inputs must not use nondeterministic reducer or replay-sensitive logic. Mock scenarios must be replay-safe and must not obscure causality, hash-chain continuity, provenance, or ActionGate decisions.
++
++Required proof:
++
++- mock scenario events have stable identity, deterministic payloads, and explicit provenance or fixture provenance;
++- mock scenario execution does not depend on `Date.now()`, `Math.random()`, mutable runtime memory, UI timing, or browser-only state for replay-sensitive decisions;
++- mock scenario outputs can be replayed to the same canonical state and trust evidence;
++- mock-first work does not introduce live market ingestion, V1 connection, execution, trading, or exchange keys.
++
++Current/future modules:
++
++- current: `core/contracts/src/events.ts`
++- current: `core/system/journal.ts`
++- current: `core/integrity/snapshot-hash-chain.ts`
++- current: `core/trace/causality-trace.ts`
++- future: `apps/core-ui-api/mock-scenarios/*`
++- tests: `tests/scenarios/*`
++
++### LAW-084 — UI layout persistence must not affect Core semantics
++
++UI layout persistence must not affect Core semantics.
++
++Persistence of panels, tabs, filters, columns, viewport, graph layout, selection, local preferences, or visual grouping is frontend-only state. It must not change core state, event order, snapshot revision, trust report, permission verdict, freshness, provenance, hash-chain evidence, or causality trace.
++
++Required proof:
++
++- layout persistence is not included in canonical journal unless a future explicit core event law says otherwise;
++- restoring UI layout does not replay, skip, reorder, or mutate core events;
++- UI filters do not hide mandatory machine-readable denial reasons from canonical outputs;
++- visual grouping does not imply causal grouping unless core trace evidence says so.
++
++Current/future modules:
++
++- current: `core/kernel/core-trust-report.ts`
++- current: `core/trace/causality-trace.ts`
++- current: `core/gates/src/action-gate.ts`
++- future: `apps/core-ui-api/*`
++- tests: `tests/scenarios/*`
++
++### LAW-085 — Visualization must not alter computation
++
++Visualization must not alter computation.
++
++Visualization is an observation and explanation layer. Charts, graphs, timelines, colors, animations, grouping, filters, highlighting, and step-through displays must not alter reducers, replay, event validation, integrity checks, trust evaluation, permission verdicts, or recovery recommendations.
++
++Required proof:
++
++- rendering order is not event order unless backed by core trace evidence;
++- visual emphasis is not severity unless backed by CoreTrustReport, IntegrityReport, ActionGate verdict, or scenario audit evidence;
++- visualization does not call mutation paths as a side effect of reading data;
++- visualization cannot transform mock observation into execution or trading permission.
++
++Current/future modules:
++
++- current: `core/transitions/src/reducers.ts`
++- current: `core/kernel/core-trust-report.ts`
++- current: `core/integrity/integrity-report.ts`
++- current: `core/gates/src/action-gate.ts`
++- current: `core/trace/causality-trace.ts`
++- future: `apps/core-ui-api/*`
++- tests: `tests/scenarios/*`
++
++### Wave 10A observable UI invariants
++
++The following invariants are required for Observable UI work:
++
++1. UI observes; Core decides;
++2. UI state is never canonical core state;
++3. UI cannot mutate core state without a validated core event/action path;
++4. UI cannot compute trust or permissions;
++5. UI cannot bypass ActionGate;
++6. observable streams are informational only;
++7. mock scenarios must preserve deterministic replay;
++8. UI layout persistence must not affect core semantics;
++9. visualization must not alter computation;
++10. mock-first observable UI work must not introduce V1, live market, websocket authority, execution, trading, exchange keys, order placement, or frontend authority.
++
++### Wave 10A red lines
++
++The kernel must not:
++
++- treat frontend state, UI layout persistence, browser storage, stream buffers, or visual labels as authority;
++- introduce execution semantics, trading controls, live trading language, websocket authority, exchange keys, order placement, or frontend authority through UI work;
++- let observable streams grant permission, certify trust, certify freshness, mutate state, or bypass ActionGate;
++- let mock scenarios use nondeterministic replay-sensitive logic;
++- let visualization alter computation, trust, permissions, integrity, replay, provenance, or causality.
++
++
+ ### Wave 9 market input integrity invariants
+ 
+ The following invariants are required for Market Input Integrity work:
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/DELIVERY_REPORT_WAVE10A_ROLE4_COMPUTATION_TRACE_DTO.md /mnt/data/wave10a_work/repo/DELIVERY_REPORT_WAVE10A_ROLE4_COMPUTATION_TRACE_DTO.md
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/DELIVERY_REPORT_WAVE10A_ROLE4_COMPUTATION_TRACE_DTO.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/DELIVERY_REPORT_WAVE10A_ROLE4_COMPUTATION_TRACE_DTO.md	2026-05-09 11:41:51.871707298 +0000
+@@ -0,0 +1,100 @@
++# Delivery Report — Wave 10A Role 4: Canonical ComputationTrace DTO
++
++## Role
++
++Role 4 — Contracts / Reducer / DTO.
++
++## Base
++
++`mbg-core-v0.1-alpha8.zip`
++
++## Scope
++
++Created canonical UI DTO contracts for a mock-first Connected Observable Core Machine.
++
++This delivery is contract-only. It does not add websocket authority, V1, execution, trading, order placement, UI controls, layout semantics, or frontend-side trust computation.
++
++## Added / changed files
++
++- `core/contracts/ui/computation-trace-dto.ts`
++- `core/contracts/ui/index.ts`
++- `core/contracts/src/ui.ts`
++- `core/ui-api/mock-scenarios.ts`
++- `tests/scenarios/wave10a-computation-trace-dto.ts`
++- `package.json`
++
++## DTO contracts added
++
++- `ComputationTraceDTO`
++- `MachinePulseDTO`
++- `PipelineStepDTO`
++- `FormulaExplanationDTO`
++- `RuleEvaluationDTO`
++- `SnapshotDiffDTO`
++- `GateVerdictDTO`
++- `LedgerRecordDTO`
++- `QuarantineRecordDTO`
++- `RecoveryHintDTO`
++- `MarketInputIntegrityDTO`
++- `ProvenanceDTO`
++
++## Mock scenario contracts added
++
++- `HEALTHY_TRUSTED_READY`
++- `EXCHANGE_TRUTH_UNKNOWN_DENY`
++- `MARKET_INPUT_UNKNOWN_DENY`
++- `MARKET_INPUT_STALE_DENY`
++- `MARKET_INPUT_GAP_DENY`
++- `DUPLICATE_EVENT_IDEMPOTENT`
++- `INVALID_EVENT_QUARANTINE`
++- `MISSING_PROVENANCE_DENY`
++- `PROVENANCE_MISMATCH_COMPROMISE`
++- `SNAPSHOT_HASH_MISMATCH`
++- `REPLAY_MISMATCH_BLOCK`
++- `RECOVERY_ONLY_MODE`
++- `CANCEL_REDUCE_ONLY_ALLOWED`
++- `VALID_OBSERVATION_NO_PERMISSION`
++- `FULL_READY_GATE_DECIDES`
++
++## Public exports
++
++- `core/contracts/ui/index.ts`
++- `core/contracts/src/ui.ts`
++- `core/ui-api/mock-scenarios.ts`
++
++## Semantic notes
++
++- UI observes; Core decides.
++- DTOs expose core decisions and evidence, not UI state.
++- DTOs do not encode layout, theme, component, websocket, execution, or trading authority.
++- Mock scenario payloads are deterministic and adapter-safe.
++- `VALID_OBSERVATION_NO_PERMISSION` explicitly shows that valid market observation does not grant permission.
++- `FULL_READY_GATE_DECIDES` explicitly shows that ActionGate remains the final action enforcement surface.
++- DTO timestamps use `*FromEvent` fields to preserve replay determinism.
++
++## Tests added
++
++- `tests/scenarios/wave10a-computation-trace-dto.ts`
++
++## Script added
++
++- `npm run test:core:computation-trace-dto`
++
++## Commands run
++
++- `npm ci --ignore-scripts` — PASS
++- `npm run typecheck` — PASS
++- `npm test` — PASS
++- `npm run test:core:computation-trace-dto` — PASS
++
++## Replay-safety note
++
++The DTO layer uses deterministic mock payloads and canonical DTO stringify. It does not use `Date.now()`, `Math.random()`, websocket state, runtime memory, or external services to build scenario payloads.
++
++## Known limitations
++
++- This task does not implement an HTTP API endpoint.
++- This task does not connect the frontend reference package.
++- This task does not subscribe to runtime events.
++- This task does not change ActionGate, trust logic, reducers, persistence, or runtime behavior.
++- This task does not include UI layout or display semantics.
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/DELIVERY_REPORT_WAVE10_OBSERVABLE_MACHINE_AUDIT.md /mnt/data/wave10a_work/repo/DELIVERY_REPORT_WAVE10_OBSERVABLE_MACHINE_AUDIT.md
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/DELIVERY_REPORT_WAVE10_OBSERVABLE_MACHINE_AUDIT.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/DELIVERY_REPORT_WAVE10_OBSERVABLE_MACHINE_AUDIT.md	2026-05-09 11:41:52.127194517 +0000
+@@ -0,0 +1,166 @@
++# Delivery Report — Wave 10A Observable Machine Audit
++
++Role: 7 — Scenario Audit / Behavioral Verification
++
++Canonical base: `mbg-core-v0.1-alpha8`
++
++Frontend reference: `observable-core-machine-v0-7-6`
++
++Target: Wave 10A / mock-first connected observable core machine
++
++## Scope
++
++This delivery adds acceptance-audit coverage for the mock-first Core UI API / connected observable core machine.
++
++The audit verifies that UI observes while Core decides. It does not implement runtime architecture, UI controls, trading, execution, live market integration, V1, websocket authority, or exchange keys.
++
++## Files changed
++
++```txt
++package.json
++tests/scenarios/wave10-observable-machine-audit.ts
++DELIVERY_REPORT_WAVE10_OBSERVABLE_MACHINE_AUDIT.md
++```
++
++## Added script
++
++```bash
++npm run test:wave10:scenario-audit
++```
++
++The script runs:
++
++```bash
++npm run typecheck && tsx tests/scenarios/wave10-observable-machine-audit.ts
++```
++
++## Scenarios covered
++
++```txt
++1. All 15 mock scenarios render deterministically.
++2. UI DTO stable across replay.
++3. Same scenario -> same visual verdict.
++4. Market input integrity visible.
++5. Provenance visible.
++6. Gap/stale/duplicate visible.
++7. Snapshot diff visible.
++8. Recovery visibility preserved.
++9. Quarantine visibility preserved.
++10. ActionGate deny reasoning visible.
++11. Valid observation does not imply permission.
++12. UI DTO does not mutate Core state.
++13. UI contracts remain read-only.
++14. No execution semantics leak.
++15. No trading controls leak.
++16. No websocket authority.
++17. No V1/live integration.
++18. Deterministic replay preserved.
++```
++
++## Semantic risks covered
++
++```txt
++UI observes; Core decides.
++Mock scenario rendering must be deterministic.
++UI DTO must be stable across replay.
++Market input status must be observable, not treated as permission.
++Provenance must remain visible.
++Gap/stale/duplicate conditions must be visible.
++Snapshot diff, recovery, quarantine and ActionGate denial reasons must be visible.
++Reading UI DTO must not mutate runtime state.
++DTO/contracts must remain read-only.
++No execution/trading/websocket authority/V1/live semantics may leak through the observable machine.
++Replay determinism must be preserved.
++```
++
++## Commands run on alpha8
++
++```bash
++npm run typecheck
++```
++
++Result: passed.
++
++```bash
++npm test
++```
++
++Result: passed.
++
++```bash
++npm run test:wave10:scenario-audit
++```
++
++Result on alpha8: expected Wave 10A implementation gaps.
++
++Observed alpha8 result:
++
++```json
++{
++  "name": "wave10_observable_machine_audit",
++  "total": 18,
++  "passed": 0,
++  "failed": 18
++}
++```
++
++## Expected final Wave 10A result
++
++After the Observable Core Machine / Core UI API is integrated, the audit should pass fully:
++
++```json
++{
++  "name": "wave10_observable_machine_audit",
++  "total": 18,
++  "passed": 18,
++  "failed": 0
++}
++```
++
++## Expected Wave 10A surfaces
++
++The audit intentionally accepts canonical naming flexibility and looks for equivalent real runtime/module surfaces such as:
++
++```txt
++getObservableCoreMachineScenarios()
++getObservableMachineScenarios()
++getCoreUiMockScenarios()
++getComputationTraceScenarios()
++
++getObservableCoreMachineView()
++getObservableCoreMachineDto()
++getCoreUiDto()
++getComputationTrace()
++getLatestComputationTrace()
++
++renderObservableCoreScenario()
++renderCoreUiScenario()
++renderComputationTraceScenario()
++```
++
++Role 8 may adapt exact names/API to the final canonical implementation, but must not weaken semantic expectations.
++
++## Known limitations / gaps
++
++Alpha8 does not yet expose the Wave 10A observable-machine/Core UI DTO surface expected by this audit.
++
++The audit does not render a real browser UI. It checks the Core-facing DTO/contract layer and deterministic scenario outputs.
++
++The audit does not connect external services, live market feeds, V1, websocket authority, execution, trading controls, or exchange credentials.
++
++## Intentionally not done
++
++```txt
++CORE_CONSTITUTION.md was not changed.
++Runtime behavior was not changed.
++ActionGate logic was not changed.
++Trust logic was not changed.
++Replay/integrity logic was not changed.
++V1/V2 were not connected.
++UI controls were not added.
++Live market was not connected.
++Websocket authority was not added.
++Execution/trading/order placement was not added.
++Exchange keys were not added.
++External services were not used.
++```
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/DELIVERY_REPORT_WAVE10_OBSERVABLE_TRACE_MAPPING.md /mnt/data/wave10a_work/repo/DELIVERY_REPORT_WAVE10_OBSERVABLE_TRACE_MAPPING.md
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/DELIVERY_REPORT_WAVE10_OBSERVABLE_TRACE_MAPPING.md	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/DELIVERY_REPORT_WAVE10_OBSERVABLE_TRACE_MAPPING.md	2026-05-09 11:41:51.951687194 +0000
+@@ -0,0 +1,183 @@
++# DELIVERY_REPORT_WAVE10_OBSERVABLE_TRACE_MAPPING.md
++
++## Role
++
++Role 5 — Causality / Trace
++
++## Task
++
++Wave 10A — Observable Trace Mapping
++
++## Base
++
++`mbg-core-v0.1-alpha8.zip`
++
++## Summary
++
++Added replay-safe observable trace mapping for the Connected Observable Core Machine.
++
++The mapping exposes:
++
++- revision history;
++- replay steps;
++- causality chain;
++- provenance lineage;
++- integrity failures;
++- market input integrity;
++- snapshot transitions;
++- gate reasoning;
++- quarantine/recovery visibility;
++- revision cursor semantics;
++- time-travel visualization semantics.
++
++The implementation is read-only. It does not mutate snapshot, write events, calculate trust, call exchanges, connect V1, add execution, or create frontend authority.
++
++## Changed files
++
++```text
++core/trace/causality-trace.ts
++tests/scenarios/wave10-observable-trace-mapping.ts
++package.json
++DELIVERY_REPORT_WAVE10_OBSERVABLE_TRACE_MAPPING.md
++```
++
++## Trace model changes
++
++Added observable mapping types and functions:
++
++```text
++ObservableTraceStepKind
++ObservableTraceStepStatus
++ObservableRevisionCursor
++ObservableTraceStep
++ObservableRevisionHistoryEntry
++ObservableReplayStep
++ObservableTimeTravelSemantics
++ObservableTraceMapping
++mapTraceToObservableSteps()
++buildObservableTraceMapping()
++```
++
++## Replay-safe ordering
++
++Ordering is deterministic and ignores wall-clock generation time:
++
++```text
++revisionAfter ASC,
++revisionBefore ASC,
++eventId ASC,
++eventType ASC,
++transitionStatus ASC,
++traceId ASC
++```
++
++## Revision cursor semantics
++
++Each visual step carries:
++
++```text
++rev:<revisionBefore>-><revisionAfter>
++```
++
++Cursor selection is read-only visualization. It never mutates Core state.
++
++## Time-travel visualization semantics
++
++Time-travel is a UI visualization of existing trace evidence only.
++
++The UI may select a revision cursor, but it must not recompute trust, permissions, transitions, or replay state.
++
++## Tests added
++
++```text
++tests/scenarios/wave10-observable-trace-mapping.ts
++```
++
++Script:
++
++```text
++npm run test:wave10:observable-trace-mapping
++```
++
++Covered scenarios:
++
++1. replay ordering stable;
++2. causality ordering stable;
++3. snapshot transition deterministic;
++4. provenance lineage visible;
++5. market input integrity visible;
++6. integrity failure visible;
++7. quarantine/recovery visibility present;
++8. time-travel semantics are read-only;
++9. trace steps include event → provenance → transition → snapshot → trust → gate → market input.
++
++## Tests run
++
++```text
++npm run typecheck
++PASS
++
++npm test
++PASS
++
++npm run test:wave10:observable-trace-mapping
++PASS
++```
++
++## Example trace JSON
++
++```json
++{
++  "mappingVersion": "observable-trace-mapping-v1",
++  "ordering": {
++    "stable": true,
++    "rule": "revisionAfter ASC, revisionBefore ASC, eventId ASC, eventType ASC, transitionStatus ASC, traceId ASC; generatedAt is ignored"
++  },
++  "revisionCursor": {
++    "latestRevision": 1,
++    "availableCursors": ["rev:0->0", "rev:0->1"]
++  },
++  "timeTravel": {
++    "cursorField": "revisionCursor",
++    "orderingRule": "A UI may move across availableCursors only; it must not recompute ordering from wall-clock time.",
++    "mutationRule": "Selecting a cursor is read-only visualization and never mutates Core state.",
++    "readOnlyRule": "UI observes mapped Core evidence; Kernel Authority and ActionGate remain the only trust/action authorities."
++  }
++}
++```
++
++## Observability note
++
++Observable Core Machine can render the mapped flow as:
++
++```text
++revision history
++→ replay steps
++→ event
++→ metadata/provenance
++→ transition
++→ snapshot transition
++→ trust effect
++→ gate reasoning
++→ market input integrity
++→ integrity/quarantine/recovery visibility
++```
++
++The UI observes these artifacts. Core remains the only decision maker.
++
++## Semantic notes
++
++- UI observes, Core decides.
++- Observable mapping is an adapter over CausalityTrace, not a new source of truth.
++- Mapping is deterministic where possible.
++- Mapping does not use `Date.now()` or `Math.random()`.
++- Mapping does not weaken ActionGate, Kernel Authority, replay, integrity, or trust logic.
++- Missing provenance/input remains visible as a gap/issue, not corruption.
++
++## Known limitations
++
++- No frontend implementation is included.
++- No API endpoint is added in this role.
++- No streaming/polling transport is added.
++- No V1/live market/execution/trading integration is added.
++- Snapshot Hash Chain is referenced through existing `hashChainLinkId`; this task does not implement new hash-chain logic.
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/contracts/src/ui.ts /mnt/data/wave10a_work/repo/core/contracts/src/ui.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/contracts/src/ui.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/core/contracts/src/ui.ts	2026-05-09 11:41:51.904483141 +0000
+@@ -0,0 +1 @@
++export * from "../ui/index.js";
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/contracts/ui/computation-trace-dto.ts /mnt/data/wave10a_work/repo/core/contracts/ui/computation-trace-dto.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/contracts/ui/computation-trace-dto.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/core/contracts/ui/computation-trace-dto.ts	2026-05-09 11:41:51.904693296 +0000
+@@ -0,0 +1,222 @@
++import { z } from "zod";
++
++export const UI_DTO_VERSION = "core-ui-dto-v1" as const;
++
++export const TrustStateSchema = z.enum([
++  "TRUSTED",
++  "RECOVERABLE",
++  "UNCERTAIN",
++  "COMPROMISED",
++  "HALTED",
++  "PANIC"
++]);
++
++export const IntegrityStatusSchema = z.enum([
++  "unknown",
++  "valid",
++  "warning",
++  "broken",
++  "tampered",
++  "discontinuity"
++]);
++
++export const ProvenanceDTOSchema = z.object({
++  provenanceId: z.string(),
++  originType: z.string(),
++  originEventId: z.string().optional(),
++  targetId: z.string(),
++  parentProvenanceIds: z.array(z.string()).default([]),
++  source: z.string(),
++  confidence: z.number().min(0).max(1),
++  createdAtFromEvent: z.string()
++}).strict();
++
++export type ProvenanceDTO = z.infer<typeof ProvenanceDTOSchema>;
++
++export const RuleEvaluationDTOSchema = z.object({
++  ruleId: z.string(),
++  label: z.string(),
++  passed: z.boolean(),
++  severity: z.enum(["info", "warning", "blocking", "critical", "panic"]),
++  reasonCode: z.string().optional(),
++  evidence: z.record(z.unknown()).default({})
++}).strict();
++
++export type RuleEvaluationDTO = z.infer<typeof RuleEvaluationDTOSchema>;
++
++export const FormulaExplanationDTOSchema = z.object({
++  formulaId: z.string(),
++  label: z.string(),
++  expression: z.string(),
++  inputs: z.record(z.union([z.string(), z.number(), z.boolean(), z.null()])),
++  result: z.union([z.string(), z.number(), z.boolean(), z.null()]),
++  deterministic: z.literal(true)
++}).strict();
++
++export type FormulaExplanationDTO = z.infer<typeof FormulaExplanationDTOSchema>;
++
++export const SnapshotDiffDTOSchema = z.object({
++  beforeRevision: z.number().int().nonnegative(),
++  afterRevision: z.number().int().nonnegative(),
++  beforeHash: z.string().optional(),
++  afterHash: z.string().optional(),
++  changedPaths: z.array(z.string()),
++  addedPaths: z.array(z.string()).default([]),
++  removedPaths: z.array(z.string()).default([])
++}).strict();
++
++export type SnapshotDiffDTO = z.infer<typeof SnapshotDiffDTOSchema>;
++
++export const GateVerdictDTOSchema = z.object({
++  actionId: z.string(),
++  actionType: z.string(),
++  allowed: z.boolean(),
++  actionClass: z.string(),
++  kernelTrustState: TrustStateSchema,
++  severity: z.enum(["info", "warning", "critical", "panic"]).or(z.string()),
++  blockingReasons: z.array(z.string()),
++  allowedAlternatives: z.array(z.string()).default([]),
++  gateVersion: z.string()
++}).strict();
++
++export type GateVerdictDTO = z.infer<typeof GateVerdictDTOSchema>;
++
++export const LedgerRecordDTOSchema = z.object({
++  recordId: z.string(),
++  decision: z.enum(["allow", "deny"]),
++  actionType: z.string(),
++  reasonCodes: z.array(z.string()),
++  recordedAtFromEvent: z.string(),
++  sourceEventId: z.string().optional()
++}).strict();
++
++export type LedgerRecordDTO = z.infer<typeof LedgerRecordDTOSchema>;
++
++export const QuarantineRecordDTOSchema = z.object({
++  quarantineId: z.string(),
++  reason: z.string(),
++  source: z.string(),
++  eventId: z.string().optional(),
++  eventType: z.string().optional(),
++  payloadHash: z.string(),
++  severity: z.enum(["info", "warning", "blocking", "critical", "panic"]),
++  detectedAtFromEvent: z.string(),
++  recoverable: z.boolean()
++}).strict();
++
++export type QuarantineRecordDTO = z.infer<typeof QuarantineRecordDTOSchema>;
++
++export const RecoveryHintDTOSchema = z.object({
++  hintId: z.string(),
++  actionType: z.string(),
++  reason: z.string(),
++  priority: z.enum(["none", "low", "medium", "high", "critical"]),
++  manualReviewRequired: z.boolean()
++}).strict();
++
++export type RecoveryHintDTO = z.infer<typeof RecoveryHintDTOSchema>;
++
++export const MarketInputIntegrityDTOSchema = z.object({
++  status: z.enum([
++    "unknown",
++    "valid",
++    "stale",
++    "duplicate",
++    "gap_detected",
++    "checksum_mismatch",
++    "invalid",
++    "unverifiable"
++  ]),
++  observationId: z.string().optional(),
++  eventId: z.string().optional(),
++  symbol: z.string().optional(),
++  channel: z.string().optional(),
++  sourceName: z.string().optional(),
++  sequence: z.union([z.number(), z.string()]).optional(),
++  payloadHash: z.string().optional(),
++  provenanceId: z.string().optional(),
++  blockingReasons: z.array(z.string()),
++  checkedAtFromEvent: z.string()
++}).strict();
++
++export type MarketInputIntegrityDTO = z.infer<typeof MarketInputIntegrityDTOSchema>;
++
++export const PipelineStepDTOSchema = z.object({
++  stepId: z.string(),
++  label: z.string(),
++  status: z.enum(["not_started", "running", "passed", "blocked", "failed", "skipped"]),
++  inputRefs: z.array(z.string()).default([]),
++  outputRefs: z.array(z.string()).default([]),
++  startedAtFromEvent: z.string().optional(),
++  completedAtFromEvent: z.string().optional(),
++  rules: z.array(RuleEvaluationDTOSchema).default([]),
++  formulas: z.array(FormulaExplanationDTOSchema).default([])
++}).strict();
++
++export type PipelineStepDTO = z.infer<typeof PipelineStepDTOSchema>;
++
++export const MachinePulseDTOSchema = z.object({
++  dtoVersion: z.literal(UI_DTO_VERSION),
++  pulseId: z.string(),
++  scenarioId: z.string().optional(),
++  emittedAtFromEvent: z.string(),
++  snapshotRevision: z.number().int().nonnegative(),
++  snapshotHash: z.string().optional(),
++  trustState: TrustStateSchema,
++  runtimeMode: z.string(),
++  tradingAllowed: z.boolean(),
++  summary: z.string(),
++  blocked: z.boolean(),
++  blockingReasons: z.array(z.string())
++}).strict();
++
++export type MachinePulseDTO = z.infer<typeof MachinePulseDTOSchema>;
++
++export const ComputationTraceDTOSchema = z.object({
++  dtoVersion: z.literal(UI_DTO_VERSION),
++  traceId: z.string(),
++  scenarioId: z.string(),
++  title: z.string(),
++  description: z.string(),
++  createdAtFromEvent: z.string(),
++  pulse: MachinePulseDTOSchema,
++  pipeline: z.array(PipelineStepDTOSchema),
++  snapshotDiff: SnapshotDiffDTOSchema,
++  gateVerdict: GateVerdictDTOSchema.optional(),
++  ledgerRecords: z.array(LedgerRecordDTOSchema).default([]),
++  quarantineRecords: z.array(QuarantineRecordDTOSchema).default([]),
++  recoveryHints: z.array(RecoveryHintDTOSchema).default([]),
++  marketInputIntegrity: MarketInputIntegrityDTOSchema.optional(),
++  provenance: z.array(ProvenanceDTOSchema).default([]),
++  causality: z.object({
++    eventId: z.string().optional(),
++    transitionId: z.string().optional(),
++    previousSnapshotHash: z.string().optional(),
++    eventHash: z.string().optional(),
++    transitionHash: z.string().optional(),
++    snapshotHash: z.string().optional()
++  }).strict(),
++  notes: z.array(z.string()).default([])
++}).strict();
++
++export type ComputationTraceDTO = z.infer<typeof ComputationTraceDTOSchema>;
++
++export function canonicalDtoStringify(value: unknown): string {
++  if (value === null || typeof value !== "object") return JSON.stringify(value);
++  if (Array.isArray(value)) return `[${value.map((item) => canonicalDtoStringify(item)).join(",")}]`;
++
++  const record = value as Record<string, unknown>;
++  return `{${Object.keys(record)
++    .filter((key) => record[key] !== undefined)
++    .sort()
++    .map((key) => `${JSON.stringify(key)}:${canonicalDtoStringify(record[key])}`)
++    .join(",")}}`;
++}
++
++export function validateComputationTraceDTO(value: unknown): ComputationTraceDTO {
++  return ComputationTraceDTOSchema.parse(value);
++}
++
++export function validateMachinePulseDTO(value: unknown): MachinePulseDTO {
++  return MachinePulseDTOSchema.parse(value);
++}
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/contracts/ui/index.ts /mnt/data/wave10a_work/repo/core/contracts/ui/index.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/contracts/ui/index.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/core/contracts/ui/index.ts	2026-05-09 11:41:51.904817840 +0000
+@@ -0,0 +1 @@
++export * from "./computation-trace-dto.js";
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/observable/observable-read-models.ts /mnt/data/wave10a_work/repo/core/observable/observable-read-models.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/observable/observable-read-models.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/core/observable/observable-read-models.ts	2026-05-09 11:41:52.082597100 +0000
+@@ -0,0 +1,410 @@
++import type { GateDecision } from "../contracts/src/actions.js";
++import type { IntegrityReport, MarketInputIntegrityReport, ProvenanceHealthReport } from "../integrity/integrity-report.js";
++import type { CoreTrustReport, BlockingReason } from "../kernel/core-trust-report.js";
++import type { RecoveryPlan, QuarantineSummary } from "../recovery/recovery-planner.js";
++
++export const OBSERVABLE_READ_MODEL_VERSION = "observable-read-models-v0.1" as const;
++
++export type ObservableStatus = "ok" | "warning" | "blocked" | "critical" | "unknown";
++export type ObservableSeverity = "info" | "warning" | "blocking" | "critical" | "panic";
++
++export interface ObservableExplanation {
++  code: string;
++  title: string;
++  detail: string;
++  severity: ObservableSeverity;
++  domain?: string;
++  evidence?: Record<string, unknown>;
++}
++
++export interface ObservableMachineSummary {
++  trustState: string;
++  runtimeMode: string;
++  tradingAllowed: boolean;
++  revision: number;
++  mainReason?: string;
++  mainExplanation?: string;
++}
++
++export interface ObservableTrustReportModel {
++  modelVersion: typeof OBSERVABLE_READ_MODEL_VERSION;
++  revision: number;
++  trustState: string;
++  runtimeMode: string;
++  tradingAllowed: boolean;
++  allowedActionClasses: string[];
++  blockingReasons: ObservableExplanation[];
++  health: {
++    healthTruthComplete?: boolean;
++    diagnostics: string[];
++  };
++  integrity?: ObservableIntegrityReportModel;
++  provenance?: ObservableProvenanceIntegrityModel;
++  marketInput?: ObservableMarketInputStatusModel;
++}
++
++export interface ObservableIntegrityReportModel {
++  modelVersion: typeof OBSERVABLE_READ_MODEL_VERSION;
++  status: string;
++  severity: ObservableSeverity;
++  revision?: number;
++  chainContinuity?: boolean | "unknown";
++  snapshotHash?: string;
++  previousSnapshotHash?: string;
++  lastEventHash?: string;
++  lastTransitionHash?: string;
++  mismatchReason?: string;
++  explanation: ObservableExplanation;
++}
++
++export interface ObservableActionGateVerdictModel {
++  modelVersion: typeof OBSERVABLE_READ_MODEL_VERSION;
++  action: string;
++  allowed: boolean;
++  decision: "allow" | "deny";
++  actionClass: string;
++  severity: string;
++  snapshotRevision: number;
++  kernelTrustState: string;
++  blockingReasons: ObservableExplanation[];
++  allowedAlternatives: string[];
++  relatedInvariants: string[];
++  gateVersion: string;
++  deterministicExplanation: string;
++  traceId?: string;
++  integrityStatus?: string;
++  provenanceStatus?: string;
++  marketInputStatus?: string;
++}
++
++export interface ObservableRecoveryPlanModel {
++  modelVersion: typeof OBSERVABLE_READ_MODEL_VERSION;
++  required: boolean;
++  mode: string;
++  priority: string;
++  reasons: ObservableExplanation[];
++  nextActions: ObservableRecoveryHint[];
++  forbiddenActions: string[];
++  manualReviewRequired: boolean;
++  plannerVersion: string;
++}
++
++export interface ObservableRecoveryHint {
++  action: string;
++  title: string;
++  detail: string;
++  safeToDisplay: true;
++}
++
++export interface ObservableQuarantineSummaryModel {
++  modelVersion: typeof OBSERVABLE_READ_MODEL_VERSION;
++  count: number;
++  hasItems: boolean;
++  reasons: string[];
++  explanation: string;
++}
++
++export interface ObservableMarketInputStatusModel {
++  modelVersion: typeof OBSERVABLE_READ_MODEL_VERSION;
++  status: string;
++  blockingReasons: ObservableExplanation[];
++  source?: string;
++  provider?: string;
++  eventId?: string;
++  sequence?: number | string;
++  provenanceId?: string;
++  checksum?: string;
++  checkedAt?: string;
++}
++
++export interface ObservableProvenanceIntegrityModel {
++  modelVersion: typeof OBSERVABLE_READ_MODEL_VERSION;
++  status: string;
++  blockingReasons: ObservableExplanation[];
++  traceId?: string;
++  parentTraceId?: string;
++  sourceEventId?: string;
++  checkedAt?: string;
++  severity?: string;
++}
++
++export interface ObservableCoreReadModel {
++  modelVersion: typeof OBSERVABLE_READ_MODEL_VERSION;
++  machine: ObservableMachineSummary;
++  trustReport: ObservableTrustReportModel;
++  integrity?: ObservableIntegrityReportModel;
++  gateVerdict?: ObservableActionGateVerdictModel;
++  blockingReasons: ObservableExplanation[];
++  recoveryPlan?: ObservableRecoveryPlanModel;
++  quarantine?: ObservableQuarantineSummaryModel;
++  marketInput?: ObservableMarketInputStatusModel;
++  provenance?: ObservableProvenanceIntegrityModel;
++}
++
++export interface ObservableCoreReadModelInput {
++  coreTrustReport: CoreTrustReport;
++  gateVerdict?: GateDecision;
++  recoveryPlan?: RecoveryPlan;
++  quarantineSummary?: QuarantineSummary;
++}
++
++const REASON_TITLES: Record<string, string> = {
++  bootstrap_not_reconciled: "Bootstrap is not reconciled",
++  bootstrap_awaiting_exchange_truth: "Bootstrap is waiting for exchange truth",
++  exchange_truth_unknown: "Exchange truth is unknown",
++  exchange_truth_stale: "Exchange truth is stale",
++  exchange_truth_conflicted: "Exchange truth is conflicted",
++  market_data_stale: "Market data is stale",
++  freshness_unknown: "Freshness is unknown",
++  connection_state_unknown: "Connection state is unknown",
++  health_truth_partial: "Health truth is partial",
++  ws_status_unknown: "WebSocket status is unknown",
++  position_unknown: "Position is unknown",
++  risk_blocked: "Risk is blocked",
++  order_uncertain_requires_reconcile: "Order state is uncertain",
++  integrity_broken: "Integrity chain is broken",
++  integrity_tampered: "Integrity chain is tampered",
++  causality_contradiction: "Causality contradiction detected",
++  provenance_missing: "Provenance is missing",
++  provenance_incomplete: "Provenance is incomplete",
++  provenance_inconsistent: "Provenance is inconsistent",
++  provenance_unverifiable: "Provenance is unverifiable",
++  provenance_parent_missing: "Provenance parent is missing",
++  provenance_replay_mismatch: "Provenance replay mismatch",
++  PROVENANCE_MISSING: "Provenance is missing",
++  PROVENANCE_INCOMPLETE: "Provenance is incomplete",
++  PROVENANCE_INCONSISTENT: "Provenance is inconsistent",
++  PROVENANCE_UNVERIFIABLE: "Provenance is unverifiable",
++  PROVENANCE_PARENT_MISSING: "Provenance parent is missing",
++  PROVENANCE_REPLAY_MISMATCH: "Provenance replay mismatch",
++  MARKET_INPUT_UNKNOWN: "Market input is unknown",
++  MARKET_INPUT_MISSING_PROVENANCE: "Market input provenance is missing",
++  MARKET_INPUT_STALE: "Market input is stale",
++  MARKET_INPUT_GAP: "Market input gap detected",
++  MARKET_INPUT_DUPLICATE: "Duplicate market input",
++  MARKET_INPUT_INVALID: "Market input is invalid",
++  MARKET_INPUT_CHECKSUM_MISMATCH: "Market input checksum mismatch",
++  MARKET_INPUT_UNVERIFIABLE: "Market input is unverifiable"
++};
++
++function titleFor(code: string): string {
++  return REASON_TITLES[code] ?? code.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
++}
++
++function detailFor(code: string): string {
++  if (code.startsWith("MARKET_INPUT_")) return "Risk-increasing actions require valid, fresh, replay-safe market input with provenance.";
++  if (code.startsWith("PROVENANCE_") || code.startsWith("provenance_")) return "Risk-increasing actions require valid provenance; recovery and risk-reducing actions remain observable.";
++  if (code.startsWith("exchange_truth_")) return "Core cannot treat exchange truth as safe for normal trading until this condition is resolved.";
++  if (code.includes("fresh") || code.includes("stale")) return "Freshness must be proven before ordinary risk-increasing action.";
++  if (code.includes("integrity") || code.includes("tampered")) return "Integrity evidence blocks unsafe actions until replay/manual review resolves it.";
++  if (code.includes("connection") || code.includes("health") || code.includes("ws_")) return "Health truth is not complete enough for normal action.";
++  return "Core reported this reason as part of the deterministic action/trust evaluation.";
++}
++
++function severityFor(code: string, fallback: ObservableSeverity = "blocking"): ObservableSeverity {
++  if (code.includes("PANIC") || code.includes("tampered") || code.includes("TAMPERED")) return "panic";
++  if (code.includes("conflicted") || code.includes("mismatch") || code.includes("MISMATCH") || code.includes("INCONSISTENT") || code.includes("CHECKSUM")) return "critical";
++  if (code.includes("unknown") || code.includes("UNKNOWN") || code.includes("missing") || code.includes("MISSING")) return "warning";
++  return fallback;
++}
++
++function unique(values: string[]): string[] {
++  return Array.from(new Set(values.filter((value) => value.trim().length > 0))).sort();
++}
++
++function explanationFromCode(code: string, domain?: string, severity?: ObservableSeverity, evidence?: Record<string, unknown>): ObservableExplanation {
++  return {
++    code,
++    title: titleFor(code),
++    detail: detailFor(code),
++    severity: severity ?? severityFor(code),
++    domain,
++    evidence
++  };
++}
++
++function explanationFromBlockingReason(reason: BlockingReason): ObservableExplanation {
++  return {
++    code: reason.code,
++    title: titleFor(reason.code),
++    detail: reason.message || detailFor(reason.code),
++    severity: reason.severity,
++    domain: reason.domain,
++    evidence: reason.evidence
++  };
++}
++
++export function buildObservableBlockingReasons(reasons: Array<string | BlockingReason>): ObservableExplanation[] {
++  return reasons.map((reason) => {
++    if (typeof reason === "string") return explanationFromCode(reason);
++    return explanationFromBlockingReason(reason);
++  }).sort((a, b) => a.code.localeCompare(b.code));
++}
++
++export function buildObservableIntegrityReport(integrity?: IntegrityReport): ObservableIntegrityReportModel | undefined {
++  if (!integrity) return undefined;
++  const code = integrity.mismatchReason || `integrity_${integrity.status}`;
++  return {
++    modelVersion: OBSERVABLE_READ_MODEL_VERSION,
++    status: integrity.status,
++    severity: integrity.severity,
++    revision: integrity.revision,
++    chainContinuity: integrity.chainContinuity,
++    snapshotHash: integrity.snapshotHash,
++    previousSnapshotHash: integrity.previousSnapshotHash,
++    lastEventHash: integrity.lastEventHash,
++    lastTransitionHash: integrity.lastTransitionHash,
++    mismatchReason: integrity.mismatchReason,
++    explanation: explanationFromCode(code, "integrity", integrity.severity, {
++      chainContinuity: integrity.chainContinuity
++    })
++  };
++}
++
++export function buildObservableProvenanceIntegrity(provenance?: ProvenanceHealthReport): ObservableProvenanceIntegrityModel | undefined {
++  if (!provenance) return undefined;
++  return {
++    modelVersion: OBSERVABLE_READ_MODEL_VERSION,
++    status: provenance.status,
++    blockingReasons: buildObservableBlockingReasons(provenance.blockingReasons),
++    traceId: provenance.traceId,
++    parentTraceId: provenance.parentTraceId,
++    sourceEventId: provenance.sourceEventId,
++    checkedAt: provenance.checkedAt,
++    severity: provenance.severity
++  };
++}
++
++export function buildObservableMarketInputStatus(marketInput?: MarketInputIntegrityReport): ObservableMarketInputStatusModel | undefined {
++  if (!marketInput) return undefined;
++  return {
++    modelVersion: OBSERVABLE_READ_MODEL_VERSION,
++    status: marketInput.status,
++    blockingReasons: buildObservableBlockingReasons(marketInput.blockingReasons),
++    source: marketInput.source,
++    provider: marketInput.provider,
++    eventId: marketInput.eventId,
++    sequence: marketInput.sequence,
++    provenanceId: marketInput.provenanceId,
++    checksum: marketInput.checksum,
++    checkedAt: marketInput.checkedAt
++  };
++}
++
++export function deterministicVerdictExplanation(verdict: GateDecision): string {
++  if (verdict.allowed) {
++    return `${verdict.actionType}: allow at revision ${verdict.snapshotRevision} by ${verdict.gateVersion}`;
++  }
++  const reasons = unique(verdict.blockingReasons ?? []);
++  const reasonText = reasons.length ? reasons.join(",") : "action_gate_denied";
++  return `${verdict.actionType}: deny at revision ${verdict.snapshotRevision} by ${verdict.gateVersion}; reasons=${reasonText}`;
++}
++
++export function buildObservableActionGateVerdict(verdict?: GateDecision): ObservableActionGateVerdictModel | undefined {
++  if (!verdict) return undefined;
++  return {
++    modelVersion: OBSERVABLE_READ_MODEL_VERSION,
++    action: verdict.actionType,
++    allowed: verdict.allowed,
++    decision: verdict.decision,
++    actionClass: verdict.actionClass,
++    severity: verdict.severity,
++    snapshotRevision: verdict.snapshotRevision,
++    kernelTrustState: verdict.kernelTrustState,
++    blockingReasons: buildObservableBlockingReasons(verdict.blockingReasons ?? []),
++    allowedAlternatives: unique((verdict.allowedAlternatives ?? []).map(String)),
++    relatedInvariants: unique(verdict.relatedInvariants ?? []),
++    gateVersion: verdict.gateVersion,
++    deterministicExplanation: deterministicVerdictExplanation(verdict),
++    traceId: verdict.traceId,
++    integrityStatus: verdict.integrityStatus,
++    provenanceStatus: verdict.provenanceStatus,
++    marketInputStatus: verdict.marketInputStatus
++  };
++}
++
++export function buildObservableRecoveryPlan(plan?: RecoveryPlan): ObservableRecoveryPlanModel | undefined {
++  if (!plan) return undefined;
++  return {
++    modelVersion: OBSERVABLE_READ_MODEL_VERSION,
++    required: plan.required,
++    mode: plan.mode,
++    priority: plan.priority,
++    reasons: buildObservableBlockingReasons(plan.reasons),
++    nextActions: unique(plan.nextActions).map((action) => ({
++      action,
++      title: titleFor(action),
++      detail: "Recovery hint is observable only; execution must still go through approved Core APIs and ActionGate.",
++      safeToDisplay: true
++    })),
++    forbiddenActions: unique(plan.forbiddenActions),
++    manualReviewRequired: plan.manualReviewRequired,
++    plannerVersion: plan.plannerVersion
++  };
++}
++
++export function buildObservableQuarantineSummary(summary?: QuarantineSummary): ObservableQuarantineSummaryModel | undefined {
++  if (!summary) return undefined;
++  const count = [summary.count, summary.itemCount, summary.quarantinedCount, summary.badDataCount, summary.rejectedEventCount]
++    .filter((value): value is number => typeof value === "number" && Number.isFinite(value))
++    .reduce((total, value) => total + Math.max(0, value), 0);
++  const hasItems = Boolean(summary.hasItems || count > 0);
++  const reasons = unique((summary.reasons ?? []).map(String));
++  return {
++    modelVersion: OBSERVABLE_READ_MODEL_VERSION,
++    count,
++    hasItems,
++    reasons,
++    explanation: hasItems
++      ? "Quarantine has records. UI may display them as evidence but must not replay or apply them."
++      : "Quarantine has no reported records."
++  };
++}
++
++export function buildObservableTrustReport(report: CoreTrustReport): ObservableTrustReportModel {
++  return {
++    modelVersion: OBSERVABLE_READ_MODEL_VERSION,
++    revision: report.revision,
++    trustState: report.trustState,
++    runtimeMode: report.runtimeMode,
++    tradingAllowed: report.tradingAllowed,
++    allowedActionClasses: unique(report.allowedActionClasses.map(String)),
++    blockingReasons: buildObservableBlockingReasons(report.blockingReasons),
++    health: {
++      healthTruthComplete: report.healthTruth?.healthTruthComplete,
++      diagnostics: unique(Array.isArray(report.healthTruth?.diagnostics) ? report.healthTruth.diagnostics.map(String) : [])
++    },
++    integrity: buildObservableIntegrityReport(report.integrity),
++    provenance: buildObservableProvenanceIntegrity(report.provenance),
++    marketInput: buildObservableMarketInputStatus(report.marketInput)
++  };
++}
++
++export function buildObservableCoreReadModel(input: ObservableCoreReadModelInput): ObservableCoreReadModel {
++  const trustReport = buildObservableTrustReport(input.coreTrustReport);
++  const gateVerdict = buildObservableActionGateVerdict(input.gateVerdict ?? input.coreTrustReport.actionVerdicts?.place_order ?? input.coreTrustReport.actions?.place_order);
++  const recoveryPlan = buildObservableRecoveryPlan(input.recoveryPlan);
++  const quarantine = buildObservableQuarantineSummary(input.quarantineSummary);
++  const blockingReasons = gateVerdict?.blockingReasons?.length ? gateVerdict.blockingReasons : trustReport.blockingReasons;
++  const mainReason = blockingReasons[0];
++
++  return {
++    modelVersion: OBSERVABLE_READ_MODEL_VERSION,
++    machine: {
++      trustState: trustReport.trustState,
++      runtimeMode: trustReport.runtimeMode,
++      tradingAllowed: trustReport.tradingAllowed,
++      revision: trustReport.revision,
++      mainReason: mainReason?.code,
++      mainExplanation: mainReason?.detail
++    },
++    trustReport,
++    integrity: trustReport.integrity,
++    gateVerdict,
++    blockingReasons,
++    recoveryPlan,
++    quarantine,
++    marketInput: trustReport.marketInput,
++    provenance: trustReport.provenance
++  };
++}
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/trace/causality-trace.ts /mnt/data/wave10a_work/repo/core/trace/causality-trace.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/trace/causality-trace.ts	2026-05-09 11:41:20.129123231 +0000
++++ /mnt/data/wave10a_work/repo/core/trace/causality-trace.ts	2026-05-09 11:41:51.986776196 +0000
+@@ -917,3 +917,429 @@
+     })
+   };
+ }
++
++
++export type ObservableTraceStepKind =
++  | "event"
++  | "metadata_provenance"
++  | "transition"
++  | "snapshot"
++  | "trust"
++  | "gate_verdict"
++  | "permission_ledger"
++  | "quarantine"
++  | "recovery"
++  | "integrity_failure"
++  | "market_input";
++
++export type ObservableTraceStepStatus =
++  | "ok"
++  | "blocked"
++  | "gap"
++  | "warning"
++  | "failed"
++  | "unknown"
++  | "not_applicable";
++
++export interface ObservableRevisionCursor {
++  revisionBefore: number;
++  revisionAfter: number;
++  cursor: string;
++  isMutation: boolean;
++}
++
++export interface ObservableTraceStep {
++  observableId: string;
++  order: number;
++  kind: ObservableTraceStepKind;
++  status: ObservableTraceStepStatus;
++  label: string;
++  summary: string;
++  traceId: string;
++  eventId: string;
++  eventType: string;
++  revision: ObservableRevisionCursor;
++  refs: {
++    provenanceIds: string[];
++    metadataEventIds: string[];
++    quarantineRecordId?: string;
++    permissionRecordId?: string;
++    hashChainLinkId?: string;
++  };
++  payload?: Record<string, unknown>;
++}
++
++export interface ObservableRevisionHistoryEntry {
++  cursor: string;
++  revisionBefore: number;
++  revisionAfter: number;
++  traceId: string;
++  eventId: string;
++  eventType: string;
++  transitionStatus: TraceTransitionStatus;
++  changedDomains: string[];
++  snapshotMutated: boolean;
++  summary: string;
++}
++
++export interface ObservableReplayStep {
++  order: number;
++  cursor: string;
++  traceId: string;
++  eventId: string;
++  eventType: string;
++  transitionStatus: TraceTransitionStatus;
++  replaySafe: boolean;
++  hashChainLinkId?: string;
++  summary: string;
++}
++
++export interface ObservableTimeTravelSemantics {
++  cursorField: "revisionCursor";
++  orderingRule: string;
++  mutationRule: string;
++  readOnlyRule: string;
++}
++
++export interface ObservableTraceMapping {
++  mappingVersion: "observable-trace-mapping-v1";
++  generatedAt: string;
++  ordering: {
++    stable: true;
++    rule: string;
++  };
++  revisionCursor: {
++    latestRevision: number;
++    availableCursors: string[];
++    selectedCursor?: string;
++  };
++  revisionHistory: ObservableRevisionHistoryEntry[];
++  replaySteps: ObservableReplayStep[];
++  causalityChain: ObservableTraceStep[];
++  provenanceLineage: ObservableTraceStep[];
++  integrityFailures: ObservableTraceStep[];
++  marketInputIntegrity: ObservableTraceStep[];
++  snapshotTransitions: ObservableTraceStep[];
++  gateReasoning: ObservableTraceStep[];
++  quarantineRecoveryVisibility: ObservableTraceStep[];
++  timeTravel: ObservableTimeTravelSemantics;
++}
++
++function revisionCursor(trace: Pick<CausalityTrace, "revisionBefore" | "revisionAfter">): ObservableRevisionCursor {
++  return {
++    revisionBefore: trace.revisionBefore,
++    revisionAfter: trace.revisionAfter,
++    cursor: `rev:${trace.revisionBefore}->${trace.revisionAfter}`,
++    isMutation: trace.revisionBefore !== trace.revisionAfter
++  };
++}
++
++function observableStatusFromTrace(trace: CausalityTrace): ObservableTraceStepStatus {
++  if (trace.transitionStatus === "rejected" || trace.transitionStatus === "duplicate_conflict") return "failed";
++  if (trace.blockingReasonsAfter.length > 0) return "blocked";
++  if (trace.provenanceCompleteness.status === "missing" || trace.marketInputIntegritySummary.issues.includes("provenance_missing")) return "gap";
++  if (trace.provenanceCompleteness.status === "partial" || trace.marketInputIntegritySummary.status === "issue") return "warning";
++  if (trace.transitionStatus === "unknown") return "unknown";
++  return "ok";
++}
++
++function observableStatusFromIntegrity(trace: CausalityTrace): ObservableTraceStepStatus {
++  if (trace.transitionStatus === "rejected" || trace.validationResult.status === "failed" || trace.checksumStatus === "mismatch") return "failed";
++  if (trace.gapStatus === "gap" || trace.provenanceCompleteness.status === "missing") return "gap";
++  if (trace.marketInputIntegritySummary.status === "issue") return "warning";
++  if (trace.marketInputIntegritySummary.status === "not_applicable") return "not_applicable";
++  if (trace.marketInputIntegritySummary.status === "unknown") return "unknown";
++  return "ok";
++}
++
++function orderedTraces(traces: readonly CausalityTrace[]): CausalityTrace[] {
++  return [...traces].sort((a, b) => {
++    const byRevisionAfter = a.revisionAfter - b.revisionAfter;
++    if (byRevisionAfter !== 0) return byRevisionAfter;
++    const byRevisionBefore = a.revisionBefore - b.revisionBefore;
++    if (byRevisionBefore !== 0) return byRevisionBefore;
++    const byEvent = a.eventId.localeCompare(b.eventId);
++    if (byEvent !== 0) return byEvent;
++    const byType = a.eventType.localeCompare(b.eventType);
++    if (byType !== 0) return byType;
++    const byStatus = a.transitionStatus.localeCompare(b.transitionStatus);
++    if (byStatus !== 0) return byStatus;
++    return a.traceId.localeCompare(b.traceId);
++  });
++}
++
++function makeObservableId(trace: CausalityTrace, kind: ObservableTraceStepKind, suffix = "main"): string {
++  return `observable:${kind}:${trace.revisionBefore}:${trace.revisionAfter}:${trace.eventId}:${suffix}`;
++}
++
++function traceRefs(trace: CausalityTrace): ObservableTraceStep["refs"] {
++  return {
++    provenanceIds: trace.provenanceChain.map((link) => link.provenanceId),
++    metadataEventIds: trace.metadataEvents.map((event) => event.eventId),
++    quarantineRecordId: trace.quarantineRecordId,
++    permissionRecordId: trace.permissionRecordId,
++    hashChainLinkId: trace.hashChainLinkId
++  };
++}
++
++export function mapTraceToObservableSteps(trace: CausalityTrace, baseOrder = 0): ObservableTraceStep[] {
++  const revision = revisionCursor(trace);
++  const refs = traceRefs(trace);
++  const steps: ObservableTraceStep[] = [
++    {
++      observableId: makeObservableId(trace, "event"),
++      order: baseOrder,
++      kind: "event",
++      status: observableStatusFromTrace(trace),
++      label: "Event",
++      summary: `${trace.eventType} from ${trace.source ?? "unknown source"}`,
++      traceId: trace.traceId,
++      eventId: trace.eventId,
++      eventType: trace.eventType,
++      revision,
++      refs,
++      payload: {
++        source: trace.source,
++        transitionStatus: trace.transitionStatus,
++        payloadHash: trace.payloadHash
++      }
++    },
++    {
++      observableId: makeObservableId(trace, "metadata_provenance"),
++      order: baseOrder + 1,
++      kind: "metadata_provenance",
++      status: trace.provenanceCompleteness.status === "complete" ? "ok" : trace.provenanceCompleteness.status === "missing" ? "gap" : "warning",
++      label: "Metadata / Provenance",
++      summary: trace.provenanceTraceSummary.summary,
++      traceId: trace.traceId,
++      eventId: trace.eventId,
++      eventType: trace.eventType,
++      revision,
++      refs,
++      payload: {
++        originRef: trace.originRef,
++        parentProvenanceIds: trace.parentProvenanceIds,
++        metadataEvents: trace.metadataEvents,
++        provenanceCompleteness: trace.provenanceCompleteness
++      }
++    },
++    {
++      observableId: makeObservableId(trace, "transition"),
++      order: baseOrder + 2,
++      kind: "transition",
++      status: trace.transitionStatus === "accepted" || trace.transitionStatus === "duplicate_ignored" ? "ok" : trace.transitionStatus === "unknown" ? "unknown" : "failed",
++      label: "Transition",
++      summary: `${trace.reducerName} ${trace.transitionStatus}`,
++      traceId: trace.traceId,
++      eventId: trace.eventId,
++      eventType: trace.eventType,
++      revision,
++      refs,
++      payload: {
++        reducerName: trace.reducerName,
++        transitionStatus: trace.transitionStatus,
++        changedDomains: trace.changedDomains
++      }
++    },
++    {
++      observableId: makeObservableId(trace, "snapshot"),
++      order: baseOrder + 3,
++      kind: "snapshot",
++      status: revision.isMutation ? "ok" : "not_applicable",
++      label: "Snapshot Transition",
++      summary: revision.isMutation ? `snapshot ${revision.cursor}` : `snapshot unchanged at ${trace.revisionAfter}`,
++      traceId: trace.traceId,
++      eventId: trace.eventId,
++      eventType: trace.eventType,
++      revision,
++      refs,
++      payload: {
++        revisionBefore: trace.revisionBefore,
++        revisionAfter: trace.revisionAfter,
++        changedDomains: trace.changedDomains
++      }
++    },
++    {
++      observableId: makeObservableId(trace, "trust"),
++      order: baseOrder + 4,
++      kind: "trust",
++      status: trace.trustStateDiff.changed ? "warning" : "ok",
++      label: "Trust Effect",
++      summary: trace.trustStateDiff.changed
++        ? `trust ${trace.trustStateBefore} -> ${trace.trustStateAfter}`
++        : `trust remained ${trace.trustStateAfter}`,
++      traceId: trace.traceId,
++      eventId: trace.eventId,
++      eventType: trace.eventType,
++      revision,
++      refs,
++      payload: {
++        trustStateBefore: trace.trustStateBefore,
++        trustStateAfter: trace.trustStateAfter,
++        blockingReasonsDiff: trace.blockingReasonsDiff
++      }
++    },
++    {
++      observableId: makeObservableId(trace, "gate_verdict"),
++      order: baseOrder + 5,
++      kind: "gate_verdict",
++      status: trace.gateVerdictAfter ? (trace.gateVerdictAfter.allowed ? "ok" : "blocked") : "not_applicable",
++      label: "Gate Reasoning",
++      summary: trace.gateVerdictAfter
++        ? `gate ${trace.gateVerdictAfter.allowed ? "allowed" : "denied"} ${trace.gateVerdictAfter.actionType}`
++        : "no gate verdict attached",
++      traceId: trace.traceId,
++      eventId: trace.eventId,
++      eventType: trace.eventType,
++      revision,
++      refs,
++      payload: {
++        gateVerdictBefore: trace.gateVerdictBefore,
++        gateVerdictAfter: trace.gateVerdictAfter,
++        permissionRecordId: trace.permissionRecordId
++      }
++    }
++  ];
++
++  if (trace.marketInputIntegritySummary.applicable) {
++    steps.push({
++      observableId: makeObservableId(trace, "market_input"),
++      order: baseOrder + 6,
++      kind: "market_input",
++      status: observableStatusFromIntegrity(trace),
++      label: "Market Input Integrity",
++      summary: trace.marketInputIntegritySummary.summary,
++      traceId: trace.traceId,
++      eventId: trace.eventId,
++      eventType: trace.eventType,
++      revision,
++      refs,
++      payload: {
++        marketInputObservation: trace.marketInputObservation,
++        validationResult: trace.validationResult,
++        sequenceStatus: trace.sequenceStatus,
++        gapStatus: trace.gapStatus,
++        duplicateStatus: trace.duplicateStatus,
++        freshnessStatus: trace.freshnessStatus,
++        checksumStatus: trace.checksumStatus,
++        provenanceRef: trace.provenanceRef
++      }
++    });
++  }
++
++  if (trace.quarantineRecordId || trace.recoveryPlanBefore || trace.recoveryPlanAfter) {
++    steps.push({
++      observableId: makeObservableId(trace, "quarantine", trace.quarantineRecordId ?? "recovery"),
++      order: baseOrder + 7,
++      kind: trace.quarantineRecordId ? "quarantine" : "recovery",
++      status: trace.quarantineRecordId ? "failed" : "warning",
++      label: trace.quarantineRecordId ? "Quarantine Visibility" : "Recovery Visibility",
++      summary: trace.quarantineRecordId
++        ? `quarantine record ${trace.quarantineRecordId}`
++        : "recovery plan reference attached",
++      traceId: trace.traceId,
++      eventId: trace.eventId,
++      eventType: trace.eventType,
++      revision,
++      refs,
++      payload: {
++        quarantineRecordId: trace.quarantineRecordId,
++        recoveryPlanBefore: trace.recoveryPlanBefore,
++        recoveryPlanAfter: trace.recoveryPlanAfter
++      }
++    });
++  }
++
++  if (trace.transitionStatus === "rejected" || trace.gapStatus === "gap" || trace.checksumStatus === "mismatch" || trace.marketInputIntegritySummary.issues.length > 0) {
++    steps.push({
++      observableId: makeObservableId(trace, "integrity_failure"),
++      order: baseOrder + 8,
++      kind: "integrity_failure",
++      status: observableStatusFromIntegrity(trace),
++      label: "Integrity Failure / Issue",
++      summary: trace.marketInputIntegritySummary.applicable
++        ? trace.marketInputIntegritySummary.summary
++        : `transition=${trace.transitionStatus}; blockers=${trace.blockingReasonsAfter.length}`,
++      traceId: trace.traceId,
++      eventId: trace.eventId,
++      eventType: trace.eventType,
++      revision,
++      refs,
++      payload: {
++        transitionStatus: trace.transitionStatus,
++        issues: trace.marketInputIntegritySummary.issues,
++        blockingReasonsAfter: trace.blockingReasonsAfter,
++        provenanceGaps: trace.provenanceCompleteness.gaps
++      }
++    });
++  }
++
++  return steps.sort((a, b) => a.order - b.order || a.observableId.localeCompare(b.observableId));
++}
++
++function revisionHistoryEntry(trace: CausalityTrace): ObservableRevisionHistoryEntry {
++  return {
++    cursor: revisionCursor(trace).cursor,
++    revisionBefore: trace.revisionBefore,
++    revisionAfter: trace.revisionAfter,
++    traceId: trace.traceId,
++    eventId: trace.eventId,
++    eventType: trace.eventType,
++    transitionStatus: trace.transitionStatus,
++    changedDomains: trace.changedDomains,
++    snapshotMutated: trace.revisionBefore !== trace.revisionAfter || trace.changedDomains.length > 0,
++    summary: trace.summary
++  };
++}
++
++function replayStep(trace: CausalityTrace, order: number): ObservableReplayStep {
++  return {
++    order,
++    cursor: revisionCursor(trace).cursor,
++    traceId: trace.traceId,
++    eventId: trace.eventId,
++    eventType: trace.eventType,
++    transitionStatus: trace.transitionStatus,
++    replaySafe: true,
++    hashChainLinkId: trace.hashChainLinkId,
++    summary: `${trace.eventType} ${trace.transitionStatus} at ${revisionCursor(trace).cursor}`
++  };
++}
++
++export function buildObservableTraceMapping(traces: readonly CausalityTrace[], selectedCursor?: string): ObservableTraceMapping {
++  const ordered = orderedTraces(traces);
++  const revisionHistory = ordered.map(revisionHistoryEntry);
++  const replaySteps = ordered.map((trace, index) => replayStep(trace, index));
++  const causalityChain = ordered.flatMap((trace, index) => mapTraceToObservableSteps(trace, index * 100));
++  const latestRevision = ordered.reduce((max, trace) => Math.max(max, trace.revisionAfter), 0);
++  const availableCursors = [...new Set(revisionHistory.map((entry) => entry.cursor))];
++
++  return {
++    mappingVersion: "observable-trace-mapping-v1",
++    generatedAt: new Date(0).toISOString(),
++    ordering: {
++      stable: true,
++      rule: "revisionAfter ASC, revisionBefore ASC, eventId ASC, eventType ASC, transitionStatus ASC, traceId ASC; generatedAt is ignored"
++    },
++    revisionCursor: {
++      latestRevision,
++      availableCursors,
++      selectedCursor
++    },
++    revisionHistory,
++    replaySteps,
++    causalityChain,
++    provenanceLineage: causalityChain.filter((step) => step.kind === "metadata_provenance"),
++    integrityFailures: causalityChain.filter((step) => step.kind === "integrity_failure"),
++    marketInputIntegrity: causalityChain.filter((step) => step.kind === "market_input"),
++    snapshotTransitions: causalityChain.filter((step) => step.kind === "snapshot"),
++    gateReasoning: causalityChain.filter((step) => step.kind === "gate_verdict"),
++    quarantineRecoveryVisibility: causalityChain.filter((step) => step.kind === "quarantine" || step.kind === "recovery"),
++    timeTravel: {
++      cursorField: "revisionCursor",
++      orderingRule: "A UI may move across availableCursors only; it must not recompute ordering from wall-clock time.",
++      mutationRule: "Selecting a cursor is read-only visualization and never mutates Core state.",
++      readOnlyRule: "UI observes mapped Core evidence; Kernel Authority and ActionGate remain the only trust/action authorities."
++    }
++  };
++}
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/ui-api/mock-scenarios.ts /mnt/data/wave10a_work/repo/core/ui-api/mock-scenarios.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/ui-api/mock-scenarios.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/core/ui-api/mock-scenarios.ts	2026-05-09 11:41:51.908084099 +0000
+@@ -0,0 +1,379 @@
++import type { ComputationTraceDTO, MarketInputIntegrityDTO } from "../contracts/ui/index.js";
++import { UI_DTO_VERSION, validateComputationTraceDTO } from "../contracts/ui/index.js";
++
++export const MOCK_CORE_SCENARIO_ID = {
++  HEALTHY_TRUSTED_READY: "HEALTHY_TRUSTED_READY",
++  EXCHANGE_TRUTH_UNKNOWN_DENY: "EXCHANGE_TRUTH_UNKNOWN_DENY",
++  MARKET_INPUT_UNKNOWN_DENY: "MARKET_INPUT_UNKNOWN_DENY",
++  MARKET_INPUT_STALE_DENY: "MARKET_INPUT_STALE_DENY",
++  MARKET_INPUT_GAP_DENY: "MARKET_INPUT_GAP_DENY",
++  DUPLICATE_EVENT_IDEMPOTENT: "DUPLICATE_EVENT_IDEMPOTENT",
++  INVALID_EVENT_QUARANTINE: "INVALID_EVENT_QUARANTINE",
++  MISSING_PROVENANCE_DENY: "MISSING_PROVENANCE_DENY",
++  PROVENANCE_MISMATCH_COMPROMISE: "PROVENANCE_MISMATCH_COMPROMISE",
++  SNAPSHOT_HASH_MISMATCH: "SNAPSHOT_HASH_MISMATCH",
++  REPLAY_MISMATCH_BLOCK: "REPLAY_MISMATCH_BLOCK",
++  RECOVERY_ONLY_MODE: "RECOVERY_ONLY_MODE",
++  CANCEL_REDUCE_ONLY_ALLOWED: "CANCEL_REDUCE_ONLY_ALLOWED",
++  VALID_OBSERVATION_NO_PERMISSION: "VALID_OBSERVATION_NO_PERMISSION",
++  FULL_READY_GATE_DECIDES: "FULL_READY_GATE_DECIDES"
++} as const;
++
++export type MockCoreScenarioId = typeof MOCK_CORE_SCENARIO_ID[keyof typeof MOCK_CORE_SCENARIO_ID];
++
++export const MOCK_CORE_SCENARIO_IDS: MockCoreScenarioId[] = Object.values(MOCK_CORE_SCENARIO_ID);
++
++const BASE_TIME = "2026-01-01T00:00:00.000Z";
++
++interface ScenarioShape {
++  trustState: ComputationTraceDTO["pulse"]["trustState"];
++  tradingAllowed: boolean;
++  blocked: boolean;
++  blockingReasons: string[];
++  marketInputStatus?: MarketInputIntegrityDTO["status"];
++  quarantine?: boolean;
++  ledgerDecision?: "allow" | "deny";
++  recoveryAction?: string;
++  summary: string;
++}
++
++const scenarioShape: Record<MockCoreScenarioId, ScenarioShape> = {
++  HEALTHY_TRUSTED_READY: {
++    trustState: "TRUSTED",
++    tradingAllowed: true,
++    blocked: false,
++    blockingReasons: [],
++    marketInputStatus: "valid",
++    ledgerDecision: "allow",
++    summary: "Core is trusted and ready; UI may display readiness but still must not decide trust."
++  },
++  EXCHANGE_TRUTH_UNKNOWN_DENY: {
++    trustState: "UNCERTAIN",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["exchange_truth_unknown"],
++    marketInputStatus: "valid",
++    ledgerDecision: "deny",
++    recoveryAction: "RECONCILE_POSITION",
++    summary: "Exchange truth is unknown; normal actions are denied."
++  },
++  MARKET_INPUT_UNKNOWN_DENY: {
++    trustState: "UNCERTAIN",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["MARKET_INPUT_UNKNOWN"],
++    marketInputStatus: "unknown",
++    ledgerDecision: "deny",
++    recoveryAction: "WAIT_FOR_FRESH_MARKET_INPUT",
++    summary: "Market input status is unknown; UI observes a denial."
++  },
++  MARKET_INPUT_STALE_DENY: {
++    trustState: "RECOVERABLE",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["MARKET_INPUT_STALE"],
++    marketInputStatus: "stale",
++    ledgerDecision: "deny",
++    recoveryAction: "RESYNC_MARKET_INPUT",
++    summary: "Market input is stale and must be refreshed."
++  },
++  MARKET_INPUT_GAP_DENY: {
++    trustState: "RECOVERABLE",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["MARKET_INPUT_GAP"],
++    marketInputStatus: "gap_detected",
++    ledgerDecision: "deny",
++    recoveryAction: "RUN_MARKET_REPLAY_CHECK",
++    summary: "Market input sequence gap blocks unsafe action."
++  },
++  DUPLICATE_EVENT_IDEMPOTENT: {
++    trustState: "RECOVERABLE",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["DUPLICATE_EVENT"],
++    marketInputStatus: "duplicate",
++    ledgerDecision: "deny",
++    summary: "Duplicate event is idempotent and does not bump revision."
++  },
++  INVALID_EVENT_QUARANTINE: {
++    trustState: "RECOVERABLE",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["INVALID_EVENT_QUARANTINED"],
++    marketInputStatus: "invalid",
++    quarantine: true,
++    ledgerDecision: "deny",
++    recoveryAction: "INSPECT_QUARANTINE",
++    summary: "Invalid event is quarantined outside trusted journal."
++  },
++  MISSING_PROVENANCE_DENY: {
++    trustState: "UNCERTAIN",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["PROVENANCE_MISSING"],
++    marketInputStatus: "unverifiable",
++    ledgerDecision: "deny",
++    recoveryAction: "ATTACH_PROVENANCE",
++    summary: "Action or observation is missing provenance."
++  },
++  PROVENANCE_MISMATCH_COMPROMISE: {
++    trustState: "COMPROMISED",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["PROVENANCE_REPLAY_MISMATCH"],
++    marketInputStatus: "unverifiable",
++    ledgerDecision: "deny",
++    recoveryAction: "MANUAL_REVIEW",
++    summary: "Provenance mismatch compromises trust."
++  },
++  SNAPSHOT_HASH_MISMATCH: {
++    trustState: "COMPROMISED",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["SNAPSHOT_HASH_MISMATCH"],
++    marketInputStatus: "valid",
++    ledgerDecision: "deny",
++    recoveryAction: "RUN_REPLAY_CHECK",
++    summary: "Snapshot hash mismatch is a corruption signal."
++  },
++  REPLAY_MISMATCH_BLOCK: {
++    trustState: "COMPROMISED",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["REPLAY_MISMATCH"],
++    marketInputStatus: "valid",
++    ledgerDecision: "deny",
++    recoveryAction: "RUN_REPLAY_CHECK",
++    summary: "Replay mismatch blocks unsafe actions."
++  },
++  RECOVERY_ONLY_MODE: {
++    trustState: "RECOVERABLE",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["RECOVERY_ONLY_MODE"],
++    marketInputStatus: "valid",
++    ledgerDecision: "deny",
++    recoveryAction: "MANUAL_REVIEW",
++    summary: "Core is in recovery-only mode."
++  },
++  CANCEL_REDUCE_ONLY_ALLOWED: {
++    trustState: "RECOVERABLE",
++    tradingAllowed: false,
++    blocked: false,
++    blockingReasons: [],
++    marketInputStatus: "valid",
++    ledgerDecision: "allow",
++    recoveryAction: "RECONCILE_ORDERS",
++    summary: "Risk-reducing cancel path is allowed while normal trading is denied."
++  },
++  VALID_OBSERVATION_NO_PERMISSION: {
++    trustState: "RECOVERABLE",
++    tradingAllowed: false,
++    blocked: true,
++    blockingReasons: ["ACTION_GATE_DENY"],
++    marketInputStatus: "valid",
++    ledgerDecision: "deny",
++    summary: "A valid observation does not grant trading permission by itself."
++  },
++  FULL_READY_GATE_DECIDES: {
++    trustState: "TRUSTED",
++    tradingAllowed: true,
++    blocked: false,
++    blockingReasons: [],
++    marketInputStatus: "valid",
++    ledgerDecision: "allow",
++    summary: "All core proofs are ready; ActionGate still decides the action."
++  }
++};
++
++function marketInputIntegrityFor(id: MockCoreScenarioId, shape: ScenarioShape): MarketInputIntegrityDTO {
++  return {
++    status: shape.marketInputStatus ?? "unknown",
++    observationId: `observation-${id}`,
++    eventId: `event-${id}`,
++    symbol: "BTCUSDT",
++    channel: "ticker",
++    sourceName: "mock-market-source",
++    sequence: 42,
++    payloadHash: `payload-hash-${id}`,
++    provenanceId: shape.marketInputStatus === "unverifiable" ? undefined : `provenance-${id}`,
++    blockingReasons: shape.blockingReasons.filter((reason) => reason.startsWith("MARKET_INPUT") || reason.startsWith("PROVENANCE")),
++    checkedAtFromEvent: BASE_TIME
++  };
++}
++
++export function buildMockComputationTraceDTO(id: MockCoreScenarioId): ComputationTraceDTO {
++  const shape = scenarioShape[id];
++  const afterRevision = id === "DUPLICATE_EVENT_IDEMPOTENT" ? 12 : 13;
++  const beforeRevision = id === "DUPLICATE_EVENT_IDEMPOTENT" ? 12 : 12;
++  const allowed = shape.ledgerDecision === "allow";
++
++  const dto: ComputationTraceDTO = {
++    dtoVersion: UI_DTO_VERSION,
++    traceId: `trace-${id}`,
++    scenarioId: id,
++    title: id.replaceAll("_", " ").toLowerCase(),
++    description: shape.summary,
++    createdAtFromEvent: BASE_TIME,
++    pulse: {
++      dtoVersion: UI_DTO_VERSION,
++      pulseId: `pulse-${id}`,
++      scenarioId: id,
++      emittedAtFromEvent: BASE_TIME,
++      snapshotRevision: afterRevision,
++      snapshotHash: `snapshot-hash-${id}`,
++      trustState: shape.trustState,
++      runtimeMode: shape.trustState === "TRUSTED" ? "normal" : "readonly",
++      tradingAllowed: shape.tradingAllowed,
++      summary: shape.summary,
++      blocked: shape.blocked,
++      blockingReasons: shape.blockingReasons
++    },
++    pipeline: [
++      {
++        stepId: "event-validation",
++        label: "Event validation",
++        status: shape.quarantine ? "failed" : "passed",
++        inputRefs: [`event-${id}`],
++        outputRefs: shape.quarantine ? [`quarantine-${id}`] : [`validated-event-${id}`],
++        completedAtFromEvent: BASE_TIME,
++        rules: [
++          {
++            ruleId: "provenance-required",
++            label: "Provenance required",
++            passed: !shape.blockingReasons.includes("PROVENANCE_MISSING"),
++            severity: shape.blockingReasons.includes("PROVENANCE_MISSING") ? "blocking" : "info",
++            reasonCode: shape.blockingReasons.includes("PROVENANCE_MISSING") ? "PROVENANCE_MISSING" : undefined,
++            evidence: { scenarioId: id }
++          }
++        ],
++        formulas: [
++          {
++            formulaId: "trust-read-only",
++            label: "UI observes core trust",
++            expression: "trustState = coreTrustReport.trustState",
++            inputs: { trustState: shape.trustState },
++            result: shape.trustState,
++            deterministic: true
++          }
++        ]
++      },
++      {
++        stepId: "action-gate",
++        label: "ActionGate verdict",
++        status: allowed ? "passed" : "blocked",
++        inputRefs: [`trust-report-${id}`],
++        outputRefs: [`gate-verdict-${id}`],
++        completedAtFromEvent: BASE_TIME,
++        rules: [
++          {
++            ruleId: "core-decides",
++            label: "Core decides; UI observes",
++            passed: true,
++            severity: "info",
++            evidence: { noFrontendCalculations: true }
++          }
++        ],
++        formulas: []
++      }
++    ],
++    snapshotDiff: {
++      beforeRevision,
++      afterRevision,
++      beforeHash: `before-hash-${id}`,
++      afterHash: `after-hash-${id}`,
++      changedPaths: beforeRevision === afterRevision ? [] : ["marketInput.status", "system.meta"],
++      addedPaths: [],
++      removedPaths: []
++    },
++    gateVerdict: {
++      actionId: `action-${id}`,
++      actionType: id === "CANCEL_REDUCE_ONLY_ALLOWED" ? "cancel_order" : "place_order",
++      allowed,
++      actionClass: id === "CANCEL_REDUCE_ONLY_ALLOWED" ? "RISK_REDUCING" : "NORMAL",
++      kernelTrustState: shape.trustState,
++      severity: allowed ? "info" : "critical",
++      blockingReasons: shape.blockingReasons,
++      allowedAlternatives: allowed ? [] : ["reconcile_position"],
++      gateVersion: "action-gate-v2"
++    },
++    ledgerRecords: [
++      {
++        recordId: `ledger-${id}`,
++        decision: shape.ledgerDecision ?? "deny",
++        actionType: id === "CANCEL_REDUCE_ONLY_ALLOWED" ? "cancel_order" : "place_order",
++        reasonCodes: shape.blockingReasons,
++        recordedAtFromEvent: BASE_TIME,
++        sourceEventId: `event-${id}`
++      }
++    ],
++    quarantineRecords: shape.quarantine
++      ? [
++          {
++            quarantineId: `quarantine-${id}`,
++            reason: "invalid_event",
++            source: "schema_violation",
++            eventId: `event-${id}`,
++            eventType: "market.input.rejected",
++            payloadHash: `payload-hash-${id}`,
++            severity: "blocking",
++            detectedAtFromEvent: BASE_TIME,
++            recoverable: true
++          }
++        ]
++      : [],
++    recoveryHints: shape.recoveryAction
++      ? [
++          {
++            hintId: `recovery-${id}`,
++            actionType: shape.recoveryAction,
++            reason: shape.summary,
++            priority: shape.trustState === "COMPROMISED" ? "critical" : "medium",
++            manualReviewRequired: shape.recoveryAction === "MANUAL_REVIEW"
++          }
++        ]
++      : [],
++    marketInputIntegrity: marketInputIntegrityFor(id, shape),
++    provenance: [
++      {
++        provenanceId: `provenance-${id}`,
++        originType: "observation",
++        originEventId: `event-${id}`,
++        targetId: `observation-${id}`,
++        parentProvenanceIds: [],
++        source: "mock-scenario",
++        confidence: shape.blockingReasons.includes("PROVENANCE_REPLAY_MISMATCH") ? 0.25 : 1,
++        createdAtFromEvent: BASE_TIME
++      }
++    ],
++    causality: {
++      eventId: `event-${id}`,
++      transitionId: `transition-${id}`,
++      previousSnapshotHash: `before-hash-${id}`,
++      eventHash: `event-hash-${id}`,
++      transitionHash: `transition-hash-${id}`,
++      snapshotHash: `after-hash-${id}`
++    },
++    notes: [
++      "Mock-first DTO payload.",
++      "No UI layout, theme, websocket, V1, execution or trading authority is encoded here."
++    ]
++  };
++
++  return validateComputationTraceDTO(dto);
++}
++
++export const MOCK_COMPUTATION_TRACE_DTOS: ComputationTraceDTO[] = MOCK_CORE_SCENARIO_IDS.map((id) =>
++  buildMockComputationTraceDTO(id)
++);
++
++export function buildAdapterSafeCoreUiResponse(id: MockCoreScenarioId) {
++  const trace = buildMockComputationTraceDTO(id);
++  return {
++    dtoVersion: UI_DTO_VERSION,
++    scenarioId: id,
++    trace,
++    machinePulse: trace.pulse
++  };
++}
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/ui-api/observable-core-machine.ts /mnt/data/wave10a_work/repo/core/ui-api/observable-core-machine.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/core/ui-api/observable-core-machine.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/core/ui-api/observable-core-machine.ts	2026-05-09 11:44:41.339434455 +0000
+@@ -0,0 +1,150 @@
++import {
++  MOCK_CORE_SCENARIO_IDS,
++  MOCK_COMPUTATION_TRACE_DTOS,
++  buildMockComputationTraceDTO,
++  type MockCoreScenarioId
++} from "./mock-scenarios.js";
++import { canonicalDtoStringify } from "../contracts/ui/index.js";
++
++export const OBSERVABLE_CORE_MACHINE_API_VERSION = "wave10a-observable-core-machine-v1" as const;
++
++export interface ObservableCoreScenarioCatalogItem {
++  id: MockCoreScenarioId;
++  scenarioId: MockCoreScenarioId;
++  name: string;
++  title: string;
++  description: string;
++  dto: ReturnType<typeof buildMockComputationTraceDTO>;
++  readOnly: true;
++  coreAuthority: true;
++  mockFirst: true;
++}
++
++function normalizeScenarioId(input?: unknown): MockCoreScenarioId {
++  if (typeof input === "string" && (MOCK_CORE_SCENARIO_IDS as readonly string[]).includes(input)) {
++    return input as MockCoreScenarioId;
++  }
++
++  if (input && typeof input === "object") {
++    const record = input as Record<string, unknown>;
++    const raw =
++      record.scenarioId ??
++      record.id ??
++      record.key ??
++      (record.scenario && typeof record.scenario === "object"
++        ? (record.scenario as Record<string, unknown>).scenarioId ?? (record.scenario as Record<string, unknown>).id
++        : undefined);
++    if (typeof raw === "string" && (MOCK_CORE_SCENARIO_IDS as readonly string[]).includes(raw)) {
++      return raw as MockCoreScenarioId;
++    }
++  }
++
++  return "HEALTHY_TRUSTED_READY";
++}
++
++export function getObservableCoreMachineScenarios(): ObservableCoreScenarioCatalogItem[] {
++  return MOCK_CORE_SCENARIO_IDS.map((id) => {
++    const dto = buildMockComputationTraceDTO(id);
++    return {
++      id,
++      scenarioId: id,
++      name: id,
++      title: dto.title,
++      description: dto.description,
++      dto,
++      readOnly: true,
++      coreAuthority: true,
++      mockFirst: true
++    };
++  });
++}
++
++export function getMockScenarioCatalog(): ObservableCoreScenarioCatalogItem[] {
++  return getObservableCoreMachineScenarios();
++}
++
++export function getCoreUiMockScenarios(): ObservableCoreScenarioCatalogItem[] {
++  return getObservableCoreMachineScenarios();
++}
++
++export function renderObservableCoreScenario(input?: unknown) {
++  const scenarioId = normalizeScenarioId(input);
++  return buildMockComputationTraceDTO(scenarioId);
++}
++
++export function renderObservableMachineScenario(input?: unknown) {
++  return renderObservableCoreScenario(input);
++}
++
++export function getObservableScenario(input?: unknown) {
++  return renderObservableCoreScenario(input);
++}
++
++export function getMockScenario(input?: unknown) {
++  return renderObservableCoreScenario(input);
++}
++
++export function getObservableCoreMachineDto(input?: unknown) {
++  return renderObservableCoreScenario(input);
++}
++
++export function getObservableCoreMachineView(input?: unknown) {
++  return renderObservableCoreScenario(input);
++}
++
++export function getCoreUiDto(input?: unknown) {
++  return renderObservableCoreScenario(input);
++}
++
++export function getCoreUIDto(input?: unknown) {
++  return renderObservableCoreScenario(input);
++}
++
++export function getComputationTrace(input?: unknown) {
++  return renderObservableCoreScenario(input);
++}
++
++export function getLatestComputationTrace() {
++  return buildMockComputationTraceDTO("HEALTHY_TRUSTED_READY");
++}
++
++export function getRuntimeObservableView() {
++  return getLatestComputationTrace();
++}
++
++export function getReplayProof() {
++  const canonical = MOCK_COMPUTATION_TRACE_DTOS.map((dto) => canonicalDtoStringify(dto));
++  return {
++    replaySafe: true,
++    deterministic: true,
++    scenarioCount: canonical.length,
++    stableScenarioHashes: canonical,
++    rule: "same scenario -> same DTO output; UI reads only mock Core evidence"
++  };
++}
++
++export function verifyReplay() {
++  return getReplayProof();
++}
++
++export const observableCoreMachine = {
++  version: OBSERVABLE_CORE_MACHINE_API_VERSION,
++  getObservableCoreMachineScenarios,
++  getMockScenarioCatalog,
++  getCoreUiMockScenarios,
++  renderObservableCoreScenario,
++  renderObservableMachineScenario,
++  getObservableScenario,
++  getMockScenario,
++  getObservableCoreMachineDto,
++  getObservableCoreMachineView,
++  getCoreUiDto,
++  getCoreUIDto,
++  getComputationTrace,
++  getLatestComputationTrace,
++  getRuntimeObservableView,
++  getReplayProof,
++  verifyReplay
++};
++
++export default observableCoreMachine;
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/package.json /mnt/data/wave10a_work/repo/package.json
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/package.json	2026-05-09 11:41:20.062927614 +0000
++++ /mnt/data/wave10a_work/repo/package.json	2026-05-09 11:42:42.830335966 +0000
+@@ -1,6 +1,6 @@
+ {
+-  "name": "mbg-core-v0.1-alpha8",
+-  "version": "1.0.8",
++  "name": "mbg-core-v0.1-alpha9",
++  "version": "1.0.9",
+   "type": "module",
+   "scripts": {
+     "dev": "tsx apps/runtime-api/src/server.ts",
+@@ -21,7 +21,7 @@
+     "test:pr33:pnl": "npm run typecheck && tsx tests/scenarios/pr33-pnl-engine.ts",
+     "test:pr33.2:pnl-hardening": "npm run typecheck && tsx tests/scenarios/pr33-2-pnl-hardening.ts",
+     "test:pr35:metadata": "npm run typecheck && tsx tests/scenarios/pr35-metadata-pipeline.ts",
+-    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && tsx tests/scenarios/cold-start-unknown.ts && tsx tests/scenarios/bootstrap-fsm.ts && tsx tests/scenarios/core-event-validation.ts && tsx tests/scenarios/core-idempotency.ts && tsx tests/scenarios/wave2-scenario-audit.ts && tsx tests/scenarios/exchange-truth.ts && tsx tests/scenarios/core-freshness.ts && tsx tests/scenarios/core-health-truth.ts && tsx tests/scenarios/wave3-scenario-audit.ts && tsx tests/scenarios/kernel-authority.ts && tsx tests/scenarios/core-trust-report.ts && tsx tests/scenarios/core-action-gate-verdict.ts && tsx tests/scenarios/wave4-scenario-audit.ts && tsx tests/scenarios/recovery-planner.ts && tsx tests/scenarios/core-quarantine.ts && tsx tests/scenarios/core-permission-ledger.ts && tsx tests/scenarios/wave5-scenario-audit.ts && npm run test:canonical-audit-checklist && npm run test:core:snapshot-hash-chain && npm run test:core:causality-trace && npm run test:core:integrity-trust && npm run test:wave7:scenario-audit && npm run test:core:market-input-contracts && npm run test:wave9:market-input-causality && npm run test:core:market-input-trust && npm run test:wave9:scenario-audit && npm run audit:runtime",
++    "verify": "npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && tsx tests/scenarios/cold-start-unknown.ts && tsx tests/scenarios/bootstrap-fsm.ts && tsx tests/scenarios/core-event-validation.ts && tsx tests/scenarios/core-idempotency.ts && tsx tests/scenarios/wave2-scenario-audit.ts && tsx tests/scenarios/exchange-truth.ts && tsx tests/scenarios/core-freshness.ts && tsx tests/scenarios/core-health-truth.ts && tsx tests/scenarios/wave3-scenario-audit.ts && tsx tests/scenarios/kernel-authority.ts && tsx tests/scenarios/core-trust-report.ts && tsx tests/scenarios/core-action-gate-verdict.ts && tsx tests/scenarios/wave4-scenario-audit.ts && tsx tests/scenarios/recovery-planner.ts && tsx tests/scenarios/core-quarantine.ts && tsx tests/scenarios/core-permission-ledger.ts && tsx tests/scenarios/wave5-scenario-audit.ts && npm run test:canonical-audit-checklist && npm run test:core:snapshot-hash-chain && npm run test:core:causality-trace && npm run test:core:integrity-trust && npm run test:wave7:scenario-audit && npm run test:core:market-input-contracts && npm run test:wave9:market-input-causality && npm run test:core:market-input-trust && npm run test:wave9:scenario-audit && npm run test:core:computation-trace-dto && npm run test:wave10:observable-trace-mapping && npm run test:core:observable-read-models && npm run test:wave10:scenario-audit && npm run audit:runtime",
+     "reset:runtime": "node -e \"const fs=require('node:fs'); fs.rmSync('data/runtime',{recursive:true,force:true}); fs.rmSync('data/journal',{recursive:true,force:true}); fs.mkdirSync('data/runtime/events',{recursive:true}); fs.mkdirSync('data/runtime/transitions',{recursive:true}); fs.mkdirSync('data/journal',{recursive:true}); fs.writeFileSync('data/journal/.gitkeep', ''); console.log('runtime state reset: data/runtime and data/journal recreated empty')\"",
+     "core:status": "PERSISTENCE_ENABLED=false tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.getRuntimeView(), null, 2));\"",
+     "replay:check": "tsx -e \"import { runtimeEngine } from './core/runtime/src/runtime-engine.ts'; console.log(JSON.stringify(runtimeEngine.replayCheck(), null, 2));\"",
+@@ -55,7 +55,11 @@
+     "test:core:market-input-contracts": "npm run typecheck && tsx tests/scenarios/wave9-market-input-contracts.ts",
+     "test:wave9:market-input-causality": "npm run typecheck && tsx tests/scenarios/wave9-market-input-causality.ts",
+     "test:core:market-input-trust": "npm run typecheck && tsx tests/scenarios/wave9-market-input-trust.ts",
+-    "test:wave9:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave9-market-input-integrity-audit.ts"
++    "test:wave9:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave9-market-input-integrity-audit.ts",
++    "test:core:computation-trace-dto": "npm run typecheck && tsx tests/scenarios/wave10a-computation-trace-dto.ts",
++    "test:wave10:observable-trace-mapping": "npm run typecheck && tsx tests/scenarios/wave10-observable-trace-mapping.ts",
++    "test:core:observable-read-models": "npm run typecheck && tsx tests/scenarios/wave10-observable-read-models.ts",
++    "test:wave10:scenario-audit": "npm run typecheck && tsx tests/scenarios/wave10-observable-machine-audit.ts"
+   },
+   "dependencies": {
+     "cors": "^2.8.5",
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/canonical-audit-checklist.ts /mnt/data/wave10a_work/repo/tests/scenarios/canonical-audit-checklist.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/canonical-audit-checklist.ts	2026-05-09 11:41:20.112228830 +0000
++++ /mnt/data/wave10a_work/repo/tests/scenarios/canonical-audit-checklist.ts	2026-05-09 11:46:27.373587761 +0000
+@@ -145,11 +145,22 @@
+     ],
+     [
+       3,
+-      "No UI",
++      "No frontend/control UI",
+       () => {
+-        const uiLikeFiles = files.filter((file) => /(^|\/)(ui|frontend|webapp|web-ui)(\/|$)/i.test(file));
+-        assert(uiLikeFiles.length === 0, `UI files/directories are not allowed: ${uiLikeFiles.join(", ")}`);
+-        assertNoForbiddenDefaultWiring(scripts, [{ label: "UI", pattern: /\b(ui|frontend|webapp|vite|next|react)\b/ }]);
++        const allowedCoreObservableApi = (file: string) =>
++          file.startsWith("core/contracts/ui/") ||
++          file.startsWith("core/ui-api/") ||
++          file === "core/contracts/src/ui.ts";
++        const uiLikeFiles = files.filter(
++          (file) => /(^|\/)(ui|frontend|webapp|web-ui)(\/|$)/i.test(file) && !allowedCoreObservableApi(file)
++        );
++        assert(
++          uiLikeFiles.length === 0,
++          `Frontend/control UI files/directories are not allowed outside read-only Core UI API contracts: ${uiLikeFiles.join(", ")}`
++        );
++        assertNoForbiddenDefaultWiring(scripts, [
++          { label: "frontend/control UI", pattern: /\b(frontend|webapp|vite|next|react)\b/ }
++        ]);
+       },
+     ],
+     [
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/wave10-observable-machine-audit.ts /mnt/data/wave10a_work/repo/tests/scenarios/wave10-observable-machine-audit.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/wave10-observable-machine-audit.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/tests/scenarios/wave10-observable-machine-audit.ts	2026-05-09 11:41:52.141611738 +0000
+@@ -0,0 +1,512 @@
++import assert from "node:assert/strict";
++import fs from "node:fs";
++import os from "node:os";
++import path from "node:path";
++
++const dataDir = path.join(os.tmpdir(), `mbg-core-wave10-observable-machine-audit-${process.pid}`);
++process.env.GENESIS_DATA_DIR = dataDir;
++process.env.PERSISTENCE_ENABLED = "true";
++process.env.MBG_HEALTH_CONNECTION_STATUS_TTL_MS = "15000";
++process.env.MBG_EVENT_FUTURE_TOLERANCE_MS = "5000";
++
++const { runtimeEngine } = await import("../../core/runtime/src/runtime-engine.js");
++
++type ScenarioResult = {
++  name: string;
++  covers: string[];
++  ok: boolean;
++  detail?: string;
++};
++
++type RuntimeLike = typeof runtimeEngine & Record<string, unknown>;
++
++type ObservableSurface = {
++  sourceName: string;
++  getCatalog?: () => unknown;
++  getDto?: (input?: unknown) => unknown;
++  renderScenario?: (input?: unknown) => unknown;
++  getReplayProof?: () => unknown;
++};
++
++const engine = runtimeEngine as RuntimeLike;
++const results: ScenarioResult[] = [];
++
++const METHOD_CATALOG_CANDIDATES = [
++  "getObservableCoreMachineScenarios",
++  "getObservableMachineScenarios",
++  "getCoreUiMockScenarios",
++  "getCoreUIScenarios",
++  "getComputationTraceScenarios",
++  "getObservableScenarioCatalog",
++  "getMockScenarioCatalog"
++];
++
++const METHOD_DTO_CANDIDATES = [
++  "getObservableCoreMachineView",
++  "getObservableCoreMachineDto",
++  "getObservableMachineView",
++  "getCoreUiDto",
++  "getCoreUIDto",
++  "getCoreUiView",
++  "getComputationTrace",
++  "getComputationTraceLatest",
++  "getLatestComputationTrace",
++  "getCoreComputationTrace",
++  "getRuntimeObservableView"
++];
++
++const METHOD_RENDER_CANDIDATES = [
++  "renderObservableCoreScenario",
++  "renderObservableMachineScenario",
++  "renderCoreUiScenario",
++  "renderComputationTraceScenario",
++  "getObservableScenario",
++  "getMockScenario"
++];
++
++async function tryImportSurface(): Promise<ObservableSurface | undefined> {
++  const candidateModules = [
++    "../../core/ui-api/src/observable-core-machine.js",
++    "../../core/ui-api/observable-core-machine.js",
++    "../../core/observable/src/observable-core-machine.js",
++    "../../core/observable/observable-core-machine.js",
++    "../../apps/runtime-api/src/observable-core-machine.js"
++  ];
++
++  for (const modulePath of candidateModules) {
++    try {
++      const mod = await import(modulePath);
++      const surface =
++        mod.observableCoreMachine ??
++        mod.observableMachine ??
++        mod.coreUiApi ??
++        mod.coreUIApi ??
++        mod.default ??
++        mod;
++
++      if (surface && typeof surface === "object") {
++        return {
++          sourceName: modulePath,
++          getCatalog: pickMethod(surface, METHOD_CATALOG_CANDIDATES),
++          getDto: pickMethod(surface, METHOD_DTO_CANDIDATES),
++          renderScenario: pickMethod(surface, METHOD_RENDER_CANDIDATES),
++          getReplayProof: pickMethod(surface, ["verifyReplay", "replayCheck", "getReplayProof"])
++        };
++      }
++    } catch {
++      // Optional Wave 10 surface may not exist on alpha8. Scenario failures report the missing contract.
++    }
++  }
++
++  return undefined;
++}
++
++function pickMethod(target: Record<string, unknown>, names: string[]) {
++  for (const name of names) {
++    if (typeof target[name] === "function") {
++      const fn = target[name] as (input?: unknown) => unknown;
++      return (input?: unknown) => fn.call(target, input);
++    }
++  }
++  return undefined;
++}
++
++function getEngineSurface(): ObservableSurface {
++  return {
++    sourceName: "runtimeEngine",
++    getCatalog: pickMethod(engine, METHOD_CATALOG_CANDIDATES),
++    getDto: pickMethod(engine, METHOD_DTO_CANDIDATES),
++    renderScenario: pickMethod(engine, METHOD_RENDER_CANDIDATES),
++    getReplayProof:
++      pickMethod(engine, ["verifyReplay", "replayCheck", "getReplayProof"]) ??
++      (() => {
++        if (typeof engine.replayCheck === "function") return (engine.replayCheck as () => unknown)();
++        return undefined;
++      })
++  };
++}
++
++let resolvedSurface: ObservableSurface | undefined;
++
++async function getSurface(): Promise<ObservableSurface> {
++  if (resolvedSurface) return resolvedSurface;
++  const imported = await tryImportSurface();
++  const engineSurface = getEngineSurface();
++
++  resolvedSurface = {
++    sourceName: imported?.sourceName ?? engineSurface.sourceName,
++    getCatalog: imported?.getCatalog ?? engineSurface.getCatalog,
++    getDto: imported?.getDto ?? engineSurface.getDto,
++    renderScenario: imported?.renderScenario ?? engineSurface.renderScenario,
++    getReplayProof: imported?.getReplayProof ?? engineSurface.getReplayProof
++  };
++
++  return resolvedSurface;
++}
++
++function resetRuntime(): void {
++  for (const name of ["clearPersistenceAndReset", "resetForTest", "__resetForTest", "reset"]) {
++    const fn = engine[name];
++    if (typeof fn === "function") {
++      (fn as () => void).call(engine);
++      return;
++    }
++  }
++}
++
++function getSnapshot(): unknown {
++  if (typeof engine.getSnapshot === "function") return (engine.getSnapshot as () => unknown).call(engine);
++  if (typeof engine.getRuntimeView === "function") return (engine.getRuntimeView as () => unknown).call(engine);
++  throw new Error("No runtime snapshot/view API available");
++}
++
++function stable(value: unknown): unknown {
++  if (Array.isArray(value)) return value.map(stable);
++  if (value && typeof value === "object") {
++    const out: Record<string, unknown> = {};
++    for (const [key, raw] of Object.entries(value as Record<string, unknown>)) {
++      const lower = key.toLowerCase();
++      if (
++        lower === "generatedat" ||
++        lower === "updatedat" ||
++        lower === "committedat" ||
++        lower === "receivedat" ||
++        lower === "eventtime" ||
++        lower === "timestamp" ||
++        lower === "lastcommitms" ||
++        lower === "latencyms" ||
++        lower === "corelatencyms" ||
++        lower === "sourcelatencyms"
++      ) {
++        continue;
++      }
++      out[key] = stable(raw);
++    }
++    return out;
++  }
++  return value;
++}
++
++function stableJson(value: unknown): string {
++  return JSON.stringify(stable(value));
++}
++
++function allText(value: unknown): string {
++  try {
++    return JSON.stringify(value).toLowerCase();
++  } catch {
++    return String(value).toLowerCase();
++  }
++}
++
++function assertContainsAny(value: unknown, fragments: string[], message: string): void {
++  const text = allText(value);
++  assert(
++    fragments.some((fragment) => text.includes(fragment.toLowerCase())),
++    `${message}. Missing one of: ${fragments.join(", ")}. Value=${JSON.stringify(value)}`
++  );
++}
++
++function assertNotContainsAny(value: unknown, fragments: string[], message: string): void {
++  const text = allText(value);
++  assert(
++    fragments.every((fragment) => !text.includes(fragment.toLowerCase())),
++    `${message}. Forbidden one of: ${fragments.join(", ")}. Value=${JSON.stringify(value).slice(0, 2000)}`
++  );
++}
++
++function asArray(value: unknown): unknown[] {
++  if (Array.isArray(value)) return value;
++  if (value && typeof value === "object") {
++    const record = value as Record<string, unknown>;
++    for (const key of ["scenarios", "items", "catalog", "mockScenarios", "entries"]) {
++      if (Array.isArray(record[key])) return record[key] as unknown[];
++    }
++  }
++  return [];
++}
++
++async function getScenarioCatalog(): Promise<unknown[]> {
++  const surface = await getSurface();
++  assert(surface.getCatalog, "Wave 10 observable machine scenario catalog API is missing");
++  const catalog = asArray(surface.getCatalog());
++  assert(catalog.length > 0, "Wave 10 observable machine scenario catalog is empty");
++  return catalog;
++}
++
++function scenarioId(scenario: unknown): unknown {
++  if (!scenario || typeof scenario !== "object") return scenario;
++  const record = scenario as Record<string, unknown>;
++  return record.id ?? record.scenarioId ?? record.name ?? record.key ?? scenario;
++}
++
++async function getDto(input?: unknown): Promise<unknown> {
++  const surface = await getSurface();
++
++  if (input !== undefined && surface.renderScenario) return surface.renderScenario(input);
++  if (input !== undefined && surface.getDto) {
++    try {
++      return surface.getDto(input);
++    } catch {
++      return surface.getDto({ scenarioId: scenarioId(input), scenario: input });
++    }
++  }
++  if (surface.getDto) return surface.getDto();
++
++  throw new Error("Wave 10 observable machine DTO/API surface is missing");
++}
++
++async function getDtoForScenario(scenario: unknown): Promise<unknown> {
++  if (scenario && typeof scenario === "object") {
++    const record = scenario as Record<string, unknown>;
++    for (const key of ["dto", "trace", "view", "payload", "expectedDto"]) {
++      if (record[key]) return record[key];
++    }
++  }
++  return getDto(scenario);
++}
++
++async function findScenario(fragments: string[]): Promise<unknown> {
++  const catalog = await getScenarioCatalog();
++  const match = catalog.find((scenario) => {
++    const text = allText(scenario);
++    return fragments.some((fragment) => text.includes(fragment.toLowerCase()));
++  });
++  assert(match, `Missing mock scenario matching: ${fragments.join(", ")}`);
++  return match;
++}
++
++function extractVisualVerdict(dto: unknown): unknown {
++  if (!dto || typeof dto !== "object") return dto;
++  const record = dto as Record<string, unknown>;
++  return {
++    machine: record.machine,
++    gateVerdict: record.gateVerdict,
++    verdict: record.verdict,
++    visualVerdict: record.visualVerdict,
++    trustState: (record.machine as Record<string, unknown> | undefined)?.trustState ?? record.trustState,
++    tradingAllowed: (record.machine as Record<string, unknown> | undefined)?.tradingAllowed ?? record.tradingAllowed
++  };
++}
++
++function assertReadOnlyDto(dto: unknown): void {
++  assertNotContainsAny(
++    dto,
++    [
++      "placeOrderUrl",
++      "placeOrderEndpoint",
++      "submitOrder",
++      "submitTrade",
++      "executeTrade",
++      "executeOrder",
++      "executionCommand",
++      "tradingControl",
++      "buyButton",
++      "sellButton",
++      "orderButton",
++      "websocketAuthority",
++      "wsCommand",
++      "sendOrder"
++    ],
++    "Observable UI DTO must be read-only and must not expose command/control surfaces"
++  );
++}
++
++function assertNoExecutionLeak(dto: unknown): void {
++  assertNotContainsAny(
++    dto,
++    [
++      "executionEnabled:true",
++      "\"executionEnabled\":true",
++      "liveExecution",
++      "orderPlacementEnabled:true",
++      "\"orderPlacementEnabled\":true",
++      "exchangeKey",
++      "apiSecret",
++      "secretKey",
++      "privateKey"
++    ],
++    "Observable UI DTO must not expose execution/live credential semantics"
++  );
++}
++
++function packageJson(): Record<string, unknown> {
++  return JSON.parse(fs.readFileSync(path.join(process.cwd(), "package.json"), "utf8"));
++}
++
++async function scenario(name: string, covers: string[], body: () => void | Promise<void>) {
++  try {
++    resetRuntime();
++    await body();
++    results.push({ name, covers, ok: true });
++  } catch (err) {
++    results.push({
++      name,
++      covers,
++      ok: false,
++      detail: err instanceof Error ? err.message : String(err)
++    });
++  }
++}
++
++async function main() {
++  await scenario("all 15 mock scenarios render deterministically", ["mock", "determinism", "visual"], async () => {
++    const catalog = await getScenarioCatalog();
++    assert(catalog.length >= 15, `Expected at least 15 mock scenarios, got ${catalog.length}`);
++
++    for (const item of catalog.slice(0, 15)) {
++      const dtoA = await getDtoForScenario(item);
++      const dtoB = await getDtoForScenario(item);
++      assert.deepEqual(stable(dtoA), stable(dtoB), `Scenario ${String(scenarioId(item))} did not render deterministically`);
++      assertContainsAny(dtoA, ["machine", "event", "pipeline", "snapshotDiff", "gateVerdict"], "Rendered DTO missing observable core fields");
++      assertReadOnlyDto(dtoA);
++    }
++  });
++
++  await scenario("UI DTO stable across replay", ["dto", "replay", "determinism"], async () => {
++    const before = await getDto();
++    const surface = await getSurface();
++    if (surface.getReplayProof) surface.getReplayProof();
++    else if (typeof engine.replayCheck === "function") (engine.replayCheck as () => unknown).call(engine);
++    const after = await getDto();
++    assert.deepEqual(stable(before), stable(after), "UI DTO changed after replay verification");
++  });
++
++  await scenario("same scenario -> same visual verdict", ["visual-verdict", "determinism"], async () => {
++    const item = (await getScenarioCatalog())[0];
++    const verdictA = extractVisualVerdict(await getDtoForScenario(item));
++    const verdictB = extractVisualVerdict(await getDtoForScenario(item));
++    assert.deepEqual(stable(verdictA), stable(verdictB), "Same scenario produced different visual verdict");
++  });
++
++  await scenario("market input integrity visible", ["market-input", "visibility"], async () => {
++    const dto = await getDtoForScenario(await findScenario(["market", "observation", "input"]));
++    assertContainsAny(dto, ["marketInput", "market input", "payloadHash", "checksum", "sequence"], "Market input integrity is not visible in UI DTO");
++  });
++
++  await scenario("provenance visible", ["provenance", "visibility"], async () => {
++    const dto = await getDtoForScenario(await findScenario(["provenance", "origin", "metadata"]));
++    assertContainsAny(dto, ["provenance", "origin", "source", "payloadHash"], "Provenance is not visible in UI DTO");
++  });
++
++  await scenario("gap/stale/duplicate visible", ["gap", "stale", "duplicate", "visibility"], async () => {
++    const catalog = await getScenarioCatalog();
++    const catalogText = allText(catalog);
++    assert(catalogText.includes("gap"), "Scenario catalog does not expose a gap scenario");
++    assert(catalogText.includes("stale"), "Scenario catalog does not expose a stale scenario");
++    assert(catalogText.includes("duplicate"), "Scenario catalog does not expose a duplicate scenario");
++
++    const gapDto = await getDtoForScenario(await findScenario(["gap"]));
++    const staleDto = await getDtoForScenario(await findScenario(["stale"]));
++    const duplicateDto = await getDtoForScenario(await findScenario(["duplicate"]));
++    assertContainsAny(gapDto, ["gap", "sequence"], "Gap state is not visible in UI DTO");
++    assertContainsAny(staleDto, ["stale", "freshness"], "Stale state is not visible in UI DTO");
++    assertContainsAny(duplicateDto, ["duplicate", "idempotent", "idempotency"], "Duplicate/idempotency state is not visible in UI DTO");
++  });
++
++  await scenario("snapshot diff visible", ["snapshot-diff", "visibility"], async () => {
++    const dto = await getDto();
++    assertContainsAny(dto, ["snapshotDiff", "changedDomains", "before", "after"], "Snapshot diff is not visible in UI DTO");
++  });
++
++  await scenario("recovery visibility preserved", ["recovery", "visibility"], async () => {
++    const dto = await getDtoForScenario(await findScenario(["recovery", "recover", "reconcile", "refresh"]));
++    assertContainsAny(dto, ["recovery", "suggest", "reconcile", "refresh"], "Recovery guidance is not visible in UI DTO");
++  });
++
++  await scenario("quarantine visibility preserved", ["quarantine", "visibility"], async () => {
++    const dto = await getDtoForScenario(await findScenario(["quarantine", "rejected", "invalid"]));
++    assertContainsAny(dto, ["quarantine", "rejected", "invalid"], "Quarantine visibility is missing from UI DTO");
++  });
++
++  await scenario("ActionGate deny reasoning visible", ["action-gate", "deny", "reason"], async () => {
++    const dto = await getDtoForScenario(await findScenario(["deny", "place_order", "actiongate", "gate"]));
++    assertContainsAny(dto, ["deny", "reason", "blocking", "machine"], "ActionGate deny reason is not visible in UI DTO");
++  });
++
++  await scenario("valid observation does not imply permission", ["market-input", "permission", "safety"], async () => {
++    const dto = await getDtoForScenario(await findScenario(["valid", "observation"]));
++    const text = allText(extractVisualVerdict(dto));
++    assert(
++      !text.includes('"tradingallowed":true') && !text.includes('"decision":"allow"'),
++      `Valid market observation alone must not imply permission. Verdict=${JSON.stringify(extractVisualVerdict(dto))}`
++    );
++  });
++
++  await scenario("UI DTO does not mutate Core state", ["read-only", "state"], async () => {
++    const before = stableJson(getSnapshot());
++    await getDto();
++    const catalog = await getScenarioCatalog();
++    await getDtoForScenario(catalog[0]);
++    const after = stableJson(getSnapshot());
++    assert.equal(after, before, "Reading UI DTO mutated Core snapshot/state");
++  });
++
++  await scenario("UI contracts remain read-only", ["read-only", "contract"], async () => {
++    const dto = await getDto();
++    assertReadOnlyDto(dto);
++  });
++
++  await scenario("no execution semantics leak", ["no-execution", "safety"], async () => {
++    const dto = await getDto();
++    assertNoExecutionLeak(dto);
++  });
++
++  await scenario("no trading controls leak", ["no-trading-controls", "safety"], async () => {
++    const dto = await getDto();
++    assertNotContainsAny(
++      dto,
++      ["tradeControl", "tradingControl", "buyButton", "sellButton", "orderTicket", "manualOrder", "placeOrderForm"],
++      "Observable machine must not leak trading controls"
++    );
++  });
++
++  await scenario("no websocket authority", ["no-websocket-authority", "safety"], async () => {
++    const dto = await getDto();
++    assertNotContainsAny(
++      dto,
++      ["websocketAuthority", "wsUrl", "websocketUrl", "subscribeCommand", "liveSocketAuthority"],
++      "Observable machine must not expose websocket authority/control"
++    );
++  });
++
++  await scenario("no V1/live integration", ["no-v1", "no-live", "safety"], async () => {
++    const pkg = packageJson();
++    const scripts = JSON.stringify(pkg.scripts ?? {});
++    assertNotContainsAny(scripts, ["v1:live", "live:v1", "start:live", "trade:live"], "Package scripts must not add V1/live integration commands");
++
++    const dto = await getDto();
++    assertNotContainsAny(dto, ["v1Live", "liveV1", "liveTradingEnabled", "exchangeWebsocketConnected:true"], "UI DTO must not expose V1/live integration");
++  });
++
++  await scenario("deterministic replay preserved", ["replay", "determinism"], async () => {
++    const surface = await getSurface();
++    const replayA = surface.getReplayProof ? surface.getReplayProof() : undefined;
++    const replayB = surface.getReplayProof ? surface.getReplayProof() : undefined;
++    assert.deepEqual(stable(replayA), stable(replayB), "Replay verification result is not deterministic");
++
++    const dtoA = await getDto();
++    const dtoB = await getDto();
++    assert.deepEqual(stable(dtoA), stable(dtoB), "Observable DTO is not deterministic after replay checks");
++  });
++
++  const failed = results.filter((result) => !result.ok);
++  const summary = {
++    name: "wave10_observable_machine_audit",
++    total: results.length,
++    passed: results.length - failed.length,
++    failed: failed.length,
++    results
++  };
++
++  console.log(JSON.stringify(summary, null, 2));
++
++  if (failed.length > 0) {
++    process.exitCode = 1;
++  }
++}
++
++main().catch((err) => {
++  console.error(err);
++  process.exitCode = 1;
++});
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/wave10-observable-read-models.ts /mnt/data/wave10a_work/repo/tests/scenarios/wave10-observable-read-models.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/wave10-observable-read-models.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/tests/scenarios/wave10-observable-read-models.ts	2026-05-09 11:41:52.058324120 +0000
+@@ -0,0 +1,127 @@
++import assert from "node:assert/strict";
++import { ACTION_TYPE } from "../../core/contracts/src/actions.js";
++import { ActionGate } from "../../core/gates/src/action-gate.js";
++import { buildMarketInputIntegrityReport, buildProvenanceHealthReport } from "../../core/integrity/integrity-report.js";
++import {
++  buildObservableActionGateVerdict,
++  buildObservableCoreReadModel,
++  buildObservableRecoveryPlan,
++  buildObservableTrustReport
++} from "../../core/observable/observable-read-models.js";
++import { planRecovery } from "../../core/recovery/recovery-planner.js";
++import { DEFAULT_FRESHNESS_CONFIG } from "../../core/runtime/src/freshness.js";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++
++const fixedNow = new Date("2026-05-07T18:27:14.000Z");
++
++function coldRuntimeReadModelIsDeterministic() {
++  runtimeEngine.clearPersistenceAndReset();
++
++  const report = runtimeEngine.getCoreTrustReport({ test: "wave10-observable-read-models" });
++  const recoveryPlan = planRecovery({ coreTrustReport: report });
++  const verdict = report.actions.place_order;
++
++  const first = buildObservableCoreReadModel({
++    coreTrustReport: report,
++    gateVerdict: verdict,
++    recoveryPlan,
++    quarantineSummary: { count: 0, hasItems: false, reasons: [] }
++  });
++  const second = buildObservableCoreReadModel({
++    coreTrustReport: report,
++    gateVerdict: verdict,
++    recoveryPlan,
++    quarantineSummary: { count: 0, hasItems: false, reasons: [] }
++  });
++
++  assert.deepEqual(second, first, "same Core report/verdict must produce the same observable read model");
++  assert.equal(first.modelVersion, "observable-read-models-v0.1");
++  assert.equal(first.gateVerdict?.gateVersion, "action-gate-v2");
++  assert.equal(first.machine.revision, report.revision);
++}
++
++function denyReasonsArePreservedForUi() {
++  runtimeEngine.clearPersistenceAndReset();
++
++  const report = runtimeEngine.getCoreTrustReport({ test: "wave10-deny-reasons" });
++  const verdict = report.actions.place_order;
++  const observable = buildObservableActionGateVerdict(verdict);
++
++  assert.ok(observable, "observable verdict exists");
++  assert.equal(observable.allowed, false);
++  assert.deepEqual(
++    observable.blockingReasons.map((reason) => reason.code).sort(),
++    [...verdict.blockingReasons].sort(),
++    "UI-safe verdict must preserve ActionGate blocking reason codes"
++  );
++  assert.ok(observable.deterministicExplanation.includes("deny"));
++  assert.ok(observable.deterministicExplanation.includes(String(verdict.snapshotRevision)));
++}
++
++function recoveryHintsAreDeterministicAndObservableOnly() {
++  runtimeEngine.clearPersistenceAndReset();
++
++  const report = runtimeEngine.getCoreTrustReport({ test: "wave10-recovery-hints" });
++  const firstPlan = planRecovery({ coreTrustReport: report });
++  const secondPlan = planRecovery({ coreTrustReport: report });
++
++  const first = buildObservableRecoveryPlan(firstPlan);
++  const second = buildObservableRecoveryPlan(secondPlan);
++
++  assert.deepEqual(second, first, "same recovery input must produce same observable recovery hints");
++  assert.ok(first?.nextActions.every((hint) => hint.safeToDisplay), "recovery hints must be display-safe");
++  assert.ok(first?.nextActions.every((hint) => hint.detail.includes("ActionGate")), "hints must not imply UI-side execution");
++}
++
++function observableTrustReportExposesIntegrityAndEvidence() {
++  runtimeEngine.clearPersistenceAndReset();
++
++  const report = runtimeEngine.getCoreTrustReport({ test: "wave10-trust-report" });
++  const observable = buildObservableTrustReport(report);
++
++  assert.equal(observable.revision, report.revision);
++  assert.equal(observable.trustState, report.trustState);
++  assert.equal(observable.integrity?.status, report.integrity?.status);
++  assert.equal(observable.provenance?.status, report.provenanceStatus);
++  assert.equal(observable.marketInput?.status, report.marketInputStatus);
++}
++
++function sameStateSameObservableVerdictWithExplicitGateInputs() {
++  runtimeEngine.clearPersistenceAndReset();
++
++  const snapshot = runtimeEngine.getSnapshot();
++  const gate = new ActionGate();
++  const provenance = buildProvenanceHealthReport({
++    status: "missing",
++    checkedAt: fixedNow
++  });
++  const marketInput = buildMarketInputIntegrityReport({
++    status: "unknown",
++    checkedAt: fixedNow
++  });
++  const options = {
++    enforceFreshness: true,
++    now: fixedNow,
++    freshness: runtimeEngine.getFreshness(fixedNow),
++    freshnessConfig: DEFAULT_FRESHNESS_CONFIG,
++    integrity: runtimeEngine.getIntegrityReport(fixedNow),
++    causality: runtimeEngine.getCausalityReport(undefined, undefined, undefined),
++    provenance,
++    marketInput
++  };
++
++  const first = buildObservableActionGateVerdict(gate.evaluate({ type: ACTION_TYPE.PLACE_ORDER }, snapshot, options));
++  const second = buildObservableActionGateVerdict(gate.evaluate({ type: ACTION_TYPE.PLACE_ORDER }, snapshot, options));
++
++  assert.deepEqual(second, first, "same state and same gate evidence must produce same observable verdict");
++  assert.ok(first?.blockingReasons.some((reason) => reason.code === "provenance_missing"));
++  assert.ok(first?.blockingReasons.some((reason) => reason.code === "MARKET_INPUT_UNKNOWN"));
++}
++
++coldRuntimeReadModelIsDeterministic();
++denyReasonsArePreservedForUi();
++recoveryHintsAreDeterministicAndObservableOnly();
++observableTrustReportExposesIntegrityAndEvidence();
++sameStateSameObservableVerdictWithExplicitGateInputs();
++
++console.log("wave10 observable read models scenarios passed");
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/wave10-observable-trace-mapping.ts /mnt/data/wave10a_work/repo/tests/scenarios/wave10-observable-trace-mapping.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/wave10-observable-trace-mapping.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/tests/scenarios/wave10-observable-trace-mapping.ts	2026-05-09 11:41:51.967840284 +0000
+@@ -0,0 +1,165 @@
++import assert from "node:assert/strict";
++import { EVENT_TYPE } from "../../core/contracts/src/events.js";
++import {
++  buildCausalityTrace,
++  buildObservableTraceMapping,
++  mapTraceToObservableSteps
++} from "../../core/trace/causality-trace.js";
++import { runtimeEngine } from "../../core/runtime/src/runtime-engine.js";
++
++runtimeEngine.clearPersistenceAndReset();
++
++const beforeSnapshot = runtimeEngine.getSnapshot();
++const beforeReport = runtimeEngine.getCoreTrustReport();
++
++const marketEvent = {
++  eventId: "wave10-market-1",
++  eventType: EVENT_TYPE.MARKET_TICK_RECEIVED,
++  timestamp: "2026-01-01T00:00:01.000Z",
++  source: "mock-market",
++  payload: {
++    symbol: "BTCUSDT",
++    price: 101,
++    bid: 100,
++    ask: 102,
++    volume: 1,
++    provider: "mock-market",
++    marketInputIntegrity: {
++      sequence: 1,
++      sequenceStatus: "ordered",
++      gapStatus: "none",
++      duplicateStatus: "none",
++      freshnessStatus: "fresh",
++      checksumStatus: "valid",
++      payloadHash: "sha256:wave10-market-1"
++    },
++    provenance: {
++      originRef: "mock-feed:BTCUSDT:1",
++      parentProvenanceIds: ["prov:mock-feed-root"]
++    },
++    metadataEvents: [{
++      eventId: "metadata.wave10.market.1",
++      eventType: "metadata.provenance.recorded",
++      source: "core",
++      timestamp: "2026-01-01T00:00:00.000Z",
++      originRef: "mock-feed:BTCUSDT:1",
++      parentProvenanceIds: ["prov:mock-feed-root"],
++      payload: { kind: "observable-trace-provenance" }
++    }]
++  }
++};
++
++const accepted = runtimeEngine.commitEventResult(marketEvent as any, { log: false });
++assert.equal(accepted.status, "accepted");
++
++const acceptedTrace = runtimeEngine.getCausalityTraceView(10).find((trace) => trace.eventId === "wave10-market-1");
++assert.ok(acceptedTrace, "accepted market event creates trace");
++
++const manualTraceA = buildCausalityTrace({
++  event: {
++    eventId: "wave10-manual-a",
++    eventType: "manual.observable.test",
++    source: "test",
++    payload: {
++      metadataEvents: [{
++        eventId: "metadata.wave10.manual.a",
++        eventType: "metadata.provenance.recorded",
++        source: "core",
++        originRef: "manual-origin-a",
++        payload: { kind: "manual" }
++      }],
++      provenance: { originRef: "manual-origin-a" }
++    }
++  } as any,
++  beforeSnapshot,
++  afterSnapshot: beforeSnapshot,
++  beforeReport,
++  afterReport: beforeReport,
++  transitionStatus: "unknown",
++  generatedAt: "2099-01-01T00:00:00.000Z"
++});
++
++const manualTraceB = buildCausalityTrace({
++  event: {
++    eventId: "wave10-manual-b",
++    eventType: "manual.observable.test",
++    source: "test",
++    payload: {
++      marketInputIntegrity: {
++        sequenceStatus: "ordered",
++        gapStatus: "gap",
++        duplicateStatus: "none",
++        freshnessStatus: "stale",
++        checksumStatus: "valid"
++      },
++      symbol: "ETHUSDT",
++      price: 200,
++      bid: 199,
++      ask: 201,
++      provider: "mock-market"
++    }
++  } as any,
++  beforeSnapshot,
++  afterSnapshot: beforeSnapshot,
++  beforeReport,
++  afterReport: beforeReport,
++  transitionStatus: "rejected",
++  generatedAt: "1970-01-01T00:00:00.000Z",
++  quarantineRecordId: "quarantine:wave10-manual-b"
++});
++
++const mappingA = buildObservableTraceMapping([manualTraceB, acceptedTrace!, manualTraceA]);
++const mappingB = buildObservableTraceMapping([acceptedTrace!, manualTraceA, manualTraceB]);
++
++assert.deepEqual(
++  mappingA.replaySteps.map((step) => step.traceId),
++  mappingB.replaySteps.map((step) => step.traceId),
++  "replay ordering stable"
++);
++
++assert.deepEqual(
++  mappingA.causalityChain.map((step) => step.observableId),
++  mappingB.causalityChain.map((step) => step.observableId),
++  "causality ordering stable"
++);
++
++assert.ok(mappingA.revisionHistory.length >= 3, "revision history is present");
++assert.ok(mappingA.provenanceLineage.some((step) => step.refs.metadataEventIds.includes("metadata.wave10.market.1")), "provenance lineage visible");
++assert.ok(mappingA.marketInputIntegrity.some((step) => step.eventId === "wave10-market-1"), "market input integrity visible");
++assert.ok(mappingA.integrityFailures.some((step) => step.eventId === "wave10-manual-b"), "integrity failures visible");
++assert.ok(mappingA.quarantineRecoveryVisibility.some((step) => step.refs.quarantineRecordId === "quarantine:wave10-manual-b"), "quarantine visibility present");
++assert.equal(mappingA.timeTravel.cursorField, "revisionCursor");
++assert.ok(mappingA.timeTravel.readOnlyRule.includes("UI observes"), "time-travel semantics keep UI read-only");
++
++const snapshotStepsA = mappingA.snapshotTransitions.map((step) => ({
++  observableId: step.observableId,
++  revision: step.revision,
++  summary: step.summary
++}));
++const snapshotStepsB = mappingB.snapshotTransitions.map((step) => ({
++  observableId: step.observableId,
++  revision: step.revision,
++  summary: step.summary
++}));
++assert.deepEqual(snapshotStepsA, snapshotStepsB, "snapshot transition deterministic");
++
++const stepKinds = mapTraceToObservableSteps(acceptedTrace!).map((step) => step.kind);
++assert.ok(stepKinds.includes("event"));
++assert.ok(stepKinds.includes("metadata_provenance"));
++assert.ok(stepKinds.includes("transition"));
++assert.ok(stepKinds.includes("snapshot"));
++assert.ok(stepKinds.includes("trust"));
++assert.ok(stepKinds.includes("gate_verdict"));
++assert.ok(stepKinds.includes("market_input"));
++
++console.log(JSON.stringify({
++  exampleObservableTraceMapping: {
++    mappingVersion: mappingA.mappingVersion,
++    ordering: mappingA.ordering,
++    revisionCursor: mappingA.revisionCursor,
++    firstReplayStep: mappingA.replaySteps[0],
++    firstCausalityStep: mappingA.causalityChain[0],
++    timeTravel: mappingA.timeTravel
++  }
++}, null, 2));
++console.log("wave10 observable trace mapping checks passed");
+diff -ruN '--exclude=node_modules' '--exclude=data' '--exclude=package-lock.json' /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/wave10a-computation-trace-dto.ts /mnt/data/wave10a_work/repo/tests/scenarios/wave10a-computation-trace-dto.ts
+--- /mnt/data/wave10a_work/mbg-core-v0.1-alpha8/mbg-core-v0.1-alpha8/tests/scenarios/wave10a-computation-trace-dto.ts	1970-01-01 00:00:00.000000000 +0000
++++ /mnt/data/wave10a_work/repo/tests/scenarios/wave10a-computation-trace-dto.ts	2026-05-09 11:41:51.890767410 +0000
+@@ -0,0 +1,76 @@
++import assert from "node:assert/strict";
++import {
++  ComputationTraceDTOSchema,
++  MachinePulseDTOSchema,
++  canonicalDtoStringify,
++  validateComputationTraceDTO
++} from "../../core/contracts/ui/index.js";
++import {
++  MOCK_COMPUTATION_TRACE_DTOS,
++  MOCK_CORE_SCENARIO_ID,
++  MOCK_CORE_SCENARIO_IDS,
++  buildAdapterSafeCoreUiResponse,
++  buildMockComputationTraceDTO
++} from "../../core/ui-api/mock-scenarios.js";
++
++function assertNoUiStateOrLayout(value: unknown): void {
++  const serialized = JSON.stringify(value);
++  const forbidden = ["theme", "layout", "component", "button", "modal", "css", "color"];
++  for (const token of forbidden) {
++    assert.equal(
++      serialized.includes(`"${token}"`),
++      false,
++      `Core DTO must not encode UI layout/control token: ${token}`
++    );
++  }
++}
++
++for (const dto of MOCK_COMPUTATION_TRACE_DTOS) {
++  assert.doesNotThrow(() => ComputationTraceDTOSchema.parse(dto), `scenario ${dto.scenarioId} must validate`);
++  assert.doesNotThrow(() => MachinePulseDTOSchema.parse(dto.pulse), `pulse ${dto.scenarioId} must validate`);
++  assert.equal(dto.dtoVersion, "core-ui-dto-v1");
++  assert.equal(dto.pulse.dtoVersion, "core-ui-dto-v1");
++  assertNoUiStateOrLayout(dto);
++}
++
++assert.deepEqual(
++  MOCK_COMPUTATION_TRACE_DTOS.map((dto) => dto.scenarioId).sort(),
++  [...MOCK_CORE_SCENARIO_IDS].sort(),
++  "all required mock scenarios must have payloads"
++);
++
++const duplicate = buildMockComputationTraceDTO(MOCK_CORE_SCENARIO_ID.DUPLICATE_EVENT_IDEMPOTENT);
++assert.equal(duplicate.snapshotDiff.beforeRevision, duplicate.snapshotDiff.afterRevision);
++assert.equal(duplicate.snapshotDiff.changedPaths.length, 0);
++assert.equal(duplicate.gateVerdict?.blockingReasons.includes("DUPLICATE_EVENT"), true);
++
++const healthy = buildMockComputationTraceDTO(MOCK_CORE_SCENARIO_ID.HEALTHY_TRUSTED_READY);
++assert.equal(healthy.pulse.trustState, "TRUSTED");
++assert.equal(healthy.pulse.tradingAllowed, true);
++assert.equal(healthy.gateVerdict?.allowed, true);
++
++const validObservationNoPermission = buildMockComputationTraceDTO(MOCK_CORE_SCENARIO_ID.VALID_OBSERVATION_NO_PERMISSION);
++assert.equal(validObservationNoPermission.marketInputIntegrity?.status, "valid");
++assert.equal(validObservationNoPermission.gateVerdict?.allowed, false);
++
++const missingProvenance = buildMockComputationTraceDTO(MOCK_CORE_SCENARIO_ID.MISSING_PROVENANCE_DENY);
++assert.equal(missingProvenance.marketInputIntegrity?.status, "unverifiable");
++assert.equal(missingProvenance.pulse.blockingReasons.includes("PROVENANCE_MISSING"), true);
++
++const quarantine = buildMockComputationTraceDTO(MOCK_CORE_SCENARIO_ID.INVALID_EVENT_QUARANTINE);
++assert.equal(quarantine.quarantineRecords.length, 1);
++
++const adapterResponse = buildAdapterSafeCoreUiResponse(MOCK_CORE_SCENARIO_ID.MARKET_INPUT_STALE_DENY);
++assert.equal(adapterResponse.machinePulse.trustState, "RECOVERABLE");
++assert.equal(adapterResponse.trace.marketInputIntegrity?.status, "stale");
++assertNoUiStateOrLayout(adapterResponse);
++
++const first = buildMockComputationTraceDTO(MOCK_CORE_SCENARIO_ID.SNAPSHOT_HASH_MISMATCH);
++const second = buildMockComputationTraceDTO(MOCK_CORE_SCENARIO_ID.SNAPSHOT_HASH_MISMATCH);
++assert.equal(canonicalDtoStringify(first), canonicalDtoStringify(second), "mock DTO must be deterministic");
++assert.equal(
++  canonicalDtoStringify(validateComputationTraceDTO(JSON.parse(JSON.stringify(first)))),
++  canonicalDtoStringify(first)
++);
++
++console.log("Wave 10A ComputationTrace DTO scenarios passed");

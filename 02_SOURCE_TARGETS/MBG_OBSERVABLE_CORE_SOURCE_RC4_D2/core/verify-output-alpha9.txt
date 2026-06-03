@@ -1,0 +1,2473 @@
+
+> mbg-core-v0.1-alpha9@1.0.9 verify
+> npm run reset:runtime && npm run typecheck && npm test && npm run test:core-constitution && tsx tests/scenarios/cold-start-unknown.ts && tsx tests/scenarios/bootstrap-fsm.ts && tsx tests/scenarios/core-event-validation.ts && tsx tests/scenarios/core-idempotency.ts && tsx tests/scenarios/wave2-scenario-audit.ts && tsx tests/scenarios/exchange-truth.ts && tsx tests/scenarios/core-freshness.ts && tsx tests/scenarios/core-health-truth.ts && tsx tests/scenarios/wave3-scenario-audit.ts && tsx tests/scenarios/kernel-authority.ts && tsx tests/scenarios/core-trust-report.ts && tsx tests/scenarios/core-action-gate-verdict.ts && tsx tests/scenarios/wave4-scenario-audit.ts && tsx tests/scenarios/recovery-planner.ts && tsx tests/scenarios/core-quarantine.ts && tsx tests/scenarios/core-permission-ledger.ts && tsx tests/scenarios/wave5-scenario-audit.ts && npm run test:canonical-audit-checklist && npm run test:core:snapshot-hash-chain && npm run test:core:causality-trace && npm run test:core:integrity-trust && npm run test:wave7:scenario-audit && npm run test:core:market-input-contracts && npm run test:wave9:market-input-causality && npm run test:core:market-input-trust && npm run test:wave9:scenario-audit && npm run test:core:computation-trace-dto && npm run test:wave10:observable-trace-mapping && npm run test:core:observable-read-models && npm run test:wave10:scenario-audit && npm run audit:runtime
+
+
+> mbg-core-v0.1-alpha9@1.0.9 reset:runtime
+> node -e "const fs=require('node:fs'); fs.rmSync('data/runtime',{recursive:true,force:true}); fs.rmSync('data/journal',{recursive:true,force:true}); fs.mkdirSync('data/runtime/events',{recursive:true}); fs.mkdirSync('data/runtime/transitions',{recursive:true}); fs.mkdirSync('data/journal',{recursive:true}); fs.writeFileSync('data/journal/.gitkeep', ''); console.log('runtime state reset: data/runtime and data/journal recreated empty')"
+
+runtime state reset: data/runtime and data/journal recreated empty
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+
+> mbg-core-v0.1-alpha9@1.0.9 test
+> tsx tests/scenarios/gate-scenarios.ts
+
+[runtime] event=market.tick.received eventId=4ef0913e-b3cb-4451-bf30-8d21bd4c6ca3 snapshot=0->1 changed=market,risk,system
+[runtime] event=position.reconciled eventId=215c1c72-d691-4b6c-aad9-81c5cbf3236d snapshot=1->2 changed=position,risk,system
+[runtime] event=bootstrap.loading_snapshot eventId=31ed2e76-f42e-41b2-a498-f4bc6d4e258d snapshot=2->3 changed=bootstrap,risk,system
+[runtime] event=bootstrap.replaying_tail eventId=ba6cca35-136d-4cd5-80ad-f6a17ba532c4 snapshot=3->4 changed=bootstrap,risk,system
+[runtime] event=bootstrap.awaiting_exchange_truth eventId=ac08b9da-7a13-4611-8080-26a49cc8f65c snapshot=4->5 changed=bootstrap,risk,system
+[runtime] event=bootstrap.reconciled eventId=20149ccc-9ed5-41fd-9304-2df590d13eb0 snapshot=5->6 changed=bootstrap,risk,system
+[runtime] event=exchange_truth.reconcile_succeeded eventId=4c8967e6-e547-4c12-8136-ef9ec0fe20e2 snapshot=6->7 changed=exchangeTruth,risk,system
+[runtime] event=system.health.changed eventId=2c70c13d-ab13-48e3-9989-9ff1d0fa4b55 snapshot=7->8 changed=risk,system
+5 gate scenario base checks passed with provenance risk gate
+
+> mbg-core-v0.1-alpha9@1.0.9 test:core-constitution
+> node tests/scenarios/core-constitution.test.mjs
+
+✅ Core Constitution checks passed
+[persistence] recovered mode=segmented-streaming events=8 snapshotRevision=8 recentWindow=0
+{
+  "name": "cold_start_unknown",
+  "ok": true
+}
+[persistence] recovered mode=segmented-streaming events=8 snapshotRevision=8 recentWindow=0
+{
+  "name": "bootstrap_fsm",
+  "ok": true
+}
+[persistence] recovered mode=segmented-streaming events=8 snapshotRevision=8 recentWindow=0
+core event validation checks passed
+[runtime] event=market.tick.received eventId=evt-market-1 snapshot=0->1 changed=market,risk,system
+[runtime] idempotency=duplicate_ignored scope=eventId key=evt-market-1 eventId=evt-market-1
+[runtime] idempotency=duplicate_conflict scope=eventId key=evt-market-1 eventId=evt-market-1
+[runtime] event=order.execution.reported eventId=evt-fill-1 snapshot=1->2 changed=order,position,risk,system
+[runtime] idempotency=duplicate_ignored scope=fillId key=fill-1 eventId=evt-fill-duplicate-new-event-id
+[runtime] event=position.reconciled eventId=evt-reconcile-1 snapshot=2->3 changed=position,risk,system
+[runtime] idempotency=duplicate_ignored scope=reconcileId key=reconcile-1 eventId=evt-reconcile-2
+[persistence] recovered mode=segmented-streaming events=3 snapshotRevision=3 recentWindow=0
+[runtime] idempotency=duplicate_ignored scope=eventId key=evt-market-1 eventId=evt-market-1
+{
+  "name": "core_idempotency",
+  "ok": true,
+  "revision": 3,
+  "replay": {
+    "ok": true,
+    "eventCount": 3,
+    "currentRevision": 3,
+    "replayRevision": 3,
+    "currentCommittedAt": "2026-05-06T00:00:03.000Z",
+    "replayCommittedAt": "2026-05-06T00:00:03.000Z",
+    "lastEventId": "evt-reconcile-1",
+    "mode": "snapshot-first-streaming-tail-idempotent",
+    "idempotency": {
+      "duplicateCount": 0,
+      "conflictCount": 0
+    }
+  },
+  "idempotency": {
+    "size": {
+      "eventIds": 3,
+      "fillIds": 1,
+      "reconcileIds": 1,
+      "exchangeReportIds": 1,
+      "provenanceIds": 0,
+      "metadataIds": 0,
+      "marketObservationIds": 0
+    },
+    "diagnostics": [
+      {
+        "decision": "accepted",
+        "scope": "eventId",
+        "key": "evt-market-1",
+        "eventId": "evt-market-1",
+        "eventType": "market.tick.received",
+        "reason": "accepted_new_event_identity",
+        "canonicalEvent": true,
+        "incomingFingerprint": "01f274ac23afff271daa00b883ad99428203663015ce9ad00706a06819f9282e"
+      },
+      {
+        "decision": "duplicate_ignored",
+        "scope": "eventId",
+        "key": "evt-market-1",
+        "eventId": "evt-market-1",
+        "eventType": "market.tick.received",
+        "reason": "duplicate_event_id_same_payload",
+        "canonicalEvent": false,
+        "existingEventId": "evt-market-1",
+        "existingFingerprint": "01f274ac23afff271daa00b883ad99428203663015ce9ad00706a06819f9282e",
+        "incomingFingerprint": "01f274ac23afff271daa00b883ad99428203663015ce9ad00706a06819f9282e"
+      },
+      {
+        "decision": "duplicate_conflict",
+        "scope": "eventId",
+        "key": "evt-market-1",
+        "eventId": "evt-market-1",
+        "eventType": "market.tick.received",
+        "reason": "duplicate_event_id_conflicting_payload",
+        "canonicalEvent": false,
+        "existingEventId": "evt-market-1",
+        "existingFingerprint": "01f274ac23afff271daa00b883ad99428203663015ce9ad00706a06819f9282e",
+        "incomingFingerprint": "5545858ed13f1e15bdd0ceb2d802f2c75e38e5d4d7a7b9c51d5056d092368a60"
+      },
+      {
+        "decision": "accepted",
+        "scope": "eventId",
+        "key": "evt-fill-1",
+        "eventId": "evt-fill-1",
+        "eventType": "order.execution.reported",
+        "reason": "accepted_new_event_identity",
+        "canonicalEvent": true,
+        "incomingFingerprint": "9c95ddd3dfd4b72e945001e373a5875aacdecbeb0ff75c8a04ad72a6d62281f6"
+      },
+      {
+        "decision": "duplicate_ignored",
+        "scope": "fillId",
+        "key": "fill-1",
+        "eventId": "evt-fill-duplicate-new-event-id",
+        "eventType": "order.execution.reported",
+        "reason": "duplicate_fill_id_same_payload",
+        "canonicalEvent": false,
+        "existingEventId": "evt-fill-1",
+        "existingFingerprint": "9ed9ca4a4c1d70c071d71e6e18b5e45135306cb06d93b83190130db3c2044439",
+        "incomingFingerprint": "9ed9ca4a4c1d70c071d71e6e18b5e45135306cb06d93b83190130db3c2044439"
+      },
+      {
+        "decision": "accepted",
+        "scope": "eventId",
+        "key": "evt-reconcile-1",
+        "eventId": "evt-reconcile-1",
+        "eventType": "position.reconciled",
+        "reason": "accepted_new_event_identity",
+        "canonicalEvent": true,
+        "incomingFingerprint": "7663fbf506e5e253c30a7ea645820dea2475959c23a8e207ad3c6a8c7dd9b6c7"
+      },
+      {
+        "decision": "duplicate_ignored",
+        "scope": "reconcileId",
+        "key": "reconcile-1",
+        "eventId": "evt-reconcile-2",
+        "eventType": "position.reconciled",
+        "reason": "duplicate_reconcile_id_same_payload",
+        "canonicalEvent": false,
+        "existingEventId": "evt-reconcile-1",
+        "existingFingerprint": "e87fdaad3ae75aac46526b0e1b8e23ad777231065db1f8e67d905d19f9f1d36c",
+        "incomingFingerprint": "e87fdaad3ae75aac46526b0e1b8e23ad777231065db1f8e67d905d19f9f1d36c"
+      }
+    ],
+    "duplicateEventCount": 3,
+    "conflictCount": 1
+  }
+}
+[persistence] recovered mode=segmented-streaming events=1 snapshotRevision=1 recentWindow=0
+{
+  "name": "wave2_scenario_audit",
+  "target": "mbg-core-v0.1-alpha2 after Roles 4/5/6 merge",
+  "ok": true,
+  "summary": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0
+  },
+  "results": [
+    {
+      "name": "bootstrap not reconciled -> PLACE_ORDER denied",
+      "covers": [
+        "Bootstrap FSM",
+        "Combined safety",
+        "ActionGate"
+      ],
+      "ok": true
+    },
+    {
+      "name": "failed bootstrap cannot transition to reconciled directly",
+      "covers": [
+        "Bootstrap FSM",
+        "Combined safety",
+        "ActionGate"
+      ],
+      "ok": true
+    },
+    {
+      "name": "invalid market tick rejected and no state change",
+      "covers": [
+        "Event Validation",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "duplicate market event is ignored without revision bump or canonical append",
+      "covers": [
+        "Event Idempotency",
+        "Scenario Audit"
+      ],
+      "ok": true
+    },
+    {
+      "name": "duplicate eventId conflict is rejected without state or journal mutation",
+      "covers": [
+        "Event Idempotency",
+        "Scenario Audit"
+      ],
+      "ok": true
+    },
+    {
+      "name": "duplicate fill is ignored and does not double PnL",
+      "covers": [
+        "Event Idempotency",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "duplicate reconcile is ignored without state or journal mutation",
+      "covers": [
+        "Event Idempotency",
+        "Bootstrap FSM",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "market tick alone does not allow trading",
+      "covers": [
+        "Bootstrap FSM",
+        "Combined safety",
+        "ActionGate"
+      ],
+      "ok": true
+    },
+    {
+      "name": "position reconciled but bootstrap not reconciled -> still denied",
+      "covers": [
+        "Bootstrap FSM",
+        "Combined safety",
+        "ActionGate"
+      ],
+      "ok": true
+    },
+    {
+      "name": "bootstrap reconciled + valid state -> allow only if ActionGate allows",
+      "covers": [
+        "Bootstrap FSM",
+        "Combined safety",
+        "ActionGate"
+      ],
+      "ok": true
+    }
+  ]
+}
+[persistence] recovered mode=segmented-streaming events=10 snapshotRevision=10 recentWindow=0
+{
+  "name": "exchange_truth_domain",
+  "ok": true
+}
+[persistence] recovered mode=segmented-streaming events=10 snapshotRevision=10 recentWindow=0
+core freshness checks passed
+[runtime] event=system.health.changed eventId=health-ws-connected-1 snapshot=0->1 changed=risk,system
+[runtime] event=system.health.changed eventId=health-ws-disconnected-1 snapshot=1->2 changed=risk,system
+[runtime] event=system.health.changed eventId=health-ws-stale-1 snapshot=2->3 changed=risk,system
+{
+  "name": "core_health_truth",
+  "ok": true,
+  "cold": {
+    "wsConnected": "unknown",
+    "healthTruthComplete": false,
+    "diagnostics": [
+      "connection_state_unknown",
+      "exchange_truth_unknown",
+      "health_truth_partial",
+      "ws_status_unknown"
+    ]
+  },
+  "connected": {
+    "wsConnected": true,
+    "sourceEventId": "health-ws-connected-1"
+  },
+  "disconnected": {
+    "wsConnected": false,
+    "sourceEventId": "health-ws-disconnected-1"
+  },
+  "stale": {
+    "wsConnected": "stale",
+    "diagnostics": [
+      "connection_state_stale",
+      "exchange_truth_unknown",
+      "health_truth_partial"
+    ]
+  }
+}
+[persistence] recovered mode=segmented-streaming events=10 snapshotRevision=10 recentWindow=0
+{
+  "name": "wave3_scenario_audit",
+  "total": 10,
+  "passed": 10,
+  "failed": 0,
+  "results": [
+    {
+      "name": "cold start -> exchangeTruth unknown -> PLACE_ORDER denied",
+      "covers": [
+        "ExchangeTruth Domain",
+        "Freshness Guard",
+        "Health Truth Cleanup",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "bootstrap reconciled but exchangeTruth unknown -> denied",
+      "covers": [
+        "ExchangeTruth Domain",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "exchangeTruth stale -> denied",
+      "covers": [
+        "ExchangeTruth Domain",
+        "Freshness Guard",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "exchangeTruth conflicted -> denied",
+      "covers": [
+        "ExchangeTruth Domain",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "exchangeTruth unavailable -> denied",
+      "covers": [
+        "ExchangeTruth Domain",
+        "Health Truth Cleanup",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "market data stale -> denied",
+      "covers": [
+        "Freshness Guard",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "connection state unknown -> not healthy and denied where applicable",
+      "covers": [
+        "Health Truth Cleanup",
+        "ExchangeTruth Domain",
+        "Combined safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "wsConnected unknown is not true",
+      "covers": [
+        "Health Truth Cleanup"
+      ],
+      "ok": true
+    },
+    {
+      "name": "bootstrap reconciled + exchangeTruth fresh + market fresh + valid position -> allow only if ActionGate allows",
+      "covers": [
+        "ExchangeTruth Domain",
+        "Freshness Guard",
+        "Combined safety",
+        "ActionGate"
+      ],
+      "ok": true
+    },
+    {
+      "name": "local flat position + exchange conflict -> denied",
+      "covers": [
+        "ExchangeTruth Domain",
+        "Combined safety"
+      ],
+      "ok": true
+    }
+  ]
+}
+[persistence] recovered mode=segmented-streaming events=10 snapshotRevision=10 recentWindow=0
+[persistence] recovered mode=segmented-streaming events=10 snapshotRevision=10 recentWindow=0
+[persistence] recovered mode=segmented-streaming events=10 snapshotRevision=10 recentWindow=0
+[persistence] recovered mode=segmented-streaming events=10 snapshotRevision=10 recentWindow=0
+[persistence] recovered mode=segmented-streaming events=11 snapshotRevision=11 recentWindow=0
+{
+  "name": "core_kernel_authority",
+  "ok": true,
+  "cases": [
+    "cold_start_uncertain",
+    "bootstrap_not_reconciled_not_trusted",
+    "exchange_truth_stale_recoverable_or_uncertain",
+    "health_unknown_not_trusted",
+    "replay_mismatch_compromised",
+    "system_halted",
+    "everything_fresh_reconciled_healthy_trusted"
+  ]
+}
+[persistence] recovered mode=segmented-streaming events=10 snapshotRevision=10 recentWindow=0
+core trust report checks passed
+{
+  "name": "core_action_gate_verdict_v2",
+  "ok": true,
+  "gateVersion": "action-gate-v2"
+}
+{
+  "name": "wave4_scenario_audit",
+  "total": 10,
+  "passed": 10,
+  "failed": 0,
+  "scenarios": [
+    {
+      "name": "cold start -> CoreTrustReport trustState=UNCERTAIN and tradingAllowed=false",
+      "covers": [
+        "Kernel Authority",
+        "CoreTrustReport"
+      ],
+      "ok": true
+    },
+    {
+      "name": "bootstrap not reconciled -> not TRUSTED",
+      "covers": [
+        "Bootstrap",
+        "Kernel Authority"
+      ],
+      "ok": true
+    },
+    {
+      "name": "exchangeTruth stale -> not TRUSTED with blocking reason",
+      "covers": [
+        "ExchangeTruth",
+        "Kernel Authority"
+      ],
+      "ok": true
+    },
+    {
+      "name": "health unknown -> not TRUSTED",
+      "covers": [
+        "Health Truth",
+        "Kernel Authority"
+      ],
+      "ok": true
+    },
+    {
+      "name": "replay mismatch -> COMPROMISED",
+      "covers": [
+        "Replay Check",
+        "Kernel Authority"
+      ],
+      "ok": true
+    },
+    {
+      "name": "halted system -> HALTED",
+      "covers": [
+        "System Halt",
+        "Kernel Authority"
+      ],
+      "ok": true
+    },
+    {
+      "name": "full ready state -> TRUSTED",
+      "covers": [
+        "Kernel Authority",
+        "ActionGate Verdict v2"
+      ],
+      "ok": true
+    },
+    {
+      "name": "ActionGate denied verdict contains machine-readable reason",
+      "covers": [
+        "ActionGate Verdict v2"
+      ],
+      "ok": true
+    },
+    {
+      "name": "CoreTrustReport contains bootstrap/exchangeTruth/freshness/healthTruth sections",
+      "covers": [
+        "CoreTrustReport"
+      ],
+      "ok": true
+    },
+    {
+      "name": "frontend should not need to calculate trust from raw flags",
+      "covers": [
+        "CoreTrustReport",
+        "Kernel Authority"
+      ],
+      "ok": true
+    }
+  ],
+  "expectedOnAlpha4": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0
+  }
+}
+{
+  "name": "recovery_planner",
+  "ok": true,
+  "plannerVersion": "recovery-planner-v1"
+}
+[persistence] recovered mode=segmented-streaming events=1 snapshotRevision=1 recentWindow=0
+core quarantine checks passed
+{
+  "name": "core_permission_ledger",
+  "ok": true,
+  "recordsAudited": 9
+}
+[gate] action=place_order decision=deny reason=bootstrap_not_reconciled snapshot=0
+[gate] action=reconcile_position decision=allow reason=none snapshot=0
+{
+  "name": "wave5_scenario_audit",
+  "total": 10,
+  "passed": 10,
+  "failed": 0,
+  "results": [
+    {
+      "name": "invalid event -> quarantine record created",
+      "covers": [
+        "Quarantine",
+        "Event Validation"
+      ],
+      "ok": true
+    },
+    {
+      "name": "invalid event -> not in canonical journal",
+      "covers": [
+        "Quarantine",
+        "Canonical Journal Safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "invalid event -> snapshot revision unchanged",
+      "covers": [
+        "Quarantine",
+        "Snapshot Safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "idempotency conflict -> quarantine or diagnostic record",
+      "covers": [
+        "Quarantine",
+        "Event Idempotency"
+      ],
+      "ok": true
+    },
+    {
+      "name": "denied PLACE_ORDER -> Permission Ledger record exists",
+      "covers": [
+        "Permission Ledger",
+        "ActionGate Verdict v2"
+      ],
+      "ok": true
+    },
+    {
+      "name": "allowed diagnostic action -> Permission Ledger record exists",
+      "covers": [
+        "Permission Ledger",
+        "ActionGate Verdict v2"
+      ],
+      "ok": true
+    },
+    {
+      "name": "cold start -> Recovery Planner suggests RECONCILE_POSITION / RECONCILE_ORDERS",
+      "covers": [
+        "Recovery Planner",
+        "Cold Start"
+      ],
+      "ok": true
+    },
+    {
+      "name": "market stale -> Recovery Planner suggests REFRESH_MARKET_DATA",
+      "covers": [
+        "Recovery Planner",
+        "Freshness Guard"
+      ],
+      "ok": true
+    },
+    {
+      "name": "health unknown -> Recovery Planner suggests CHECK_HEALTH",
+      "covers": [
+        "Recovery Planner",
+        "Health Truth"
+      ],
+      "ok": true
+    },
+    {
+      "name": "Recovery Planner does not mutate snapshot",
+      "covers": [
+        "Recovery Planner",
+        "Snapshot Safety"
+      ],
+      "ok": true
+    }
+  ]
+}
+
+> mbg-core-v0.1-alpha9@1.0.9 test:canonical-audit-checklist
+> npm run reset:runtime && tsx tests/scenarios/canonical-audit-checklist.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 reset:runtime
+> node -e "const fs=require('node:fs'); fs.rmSync('data/runtime',{recursive:true,force:true}); fs.rmSync('data/journal',{recursive:true,force:true}); fs.mkdirSync('data/runtime/events',{recursive:true}); fs.mkdirSync('data/runtime/transitions',{recursive:true}); fs.mkdirSync('data/journal',{recursive:true}); fs.writeFileSync('data/journal/.gitkeep', ''); console.log('runtime state reset: data/runtime and data/journal recreated empty')"
+
+runtime state reset: data/runtime and data/journal recreated empty
+{
+  "name": "canonical_audit_checklist",
+  "total": 20,
+  "passed": 20,
+  "failed": 0,
+  "results": [
+    {
+      "id": 1,
+      "name": "No V1 inside active core defaults",
+      "ok": true
+    },
+    {
+      "id": 2,
+      "name": "No V2 inside active core defaults",
+      "ok": true
+    },
+    {
+      "id": 3,
+      "name": "No frontend/control UI",
+      "ok": true
+    },
+    {
+      "id": 4,
+      "name": "No strategy logic in active defaults",
+      "ok": true
+    },
+    {
+      "id": 5,
+      "name": "No live trading defaults",
+      "ok": true
+    },
+    {
+      "id": 6,
+      "name": "No .env with keys",
+      "ok": true
+    },
+    {
+      "id": 7,
+      "name": "CoreTrustReport exists",
+      "ok": true
+    },
+    {
+      "id": 8,
+      "name": "Kernel Authority exists",
+      "ok": true
+    },
+    {
+      "id": 9,
+      "name": "ActionGate Verdict exists",
+      "ok": true
+    },
+    {
+      "id": 10,
+      "name": "Recovery Planner exists",
+      "ok": true
+    },
+    {
+      "id": 11,
+      "name": "Quarantine exists",
+      "ok": true
+    },
+    {
+      "id": 12,
+      "name": "Permission Ledger exists",
+      "ok": true
+    },
+    {
+      "id": 13,
+      "name": "ExchangeTruth exists",
+      "ok": true
+    },
+    {
+      "id": 14,
+      "name": "Freshness Guard exists",
+      "ok": true
+    },
+    {
+      "id": 15,
+      "name": "HealthTruth exists",
+      "ok": true
+    },
+    {
+      "id": 16,
+      "name": "package.json description corresponds to alpha5 or alpha5.1",
+      "ok": true
+    },
+    {
+      "id": 17,
+      "name": "npm run verify exists",
+      "ok": true
+    },
+    {
+      "id": 18,
+      "name": "All key scripts exist",
+      "ok": true
+    },
+    {
+      "id": 19,
+      "name": "No runtime data in archive except .gitkeep",
+      "ok": true
+    },
+    {
+      "id": 20,
+      "name": "Documents alpha1-alpha5 are present",
+      "ok": true
+    }
+  ]
+}
+
+> mbg-core-v0.1-alpha9@1.0.9 test:core:snapshot-hash-chain
+> npm run typecheck && tsx tests/scenarios/snapshot-hash-chain.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+Snapshot Hash Chain scenarios passed
+
+> mbg-core-v0.1-alpha9@1.0.9 test:core:causality-trace
+> npm run typecheck && tsx tests/scenarios/core-causality-trace.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+[gate] action=place_order decision=deny reason=bootstrap_not_reconciled snapshot=1
+core causality trace checks passed
+
+> mbg-core-v0.1-alpha9@1.0.9 test:core:integrity-trust
+> npm run typecheck && tsx tests/scenarios/integrity-trust.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+[persistence] recovered mode=segmented-streaming events=1 snapshotRevision=1 recentWindow=0
+integrity + trust integration checks passed
+
+> mbg-core-v0.1-alpha9@1.0.9 test:wave7:scenario-audit
+> npm run typecheck && tsx tests/scenarios/wave7-scenario-audit.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+[gate] action=place_order decision=deny reason=bootstrap_not_reconciled snapshot=0
+{
+  "name": "wave7_scenario_audit",
+  "total": 18,
+  "passed": 18,
+  "failed": 0,
+  "results": [
+    {
+      "name": "accepted event produces eventHash",
+      "covers": [
+        "eventHash",
+        "hash-chain"
+      ],
+      "ok": true
+    },
+    {
+      "name": "accepted event produces snapshotHash",
+      "covers": [
+        "snapshotHash",
+        "hash-chain"
+      ],
+      "ok": true
+    },
+    {
+      "name": "transition links beforeHash, eventHash, afterHash",
+      "covers": [
+        "transition proof",
+        "beforeHash",
+        "eventHash",
+        "afterHash"
+      ],
+      "ok": true
+    },
+    {
+      "name": "changed snapshot changes snapshotHash",
+      "covers": [
+        "snapshotHash",
+        "changed snapshot"
+      ],
+      "ok": true
+    },
+    {
+      "name": "revision gap fails hash-chain verification",
+      "covers": [
+        "hash-chain verification",
+        "revision gap"
+      ],
+      "ok": true
+    },
+    {
+      "name": "legacy unknown hash does not mark cold start as COMPROMISED",
+      "covers": [
+        "legacy unknown hash",
+        "cold start",
+        "trustState"
+      ],
+      "ok": true
+    },
+    {
+      "name": "proven hash mismatch creates integrity blocking reason",
+      "covers": [
+        "hash mismatch",
+        "integrity blocking reason"
+      ],
+      "ok": true
+    },
+    {
+      "name": "accepted event produces causality trace",
+      "covers": [
+        "causality trace",
+        "accepted event"
+      ],
+      "ok": true
+    },
+    {
+      "name": "causality trace captures changed domains",
+      "covers": [
+        "causality trace",
+        "changed domains"
+      ],
+      "ok": true
+    },
+    {
+      "name": "causality trace captures trustState before/after",
+      "covers": [
+        "causality trace",
+        "trustState before/after"
+      ],
+      "ok": true
+    },
+    {
+      "name": "rejected event references quarantine in trace",
+      "covers": [
+        "rejected event",
+        "quarantine",
+        "causality trace"
+      ],
+      "ok": true
+    },
+    {
+      "name": "denied action references permission ledger in trace",
+      "covers": [
+        "denied action",
+        "permission ledger",
+        "causality trace"
+      ],
+      "ok": true
+    },
+    {
+      "name": "CoreTrustReport exposes integrity summary",
+      "covers": [
+        "CoreTrustReport",
+        "integrity summary"
+      ],
+      "ok": true
+    },
+    {
+      "name": "CoreTrustReport exposes causality summary",
+      "covers": [
+        "CoreTrustReport",
+        "causality summary"
+      ],
+      "ok": true
+    },
+    {
+      "name": "broken integrity suggests recovery actions",
+      "covers": [
+        "broken integrity",
+        "Recovery Planner"
+      ],
+      "ok": true
+    },
+    {
+      "name": "trace is read-only and does not mutate snapshot",
+      "covers": [
+        "causality trace",
+        "read-only"
+      ],
+      "ok": true
+    },
+    {
+      "name": "hash-chain verification is deterministic",
+      "covers": [
+        "hash-chain verification",
+        "determinism"
+      ],
+      "ok": true
+    },
+    {
+      "name": "no V1/UI/strategy/live trading added",
+      "covers": [
+        "canonical boundaries",
+        "no V1",
+        "no UI",
+        "no strategy",
+        "no live trading"
+      ],
+      "ok": true
+    }
+  ]
+}
+
+> mbg-core-v0.1-alpha9@1.0.9 test:core:market-input-contracts
+> npm run typecheck && tsx tests/scenarios/wave9-market-input-contracts.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+[persistence] recovered mode=segmented-streaming events=8 snapshotRevision=8 recentWindow=0
+wave9 market input contracts: PASS
+
+> mbg-core-v0.1-alpha9@1.0.9 test:wave9:market-input-causality
+> npm run typecheck && tsx tests/scenarios/wave9-market-input-causality.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+[persistence] recovered mode=segmented-streaming events=8 snapshotRevision=8 recentWindow=0
+{
+  "exampleTrace": {
+    "traceId": "trace:7ffd1c8548691461b1b6d741",
+    "eventId": "wave9-market-valid-1",
+    "marketInputObservation": {
+      "eventId": "wave9-market-valid-1",
+      "eventType": "market.tick.received",
+      "source": "market-sim",
+      "symbol": "BTCUSDT",
+      "provider": "market-sim",
+      "timestamp": "2026-01-01T00:00:01.000Z",
+      "price": 101,
+      "bid": 100,
+      "ask": 102,
+      "volume": 3,
+      "sequence": 10
+    },
+    "validationResult": {
+      "status": "passed",
+      "issues": []
+    },
+    "sequenceStatus": "ordered",
+    "gapStatus": "none",
+    "duplicateStatus": "none",
+    "freshnessStatus": "fresh",
+    "provenanceRef": "market-observation:sim:1",
+    "payloadHash": "sha256:test-payload",
+    "checksumStatus": "valid",
+    "marketInputIntegritySummary": {
+      "applicable": true,
+      "status": "valid",
+      "summary": "market input market.tick.received valid; validation=passed; sequence=ordered; gap=none; duplicate=none; freshness=fresh; checksum=valid; provenance=present; snapshotMutated=true",
+      "issues": [],
+      "snapshotMutated": true,
+      "trustChanged": false,
+      "verdictAffected": true
+    }
+  }
+}
+wave9 market input causality checks passed
+
+> mbg-core-v0.1-alpha9@1.0.9 test:core:market-input-trust
+> npm run typecheck && tsx tests/scenarios/wave9-market-input-trust.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+[persistence] recovered mode=segmented-streaming events=1 snapshotRevision=1 recentWindow=0
+Wave 9 market input trust integration checks passed
+
+> mbg-core-v0.1-alpha9@1.0.9 test:wave9:scenario-audit
+> npm run typecheck && tsx tests/scenarios/wave9-market-input-integrity-audit.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+{
+  "name": "wave9_market_input_integrity_audit",
+  "total": 18,
+  "passed": 18,
+  "failed": 0,
+  "results": [
+    {
+      "name": "valid market input accepted after validation",
+      "covers": [
+        "market_input_validation",
+        "provenance"
+      ],
+      "ok": true
+    },
+    {
+      "name": "invalid market input rejected before mutation",
+      "covers": [
+        "market_input_validation",
+        "no_state_mutation"
+      ],
+      "ok": true
+    },
+    {
+      "name": "duplicate market input is idempotent",
+      "covers": [
+        "idempotency",
+        "market_input"
+      ],
+      "ok": true
+    },
+    {
+      "name": "duplicate market input does not bump revision",
+      "covers": [
+        "idempotency",
+        "revision_law"
+      ],
+      "ok": true
+    },
+    {
+      "name": "sequence gap detected",
+      "covers": [
+        "sequence_integrity",
+        "gap_detection"
+      ],
+      "ok": true
+    },
+    {
+      "name": "gap blocks risk-increasing action",
+      "covers": [
+        "ActionGate",
+        "sequence_integrity"
+      ],
+      "ok": true
+    },
+    {
+      "name": "stale input detected from event-provided timestamps",
+      "covers": [
+        "freshness",
+        "deterministic_time"
+      ],
+      "ok": true
+    },
+    {
+      "name": "stale input blocks risk-increasing action",
+      "covers": [
+        "ActionGate",
+        "freshness"
+      ],
+      "ok": true
+    },
+    {
+      "name": "missing provenance rejected or blocks risk",
+      "covers": [
+        "provenance",
+        "ActionGate"
+      ],
+      "ok": true
+    },
+    {
+      "name": "market input without payloadHash rejected",
+      "covers": [
+        "payload_hash",
+        "validation"
+      ],
+      "ok": true
+    },
+    {
+      "name": "checksum mismatch blocks trust",
+      "covers": [
+        "checksum",
+        "trust"
+      ],
+      "ok": true
+    },
+    {
+      "name": "unknown market input != corruption",
+      "covers": [
+        "trust",
+        "unknown_not_corruption"
+      ],
+      "ok": true
+    },
+    {
+      "name": "valid market input alone does not grant permission",
+      "covers": [
+        "ActionGate",
+        "market_input_not_permission"
+      ],
+      "ok": true
+    },
+    {
+      "name": "recovery/cancel/reduce-only remain available",
+      "covers": [
+        "recovery",
+        "ActionGate"
+      ],
+      "ok": true
+    },
+    {
+      "name": "market input visible in CausalityTrace",
+      "covers": [
+        "causality_trace",
+        "observability"
+      ],
+      "ok": true
+    },
+    {
+      "name": "marketInputStatus visible in CoreTrustReport",
+      "covers": [
+        "CoreTrustReport",
+        "market_input_status"
+      ],
+      "ok": true
+    },
+    {
+      "name": "replay preserves market input state",
+      "covers": [
+        "replay",
+        "determinism"
+      ],
+      "ok": true
+    },
+    {
+      "name": "no V1 / no websocket / no execution leak",
+      "covers": [
+        "scope_guard",
+        "no_live"
+      ],
+      "ok": true
+    }
+  ]
+}
+
+> mbg-core-v0.1-alpha9@1.0.9 test:core:computation-trace-dto
+> npm run typecheck && tsx tests/scenarios/wave10a-computation-trace-dto.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+Wave 10A ComputationTrace DTO scenarios passed
+
+> mbg-core-v0.1-alpha9@1.0.9 test:wave10:observable-trace-mapping
+> npm run typecheck && tsx tests/scenarios/wave10-observable-trace-mapping.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+[persistence] recovered mode=segmented-streaming events=8 snapshotRevision=8 recentWindow=0
+{
+  "exampleObservableTraceMapping": {
+    "mappingVersion": "observable-trace-mapping-v1",
+    "ordering": {
+      "stable": true,
+      "rule": "revisionAfter ASC, revisionBefore ASC, eventId ASC, eventType ASC, transitionStatus ASC, traceId ASC; generatedAt is ignored"
+    },
+    "revisionCursor": {
+      "latestRevision": 1,
+      "availableCursors": [
+        "rev:0->0",
+        "rev:0->1"
+      ]
+    },
+    "firstReplayStep": {
+      "order": 0,
+      "cursor": "rev:0->0",
+      "traceId": "trace:ae18ca2ac480cd5135c7e5b4",
+      "eventId": "wave10-manual-a",
+      "eventType": "manual.observable.test",
+      "transitionStatus": "unknown",
+      "replaySafe": true,
+      "summary": "manual.observable.test unknown at rev:0->0"
+    },
+    "firstCausalityStep": {
+      "observableId": "observable:event:0:0:wave10-manual-a:main",
+      "order": 0,
+      "kind": "event",
+      "status": "blocked",
+      "label": "Event",
+      "summary": "manual.observable.test from test",
+      "traceId": "trace:ae18ca2ac480cd5135c7e5b4",
+      "eventId": "wave10-manual-a",
+      "eventType": "manual.observable.test",
+      "revision": {
+        "revisionBefore": 0,
+        "revisionAfter": 0,
+        "cursor": "rev:0->0",
+        "isMutation": false
+      },
+      "refs": {
+        "provenanceIds": [
+          "provenance:442bcfded38e35d517d3fca4"
+        ],
+        "metadataEventIds": [
+          "metadata.wave10.manual.a"
+        ]
+      },
+      "payload": {
+        "source": "test",
+        "transitionStatus": "unknown",
+        "payloadHash": "17f69e02e3d01ac1d964c0b687d822318c6fdc710cda8977adc288364f0c6fb5"
+      }
+    },
+    "timeTravel": {
+      "cursorField": "revisionCursor",
+      "orderingRule": "A UI may move across availableCursors only; it must not recompute ordering from wall-clock time.",
+      "mutationRule": "Selecting a cursor is read-only visualization and never mutates Core state.",
+      "readOnlyRule": "UI observes mapped Core evidence; Kernel Authority and ActionGate remain the only trust/action authorities."
+    }
+  }
+}
+wave10 observable trace mapping checks passed
+
+> mbg-core-v0.1-alpha9@1.0.9 test:core:observable-read-models
+> npm run typecheck && tsx tests/scenarios/wave10-observable-read-models.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+[persistence] recovered mode=segmented-streaming events=1 snapshotRevision=1 recentWindow=0
+wave10 observable read models scenarios passed
+
+> mbg-core-v0.1-alpha9@1.0.9 test:wave10:scenario-audit
+> npm run typecheck && tsx tests/scenarios/wave10-observable-machine-audit.ts
+
+
+> mbg-core-v0.1-alpha9@1.0.9 typecheck
+> tsc --noEmit
+
+{
+  "name": "wave10_observable_machine_audit",
+  "total": 18,
+  "passed": 18,
+  "failed": 0,
+  "results": [
+    {
+      "name": "all 15 mock scenarios render deterministically",
+      "covers": [
+        "mock",
+        "determinism",
+        "visual"
+      ],
+      "ok": true
+    },
+    {
+      "name": "UI DTO stable across replay",
+      "covers": [
+        "dto",
+        "replay",
+        "determinism"
+      ],
+      "ok": true
+    },
+    {
+      "name": "same scenario -> same visual verdict",
+      "covers": [
+        "visual-verdict",
+        "determinism"
+      ],
+      "ok": true
+    },
+    {
+      "name": "market input integrity visible",
+      "covers": [
+        "market-input",
+        "visibility"
+      ],
+      "ok": true
+    },
+    {
+      "name": "provenance visible",
+      "covers": [
+        "provenance",
+        "visibility"
+      ],
+      "ok": true
+    },
+    {
+      "name": "gap/stale/duplicate visible",
+      "covers": [
+        "gap",
+        "stale",
+        "duplicate",
+        "visibility"
+      ],
+      "ok": true
+    },
+    {
+      "name": "snapshot diff visible",
+      "covers": [
+        "snapshot-diff",
+        "visibility"
+      ],
+      "ok": true
+    },
+    {
+      "name": "recovery visibility preserved",
+      "covers": [
+        "recovery",
+        "visibility"
+      ],
+      "ok": true
+    },
+    {
+      "name": "quarantine visibility preserved",
+      "covers": [
+        "quarantine",
+        "visibility"
+      ],
+      "ok": true
+    },
+    {
+      "name": "ActionGate deny reasoning visible",
+      "covers": [
+        "action-gate",
+        "deny",
+        "reason"
+      ],
+      "ok": true
+    },
+    {
+      "name": "valid observation does not imply permission",
+      "covers": [
+        "market-input",
+        "permission",
+        "safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "UI DTO does not mutate Core state",
+      "covers": [
+        "read-only",
+        "state"
+      ],
+      "ok": true
+    },
+    {
+      "name": "UI contracts remain read-only",
+      "covers": [
+        "read-only",
+        "contract"
+      ],
+      "ok": true
+    },
+    {
+      "name": "no execution semantics leak",
+      "covers": [
+        "no-execution",
+        "safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "no trading controls leak",
+      "covers": [
+        "no-trading-controls",
+        "safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "no websocket authority",
+      "covers": [
+        "no-websocket-authority",
+        "safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "no V1/live integration",
+      "covers": [
+        "no-v1",
+        "no-live",
+        "safety"
+      ],
+      "ok": true
+    },
+    {
+      "name": "deterministic replay preserved",
+      "covers": [
+        "replay",
+        "determinism"
+      ],
+      "ok": true
+    }
+  ]
+}
+
+> mbg-core-v0.1-alpha9@1.0.9 audit:runtime
+> tsx tests/scenarios/audit-runtime.ts
+
+Genesis v1 runtime audit
+PASS initial has all eight state domains
+PASS initial position is unknown
+PASS initial risk is blocked
+[runtime] event=market.tick.received eventId=bd5ed74a-bed1-4f52-8558-aa6ee615eac5 snapshot=0->1 changed=market,risk,system
+PASS market opened
+PASS market sourceEventId exists
+[runtime] event=market.input.observed eventId=cecc66e0-ed8f-45ce-9b97-1e0447fc4b58 snapshot=1->2 changed=marketInput,risk,system
+[runtime] event=signal.received eventId=9eba1533-745d-4dcc-89e8-d7a0ec41d641 snapshot=2->3 changed=trade,risk,system
+PASS trade signal ready
+PASS gate uses current snapshot
+PASS gate denies before position reconcile
+PASS gate explains bootstrap block
+[runtime] event=position.reconciled eventId=447c98c9-c49b-42e0-88f3-40781cf8de7e snapshot=3->4 changed=position,risk,system
+PASS gate stays denied until bootstrap reconcile
+[runtime] event=bootstrap.loading_snapshot eventId=2dc033b4-2fd7-45ef-af56-202f78a460f8 snapshot=4->5 changed=bootstrap,risk,system
+[runtime] event=bootstrap.replaying_tail eventId=78cb64eb-842c-4945-973f-6abfcb71e844 snapshot=5->6 changed=bootstrap,risk,system
+[runtime] event=bootstrap.awaiting_exchange_truth eventId=36556bbd-d41a-4292-8678-0686bff26fe7 snapshot=6->7 changed=bootstrap,risk,system
+[runtime] event=bootstrap.reconciled eventId=f42f0e06-8f0b-4445-8fa7-4ee7738b78f5 snapshot=7->8 changed=bootstrap,risk,system
+PASS gate still denies without exchange truth after bootstrap reconcile
+PASS gate explains missing exchange truth
+[runtime] event=exchange_truth.reconcile_succeeded eventId=2e070199-f4b0-4d56-9a1f-668458dad277 snapshot=8->9 changed=exchangeTruth,risk,system
+PASS gate still denies without health truth after exchange truth
+PASS gate explains missing health truth
+[runtime] event=system.health.changed eventId=da792607-bb0f-4d22-bec0-3084626380cf snapshot=9->10 changed=risk,system
+[runtime] event=metadata.provenance.recorded eventId=6abc477a-231b-4938-8e96-7da505685413 snapshot=10->11 changed=provenance,risk,system
+PASS gate allows only after readiness including market input is complete
+[gate] action=place_order decision=allow reason=none snapshot=11
+[runtime] event=order.requested eventId=b244686c-79b0-4bc5-bc17-0d94be2ab604 snapshot=11->12 changed=order,risk,system
+PASS order becomes pending
+PASS invariant:snapshot_revision_matches_event_count
+PASS invariant:last_transition_points_to_last_event
+PASS invariant:market_source_event_exists_when_open
+PASS invariant:permissions_use_current_snapshot
+PASS invariant:bootstrap_blocks_place_order_until_reconciled
+PASS invariant:bootstrap_failed_is_not_reconciled
+PASS invariant:exchange_truth_blocks_place_order_until_fresh
+PASS invariant:risk_blocks_non_fresh_exchange_truth
+PASS invariant:risk_blocks_unknown_position
+PASS invariant:risk_blocks_uncertain_order
+PASS invariant:system_reflects_risk_block
+PASS invariant:no_runtime_backlog
+PASS invariant:no_false_allow
+PASS invariant:commit_latency_bounded
+PASS invariant:no_idempotency_conflicts
+PASS invariant:replay_matches_current_snapshot
+Runtime view:
+{
+  engine: [32m'genesis-v1'[39m,
+  mode: [32m'live-paper-readonly+persistent'[39m,
+  flow: [
+    [32m'Bootstrap'[39m, [32m'Market'[39m,
+    [32m'Signal'[39m,    [32m'Trade'[39m,
+    [32m'Gate'[39m,      [32m'Order'[39m,
+    [32m'Position'[39m,  [32m'Risk'[39m,
+    [32m'System'[39m,    [32m'API/UI'[39m
+  ],
+  snapshotRevision: [33m12[39m,
+  committedAt: [32m'2026-05-09T11:51:05.967Z'[39m,
+  eventCount: [33m12[39m,
+  transitionCount: [33m12[39m,
+  decisionCount: [33m1[39m,
+  stateDomains: {
+    bootstrap: [32m'reconciled'[39m,
+    exchangeTruth: [32m'fresh'[39m,
+    market: [32m'open'[39m,
+    trade: [32m'signal_ready'[39m,
+    order: [32m'pending'[39m,
+    position: [32m'flat'[39m,
+    risk: [32m'clear'[39m,
+    system: [32m'healthy'[39m
+  },
+  metrics: {
+    startedAt: [32m'2026-05-09T11:51:05.839Z'[39m,
+    uptimeMs: [33m137[39m,
+    totalEvents: [33m12[39m,
+    totalTransitions: [33m12[39m,
+    totalDecisions: [33m1[39m,
+    eventsPerSecond: [33m87.591[39m,
+    lastCommitAt: [32m'2026-05-09T11:51:05.974Z'[39m,
+    timeSinceLastCommitMs: [33m2[39m,
+    commitLatencyMs: { last: [33m7.186[39m, avg: [33m9.382[39m, max: [33m26.712[39m },
+    backlogDepth: [33m0[39m,
+    rejectRate: [33m0[39m,
+    falseAllowCount: [33m0[39m,
+    actionViolationCount: [33m0[39m,
+    uncertaintyTransitionCount: [33m3[39m,
+    gateTransitionCount: [33m1[39m,
+    snapshotRevision: [33m12[39m,
+    snapshotStalled: [33mfalse[39m,
+    duplicateEventCount: [33m0[39m,
+    idempotencyConflictCount: [33m0[39m,
+    quarantineCount: [33m0[39m,
+    permissionLedgerCount: [33m1[39m
+  },
+  quarantine: { count: [33m0[39m, bySource: {}, bySeverity: {}, lastRecord: [90mundefined[39m },
+  permissionLedger: { count: [33m1[39m },
+  persistence: {
+    enabled: [33mtrue[39m,
+    dataDir: [32m'data/runtime'[39m,
+    eventLogPath: [32m'data/runtime/events'[39m,
+    snapshotPath: [32m'data/runtime/snapshot.json'[39m,
+    transitionLogPath: [32m'data/runtime/transitions'[39m,
+    eventCount: [33m12[39m,
+    snapshotRevision: [33m12[39m,
+    lastEventId: [32m'b244686c-79b0-4bc5-bc17-0d94be2ab604'[39m,
+    lastSnapshotCommittedAt: [32m'2026-05-09T11:51:05.967Z'[39m,
+    mode: [32m'segmented-streaming'[39m,
+    segmentSize: [33m5000[39m,
+    eventSegmentCount: [33m1[39m,
+    transitionSegmentCount: [33m1[39m,
+    quarantinePath: [32m'data/runtime/quarantine'[39m,
+    snapshotCorrupted: [33mfalse[39m
+  }
+}
+Health snapshot:
+{
+  systemState: [32m'healthy'[39m,
+  wsConnected: [33mtrue[39m,
+  connections: {
+    websocket: {
+      status: [33mtrue[39m,
+      observedAt: [32m'2026-05-09T11:51:05.947Z'[39m,
+      sourceEventId: [32m'da792607-bb0f-4d22-bec0-3084626380cf'[39m,
+      reason: [90mundefined[39m
+    }
+  },
+  healthTruthComplete: [33mtrue[39m,
+  healthTruthDiagnostics: [],
+  reconcileFresh: [33mtrue[39m,
+  positionMatchesFills: [33mtrue[39m,
+  openOrders: [33m1[39m,
+  unknownOrders: [33m0[39m,
+  driftDetected: [33mfalse[39m,
+  reconcileLatencyMs: [33m7.186[39m,
+  wsReconnects: [32m'unknown'[39m,
+  timestamp: [32m'2026-05-09T11:51:05.978Z'[39m
+}
+Last transitions:
+[
+  {
+    transitionId: [32m'ff1494bc-bc1a-44fd-a698-17e919feae75'[39m,
+    eventId: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m,
+    eventType: [32m'signal.received'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.886Z'[39m,
+    snapshotRevisionBefore: [33m2[39m,
+    snapshotRevisionAfter: [33m3[39m,
+    changedDomains: [ [32m'trade'[39m, [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'cold'[39m,
+        statusAfter: [32m'cold'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      exchangeTruth: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'unknown'[39m,
+        statusAfter: [32m'unknown'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      provenance: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'empty'[39m,
+        statusAfter: [32m'empty'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'idle'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'none'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      position: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'unknown'[39m,
+        statusAfter: [32m'unknown'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'blocked'[39m,
+        statusAfter: [32m'blocked'[39m,
+        revisionBefore: [33m2[39m,
+        revisionAfter: [33m3[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'degraded'[39m,
+        statusAfter: [32m'degraded'[39m,
+        revisionBefore: [33m2[39m,
+        revisionAfter: [33m3[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      }
+    }
+  },
+  {
+    transitionId: [32m'2854b3ee-3e57-4ebd-91b0-030adede14e9'[39m,
+    eventId: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m,
+    eventType: [32m'position.reconciled'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.895Z'[39m,
+    snapshotRevisionBefore: [33m3[39m,
+    snapshotRevisionAfter: [33m4[39m,
+    changedDomains: [ [32m'position'[39m, [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'cold'[39m,
+        statusAfter: [32m'cold'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      exchangeTruth: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'unknown'[39m,
+        statusAfter: [32m'unknown'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      provenance: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'empty'[39m,
+        statusAfter: [32m'empty'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'signal_ready'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'none'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      position: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'unknown'[39m,
+        statusAfter: [32m'flat'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'blocked'[39m,
+        statusAfter: [32m'blocked'[39m,
+        revisionBefore: [33m3[39m,
+        revisionAfter: [33m4[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'degraded'[39m,
+        statusAfter: [32m'degraded'[39m,
+        revisionBefore: [33m3[39m,
+        revisionAfter: [33m4[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      }
+    }
+  },
+  {
+    transitionId: [32m'0dee9a85-0dc1-40c4-a2ce-593e9f08319c'[39m,
+    eventId: [32m'2dc033b4-2fd7-45ef-af56-202f78a460f8'[39m,
+    eventType: [32m'bootstrap.loading_snapshot'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.906Z'[39m,
+    snapshotRevisionBefore: [33m4[39m,
+    snapshotRevisionAfter: [33m5[39m,
+    changedDomains: [ [32m'bootstrap'[39m, [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'cold'[39m,
+        statusAfter: [32m'loading_snapshot'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'2dc033b4-2fd7-45ef-af56-202f78a460f8'[39m
+      },
+      exchangeTruth: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'unknown'[39m,
+        statusAfter: [32m'unknown'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      provenance: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'empty'[39m,
+        statusAfter: [32m'empty'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'signal_ready'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'none'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      position: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'flat'[39m,
+        statusAfter: [32m'flat'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'blocked'[39m,
+        statusAfter: [32m'blocked'[39m,
+        revisionBefore: [33m4[39m,
+        revisionAfter: [33m5[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'degraded'[39m,
+        statusAfter: [32m'degraded'[39m,
+        revisionBefore: [33m4[39m,
+        revisionAfter: [33m5[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      }
+    }
+  },
+  {
+    transitionId: [32m'979722c5-a25c-41e6-a080-6b14e1844b72'[39m,
+    eventId: [32m'78cb64eb-842c-4945-973f-6abfcb71e844'[39m,
+    eventType: [32m'bootstrap.replaying_tail'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.913Z'[39m,
+    snapshotRevisionBefore: [33m5[39m,
+    snapshotRevisionAfter: [33m6[39m,
+    changedDomains: [ [32m'bootstrap'[39m, [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'loading_snapshot'[39m,
+        statusAfter: [32m'replaying_tail'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m2[39m,
+        sourceEventIdAfter: [32m'78cb64eb-842c-4945-973f-6abfcb71e844'[39m
+      },
+      exchangeTruth: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'unknown'[39m,
+        statusAfter: [32m'unknown'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      provenance: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'empty'[39m,
+        statusAfter: [32m'empty'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'signal_ready'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'none'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      position: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'flat'[39m,
+        statusAfter: [32m'flat'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'blocked'[39m,
+        statusAfter: [32m'blocked'[39m,
+        revisionBefore: [33m5[39m,
+        revisionAfter: [33m6[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'degraded'[39m,
+        statusAfter: [32m'degraded'[39m,
+        revisionBefore: [33m5[39m,
+        revisionAfter: [33m6[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      }
+    }
+  },
+  {
+    transitionId: [32m'bb6f06c6-1ddc-411b-9864-8989720ffa77'[39m,
+    eventId: [32m'36556bbd-d41a-4292-8678-0686bff26fe7'[39m,
+    eventType: [32m'bootstrap.awaiting_exchange_truth'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.921Z'[39m,
+    snapshotRevisionBefore: [33m6[39m,
+    snapshotRevisionAfter: [33m7[39m,
+    changedDomains: [ [32m'bootstrap'[39m, [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'replaying_tail'[39m,
+        statusAfter: [32m'awaiting_exchange_truth'[39m,
+        revisionBefore: [33m2[39m,
+        revisionAfter: [33m3[39m,
+        sourceEventIdAfter: [32m'36556bbd-d41a-4292-8678-0686bff26fe7'[39m
+      },
+      exchangeTruth: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'unknown'[39m,
+        statusAfter: [32m'unknown'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      provenance: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'empty'[39m,
+        statusAfter: [32m'empty'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'signal_ready'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'none'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      position: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'flat'[39m,
+        statusAfter: [32m'flat'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'blocked'[39m,
+        statusAfter: [32m'blocked'[39m,
+        revisionBefore: [33m6[39m,
+        revisionAfter: [33m7[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'degraded'[39m,
+        statusAfter: [32m'degraded'[39m,
+        revisionBefore: [33m6[39m,
+        revisionAfter: [33m7[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      }
+    }
+  },
+  {
+    transitionId: [32m'635e0e56-9f97-4600-9a05-72b7f2b699af'[39m,
+    eventId: [32m'f42f0e06-8f0b-4445-8fa7-4ee7738b78f5'[39m,
+    eventType: [32m'bootstrap.reconciled'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.930Z'[39m,
+    snapshotRevisionBefore: [33m7[39m,
+    snapshotRevisionAfter: [33m8[39m,
+    changedDomains: [ [32m'bootstrap'[39m, [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'awaiting_exchange_truth'[39m,
+        statusAfter: [32m'reconciled'[39m,
+        revisionBefore: [33m3[39m,
+        revisionAfter: [33m4[39m,
+        sourceEventIdAfter: [32m'f42f0e06-8f0b-4445-8fa7-4ee7738b78f5'[39m
+      },
+      exchangeTruth: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'unknown'[39m,
+        statusAfter: [32m'unknown'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      provenance: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'empty'[39m,
+        statusAfter: [32m'empty'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'signal_ready'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'none'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      position: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'flat'[39m,
+        statusAfter: [32m'flat'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'blocked'[39m,
+        statusAfter: [32m'blocked'[39m,
+        revisionBefore: [33m7[39m,
+        revisionAfter: [33m8[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'degraded'[39m,
+        statusAfter: [32m'degraded'[39m,
+        revisionBefore: [33m7[39m,
+        revisionAfter: [33m8[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      }
+    }
+  },
+  {
+    transitionId: [32m'7d5fabd0-5050-4ba6-8d52-8a8596d51a70'[39m,
+    eventId: [32m'2e070199-f4b0-4d56-9a1f-668458dad277'[39m,
+    eventType: [32m'exchange_truth.reconcile_succeeded'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.937Z'[39m,
+    snapshotRevisionBefore: [33m8[39m,
+    snapshotRevisionAfter: [33m9[39m,
+    changedDomains: [ [32m'exchangeTruth'[39m, [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'reconciled'[39m,
+        statusAfter: [32m'reconciled'[39m,
+        revisionBefore: [33m4[39m,
+        revisionAfter: [33m4[39m,
+        sourceEventIdAfter: [32m'f42f0e06-8f0b-4445-8fa7-4ee7738b78f5'[39m
+      },
+      exchangeTruth: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'unknown'[39m,
+        statusAfter: [32m'fresh'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'2e070199-f4b0-4d56-9a1f-668458dad277'[39m
+      },
+      provenance: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'empty'[39m,
+        statusAfter: [32m'empty'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'signal_ready'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'none'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      position: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'flat'[39m,
+        statusAfter: [32m'flat'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'blocked'[39m,
+        statusAfter: [32m'clear'[39m,
+        revisionBefore: [33m8[39m,
+        revisionAfter: [33m9[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'degraded'[39m,
+        statusAfter: [32m'healthy'[39m,
+        revisionBefore: [33m8[39m,
+        revisionAfter: [33m9[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      }
+    }
+  },
+  {
+    transitionId: [32m'906b71a7-71a3-4c71-adfc-b74b0a82ca3f'[39m,
+    eventId: [32m'da792607-bb0f-4d22-bec0-3084626380cf'[39m,
+    eventType: [32m'system.health.changed'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.947Z'[39m,
+    snapshotRevisionBefore: [33m9[39m,
+    snapshotRevisionAfter: [33m10[39m,
+    changedDomains: [ [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'reconciled'[39m,
+        statusAfter: [32m'reconciled'[39m,
+        revisionBefore: [33m4[39m,
+        revisionAfter: [33m4[39m,
+        sourceEventIdAfter: [32m'f42f0e06-8f0b-4445-8fa7-4ee7738b78f5'[39m
+      },
+      exchangeTruth: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'fresh'[39m,
+        statusAfter: [32m'fresh'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'2e070199-f4b0-4d56-9a1f-668458dad277'[39m
+      },
+      provenance: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'empty'[39m,
+        statusAfter: [32m'empty'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'signal_ready'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'none'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      position: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'flat'[39m,
+        statusAfter: [32m'flat'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'clear'[39m,
+        statusAfter: [32m'clear'[39m,
+        revisionBefore: [33m9[39m,
+        revisionAfter: [33m10[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'healthy'[39m,
+        statusAfter: [32m'healthy'[39m,
+        revisionBefore: [33m9[39m,
+        revisionAfter: [33m10[39m,
+        sourceEventIdAfter: [32m'da792607-bb0f-4d22-bec0-3084626380cf'[39m
+      }
+    }
+  },
+  {
+    transitionId: [32m'aba5fb79-e034-4d5c-a8dc-6e961d6d073c'[39m,
+    eventId: [32m'6abc477a-231b-4938-8e96-7da505685413'[39m,
+    eventType: [32m'metadata.provenance.recorded'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.955Z'[39m,
+    snapshotRevisionBefore: [33m10[39m,
+    snapshotRevisionAfter: [33m11[39m,
+    changedDomains: [ [32m'provenance'[39m, [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'reconciled'[39m,
+        statusAfter: [32m'reconciled'[39m,
+        revisionBefore: [33m4[39m,
+        revisionAfter: [33m4[39m,
+        sourceEventIdAfter: [32m'f42f0e06-8f0b-4445-8fa7-4ee7738b78f5'[39m
+      },
+      exchangeTruth: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'fresh'[39m,
+        statusAfter: [32m'fresh'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'2e070199-f4b0-4d56-9a1f-668458dad277'[39m
+      },
+      provenance: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'empty'[39m,
+        statusAfter: [32m'recorded'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'6abc477a-231b-4938-8e96-7da505685413'[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'signal_ready'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'none'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m0[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      position: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'flat'[39m,
+        statusAfter: [32m'flat'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'clear'[39m,
+        statusAfter: [32m'clear'[39m,
+        revisionBefore: [33m10[39m,
+        revisionAfter: [33m11[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'healthy'[39m,
+        statusAfter: [32m'healthy'[39m,
+        revisionBefore: [33m10[39m,
+        revisionAfter: [33m11[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      }
+    }
+  },
+  {
+    transitionId: [32m'c4c4f53a-f333-4bb9-b388-40bb7bb3c57d'[39m,
+    eventId: [32m'b244686c-79b0-4bc5-bc17-0d94be2ab604'[39m,
+    eventType: [32m'order.requested'[39m,
+    committedAt: [32m'2026-05-09T11:51:05.967Z'[39m,
+    snapshotRevisionBefore: [33m11[39m,
+    snapshotRevisionAfter: [33m12[39m,
+    changedDomains: [ [32m'order'[39m, [32m'risk'[39m, [32m'system'[39m ],
+    domains: {
+      bootstrap: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'reconciled'[39m,
+        statusAfter: [32m'reconciled'[39m,
+        revisionBefore: [33m4[39m,
+        revisionAfter: [33m4[39m,
+        sourceEventIdAfter: [32m'f42f0e06-8f0b-4445-8fa7-4ee7738b78f5'[39m
+      },
+      exchangeTruth: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'fresh'[39m,
+        statusAfter: [32m'fresh'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'2e070199-f4b0-4d56-9a1f-668458dad277'[39m
+      },
+      provenance: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'recorded'[39m,
+        statusAfter: [32m'recorded'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'6abc477a-231b-4938-8e96-7da505685413'[39m
+      },
+      marketInput: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'validated'[39m,
+        statusAfter: [32m'validated'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'cecc66e0-ed8f-45ce-9b97-1e0447fc4b58'[39m
+      },
+      market: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'open'[39m,
+        statusAfter: [32m'open'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'bd5ed74a-bed1-4f52-8558-aa6ee615eac5'[39m
+      },
+      trade: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'signal_ready'[39m,
+        statusAfter: [32m'signal_ready'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'9eba1533-745d-4dcc-89e8-d7a0ec41d641'[39m
+      },
+      order: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'none'[39m,
+        statusAfter: [32m'pending'[39m,
+        revisionBefore: [33m0[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'b244686c-79b0-4bc5-bc17-0d94be2ab604'[39m
+      },
+      position: {
+        changed: [33mfalse[39m,
+        statusBefore: [32m'flat'[39m,
+        statusAfter: [32m'flat'[39m,
+        revisionBefore: [33m1[39m,
+        revisionAfter: [33m1[39m,
+        sourceEventIdAfter: [32m'447c98c9-c49b-42e0-88f3-40781cf8de7e'[39m
+      },
+      risk: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'clear'[39m,
+        statusAfter: [32m'clear'[39m,
+        revisionBefore: [33m11[39m,
+        revisionAfter: [33m12[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      },
+      system: {
+        changed: [33mtrue[39m,
+        statusBefore: [32m'healthy'[39m,
+        statusAfter: [32m'healthy'[39m,
+        revisionBefore: [33m11[39m,
+        revisionAfter: [33m12[39m,
+        sourceEventIdAfter: [90mundefined[39m
+      }
+    }
+  }
+]
