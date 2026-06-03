@@ -1,0 +1,52 @@
+{
+  "schema": "genesis.perception-snapshot.v1",
+  "snapshotId": "psn-ETHUSDT-20260601T120105Z",
+  "instrumentId": "ETHUSDT",
+  "asOf": "2026-06-01T12:01:05.500Z",
+  "sourceObservationRefs": [
+    "obs-ETHUSDT-OHLC_1M-0-20260601T120000Z",
+    "obs-ETHUSDT-OHLC_1M-1-20260601T120100Z",
+    "obs-ETHUSDT-TRADE_TICK-t001-20260601T120102Z"
+  ],
+  "freshnessMs": 500,
+  "integrity": "OK",
+  "regime": "TRENDING",
+  "volatilityState": "MEDIUM",
+  "liquidityState": "NORMAL",
+  "orderBookImbalance": 0,
+  "aggressiveFlowImbalance": -0.01,
+  "liquidationPressure": "LOW",
+  "fundingStress": "NEUTRAL",
+  "dataQuality": {
+    "status": "OK",
+    "completeness": 1,
+    "reasonCodes": []
+  },
+  "provenance": {
+    "sourceId": "fixture:phase3/market-observation/ETHUSDT-offline-sample.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE3_RULES_V1",
+    "lineageHash": "sha256:a4f01b8e27b731e24762aaa8e4d6801bfa3ae50cece80365d1403466c5c1d145"
+  },
+  "timestamps": {
+    "computedAt": "2026-06-01T12:01:06.000Z",
+    "sourceWindowStart": "2026-06-01T12:00:00.000Z",
+    "sourceWindowEnd": "2026-06-01T12:01:02.100Z"
+  },
+  "evidenceRefs": [
+    "EM-P3-PER-002"
+  ],
+  "contractVersion": "genesis.perception-snapshot.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "MarketSelector",
+    "OperatorReadModel"
+  ],
+  "trustSignal": {
+    "operatorTier": "TIER_1",
+    "notaryStatus": "YELLOW",
+    "shellReadinessStatus": "NOT_READY",
+    "interpretation": "YELLOW_GUARDED"
+  }
+}

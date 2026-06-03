@@ -1,0 +1,157 @@
+{
+  "schema": "genesis.market-observation.batch.v1",
+  "slice": 2,
+  "instrument": {
+    "symbol": "BTCUSDT",
+    "venue": "SYNTHETIC_OFFLINE",
+    "marketType": "SPOT",
+    "baseAsset": "BTC",
+    "quoteAsset": "USDT"
+  },
+  "observations": [
+    {
+      "schema": "genesis.market-observation.v1",
+      "observationId": "obs-BTCUSDT-OHLC_1M-0-20260601T120000Z",
+      "instrument": {
+        "symbol": "BTCUSDT",
+        "venue": "SYNTHETIC_OFFLINE",
+        "marketType": "SPOT",
+        "baseAsset": "BTC",
+        "quoteAsset": "USDT"
+      },
+      "eventType": "OHLC_1M",
+      "observationClass": "FACT",
+      "timestamps": {
+        "sourceEventTime": "2026-06-01T12:00:00.000Z",
+        "observedAt": "2026-06-01T12:00:05.000Z",
+        "ingestedAt": "2026-06-01T12:00:05.000Z"
+      },
+      "provenance": {
+        "sourceId": "fixture:phase3/offline/BTCUSDT-offline-sample.json",
+        "sourceKind": "OFFLINE_FIXTURE",
+        "ingestMode": "REPLAY_FILE",
+        "lineageHash": "sha256:7f3a9c2e1b0d4f8a6c5e2d9b1a0f3e7c8d6b5a4f2e1d0c9b8a7f6e5d4c3b2a1",
+        "fixtureVersion": "slice2-v1",
+        "derivation": "NONE"
+      },
+      "freshness": {
+        "maxAgeMs": 120000,
+        "computedAgeMs": 5000,
+        "status": "FRESH",
+        "clockSkewMs": 0
+      },
+      "quality": {
+        "status": "OK",
+        "completeness": 1,
+        "gapDetected": false,
+        "conflictDetected": false,
+        "reasonCodes": []
+      },
+      "payload": {
+        "open": "67500.10",
+        "high": "67520.00",
+        "low": "67490.50",
+        "close": "67510.25",
+        "volume": "12.450",
+        "barInterval": "1m",
+        "barIndex": 0
+      },
+      "evidenceRefs": ["EM-P3-OBS-001"]
+    },
+    {
+      "schema": "genesis.market-observation.v1",
+      "observationId": "obs-BTCUSDT-OHLC_1M-1-20260601T120100Z",
+      "instrument": {
+        "symbol": "BTCUSDT",
+        "venue": "SYNTHETIC_OFFLINE",
+        "marketType": "SPOT",
+        "baseAsset": "BTC",
+        "quoteAsset": "USDT"
+      },
+      "eventType": "OHLC_1M",
+      "observationClass": "FACT",
+      "timestamps": {
+        "sourceEventTime": "2026-06-01T12:01:00.000Z",
+        "observedAt": "2026-06-01T12:01:05.000Z",
+        "ingestedAt": "2026-06-01T12:01:05.000Z"
+      },
+      "provenance": {
+        "sourceId": "fixture:phase3/offline/BTCUSDT-offline-sample.json",
+        "sourceKind": "OFFLINE_FIXTURE",
+        "ingestMode": "REPLAY_FILE",
+        "lineageHash": "sha256:8e4b0d3f2c1a5a9b7d6f3e0c2b1a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a0",
+        "fixtureVersion": "slice2-v1",
+        "derivation": "NONE"
+      },
+      "freshness": {
+        "maxAgeMs": 120000,
+        "computedAgeMs": 5000,
+        "status": "FRESH",
+        "clockSkewMs": 0
+      },
+      "quality": {
+        "status": "OK",
+        "completeness": 1,
+        "gapDetected": false,
+        "conflictDetected": false,
+        "reasonCodes": []
+      },
+      "payload": {
+        "open": "67510.25",
+        "high": "67535.00",
+        "low": "67505.00",
+        "close": "67528.75",
+        "volume": "9.120",
+        "barInterval": "1m",
+        "barIndex": 1
+      },
+      "evidenceRefs": ["EM-P3-OBS-001"]
+    },
+    {
+      "schema": "genesis.market-observation.v1",
+      "observationId": "obs-BTCUSDT-TRADE_TICK-t001-20260601T120105Z",
+      "instrument": {
+        "symbol": "BTCUSDT",
+        "venue": "SYNTHETIC_OFFLINE",
+        "marketType": "SPOT",
+        "baseAsset": "BTC",
+        "quoteAsset": "USDT"
+      },
+      "eventType": "TRADE_TICK",
+      "observationClass": "FACT",
+      "timestamps": {
+        "sourceEventTime": "2026-06-01T12:01:05.500Z",
+        "observedAt": "2026-06-01T12:01:06.000Z",
+        "ingestedAt": "2026-06-01T12:01:06.000Z"
+      },
+      "provenance": {
+        "sourceId": "fixture:phase3/offline/BTCUSDT-offline-sample.json",
+        "sourceKind": "OFFLINE_FIXTURE",
+        "ingestMode": "REPLAY_FILE",
+        "lineageHash": "sha256:9f5c1e4a3d2b6a0c8e7a4f1d3c2b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a9",
+        "fixtureVersion": "slice2-v1",
+        "derivation": "NONE"
+      },
+      "freshness": {
+        "maxAgeMs": 120000,
+        "computedAgeMs": 500,
+        "status": "FRESH",
+        "clockSkewMs": 0
+      },
+      "quality": {
+        "status": "OK",
+        "completeness": 1,
+        "gapDetected": false,
+        "conflictDetected": false,
+        "reasonCodes": []
+      },
+      "payload": {
+        "price": "67528.75",
+        "quantity": "0.015",
+        "side": "BUY",
+        "tradeId": "t001"
+      },
+      "evidenceRefs": ["EM-P3-OBS-001"]
+    }
+  ]
+}

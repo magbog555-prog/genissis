@@ -1,0 +1,51 @@
+{
+  "schema": "genesis.paper-execution.v1",
+  "paperExecutionId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B44",
+  "instrumentId": "BTCUSDT",
+  "tradeCardRef": "TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B44",
+  "admissionRef": "ADM-LIQUIDITY-SWEEP-RECLAIM-B44",
+  "scenarioRef": "SCN-LIQUIDITY-SWEEP-RECLAIM-B44",
+  "simulationStatus": "PAPER_SIMULATED",
+  "executionSurface": "BLOCKED",
+  "simulatedOnly": true,
+  "side": "LONG",
+  "setupType": "LIQUIDITY_SWEEP_RECLAIM",
+  "simulationPlan": {
+    "entryZone": {
+      "low": 95210,
+      "high": 95733
+    },
+    "invalidationLevel": 93991,
+    "takeProfitLevels": [
+      93991
+    ]
+  },
+  "riskGuardrails": {
+    "executionAllowed": false,
+    "mode": "OFFLINE_ONLY",
+    "capitalLocked": true,
+    "maxRiskBudgetBps": 10
+  },
+  "simulationTimestamps": {
+    "computedAt": "2026-06-03T09:53:00.000Z",
+    "expiresAt": "2026-06-01T13:01:06.000Z"
+  },
+  "provenance": {
+    "sourceId": "fixture:phase3/trade-card/trade-card-liquidity-sweep-btcusdt-offline.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE12_EXPANDED_V3",
+    "lineageHash": "sha256:8aa4d362a85e56ed7704dcfbc84f71985eae2cfd9ac3d09836c303ba6400701a"
+  },
+  "evidenceRefs": [
+    "EM-P3-PEX-b44"
+  ],
+  "contractVersion": "genesis.paper-execution.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "PaperExecutionReadModel",
+    "OperatorReadModel"
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

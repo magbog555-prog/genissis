@@ -1,0 +1,80 @@
+﻿[
+    {
+        "Slice":  "perception-slice3",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\perception-offline-slice3.json"
+    },
+    {
+        "Slice":  "selector-slice4",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\selector-offline-slice4.json"
+    },
+    {
+        "Slice":  "scenario-slice5",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\scenario-offline-slice5.json"
+    },
+    {
+        "Slice":  "admission-slice6",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\admission-offline-slice6.json"
+    },
+    {
+        "Slice":  "trade-card-slice7",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\trade-card-offline-slice7.json"
+    },
+    {
+        "Slice":  "paper-execution-slice8",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\paper-execution-offline-slice8.json"
+    },
+    {
+        "Slice":  "trade-history-slice9",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\trade-history-offline-slice9.json"
+    },
+    {
+        "Slice":  "visibility-runtime-slice10",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\visibility-runtime-alignment-slice10.verify.json"
+    },
+    {
+        "Slice":  "owner-operating-views-slice11",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\owner-operating-views-slice11.json"
+    },
+    {
+        "Slice":  "profitops-slice12",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\profitops-offline-slice12.json"
+    },
+    {
+        "Slice":  "foundation",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "(stdout JSON, no single report file)"
+    },
+    {
+        "Slice":  "foundation:strict",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "(stdout JSON, no single report file)"
+    },
+    {
+        "Slice":  "mbg-wire:self-contained",
+        "Result":  "PASS",
+        "ExitCode":  0,
+        "Report":  "D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\mbg-wire-market-observation.json"
+    }
+]

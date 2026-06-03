@@ -1,0 +1,50 @@
+{
+  "schema": "genesis.scenario-offline-slice5.v1",
+  "generatedAt": "2026-06-03T05:39:02.798Z",
+  "slice": 5,
+  "pass": true,
+  "summary": {
+    "scenarioCount": 1,
+    "goldenFiles": 1,
+    "goldenPass": 1,
+    "negativeFiles": 1,
+    "negativePass": 1,
+    "scenarioId": "SCN-LIQUIDITY-SWEEP-RECLAIM-V1",
+    "instrumentId": "ETHUSDT",
+    "phase": "RECLAIM_FORMING"
+  },
+  "files": [
+    {
+      "file": "tests/fixtures/phase3/scenario/liquidity-sweep-reclaim-ethusdt-offline.json",
+      "expectFail": false,
+      "pass": true,
+      "scenarioId": "SCN-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "instrumentId": "ETHUSDT",
+      "phase": "RECLAIM_FORMING",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/scenario/negative-admission-on-scenario.json",
+      "expectFail": true,
+      "pass": true,
+      "scenarioId": "SCN-NEG-ADMISSION-001",
+      "instrumentId": "ETHUSDT",
+      "phase": "RECLAIM_FORMING",
+      "redCount": 1,
+      "violations": [
+        {
+          "ruleId": "RC-LAYER-COLLAPSE",
+          "severity": "RED",
+          "message": "forbidden fields on ScenarioCandidate",
+          "scenarioId": "SCN-NEG-ADMISSION-001",
+          "paths": [
+            "admissionState"
+          ]
+        }
+      ]
+    }
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

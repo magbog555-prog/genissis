@@ -1,0 +1,13 @@
+{
+  "schema": "genesis.screen-proof-discipline.verify.v1",
+  "generatedAt": "2026-06-03T05:42:56.038Z",
+  "pass": true,
+  "scope": "owner-visible-l2",
+  "screenMapRef": "tests/fixtures/phase3/visibility/owner-decision-screen-map.json",
+  "totals": {
+    "screens": 5,
+    "proven": 5,
+    "unproven": 0
+  },
+  "violations": []
+}

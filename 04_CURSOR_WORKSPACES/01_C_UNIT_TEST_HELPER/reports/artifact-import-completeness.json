@@ -1,0 +1,12 @@
+{
+  "schema": "genesis.artifact-import-completeness.v1",
+  "generatedAt": "2026-06-03T07:06:55.666Z",
+  "bundleRoot": "dist/genesis-safe-readonly",
+  "tier": "OPERATOR",
+  "strictMode": false,
+  "filesScanned": 36,
+  "violationCount": 0,
+  "redCount": 0,
+  "violations": [],
+  "pass": true
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "genesis.owner-operating-views-slice11.verify.v1",
+  "generatedAt": "2026-06-03T05:39:09.140Z",
+  "slice": 11,
+  "pass": true,
+  "viewId": "OWNER-S11-D6009CE45C98C688",
+  "coveredSlices": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "violations": [],
+  "constraints": {
+    "notaryGreenClaimed": false,
+    "executionAllowed": false,
+    "liveIngestion": false
+  }
+}

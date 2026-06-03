@@ -1,0 +1,94 @@
+{
+  "schema": "genesis.market-observation.batch.v1",
+  "slice": "wire",
+  "mode": "MBG_READONLY_API",
+  "instrument": {
+    "symbol": "BTCUSDT",
+    "venue": "MBG_READONLY_API",
+    "marketType": "SPOT",
+    "baseAsset": "BTC",
+    "quoteAsset": "USDT"
+  },
+  "observations": [
+    {
+      "schema": "genesis.market-observation.v1",
+      "observationId": "obs-wire-BTCUSDT-TRADE_TICK-20260603T054245Z",
+      "instrument": {
+        "symbol": "BTCUSDT",
+        "venue": "MBG_READONLY_API",
+        "marketType": "SPOT",
+        "baseAsset": "BTC",
+        "quoteAsset": "USDT"
+      },
+      "eventType": "TRADE_TICK",
+      "observationClass": "NOISE",
+      "timestamps": {
+        "sourceEventTime": "2026-06-03T05:42:45.823Z",
+        "observedAt": "2026-06-03T05:42:45.823Z",
+        "ingestedAt": "2026-06-03T05:42:45.823Z"
+      },
+      "provenance": {
+        "sourceId": "mbg:readonly-api:3011/api/core/live-stream/last-event",
+        "sourceKind": "MBG_READONLY_API",
+        "ingestMode": "LIVE_REST",
+        "lineageHash": "sha256:4e5fab4bbd06a3440022d209c74a847594bd6ebb808898546e9436341d469091",
+        "fixtureVersion": "wire-v1",
+        "derivation": "MBG_READONLY_TO_OBSERVATION_V1"
+      },
+      "freshness": {
+        "maxAgeMs": 5000,
+        "computedAgeMs": 0,
+        "status": "FRESH",
+        "clockSkewMs": 0
+      },
+      "quality": {
+        "status": "DEGRADED",
+        "completeness": 0.5,
+        "gapDetected": true,
+        "conflictDetected": false,
+        "reasonCodes": [
+          "RC-WIRE-NO-LIVE-EVENT-YET"
+        ],
+        "degradationReason": "Live stream last-event has no numeric price yet"
+      },
+      "payload": {
+        "price": null,
+        "quantity": null,
+        "side": null,
+        "mbgEventType": "unknown",
+        "executionSurface": "closed",
+        "readOnly": true,
+        "provider": "Binance",
+        "rawSummary": {
+          "omittedForUiSafety": true,
+          "present": false,
+          "reason": "no_live_event_received"
+        }
+      },
+      "evidenceRefs": [
+        "EM-P3-WIRE-001"
+      ],
+      "wireMeta": {
+        "coreHealth": "mbg-core-connected-readonly-api",
+        "liveStreamConnected": false,
+        "connectionStatus": "disconnected",
+        "trustState": "UNCERTAIN",
+        "actionVerdict": "prohibited"
+      }
+    }
+  ],
+  "wireEndpoints": [
+    "/health",
+    "/api/core/live-stream/status",
+    "/api/core/live-stream/last-event",
+    "/api/core/overview"
+  ],
+  "mbgOverview": {
+    "overallState": "SAFE_OBSERVE_ONLY",
+    "trustState": "UNCERTAIN",
+    "executionSurface": "closed"
+  },
+  "notaryGreenClaimed": false,
+  "liveIngestion": true,
+  "executionAllowed": false
+}

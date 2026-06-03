@@ -1,0 +1,10 @@
+{
+  "schema": "genesis.shell-trust-readiness.verify.v1",
+  "generatedAt": "2026-06-02T08:38:19.159Z",
+  "pass": true,
+  "readinessStatus": "READY",
+  "ownerViewId": "OWNER-S11-11B656B7A644D8AD",
+  "pairSignal": "runnable_import_proof_pass + YELLOW_PLUS",
+  "notaryGreenNo": true,
+  "violations": []
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "genesis.paper-execution.v1",
+  "paperExecutionId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B31",
+  "instrumentId": "ETHUSDT",
+  "tradeCardRef": "TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B31",
+  "admissionRef": "ADM-LIQUIDITY-SWEEP-RECLAIM-B31",
+  "scenarioRef": "SCN-LIQUIDITY-SWEEP-RECLAIM-B31",
+  "simulationStatus": "PAPER_SIMULATED",
+  "executionSurface": "BLOCKED",
+  "simulatedOnly": true,
+  "side": "LONG",
+  "setupType": "LIQUIDITY_SWEEP_RECLAIM",
+  "simulationPlan": {
+    "entryZone": {
+      "low": 3452,
+      "high": 3489
+    },
+    "invalidationLevel": 3410,
+    "takeProfitLevels": [
+      3537,
+      3589
+    ]
+  },
+  "riskGuardrails": {
+    "executionAllowed": false,
+    "mode": "OFFLINE_ONLY",
+    "capitalLocked": true,
+    "maxRiskBudgetBps": 10
+  },
+  "simulationTimestamps": {
+    "computedAt": "2026-06-03T08:30:00.000Z",
+    "expiresAt": "2026-06-01T13:01:06.000Z"
+  },
+  "provenance": {
+    "sourceId": "fixture:phase3/trade-card/trade-card-liquidity-sweep-ethusdt-offline.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE12_EXPANDED_V3",
+    "lineageHash": "sha256:98db3c454698d5b3e2af2852beda0f47e8aee58d979f5de2a1a9dd78aa38daa4"
+  },
+  "evidenceRefs": [
+    "EM-P3-PEX-b31"
+  ],
+  "contractVersion": "genesis.paper-execution.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "PaperExecutionReadModel",
+    "OperatorReadModel"
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

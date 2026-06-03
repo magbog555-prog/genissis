@@ -1,0 +1,42 @@
+{
+  "schema": "genesis.profitops-expanded-sample-v3.v1",
+  "generatedAt": "2026-06-03T07:02:50.993Z",
+  "slice": 12,
+  "expansionId": "profitops-expanded-sample-v3",
+  "mode": "PAPER_OFFLINE_ONLY",
+  "notaryGreenClaimed": false,
+  "liveIngestion": false,
+  "executionAllowed": false,
+  "costAssumptionsBps": {
+    "feeBpsRoundTrip": 8,
+    "slippageBpsRoundTrip": 4,
+    "fundingBps": 1
+  },
+  "regimeTags": [
+    "TREND",
+    "RANGE",
+    "CHOP"
+  ],
+  "sessionTags": [
+    "ASIA",
+    "LONDON",
+    "NY"
+  ],
+  "instruments": [
+    "ETHUSDT",
+    "BTCUSDT"
+  ],
+  "tradeCount": 100,
+  "metrics": {
+    "sampleCount": 100,
+    "profitFactor": 5.199062140988603,
+    "winrate": 0.78,
+    "netExpectancyAfterFunding": 0.9667030632834361,
+    "pnl": 17116.029732931995,
+    "maxDrawdown": -210.47728472924246
+  },
+  "goldenSummaryId": "ops-ETHUSDT-paper-slice12-offline",
+  "goldenFixture": "profitops-liquidity-sweep-ethusdt-offline.json",
+  "tradeBatch": "tests/fixtures/phase3/profitops/slice12-trade-batch.json",
+  "notes": "Sprint 7 expanded offline paper batch (n>=100). Instrument/regime/session breakdowns + cost/risk reports."
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "genesis.phase3.slice12-profitops-manifest.v1",
+  "slice": 12,
+  "mode": "PAPER_OFFLINE_ONLY",
+  "costAssumptionsBps": {
+    "feeBpsRoundTrip": 8,
+    "slippageBpsRoundTrip": 4,
+    "fundingBps": 1
+  },
+  "tradeBatch": "slice12-trade-batch.json",
+  "expansion": "profitops-expanded-sample-v3",
+  "regimeTags": [
+    "TREND",
+    "RANGE",
+    "CHOP"
+  ],
+  "sessionTags": [
+    "ASIA",
+    "LONDON",
+    "NY"
+  ],
+  "files": [
+    "profitops-liquidity-sweep-ethusdt-offline.json"
+  ],
+  "negativeFiles": [
+    "negative-profit-factor-below-threshold.json"
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

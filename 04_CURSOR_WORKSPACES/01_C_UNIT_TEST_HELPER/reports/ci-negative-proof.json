@@ -1,0 +1,106 @@
+{
+  "schema": "genesis.ci-negative-proof.v1",
+  "ranAt": "2026-06-03T07:06:56.032Z",
+  "pass": true,
+  "fixtureParity": {
+    "pass": true,
+    "route": [
+      {
+        "case": "POST /order in SAFE",
+        "pass": true,
+        "expected": "RED",
+        "actual": "RED",
+        "source": "synthetic-classifier"
+      },
+      {
+        "case": "POST /trade/place in UNSAFE",
+        "pass": true,
+        "expected": "FINDING",
+        "actual": "FINDING",
+        "source": "route-inventory"
+      },
+      {
+        "case": "POST /execution/testnet/place-guarded in UNSAFE",
+        "pass": true,
+        "expected": "FINDING",
+        "actual": "FINDING",
+        "source": "route-inventory"
+      },
+      {
+        "case": "GET /health in SAFE readonly",
+        "pass": true,
+        "expected": "GREEN",
+        "actual": "GREEN",
+        "source": "route-inventory"
+      },
+      {
+        "case": "POST /order in UNKNOWN hypothetical",
+        "pass": true,
+        "expected": "YELLOW",
+        "actual": "YELLOW",
+        "source": "synthetic-classifier"
+      }
+    ],
+    "import": [
+      {
+        "case": "SAFE imports binance adapter",
+        "pass": true,
+        "expected": "RED",
+        "actual": "RED"
+      },
+      {
+        "case": "SAFE imports runtime-engine (DONOR coupling)",
+        "pass": true,
+        "expected": "YELLOW",
+        "actual": "YELLOW"
+      },
+      {
+        "case": "UNSAFE imports binance testnet",
+        "pass": true,
+        "expected": "FINDING",
+        "actual": "FINDING"
+      },
+      {
+        "case": "DONOR imports execution service",
+        "pass": true,
+        "expected": "DONOR_FINDING",
+        "actual": "DONOR_FINDING"
+      }
+    ],
+    "env": [
+      {
+        "case": "BINANCE_API_KEY reference in SAFE",
+        "pass": true,
+        "expected": "RED",
+        "actual": "RED"
+      },
+      {
+        "case": "BINANCE_API_KEY in UNSAFE exchange adapter",
+        "pass": true,
+        "expected": "FINDING",
+        "actual": "FINDING"
+      },
+      {
+        "case": "EXECUTION_MODE in runtime-api",
+        "pass": true,
+        "expected": "FINDING",
+        "actual": "FINDING"
+      },
+      {
+        "case": "CORE_READONLY_API_PORT in SAFE readonly",
+        "pass": true,
+        "expected": "OK",
+        "actual": "OK"
+      }
+    ]
+  },
+  "injectionProof": {
+    "ok": true,
+    "scanExitCode": 1,
+    "redCount": 3,
+    "scanPass": false,
+    "probeFile": "core/core/__ci_injection_probe.ts",
+    "injectedImport": "../../application/exchange/src/binance-spot-testnet.js"
+  },
+  "blockers": []
+}

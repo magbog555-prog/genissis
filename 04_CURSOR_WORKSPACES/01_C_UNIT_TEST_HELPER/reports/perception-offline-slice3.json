@@ -1,0 +1,58 @@
+{
+  "schema": "genesis.perception-offline-slice3.v1",
+  "generatedAt": "2026-06-03T05:42:41.382Z",
+  "slice": 3,
+  "pass": true,
+  "summary": {
+    "goldenFiles": 2,
+    "goldenPass": 2,
+    "negativeFiles": 1,
+    "negativePass": 1
+  },
+  "files": [
+    {
+      "file": "tests/fixtures/phase3/perception/BTCUSDT-perception-snapshot.json",
+      "expectFail": false,
+      "pass": true,
+      "snapshotId": "psn-BTCUSDT-20260601T120106Z",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/perception/ETHUSDT-perception-snapshot.json",
+      "expectFail": false,
+      "pass": true,
+      "snapshotId": "psn-ETHUSDT-20260601T120105Z",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/perception/negative-scenario-id-on-perception.json",
+      "expectFail": true,
+      "pass": true,
+      "snapshotId": "psn-NEG-scenario-001",
+      "redCount": 2,
+      "violations": [
+        {
+          "ruleId": "RC-PERCEPTION-FRESHNESS-TTL",
+          "severity": "RED",
+          "message": "freshnessMs must match timestamps.computedAt - asOf",
+          "snapshotId": "psn-NEG-scenario-001",
+          "expectedFreshnessMs": 1000,
+          "actualFreshnessMs": 5000
+        },
+        {
+          "ruleId": "RC-LAYER-COLLAPSE",
+          "severity": "RED",
+          "message": "forbidden fields on PerceptionSnapshot",
+          "snapshotId": "psn-NEG-scenario-001",
+          "paths": [
+            "scenarioId"
+          ]
+        }
+      ]
+    }
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

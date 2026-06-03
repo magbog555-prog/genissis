@@ -1,0 +1,60 @@
+{
+  "schema": "genesis.profitops-offline-slice12.v1",
+  "generatedAt": "2026-06-03T07:02:51.075Z",
+  "slice": 12,
+  "pass": true,
+  "b7MinimalGate": {
+    "minProfitFactor": 1.15,
+    "requiresNetExpectancyAfterFundingPositive": true,
+    "costAdjustedMetricsRequired": true,
+    "minSampleCount": 100,
+    "expansionId": "profitops-expanded-sample-v3"
+  },
+  "summary": {
+    "goldenFiles": 1,
+    "goldenPass": 1,
+    "negativeFiles": 1,
+    "negativePass": 1,
+    "summaryId": "ops-ETHUSDT-paper-slice12-offline",
+    "netExpectancyAfterFunding": 0.9667030632834361,
+    "profitFactor": 5.199062140988603,
+    "sampleCount": 100,
+    "winrate": 0.78
+  },
+  "files": [
+    {
+      "file": "tests/fixtures/phase3/profitops/profitops-liquidity-sweep-ethusdt-offline.json",
+      "expectFail": false,
+      "pass": true,
+      "summaryId": "ops-ETHUSDT-paper-slice12-offline",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/profitops/negative-profit-factor-below-threshold.json",
+      "expectFail": true,
+      "pass": true,
+      "summaryId": "ops-NEG-profit-factor-below-threshold",
+      "redCount": 2,
+      "violations": [
+        {
+          "ruleId": "RC-PROFITOPS-B7-NEGATIVE-FIXTURE",
+          "severity": "RED",
+          "message": "expected B7 fail: profitFactor below promotion threshold",
+          "summaryId": "ops-NEG-profit-factor-below-threshold",
+          "actual": 0.85
+        },
+        {
+          "ruleId": "RC-PROFITOPS-B7-NEGATIVE-FIXTURE",
+          "severity": "RED",
+          "message": "expected B7 fail: non-positive netExpectancyAfterFunding",
+          "summaryId": "ops-NEG-profit-factor-below-threshold",
+          "actual": -0.12
+        }
+      ]
+    }
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false,
+  "executionAllowed": false
+}

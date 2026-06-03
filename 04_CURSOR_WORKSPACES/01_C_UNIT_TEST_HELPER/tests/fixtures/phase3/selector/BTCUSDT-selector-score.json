@@ -1,0 +1,67 @@
+{
+  "schema": "genesis.market-selector-score.v1",
+  "scoreId": "sel-BTCUSDT-20260601T120106Z",
+  "instrumentId": "BTCUSDT",
+  "rank": 2,
+  "selectionStatus": "SELECTED",
+  "compositeScore": 60,
+  "sourceSnapshotRef": "psn-BTCUSDT-20260601T120106Z",
+  "scoreFactors": [
+    {
+      "factor": "integrity",
+      "value": "OK",
+      "points": 20
+    },
+    {
+      "factor": "dataQuality",
+      "value": "OK",
+      "points": 10
+    },
+    {
+      "factor": "regime",
+      "value": "RANGING",
+      "points": 5
+    },
+    {
+      "factor": "volatility",
+      "value": "LOW",
+      "points": 10
+    },
+    {
+      "factor": "liquidity",
+      "value": "NORMAL",
+      "points": 10
+    },
+    {
+      "factor": "freshness",
+      "value": 500,
+      "points": 5
+    }
+  ],
+  "selectionReasons": [
+    "RC-SEL-INTEGRITY-OK",
+    "RC-SEL-DQ-OK",
+    "RC-SEL-REGIME-RANGING",
+    "RC-SEL-VOL-LOW",
+    "RC-SEL-LIQ-NORMAL",
+    "RC-SEL-FRESH-OK"
+  ],
+  "rejectionReasons": [],
+  "dataQuality": {
+    "status": "OK",
+    "completeness": 1
+  },
+  "provenance": {
+    "sourceId": "fixture:phase3/perception/BTCUSDT-perception-snapshot.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE4_RULES_V1",
+    "lineageHash": "sha256:5b51adf790ce5baa51449e67d1b2389b68bf9c8db055d392c696d4b47c931d02"
+  },
+  "contractVersion": "genesis.market-selector-score.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "ScenarioEngine",
+    "OperatorReadModel"
+  ]
+}

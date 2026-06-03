@@ -1,0 +1,35 @@
+{
+  "schema": "genesis.portability-baseline.v1",
+  "track": "B6",
+  "tier": "BASELINE_V1",
+  "archGreen": false,
+  "fullCi": false,
+  "timestamp": "2026-06-03T07:06:56.079Z",
+  "platform": {
+    "os": "win32",
+    "arch": "x64",
+    "release": "10.0.26200"
+  },
+  "nodeVersion": "v22.22.0",
+  "pass": true,
+  "prerequisites": {
+    "node": {
+      "required": "Node.js LTS (18+ or 20+ recommended); match version across machines when comparing reports",
+      "observed": "v22.22.0"
+    },
+    "install": {
+      "command": "none (no package-lock.json)",
+      "note": "Foundation workspace has no npm dependencies; verification uses Node built-ins only"
+    },
+    "env": {
+      "GENESIS_ROOT": "optional — repo root if not default (see tools/verification/GENESIS_PATHS.md)",
+      "SOURCE_TARGET_ROOT": "optional — MBG source target if not under default GENESIS_ROOT"
+    }
+  },
+  "foundation": {
+    "script": "verify:foundation",
+    "pass": true,
+    "exitCode": 0,
+    "stderrTail": ""
+  }
+}

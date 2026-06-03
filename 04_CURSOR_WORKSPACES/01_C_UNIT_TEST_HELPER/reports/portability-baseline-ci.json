@@ -1,0 +1,74 @@
+{
+  "schema": "genesis.portability-baseline-ci.v1",
+  "track": "B6",
+  "canonicalB6": "PARTIAL_CI_LOCAL_EXECUTED",
+  "b6SetupRef": "05_REPORTS_AND_MANIFESTS/B6_GITHUB_CI_SETUP_RU.md",
+  "b6VerifyGate": "npm run verify:b6-portability-closure",
+  "tier": "BASELINE_V1",
+  "archGreen": false,
+  "fullCi": false,
+  "timestamp": "2026-06-03T06:34:15.688Z",
+  "humanRef": "04_CURSOR_WORKSPACES/01_C_UNIT_TEST_HELPER/docs/reports/PORTABILITY_BASELINE_RU.md",
+  "baselineReportRef": "reports/portability-baseline.json",
+  "secondHostInstructionsRef": "05_REPORTS_AND_MANIFESTS/portability-second-host-instructions.md",
+  "ciJob": {
+    "id": "genesis-foundation-verify",
+    "platform": "github-actions",
+    "workingDirectory": "04_CURSOR_WORKSPACES/01_C_UNIT_TEST_HELPER",
+    "steps": [
+      {
+        "order": 1,
+        "script": "verify:foundation",
+        "command": "npm run verify:foundation",
+        "purpose": "OPERATOR foundation aggregate (8 gates, no servers)"
+      },
+      {
+        "order": 2,
+        "script": "verify:portability-baseline",
+        "command": "npm run verify:portability-baseline",
+        "purpose": "Record platform + Node; re-run verify:foundation; write portability-baseline.json"
+      }
+    ],
+    "optionalStrictStep": {
+      "script": "verify:foundation:strict",
+      "command": "npm run verify:foundation:strict",
+      "note": "B1 STRICT gate; not required for B6 BASELINE_V1 but recommended in full audit reruns"
+    },
+    "prerequisites": {
+      "node": "Node.js LTS 18+ or 20+ (match baseline nodeVersion when comparing)",
+      "install": "npm ci when package-lock.json exists; currently none required",
+      "env": ["GENESIS_ROOT", "SOURCE_TARGET_ROOT"],
+      "envDoc": "tools/verification/GENESIS_PATHS.md"
+    }
+  },
+  "ciExecution": {
+    "status": "WORKFLOW_IN_REPO_PENDING_PUSH",
+    "githubActionsPass": false,
+    "githubActionsPassClaimed": false,
+    "workflowYamlInRepo": true,
+    "workflowPath": ".github/workflows/genesis-foundation-verify.yml",
+    "proofArtifact": "reports/portability-baseline-ci-run.json",
+    "honestyNote": "Workflow YAML ready; Genesis not yet on GitHub remote — follow B6_GITHUB_CI_SETUP_RU.md then attach run URL or download CI artifact."
+  },
+  "localBaselineRefresh": {
+    "status": "EXECUTED",
+    "ranAt": "2026-06-03T06:34:15.688Z",
+    "host": "win32 dev workstation",
+    "verifyPortabilityBaselineExitCode": 0,
+    "portabilityBaselinePass": true,
+    "note": "Local verify:portability-baseline PASS; does not substitute for CI or second-host proof"
+  },
+  "closureCriteria": {
+    "b6FullyClosed": false,
+    "requires": [
+      "CI job genesis-foundation-verify PASS with attached log",
+      "or second-host portability-baseline.json matching baseline pass",
+      "or Owner+Notary signed ACCEPTED_RISK_NO_LIVE_CAPITAL per B6_CLEAN_INSTALL_OR_ACCEPTED_RISK.md"
+    ]
+  },
+  "policy": {
+    "notaryGreen": "NO",
+    "archGreenApproved": "NO",
+    "liveTrading": "NOT APPROVED"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "genesis.audit-bundle-preflight.v1",
+  "generatedAt": "2026-06-03T06:55:23.561Z",
+  "pass": true,
+  "scanDigest": "sha256:caa45a9ee6afcdfd618b9bff63a961b0c140f9499734f939305713d8dc698c6f",
+  "closureDigest": "sha256:caa45a9ee6afcdfd618b9bff63a961b0c140f9499734f939305713d8dc698c6f",
+  "digestMatch": true,
+  "violations": []
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "genesis.perception-snapshot.v1",
+  "snapshotId": "psn-BTCUSDT-20260601T120106Z",
+  "instrumentId": "BTCUSDT",
+  "asOf": "2026-06-01T12:01:06.000Z",
+  "sourceObservationRefs": [
+    "obs-BTCUSDT-OHLC_1M-0-20260601T120000Z",
+    "obs-BTCUSDT-OHLC_1M-1-20260601T120100Z",
+    "obs-BTCUSDT-TRADE_TICK-t001-20260601T120105Z"
+  ],
+  "freshnessMs": 500,
+  "integrity": "OK",
+  "regime": "RANGING",
+  "volatilityState": "LOW",
+  "liquidityState": "NORMAL",
+  "orderBookImbalance": 0,
+  "aggressiveFlowImbalance": 0.01,
+  "liquidationPressure": "LOW",
+  "fundingStress": "NEUTRAL",
+  "dataQuality": {
+    "status": "OK",
+    "completeness": 1,
+    "reasonCodes": []
+  },
+  "provenance": {
+    "sourceId": "fixture:phase3/market-observation/BTCUSDT-offline-sample.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE3_RULES_V1",
+    "lineageHash": "sha256:d80fa458759cc4f1ebdc147beabdee2e930b25e730edae5a3473e0c0d9ca5190"
+  },
+  "timestamps": {
+    "computedAt": "2026-06-01T12:01:06.500Z",
+    "sourceWindowStart": "2026-06-01T12:00:00.000Z",
+    "sourceWindowEnd": "2026-06-01T12:01:05.500Z"
+  },
+  "evidenceRefs": [
+    "EM-P3-PER-001"
+  ],
+  "contractVersion": "genesis.perception-snapshot.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "MarketSelector",
+    "OperatorReadModel"
+  ],
+  "trustSignal": {
+    "operatorTier": "TIER_1",
+    "notaryStatus": "YELLOW",
+    "shellReadinessStatus": "NOT_READY",
+    "interpretation": "YELLOW_GUARDED"
+  }
+}

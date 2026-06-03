@@ -1,0 +1,25 @@
+{
+  "schema": "genesis.mbg-wire-market-observation.v1",
+  "generatedAt": "2026-06-03T05:42:45.829Z",
+  "pass": true,
+  "status": "PASS",
+  "coreReachable": true,
+  "baseUrl": "http://127.0.0.1:3011",
+  "samplePath": "tests/fixtures/phase3/market-observation/mbg-wire-live-sample.json",
+  "observationId": "obs-wire-BTCUSDT-TRADE_TICK-20260603T054245Z",
+  "instrumentId": "BTCUSDT",
+  "eventType": "TRADE_TICK",
+  "validation": {
+    "pass": true,
+    "violations": [],
+    "redCount": 0
+  },
+  "mbgOverview": {
+    "overallState": "SAFE_OBSERVE_ONLY",
+    "trustState": "UNCERTAIN",
+    "executionSurface": "closed"
+  },
+  "notaryGreenClaimed": false,
+  "liveIngestion": true,
+  "executionAllowed": false
+}

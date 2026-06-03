@@ -1,0 +1,18 @@
+{
+  "schema": "genesis.phase3.slice10-visibility-runtime-manifest.v1",
+  "slice": 10,
+  "mode": "OFFLINE_ONLY",
+  "files": [
+    "owner-visible-runtime-summary-slice10.json"
+  ],
+  "reportFile": "reports/visibility-runtime-alignment-slice10.json",
+  "coveredSlices": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "notaryGreenClaimed": false,
+  "executionAllowed": false,
+  "liveIngestion": false
+}

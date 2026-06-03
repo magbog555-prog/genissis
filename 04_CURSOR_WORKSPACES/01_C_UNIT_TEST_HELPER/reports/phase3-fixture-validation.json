@@ -1,0 +1,106 @@
+{
+  "schema": "genesis.phase3-fixture-validation.v1",
+  "generatedAt": "2026-06-01T22:17:30.544Z",
+  "slice": 2,
+  "fixtureDir": "tests/fixtures/phase3/market-observation",
+  "pass": true,
+  "summary": {
+    "goldenFiles": 2,
+    "goldenPass": 2,
+    "negativeFiles": 1,
+    "negativePass": 1,
+    "negativeFail": 0
+  },
+  "files": [
+    {
+      "file": "tests/fixtures/phase3/market-observation/BTCUSDT-offline-sample.json",
+      "expectFail": false,
+      "pass": true,
+      "observationCount": 3,
+      "redCount": 0,
+      "yellowCount": 0,
+      "violations": [],
+      "observations": [
+        {
+          "observationId": "obs-BTCUSDT-OHLC_1M-0-20260601T120000Z",
+          "pass": true,
+          "violations": []
+        },
+        {
+          "observationId": "obs-BTCUSDT-OHLC_1M-1-20260601T120100Z",
+          "pass": true,
+          "violations": []
+        },
+        {
+          "observationId": "obs-BTCUSDT-TRADE_TICK-t001-20260601T120105Z",
+          "pass": true,
+          "violations": []
+        }
+      ]
+    },
+    {
+      "file": "tests/fixtures/phase3/market-observation/ETHUSDT-offline-sample.json",
+      "expectFail": false,
+      "pass": true,
+      "observationCount": 3,
+      "redCount": 0,
+      "yellowCount": 0,
+      "violations": [],
+      "observations": [
+        {
+          "observationId": "obs-ETHUSDT-OHLC_1M-0-20260601T120000Z",
+          "pass": true,
+          "violations": []
+        },
+        {
+          "observationId": "obs-ETHUSDT-OHLC_1M-1-20260601T120100Z",
+          "pass": true,
+          "violations": []
+        },
+        {
+          "observationId": "obs-ETHUSDT-TRADE_TICK-t001-20260601T120102Z",
+          "pass": true,
+          "violations": []
+        }
+      ]
+    },
+    {
+      "file": "tests/fixtures/phase3/market-observation/negative-admission-on-market.json",
+      "expectFail": true,
+      "pass": true,
+      "observationCount": 1,
+      "redCount": 1,
+      "yellowCount": 0,
+      "violations": [
+        {
+          "gate": "QG-P3-05",
+          "severity": "RED",
+          "message": "forbidden fields present",
+          "observationId": "obs-NEG-admission-001",
+          "paths": [
+            "admissionState"
+          ]
+        }
+      ],
+      "observations": [
+        {
+          "observationId": "obs-NEG-admission-001",
+          "pass": false,
+          "violations": [
+            {
+              "gate": "QG-P3-05",
+              "severity": "RED",
+              "message": "forbidden fields present",
+              "observationId": "obs-NEG-admission-001",
+              "paths": [
+                "admissionState"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "genesis.phase3.slice7-trade-card-manifest.v1",
+  "slice": 7,
+  "mode": "OFFLINE_ONLY",
+  "derivedFrom": "tests/fixtures/phase3/admission/admission-liquidity-sweep-ethusdt-offline.json",
+  "tradeCardCount": 1,
+  "files": [
+    "trade-card-liquidity-sweep-ethusdt-offline.json"
+  ],
+  "negativeFiles": [
+    "negative-layer-collapse-trade-card.json"
+  ],
+  "liveIngestion": false,
+  "notaryGreenClaimed": false
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "genesis.trade-history-offline-slice9.v1",
+  "generatedAt": "2026-06-03T05:39:06.836Z",
+  "slice": 9,
+  "pass": true,
+  "summary": {
+    "tradeHistoryCount": 1,
+    "goldenFiles": 1,
+    "goldenPass": 1,
+    "negativeFiles": 1,
+    "negativePass": 1,
+    "tradeHistoryId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+    "historyId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+    "instrumentId": "ETHUSDT",
+    "paperExecutionRef": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1"
+  },
+  "files": [
+    {
+      "file": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline.json",
+      "expectFail": false,
+      "pass": true,
+      "tradeHistoryId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "historyId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "instrumentId": "ETHUSDT",
+      "paperExecutionRef": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/trade-history/negative-forbidden-execution-field-layer-collapse-trade-history.json",
+      "expectFail": true,
+      "pass": true,
+      "tradeHistoryId": "TH-NEG-FORBIDDEN-EXECUTION-001",
+      "historyId": "TH-NEG-FORBIDDEN-EXECUTION-001",
+      "instrumentId": "ETHUSDT",
+      "paperExecutionRef": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "redCount": 1,
+      "violations": [
+        {
+          "ruleId": "RC-LAYER-COLLAPSE",
+          "severity": "RED",
+          "message": "forbidden execution fields on TradeHistoryReadModel",
+          "tradeHistoryId": "TH-NEG-FORBIDDEN-EXECUTION-001",
+          "paths": [
+            "executionId"
+          ]
+        }
+      ]
+    }
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

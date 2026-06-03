@@ -1,0 +1,23 @@
+{
+  "schema": "genesis.profitops-cost-realism-v1.v1",
+  "generatedAt": "2026-06-03T07:02:50.994Z",
+  "slice": 12,
+  "expansionId": "profitops-expanded-sample-v3",
+  "costAssumptionsBps": {
+    "feeBpsRoundTrip": 8,
+    "slippageBpsRoundTrip": 4,
+    "fundingBps": 1
+  },
+  "sampleCount": 100,
+  "avgFeeDragR": 0.07187774266386948,
+  "avgSlippageImpactR": 0.03593887133193474,
+  "avgFundingImpactR": 0.008984717832983685,
+  "totalCostDragR": 11.680133182878782,
+  "costAsPercentOfGross": 10.779959209735381,
+  "netExpectancyAfterFees": 1.0116266524483546,
+  "netExpectancyAfterSlippage": 0.9756877811164195,
+  "netExpectancyAfterFunding": 0.9667030632834361,
+  "notaryGreenClaimed": false,
+  "liveIngestion": false,
+  "notes": "Offline bps cost model applied to paper simulation plans — not exchange-fee reconciliation."
+}

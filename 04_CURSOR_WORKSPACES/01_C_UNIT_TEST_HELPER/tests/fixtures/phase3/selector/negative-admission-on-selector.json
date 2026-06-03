@@ -1,0 +1,29 @@
+{
+  "schema": "genesis.market-selector-score.v1",
+  "scoreId": "sel-NEG-admission-001",
+  "instrumentId": "BTCUSDT",
+  "rank": 1,
+  "selectionStatus": "SELECTED",
+  "compositeScore": 75,
+  "sourceSnapshotRef": "psn-BTCUSDT-20260601T120106Z",
+  "admissionState": "ALLOW",
+  "scoreFactors": [
+    { "factor": "integrity", "value": "OK", "points": 20 }
+  ],
+  "selectionReasons": ["RC-SEL-INTEGRITY-OK"],
+  "rejectionReasons": [],
+  "dataQuality": {
+    "status": "OK",
+    "completeness": 1
+  },
+  "provenance": {
+    "sourceId": "fixture:phase3/selector/negative-admission-on-selector.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "NEGATIVE_TEST",
+    "lineageHash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "contractVersion": "genesis.market-selector-score.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (negative test)",
+  "consumerRoles": ["ScenarioEngine"]
+}

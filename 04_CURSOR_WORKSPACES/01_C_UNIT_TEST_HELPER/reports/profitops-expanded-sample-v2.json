@@ -1,0 +1,37 @@
+{
+  "schema": "genesis.profitops-expanded-sample-v2.v1",
+  "generatedAt": "2026-06-03T06:36:16.756Z",
+  "slice": 12,
+  "expansionId": "profitops-expanded-sample-v2",
+  "mode": "PAPER_OFFLINE_ONLY",
+  "notaryGreenClaimed": false,
+  "liveIngestion": false,
+  "executionAllowed": false,
+  "costAssumptionsBps": {
+    "feeBpsRoundTrip": 8,
+    "slippageBpsRoundTrip": 4,
+    "fundingBps": 1
+  },
+  "regimeTags": [
+    "TRENDING",
+    "RANGING",
+    "VOLATILE"
+  ],
+  "instruments": [
+    "ETHUSDT",
+    "BTCUSDT"
+  ],
+  "tradeCount": 21,
+  "metrics": {
+    "sampleCount": 21,
+    "profitFactor": 2.6943637420104585,
+    "winrate": 0.7142857142857143,
+    "netExpectancyAfterFunding": 0.5554285714285714,
+    "pnl": 2161.5247974410427,
+    "maxDrawdown": -210.47728472924246
+  },
+  "goldenSummaryId": "ops-ETHUSDT-paper-slice12-offline",
+  "goldenFixture": "profitops-liquidity-sweep-ethusdt-offline.json",
+  "tradeBatch": "tests/fixtures/phase3/profitops/slice12-trade-batch.json",
+  "notes": "Expanded offline paper batch (n>=20). Mechanics + cost-adjusted rollup proof only — not live edge or capital-grade profitability."
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "genesis.phase3.slice4-selector-manifest.v1",
+  "slice": 4,
+  "mode": "OFFLINE_ONLY",
+  "derivedFrom": "tests/fixtures/phase3/perception",
+  "files": [
+    "offline-ranked-batch.json",
+    "ETHUSDT-selector-score.json",
+    "BTCUSDT-selector-score.json"
+  ],
+  "negativeFiles": [
+    "negative-admission-on-selector.json"
+  ],
+  "liveIngestion": false,
+  "notaryGreenClaimed": false
+}

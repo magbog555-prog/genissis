@@ -1,0 +1,157 @@
+{
+  "schema": "genesis.market-observation.batch.v1",
+  "slice": 2,
+  "instrument": {
+    "symbol": "ETHUSDT",
+    "venue": "SYNTHETIC_OFFLINE",
+    "marketType": "SPOT",
+    "baseAsset": "ETH",
+    "quoteAsset": "USDT"
+  },
+  "observations": [
+    {
+      "schema": "genesis.market-observation.v1",
+      "observationId": "obs-ETHUSDT-OHLC_1M-0-20260601T120000Z",
+      "instrument": {
+        "symbol": "ETHUSDT",
+        "venue": "SYNTHETIC_OFFLINE",
+        "marketType": "SPOT",
+        "baseAsset": "ETH",
+        "quoteAsset": "USDT"
+      },
+      "eventType": "OHLC_1M",
+      "observationClass": "FACT",
+      "timestamps": {
+        "sourceEventTime": "2026-06-01T12:00:00.000Z",
+        "observedAt": "2026-06-01T12:00:05.000Z",
+        "ingestedAt": "2026-06-01T12:00:05.000Z"
+      },
+      "provenance": {
+        "sourceId": "fixture:phase3/offline/ETHUSDT-offline-sample.json",
+        "sourceKind": "OFFLINE_FIXTURE",
+        "ingestMode": "REPLAY_FILE",
+        "lineageHash": "sha256:a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+        "fixtureVersion": "slice2-v1",
+        "derivation": "NONE"
+      },
+      "freshness": {
+        "maxAgeMs": 120000,
+        "computedAgeMs": 5000,
+        "status": "FRESH",
+        "clockSkewMs": 0
+      },
+      "quality": {
+        "status": "OK",
+        "completeness": 1,
+        "gapDetected": false,
+        "conflictDetected": false,
+        "reasonCodes": []
+      },
+      "payload": {
+        "open": "3450.00",
+        "high": "3455.50",
+        "low": "3448.25",
+        "close": "3452.10",
+        "volume": "210.5",
+        "barInterval": "1m",
+        "barIndex": 0
+      },
+      "evidenceRefs": ["EM-P3-OBS-002"]
+    },
+    {
+      "schema": "genesis.market-observation.v1",
+      "observationId": "obs-ETHUSDT-OHLC_1M-1-20260601T120100Z",
+      "instrument": {
+        "symbol": "ETHUSDT",
+        "venue": "SYNTHETIC_OFFLINE",
+        "marketType": "SPOT",
+        "baseAsset": "ETH",
+        "quoteAsset": "USDT"
+      },
+      "eventType": "OHLC_1M",
+      "observationClass": "FACT",
+      "timestamps": {
+        "sourceEventTime": "2026-06-01T12:01:00.000Z",
+        "observedAt": "2026-06-01T12:01:05.000Z",
+        "ingestedAt": "2026-06-01T12:01:05.000Z"
+      },
+      "provenance": {
+        "sourceId": "fixture:phase3/offline/ETHUSDT-offline-sample.json",
+        "sourceKind": "OFFLINE_FIXTURE",
+        "ingestMode": "REPLAY_FILE",
+        "lineageHash": "sha256:b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef1234567",
+        "fixtureVersion": "slice2-v1",
+        "derivation": "NONE"
+      },
+      "freshness": {
+        "maxAgeMs": 120000,
+        "computedAgeMs": 5000,
+        "status": "FRESH",
+        "clockSkewMs": 0
+      },
+      "quality": {
+        "status": "OK",
+        "completeness": 1,
+        "gapDetected": false,
+        "conflictDetected": false,
+        "reasonCodes": []
+      },
+      "payload": {
+        "open": "3452.10",
+        "high": "3458.00",
+        "low": "3451.00",
+        "close": "3456.40",
+        "volume": "188.2",
+        "barInterval": "1m",
+        "barIndex": 1
+      },
+      "evidenceRefs": ["EM-P3-OBS-002"]
+    },
+    {
+      "schema": "genesis.market-observation.v1",
+      "observationId": "obs-ETHUSDT-TRADE_TICK-t001-20260601T120102Z",
+      "instrument": {
+        "symbol": "ETHUSDT",
+        "venue": "SYNTHETIC_OFFLINE",
+        "marketType": "SPOT",
+        "baseAsset": "ETH",
+        "quoteAsset": "USDT"
+      },
+      "eventType": "TRADE_TICK",
+      "observationClass": "FACT",
+      "timestamps": {
+        "sourceEventTime": "2026-06-01T12:01:02.100Z",
+        "observedAt": "2026-06-01T12:01:05.500Z",
+        "ingestedAt": "2026-06-01T12:01:05.500Z"
+      },
+      "provenance": {
+        "sourceId": "fixture:phase3/offline/ETHUSDT-offline-sample.json",
+        "sourceKind": "OFFLINE_FIXTURE",
+        "ingestMode": "REPLAY_FILE",
+        "lineageHash": "sha256:c3d4e5f6789012345678901234567890abcdef1234567890abcdef12345678",
+        "fixtureVersion": "slice2-v1",
+        "derivation": "NONE"
+      },
+      "freshness": {
+        "maxAgeMs": 120000,
+        "computedAgeMs": 3400,
+        "status": "FRESH",
+        "clockSkewMs": 0
+      },
+      "quality": {
+        "status": "OK",
+        "completeness": 1,
+        "gapDetected": false,
+        "conflictDetected": false,
+        "reasonCodes": []
+      },
+      "payload": {
+        "price": "3456.40",
+        "quantity": "1.25",
+        "side": "SELL",
+        "tradeId": "t001"
+      },
+      "evidenceRefs": ["EM-P3-OBS-002"]
+    }
+  ]
+}

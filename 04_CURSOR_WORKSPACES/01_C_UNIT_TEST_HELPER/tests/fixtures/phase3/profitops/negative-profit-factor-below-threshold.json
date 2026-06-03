@@ -1,0 +1,1045 @@
+{
+  "schema": "genesis.owner-profitops-summary.v1",
+  "summaryId": "ops-NEG-profit-factor-below-threshold",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "MissionControl",
+    "OperatorReadModel"
+  ],
+  "metricsScope": "PAPER",
+  "window": {
+    "from": "2026-06-03T05:39:05.851Z",
+    "to": "2026-06-03T07:02:50.989Z",
+    "computedAt": "2026-06-03T07:02:50.989Z"
+  },
+  "metrics": {
+    "sampleCount": 100,
+    "winrate": 0,
+    "expectancy": -0.12,
+    "pnl": -120,
+    "maxDrawdown": -210.47728472924246,
+    "profitFactor": 0.85,
+    "netExpectancyAfterFees": 1.0116266524483546,
+    "netExpectancyAfterSlippage": 0.9756877811164195,
+    "netExpectancyAfterFunding": -0.12,
+    "feeDrag": 0.07187774266386948,
+    "slippageImpact": 0.03593887133193474,
+    "fundingImpact": 0.008984717832983685,
+    "missedOpportunityRate": 0,
+    "blockedButProfitableRate": 0.78
+  },
+  "dataFreshness": {
+    "status": "FRESH",
+    "computedAgeMs": 500,
+    "maxAgeMs": 86400000
+  },
+  "sourceRefs": [
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V2",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b2.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V2",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b2.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V3",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b3.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V3",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b3.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V4",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b4.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V4",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b4.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V5",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b5.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V5",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b5.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-BTC-V1",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-BTC-V1",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B6",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b6.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B6",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b6.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B7",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b7.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B7",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b7.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B8",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b8.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B8",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b8.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B9",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b9.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B9",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b9.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B10",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b10.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B10",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b10.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B11",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b11.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B11",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b11.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B12",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b12.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B12",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b12.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B13",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b13.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B13",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b13.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B14",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b14.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B14",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b14.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B15",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b15.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B15",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b15.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B16",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b16.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B16",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b16.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B17",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b17.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B17",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b17.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B18",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b18.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B18",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b18.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B19",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b19.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B19",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b19.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B20",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b20.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B20",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b20.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B22",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b22.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B22",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b22.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B23",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b23.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B23",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b23.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B24",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b24.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B24",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b24.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B25",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b25.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B25",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b25.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B26",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b26.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B26",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b26.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B27",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b27.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B27",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b27.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B28",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b28.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B28",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b28.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B29",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b29.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B29",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b29.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B30",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b30.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B30",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b30.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B31",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b31.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B31",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b31.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B32",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b32.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B32",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b32.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B33",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b33.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B33",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b33.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B34",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b34.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B34",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b34.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B35",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b35.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B35",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b35.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B36",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b36.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B36",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b36.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B37",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b37.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B37",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b37.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B38",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b38.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B38",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b38.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B39",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b39.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B39",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b39.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B40",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b40.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B40",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b40.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B41",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b41.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B41",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b41.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B42",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b42.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B42",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b42.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B43",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b43.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B43",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b43.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B44",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b44.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B44",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b44.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B45",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b45.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B45",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b45.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B46",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b46.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B46",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b46.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B47",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b47.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B47",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b47.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B48",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b48.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B48",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b48.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B49",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b49.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B49",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b49.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B50",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b50.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B50",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b50.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B51",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b51.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B51",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b51.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B52",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b52.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B52",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b52.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B53",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b53.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B53",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b53.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B54",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b54.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B54",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b54.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B55",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b55.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B55",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b55.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B56",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b56.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B56",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b56.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B57",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b57.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B57",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b57.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B58",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b58.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B58",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b58.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B59",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b59.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B59",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b59.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B60",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b60.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B60",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b60.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B61",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b61.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B61",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b61.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B62",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b62.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B62",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b62.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B63",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b63.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B63",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b63.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B64",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b64.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B64",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b64.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B65",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b65.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B65",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b65.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B66",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b66.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B66",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b66.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B67",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b67.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B67",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b67.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B68",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b68.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B68",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b68.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B69",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b69.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B69",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b69.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B70",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b70.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B70",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b70.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B71",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b71.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B71",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b71.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B72",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b72.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B72",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b72.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B73",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b73.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B73",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b73.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B74",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b74.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B74",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b74.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B75",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b75.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B75",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b75.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B76",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b76.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B76",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b76.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B77",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b77.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B77",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b77.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B78",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b78.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B78",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b78.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B79",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b79.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B79",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b79.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B80",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b80.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B80",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b80.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B81",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b81.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B81",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b81.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B82",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b82.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B82",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b82.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B83",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b83.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B83",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b83.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B84",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b84.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B84",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b84.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B85",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b85.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B85",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b85.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B86",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b86.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B86",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b86.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B87",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b87.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B87",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b87.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B88",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b88.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B88",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b88.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B89",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b89.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B89",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b89.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B90",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b90.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B90",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b90.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B91",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b91.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B91",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b91.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B92",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b92.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B92",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b92.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B93",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b93.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B93",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b93.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B94",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b94.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B94",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b94.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B95",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b95.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B95",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b95.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B96",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b96.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B96",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b96.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B97",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b97.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B97",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b97.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B98",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b98.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B98",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b98.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B99",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-ethusdt-offline-b99.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B99",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline-b99.json"
+    },
+    {
+      "refId": "TH-PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B100",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/trade-history/trade-history-liquidity-sweep-btcusdt-offline-b100.json"
+    },
+    {
+      "refId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-B100",
+      "refType": "Evidence",
+      "refPath": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-btcusdt-offline-b100.json"
+    }
+  ],
+  "provenance": {
+    "sourceId": "fixture:phase3/profitops/profitops-liquidity-sweep-ethusdt-offline.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE12_COST_ADJUSTED_BATCH_ROLLUP_V3",
+    "lineageHash": "sha256:c2666cf51b26224c5e9e74f496b9cdde3d18b3b22b787fedb56469967884f6cb"
+  },
+  "notes": "Paper-only ProfitOps batch rollup (100+ trades, ETH/BTC, TREND/RANGE/CHOP, ASIA/LONDON/NY). Costs: fee/slippage/funding bps. Sprint 7 research batch — offline mechanics only, not capital-grade edge."
+}

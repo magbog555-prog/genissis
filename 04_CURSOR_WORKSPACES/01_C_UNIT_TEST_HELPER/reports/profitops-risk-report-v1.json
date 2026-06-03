@@ -1,0 +1,16 @@
+{
+  "schema": "genesis.profitops-risk-report-v1.v1",
+  "generatedAt": "2026-06-03T07:02:50.996Z",
+  "slice": 12,
+  "expansionId": "profitops-expanded-sample-v3",
+  "sampleCount": 100,
+  "maxDrawdown": -210.47728472924246,
+  "maxLossStreak": 1,
+  "winrate": 0.78,
+  "riskOfRuinEstimate": 0.22219999999999998,
+  "profitFactor": 5.199062140988603,
+  "notaryGreenClaimed": false,
+  "liveIngestion": false,
+  "executionAllowed": false,
+  "notes": "Simple offline risk-of-ruin from loss-streak and winrate — research indicator only."
+}

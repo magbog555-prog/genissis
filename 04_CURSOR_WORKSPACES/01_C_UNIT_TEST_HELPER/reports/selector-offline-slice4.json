@@ -1,0 +1,73 @@
+{
+  "schema": "genesis.selector-offline-slice4.v1",
+  "generatedAt": "2026-06-03T05:39:01.817Z",
+  "slice": 4,
+  "pass": true,
+  "summary": {
+    "goldenFiles": 3,
+    "goldenPass": 3,
+    "negativeFiles": 1,
+    "negativePass": 1,
+    "topInstrument": "ETHUSDT",
+    "topScore": 65
+  },
+  "files": [
+    {
+      "file": "tests/fixtures/phase3/selector/offline-ranked-batch.json",
+      "expectFail": false,
+      "pass": true,
+      "batchId": "sel-batch-offline-20260601T120106Z",
+      "redCount": 0,
+      "scoreCount": 2,
+      "violations": [],
+      "scoreResults": [
+        {
+          "violations": [],
+          "redCount": 0,
+          "scoreId": "sel-ETHUSDT-20260601T120105Z"
+        },
+        {
+          "violations": [],
+          "redCount": 0,
+          "scoreId": "sel-BTCUSDT-20260601T120106Z"
+        }
+      ]
+    },
+    {
+      "file": "tests/fixtures/phase3/selector/ETHUSDT-selector-score.json",
+      "expectFail": false,
+      "pass": true,
+      "scoreId": "sel-ETHUSDT-20260601T120105Z",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/selector/BTCUSDT-selector-score.json",
+      "expectFail": false,
+      "pass": true,
+      "scoreId": "sel-BTCUSDT-20260601T120106Z",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/selector/negative-admission-on-selector.json",
+      "expectFail": true,
+      "pass": true,
+      "scoreId": "sel-NEG-admission-001",
+      "redCount": 1,
+      "violations": [
+        {
+          "ruleId": "RC-LAYER-COLLAPSE",
+          "severity": "RED",
+          "message": "forbidden fields on MarketSelectorScore",
+          "scoreId": "sel-NEG-admission-001",
+          "paths": [
+            "admissionState"
+          ]
+        }
+      ]
+    }
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

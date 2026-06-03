@@ -1,0 +1,33 @@
+{
+  "schema": "genesis.scenario-candidate.v1",
+  "scenarioId": "SCN-NEG-ADMISSION-001",
+  "scenarioName": "Liquidity Sweep and Reclaim",
+  "instrumentId": "ETHUSDT",
+  "phase": "RECLAIM_FORMING",
+  "admissionState": "ALLOW",
+  "evidence": [
+    {
+      "evidenceId": "ev-neg-001",
+      "kind": "PRICE_ACTION",
+      "description": "Negative test — admission must not appear on scenario",
+      "sourceRef": "psn-ETHUSDT-20260601T120105Z",
+      "observedAt": "2026-06-01T12:01:05.500Z"
+    }
+  ],
+  "invalidation": {
+    "conditions": ["Admission field present — layer collapse"],
+    "reasonCodes": ["RC-SCN-NEG-TEST"]
+  },
+  "confidence": 0.5,
+  "expiresAt": "2026-06-01T13:01:06.000Z",
+  "provenance": {
+    "sourceId": "fixture:phase3/scenario/negative-admission-on-scenario.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "NEGATIVE_TEST",
+    "lineageHash": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "contractVersion": "genesis.scenario-candidate.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (negative test)",
+  "consumerRoles": ["AdmissionEngine"]
+}

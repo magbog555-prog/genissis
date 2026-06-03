@@ -1,0 +1,55 @@
+{
+  "schema": "genesis.trade-card-draft.v1",
+  "tradeCardId": "TC-NEG-LAYER-COLLAPSE-001",
+  "instrumentId": "ETHUSDT",
+  "admissionRef": "ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+  "scenarioRef": "SCN-LIQUIDITY-SWEEP-RECLAIM-V1",
+  "side": "LONG",
+  "setupType": "LIQUIDITY_SWEEP_RECLAIM",
+  "draftStatus": "DRAFT_OFFLINE",
+  "confidence": 0.6,
+  "thesis": [
+    "AdmissionDecision prepared for offline-only pre-trade planning",
+    "Trade Card remains draft; execution stays blocked"
+  ],
+  "pricePlan": {
+    "entryZone": {
+      "low": 3450,
+      "high": 3490
+    },
+    "invalidationLevel": 3410,
+    "takeProfitLevels": [
+      3535,
+      3590
+    ]
+  },
+  "riskPlan": {
+    "executionAllowed": false,
+    "mode": "OFFLINE_ONLY",
+    "capitalLocked": true,
+    "maxRiskBudgetBps": 10
+  },
+  "draftTimestamps": {
+    "computedAt": "2026-06-03T05:39:05.006Z",
+    "expiresAt": "2026-06-01T13:01:06.000Z"
+  },
+  "provenance": {
+    "sourceId": "fixture:phase3/admission/admission-liquidity-sweep-ethusdt-offline.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE7_RULES_V1",
+    "lineageHash": "sha256:37c407a8b8836e10473ca0fbbfea074251c30b8844ea7deb5f67bd705e79c950"
+  },
+  "evidenceRefs": [
+    "EM-P3-TC-001"
+  ],
+  "contractVersion": "genesis.trade-card-draft.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "ExecutionPlanner",
+    "OperatorReadModel"
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false,
+  "executionIntentId": "EXI-FORBIDDEN-001"
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "genesis.foundation.import-negative-fixture.v1",
+  "description": "Expected import scanner classifications (Stage 5).",
+  "expectations": [
+    {
+      "case": "SAFE imports binance adapter",
+      "importerScope": "SAFE",
+      "specifier": "../../application/exchange/src/binance-spot-testnet.js",
+      "expectedStatus": "RED"
+    },
+    {
+      "case": "SAFE imports runtime-engine (DONOR coupling)",
+      "importerScope": "SAFE",
+      "specifier": "../runtime/src/runtime-engine.js",
+      "targetScope": "DONOR",
+      "expectedStatus": "YELLOW"
+    },
+    {
+      "case": "UNSAFE imports binance testnet",
+      "importerScope": "UNSAFE",
+      "specifier": "../../../application/exchange/src/binance-spot-testnet.js",
+      "expectedStatus": "FINDING"
+    },
+    {
+      "case": "DONOR imports execution service",
+      "importerScope": "DONOR",
+      "specifier": "../../engine/execution/execution.service.js",
+      "expectedStatus": "DONOR_FINDING"
+    }
+  ]
+}

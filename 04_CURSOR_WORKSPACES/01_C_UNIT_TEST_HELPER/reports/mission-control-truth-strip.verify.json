@@ -1,0 +1,35 @@
+{
+  "schema": "genesis.mission-control-truth-strip.verify.v1",
+  "generatedAt": "2026-06-03T07:04:04.931Z",
+  "pass": true,
+  "violations": [],
+  "expected": {
+    "notaryGreen": "NO",
+    "archGreenApproved": false,
+    "executionAllowed": false,
+    "profitopsSampleCount": 100,
+    "b5Status": "CLOSED_DISPLAY_ONLY_NOTARY_SIGNED",
+    "b6Status": "PARTIAL_CI_LOCAL_EXECUTED"
+  },
+  "actual": {
+    "schema": "genesis.mission-control-truth-strip.v1",
+    "generatedAt": "2026-06-03T07:04:04.930Z",
+    "notaryGreen": "NO",
+    "archGreenApproved": false,
+    "executionAllowed": false,
+    "profitops": {
+      "expansionId": "profitops-expanded-sample-v3",
+      "sampleCount": 100
+    },
+    "b5": {
+      "status": "CLOSED_DISPLAY_ONLY_NOTARY_SIGNED"
+    },
+    "b6": {
+      "status": "PARTIAL_CI_LOCAL_EXECUTED"
+    },
+    "sources": {
+      "board": "D:/genessis/05_REPORTS_AND_MANIFESTS/genesis-system-status-board.json",
+      "profitops": "D:/genessis/04_CURSOR_WORKSPACES/01_C_UNIT_TEST_HELPER/reports/profitops-expanded-sample-v3.json"
+    }
+  }
+}

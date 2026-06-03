@@ -1,0 +1,72 @@
+{
+  "schema": "genesis.scenario-candidate.v1",
+  "scenarioId": "SCN-LIQUIDITY-SWEEP-RECLAIM-V1",
+  "scenarioName": "Liquidity Sweep and Reclaim",
+  "instrumentId": "ETHUSDT",
+  "phase": "RECLAIM_FORMING",
+  "evidence": [
+    {
+      "evidenceId": "ev-scn-sweep-low-probe",
+      "kind": "PRICE_ACTION",
+      "description": "Prior range low probed with quick rejection (sweep signature)",
+      "sourceRef": "psn-ETHUSDT-20260601T120105Z",
+      "observedAt": "2026-06-01T12:01:02.100Z"
+    },
+    {
+      "evidenceId": "ev-scn-reclaim-start",
+      "kind": "REGIME",
+      "description": "Regime TRENDING supports reclaim continuation hypothesis",
+      "sourceRef": "psn-ETHUSDT-20260601T120105Z",
+      "observedAt": "2026-06-01T12:01:05.500Z"
+    },
+    {
+      "evidenceId": "ev-scn-selector-top",
+      "kind": "SELECTOR",
+      "description": "Instrument rank 1 with compositeScore 65",
+      "sourceRef": "sel-ETHUSDT-20260601T120105Z",
+      "observedAt": "2026-06-01T12:01:05.500Z"
+    },
+    {
+      "evidenceId": "ev-scn-flow-context",
+      "kind": "FLOW",
+      "description": "Aggressive flow imbalance -0.01 (context only, not permission)",
+      "sourceRef": "psn-ETHUSDT-20260601T120105Z",
+      "observedAt": "2026-06-01T12:01:05.500Z"
+    }
+  ],
+  "invalidation": {
+    "conditions": [
+      "Close below swept liquidity level before reclaim confirmation",
+      "Perception integrity degrades to RED",
+      "Scenario expiresAt reached without reclaim confirmation"
+    ],
+    "reasonCodes": [
+      "RC-SCN-INV-CLOSE-BELOW-SWEEP",
+      "RC-SCN-INV-INTEGRITY-RED",
+      "RC-SCN-INV-EXPIRED"
+    ],
+    "triggerRefs": [
+      "psn-ETHUSDT-20260601T120105Z"
+    ]
+  },
+  "confidence": 0.6,
+  "expiresAt": "2026-06-01T13:01:06.000Z",
+  "sourceSelectorRef": "sel-ETHUSDT-20260601T120105Z",
+  "sourceSnapshotRef": "psn-ETHUSDT-20260601T120105Z",
+  "provenance": {
+    "sourceId": "fixture:phase3/selector/offline-ranked-batch.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE5_RULES_V1",
+    "lineageHash": "sha256:13a7edd7ecdd869e99d74cc345ed41c35756e797d2a0f963e1542c90fe531535"
+  },
+  "evidenceRefs": [
+    "EM-P3-SCN-001"
+  ],
+  "contractVersion": "genesis.scenario-candidate.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "AdmissionEngine",
+    "OperatorReadModel"
+  ]
+}

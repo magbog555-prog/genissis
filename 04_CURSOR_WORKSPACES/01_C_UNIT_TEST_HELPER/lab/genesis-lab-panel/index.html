@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Genesis Lab Panel</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div>
+      <h1 id="appTitle">Genesis Lab Panel</h1>
+      <p id="appSubtitle" class="muted"></p>
+    </div>
+    <div class="header-actions">
+      <button type="button" id="viewL2Btn" class="btn btn-view">L2</button>
+      <button type="button" id="viewMissionBtn" class="btn btn-view">Mission</button>
+      <button type="button" id="langToggle" class="btn">RU / EN</button>
+      <button type="button" id="refreshBtn" class="btn">↻</button>
+    </div>
+  </header>
+
+  <div class="banner banner-yellow" id="notaryBanner" role="status"></div>
+  <div class="banner banner-red" id="executionBanner" role="status"></div>
+
+  <main class="grid" id="l2Grid">
+    <section class="card" id="coreSection">
+      <h2 id="sectionCoreTitle"></h2>
+      <div id="coreContent" class="card-body"></div>
+    </section>
+
+    <section class="card" id="chainSection">
+      <h2 id="sectionChainTitle"></h2>
+      <div id="chainContent" class="card-body"></div>
+    </section>
+
+    <section class="card" id="trustSection">
+      <h2 id="sectionTrustTitle"></h2>
+      <div id="trustContent" class="card-body"></div>
+    </section>
+
+    <section class="card full" id="layersSection">
+      <h2 id="layersTitle">Layers</h2>
+      <div id="layersContent" class="card-body table-wrap"></div>
+    </section>
+
+    <section class="card full" id="linksSection">
+      <h2 id="sectionLinksTitle"></h2>
+      <div id="linksContent" class="card-body links"></div>
+    </section>
+  </main>
+
+  <main class="grid mission-grid hidden" id="missionGrid">
+    <section class="card">
+      <h2 id="missionSystemHealthTitle"></h2>
+      <div id="missionSystemHealthContent" class="card-body"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="missionAgentFlowTitle"></h2>
+      <div id="missionAgentFlowContent" class="card-body"></div>
+    </section>
+
+    <section class="card full">
+      <h2 id="missionPipelineTitle"></h2>
+      <div id="missionPipelineContent" class="card-body"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="missionProfitOpsTitle"></h2>
+      <div id="missionProfitOpsContent" class="card-body"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="missionMoneyFlowTitle"></h2>
+      <div id="missionMoneyFlowContent" class="card-body"></div>
+    </section>
+
+    <section class="card full">
+      <h2 id="missionRiskTitle"></h2>
+      <div id="missionRiskContent" class="card-body"></div>
+    </section>
+  </main>
+
+  <footer class="footer muted" id="footerNote">
+    Genesis Foundation · Visible Skeleton L2/L3 · read-only · execution blocked
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

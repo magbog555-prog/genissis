@@ -1,0 +1,180 @@
+{
+  "version": "1.0",
+  "status": "INITIAL",
+  "based_on": "docs/reports/REPO_INVENTORY_INITIAL.md",
+  "source_target": "${SOURCE_TARGET_ROOT}",
+  "scope_matching_priority": [
+    "SAFE",
+    "UNSAFE",
+    "DONOR",
+    "UNKNOWN"
+  ],
+  "safe_roots": [
+    "docs/**",
+    "core/CORE_CONSTITUTION.md",
+    "core/CORE_API_MAP.md",
+    "core/CORE_READONLY_API_CONTRACTS.md",
+    "core/CANONICAL_AUDIT_CHECKLIST.md",
+    "core/apps/readonly-api/**",
+    "core/core/ui-api/connected-readonly-core-api.ts",
+    "core/core/kernel/**",
+    "core/core/gates/**",
+    "core/core/invariants/**",
+    "core/core/integrity/**",
+    "core/core/permissions/**",
+    "core/core/recovery/**",
+    "core/core/quarantine/**",
+    "core/core/events/**",
+    "core/core/contracts/**",
+    "core/core/observable/**",
+    "core/core/runtime-read-model/**",
+    "core/scripts/verify-readonly-surface.mjs",
+    "scripts/verify-*.mjs"
+  ],
+  "unsafe_roots": [
+    "core/apps/runtime-api/**",
+    "core/application/exchange/**",
+    "core/application/market/**",
+    "core/engine/execution/**"
+  ],
+  "donor_roots": [
+    "core/core/runtime/**",
+    "core/core/system/**",
+    "core/core/domain/**",
+    "core/core/strategy/**",
+    "core/core/pnl/**",
+    "core/core/trace/**",
+    "core/core/market-input/**",
+    "core/core/live-stream/**",
+    "core/core/ui-api/mock-scenarios.ts",
+    "core/core/ui-api/observable-core-machine.ts",
+    "core/core/ui-api/index.ts",
+    "core/core/runtime/trading-runtime.ts",
+    "core/data/**",
+    "core/tests/**",
+    "core/*.patch",
+    "core/DELIVERY_REPORT_*",
+    "core/ALPHA*_ACCEPTANCE_REPORT.md",
+    "frontend/**",
+    "launcher/**",
+    "start-*.ps1",
+    "stop-*.ps1",
+    "verify-all.ps1",
+    "START_APP.cmd",
+    "STOP_APP.cmd",
+    "RC4_*_REPORT.md",
+    "SEMANTIC_HARDENING_REPORT.md",
+    "UX_DEBT.md",
+    "BOOT_REPORT.md",
+    "OPERATOR_ACCEPTANCE_REPORT.md",
+    "API_CONTRACT.md",
+    "SAFETY_BOUNDARY.md",
+    "README.md",
+    "START_HERE.md",
+    "RUNBOOK.md"
+  ],
+  "unknown_roots": [
+    "**"
+  ],
+  "rules": {
+    "safe_violation_status": "RED",
+    "unsafe_violation_status": "FINDING",
+    "donor_violation_status": "DONOR_FINDING",
+    "unknown_status": "YELLOW",
+    "unknown_can_be_green": false
+  },
+  "critical_rules": {
+    "SAFE_NO_UNSAFE_IMPORT": {
+      "severity_in_safe": "RED",
+      "description": "SAFE zone must not import UNSAFE roots or forbidden execution modules"
+    },
+    "SAFE_NO_EXECUTION_PATH": {
+      "severity_in_safe": "RED",
+      "description": "SAFE zone must not contain routes or handlers that mutate execution state or place orders"
+    },
+    "SAFE_NO_ORDER_ROUTE": {
+      "severity_in_safe": "RED",
+      "description": "SAFE zone must not expose POST/PUT/PATCH/DELETE order, trade, execute, place, cancel paths"
+    },
+    "SAFE_NO_EXCHANGE_ADAPTER": {
+      "severity_in_safe": "RED",
+      "description": "SAFE zone must not import exchange clients, binance adapters, or execution services"
+    },
+    "SAFE_NO_EXCHANGE_SECRET": {
+      "severity_in_safe": "RED",
+      "description": "SAFE zone must not reference exchange API keys or signing secrets in code or config"
+    },
+    "SAFE_NO_TESTNET_IN_SAFE": {
+      "severity_in_safe": "RED",
+      "description": "Testnet execution capability must not be classified or deployed as SAFE"
+    },
+    "UNKNOWN_NEVER_GREEN": {
+      "severity_in_unknown": "YELLOW",
+      "description": "UNKNOWN classification cannot yield GREEN attestation"
+    },
+    "WHOLE_REPO_NEVER_SAFE": {
+      "severity": "POLICY",
+      "description": "The entire source target must not be declared SAFE"
+    }
+  },
+  "forbidden_imports_in_safe": [
+    "unsafe",
+    "execution",
+    "exchange",
+    "order",
+    "order-router",
+    "binance",
+    "testnet",
+    "trading-runtime",
+    "live-bridge",
+    "live-execution-bridge",
+    "application/exchange",
+    "application/market",
+    "engine/execution",
+    "runtime-api",
+    "binance-spot-testnet",
+    "binance-live-market",
+    "execution.service"
+  ],
+  "forbidden_route_patterns_in_safe": [
+    { "method": "POST", "path_contains": "/order" },
+    { "method": "POST", "path_contains": "/trade" },
+    { "method": "POST", "path_contains": "/execute" },
+    { "method": "POST", "path_contains": "/execution" },
+    { "method": "POST", "path_contains": "/place" },
+    { "method": "POST", "path_contains": "/cancel" },
+    { "method": "POST", "path_contains": "/dispatch" },
+    { "method": "POST", "path_contains": "/action" },
+    { "method": "POST", "path_contains": "/intent" },
+    { "method": "POST", "path_contains": "/reconcile" },
+    { "method": "POST", "path_contains": "/testnet" },
+    { "method": "POST", "path_contains": "/market/tick" },
+    { "method": "POST", "path_contains": "/signals" }
+  ],
+  "forbidden_env_names_in_safe": [
+    "BINANCE_API_KEY",
+    "BINANCE_SECRET_KEY",
+    "BINANCE_SECRET",
+    "EXCHANGE_API_KEY",
+    "EXCHANGE_SECRET",
+    "TESTNET_KEY",
+    "LIVE_KEY",
+    "API_SECRET",
+    "PRIVATE_KEY",
+    "ORDER_ENDPOINT",
+    "TRADING_ENDPOINT",
+    "EXECUTION_MODE"
+  ],
+  "entrypoint_policy": {
+    "accepted_operator_entry": "npm run dev:readonly-api (workspace: dev:core)",
+    "unsafe_default_warning": "core/package.json script dev points to apps/runtime-api",
+    "severity_if_safe_artifact_uses_unsafe_entry": "RED"
+  },
+  "notes": [
+    "Paths are relative to source_target root.",
+    "unknown_roots ['**'] is fallback only; explicit SAFE/UNSAFE/DONOR win.",
+    "README/RUNBOOK at repo root are DONOR (read-only for operators, not safe-core code).",
+    "core/core/runtime/** is DONOR because it is shared with lab runtime-api.",
+    "Scanners must not run until FOUNDATION_SCOPE_CONFIG_INITIAL.md is reviewed."
+  ]
+}

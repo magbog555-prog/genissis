@@ -1,0 +1,67 @@
+{
+  "schema": "genesis.market-observation.batch.v1",
+  "slice": 2,
+  "_fixtureMeta": {
+    "expectValidationFail": true,
+    "expectedGate": "QG-P3-05",
+    "description": "Layer collapse: admissionState on MarketObservation"
+  },
+  "instrument": {
+    "symbol": "BTCUSDT",
+    "venue": "SYNTHETIC_OFFLINE",
+    "marketType": "SPOT",
+    "baseAsset": "BTC",
+    "quoteAsset": "USDT"
+  },
+  "observations": [
+    {
+      "schema": "genesis.market-observation.v1",
+      "observationId": "obs-NEG-admission-001",
+      "instrument": {
+        "symbol": "BTCUSDT",
+        "venue": "SYNTHETIC_OFFLINE",
+        "marketType": "SPOT",
+        "baseAsset": "BTC",
+        "quoteAsset": "USDT"
+      },
+      "eventType": "OHLC_1M",
+      "observationClass": "FACT",
+      "admissionState": "ALLOW",
+      "timestamps": {
+        "sourceEventTime": "2026-06-01T12:00:00.000Z",
+        "observedAt": "2026-06-01T12:00:05.000Z",
+        "ingestedAt": "2026-06-01T12:00:05.000Z"
+      },
+      "provenance": {
+        "sourceId": "fixture:phase3/offline/negative-admission-on-market.json",
+        "sourceKind": "OFFLINE_FIXTURE",
+        "ingestMode": "REPLAY_FILE",
+        "lineageHash": "sha256:0000000000000000000000000000000000000000000000000000000000000001",
+        "fixtureVersion": "slice2-v1",
+        "derivation": "NONE"
+      },
+      "freshness": {
+        "maxAgeMs": 120000,
+        "computedAgeMs": 5000,
+        "status": "FRESH",
+        "clockSkewMs": 0
+      },
+      "quality": {
+        "status": "OK",
+        "completeness": 1,
+        "gapDetected": false,
+        "conflictDetected": false,
+        "reasonCodes": []
+      },
+      "payload": {
+        "open": "67500.10",
+        "high": "67520.00",
+        "low": "67490.50",
+        "close": "67510.25",
+        "volume": "12.450",
+        "barInterval": "1m",
+        "barIndex": 0
+      }
+    }
+  ]
+}

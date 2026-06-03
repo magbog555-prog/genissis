@@ -1,0 +1,50 @@
+{
+  "schema": "genesis.admission-offline-slice6.v1",
+  "generatedAt": "2026-06-03T05:39:04.106Z",
+  "slice": 6,
+  "pass": true,
+  "summary": {
+    "admissionCount": 1,
+    "goldenFiles": 1,
+    "goldenPass": 1,
+    "negativeFiles": 1,
+    "negativePass": 1,
+    "admissionId": "ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+    "admissionStatus": "PREPARE",
+    "instrumentId": "ETHUSDT"
+  },
+  "files": [
+    {
+      "file": "tests/fixtures/phase3/admission/admission-liquidity-sweep-ethusdt-offline.json",
+      "expectFail": false,
+      "pass": true,
+      "admissionId": "ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "admissionStatus": "PREPARE",
+      "instrumentId": "ETHUSDT",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/admission/negative-layer-collapse-admission.json",
+      "expectFail": true,
+      "pass": true,
+      "admissionId": "ADM-NEG-LAYER-COLLAPSE-001",
+      "admissionStatus": "PREPARE",
+      "instrumentId": "ETHUSDT",
+      "redCount": 1,
+      "violations": [
+        {
+          "ruleId": "RC-LAYER-COLLAPSE",
+          "severity": "RED",
+          "message": "forbidden fields on AdmissionDecision",
+          "admissionId": "ADM-NEG-LAYER-COLLAPSE-001",
+          "paths": [
+            "canExecute"
+          ]
+        }
+      ]
+    }
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

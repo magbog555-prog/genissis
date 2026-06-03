@@ -1,0 +1,45 @@
+{
+  "schema": "genesis.portability-baseline-ci-run.v1",
+  "jobId": "genesis-foundation-verify",
+  "runId": "local-1780470416108",
+  "runMode": "LOCAL_CI_SIMULATION",
+  "workflowRef": ".github/workflows/genesis-foundation-verify.yml",
+  "executedAt": "2026-06-03T07:06:56.108Z",
+  "platform": {
+    "os": "win32",
+    "arch": "x64",
+    "node": "v22.22.0"
+  },
+  "genesisRoot": "D:\\genessis",
+  "workingDirectory": "04_CURSOR_WORKSPACES/01_C_UNIT_TEST_HELPER",
+  "pass": true,
+  "githubActionsUrl": null,
+  "honestyNote": "Workflow YAML exists in repo; this run is local simulation. Attach Actions run URL when pushed to GitHub.",
+  "steps": [
+    {
+      "name": "verify:foundation",
+      "command": "npm run verify:foundation",
+      "startedAt": "2026-06-03T07:06:51.078Z",
+      "finishedAt": "2026-06-03T07:06:53.321Z",
+      "exitCode": 0,
+      "pass": true,
+      "stdoutTail": "artifact-import-completeness: PASS\n[verify:foundation] scan:safe-bundle: PASS\n[verify:foundation] verify:negatives: PASS\n{\n  \"schema\": \"genesis.verify-foundation.v1\",\n  \"ranAt\": \"2026-06-03T07:06:53.289Z\",\n  \"tier\": \"OPERATOR\",\n  \"pass\": true,\n  \"results\": [\n    {\n      \"step\": \"entrypoint:check\",\n      \"ok\": true,\n      \"status\": 0,\n      \"stderr\": \"\"\n    },\n    {\n      \"step\": \"verify:routes\",\n      \"ok\": true,\n      \"status\": 0,\n      \"stderr\": \"\"\n    },\n    {\n      \"step\": \"verify:imports\",\n      \"ok\": true,\n      \"status\": 0,\n      \"stderr\": \"\"\n    },\n    {\n      \"step\": \"verify:env\",\n      \"ok\": true,\n      \"status\": 0,\n      \"stderr\": \"\"\n    },\n    {\n      \"step\": \"verify:closure\",\n      \"ok\": true,\n      \"status\": 0,\n      \"stderr\": \"\"\n    },\n    {\n      \"step\": \"build:safe-artifact\",\n      \"ok\": true,\n      \"status\": 0,\n      \"stderr\": \"\"\n    },\n    {\n      \"step\": \"verify:artifact-import-completeness\",\n      \"ok\": true,\n      \"status\": 0,\n      \"stderr\": \"\"\n    },\n    {\n      \"step\": \"scan:safe-bundle\",\n      \"ok\": true,\n      \"status\": 0,\n      \"stderr\": \"\"\n    },\n    {\n      \"step\": \"verify:negatives\",\n      \"ok\": true,\n      \"status\": 0,\n      \"stderr\": \"\"\n    }\n  ]\n}\n",
+      "stderrTail": ""
+    },
+    {
+      "name": "verify:portability-baseline",
+      "command": "npm run verify:portability-baseline",
+      "startedAt": "2026-06-03T07:06:53.321Z",
+      "finishedAt": "2026-06-03T07:06:56.108Z",
+      "exitCode": 0,
+      "pass": true,
+      "stdoutTail": "\n> genesis-foundation-workspace@1.0.0-sprint2 verify:portability-baseline\n> node tools/verification/verify-portability-baseline.mjs\n\n[verify:portability-baseline] B6 BASELINE_V1 — not ARCH_GREEN / not full CI\n[verify:portability-baseline] Prerequisites:\n  Node: v22.22.0 (Node.js LTS (18+ or 20+ recommended); match version across machines when comparing reports)\n  Install: none (no package-lock.json)\n    Foundation workspace has no npm dependencies; verification uses Node built-ins only\n[verify:portability-baseline] verify:foundation: PASS (exit 0)\n[verify:portability-baseline] wrote D:\\genessis\\04_CURSOR_WORKSPACES\\01_C_UNIT_TEST_HELPER\\reports\\portability-baseline.json\n{\n  \"pass\": true,\n  \"reportPath\": \"D:\\\\genessis\\\\04_CURSOR_WORKSPACES\\\\01_C_UNIT_TEST_HELPER\\\\reports\\\\portability-baseline.json\"\n}\n",
+      "stderrTail": ""
+    }
+  ],
+  "policy": {
+    "notaryGreen": "NO",
+    "archGreenApproved": false,
+    "b6Canonical": "PARTIAL_CI_LOCAL_EXECUTED"
+  }
+}

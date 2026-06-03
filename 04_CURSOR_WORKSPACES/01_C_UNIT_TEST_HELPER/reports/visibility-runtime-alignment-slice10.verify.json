@@ -1,0 +1,29 @@
+{
+  "schema": "genesis.visibility-runtime-alignment-slice10-verify.v1",
+  "generatedAt": "2026-06-03T05:39:08.096Z",
+  "slice": 10,
+  "pass": true,
+  "runtimeAlignmentId": "RA-S10-5ABBF4FF52949120",
+  "runtimeAlignmentStatus": "ALIGNED_OFFLINE",
+  "coveredSlices": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "risks": [
+    "No live execution unlock; summary remains owner-visible and offline."
+  ],
+  "guard": {
+    "staleSourceCount": 0,
+    "digestMismatchCount": 0,
+    "digestMismatchThreshold": 0,
+    "guardViolations": []
+  },
+  "violations": [],
+  "constraints": {
+    "notaryGreenClaimed": false,
+    "executionAllowed": false,
+    "liveIngestion": false
+  }
+}

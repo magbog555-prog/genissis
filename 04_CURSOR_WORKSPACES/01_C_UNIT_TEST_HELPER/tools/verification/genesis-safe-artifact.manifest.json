@@ -1,0 +1,71 @@
+{
+  "schema": "genesis.safe-artifact.manifest.v1",
+  "artifact_name": "genesis-safe-readonly",
+  "version": "1.0.0-sprint2",
+  "status": "DEFINITION",
+  "date": "2026-06-01",
+  "source_target": "${SOURCE_TARGET_ROOT}",
+  "output_dir": "dist/genesis-safe-readonly",
+  "tier_default": "OPERATOR",
+  "entrypoint": {
+    "safe": "core/apps/readonly-api/src/server.ts",
+    "forbidden": "core/apps/runtime-api/src/server.ts"
+  },
+  "include_roots": [
+    "docs/**",
+    "core/CORE_CONSTITUTION.md",
+    "core/CORE_API_MAP.md",
+    "core/CORE_READONLY_API_CONTRACTS.md",
+    "core/CANONICAL_AUDIT_CHECKLIST.md",
+    "core/apps/readonly-api/**",
+    "core/core/ui-api/connected-readonly-core-api.ts",
+    "core/core/kernel/**",
+    "core/core/gates/**",
+    "core/core/invariants/**",
+    "core/core/integrity/**",
+    "core/core/permissions/**",
+    "core/core/recovery/**",
+    "core/core/quarantine/**",
+    "core/core/events/**",
+    "core/core/contracts/**",
+    "core/core/observable/**",
+    "core/core/runtime-read-model/**",
+    "core/scripts/verify-readonly-surface.mjs"
+  ],
+  "exclude_roots": [
+    "core/apps/runtime-api/**",
+    "core/application/exchange/**",
+    "core/application/market/**",
+    "core/engine/execution/**",
+    "frontend/**",
+    "launcher/**"
+  ],
+  "tier_strict_extra_exclude": [
+    "core/core/live-stream/**",
+    "core/core/runtime/**"
+  ],
+  "forbidden_import_substrings": [
+    "runtime-api",
+    "engine/execution",
+    "application/exchange",
+    "binance",
+    "testnet",
+    "trading-runtime",
+    "live-execution-bridge"
+  ],
+  "forbidden_route_substrings": [
+    "/trade",
+    "/order",
+    "/execution",
+    "/testnet",
+    "/place-guarded"
+  ],
+  "forbidden_env_names": [
+    "BINANCE_API_KEY",
+    "BINANCE_SECRET_KEY",
+    "BINANCE_SECRET",
+    "EXCHANGE_API_KEY",
+    "EXCHANGE_SECRET",
+    "EXECUTION_MODE"
+  ]
+}

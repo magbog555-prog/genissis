@@ -1,0 +1,19 @@
+# Genesis — B6 CI / local dev
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+
+# Large / donor trees (adjust if you need them in remote)
+02_SOURCE_TARGETS/**/node_modules/
+
+# Audit zip build artifacts (keep sources in 05_REPORTS_AND_MANIFESTS)
+**/AUDIT*_RESPONSE_BUNDLE_*/
+*.zip
+
+# Cursor / IDE
+.cursor/
+.vscode/

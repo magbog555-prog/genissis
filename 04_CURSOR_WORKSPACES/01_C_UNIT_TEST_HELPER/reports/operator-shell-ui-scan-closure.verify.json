@@ -1,0 +1,11 @@
+{
+  "schema": "genesis.operator-shell-ui-scan-closure.verify.v1",
+  "generatedAt": "2026-06-03T06:33:07.418Z",
+  "pass": true,
+  "closureStatus": "COMPLETE",
+  "sourceOfTruthReport": "../02_CODE_CLOAKER_NOTARY/reports/frontend-scan-genesis-operator-shell.json",
+  "sourceReportRef": "../02_CODE_CLOAKER_NOTARY/reports/frontend-scan-genesis-operator-shell.json",
+  "sourceExists": true,
+  "sourceDigest": "sha256:caa45a9ee6afcdfd618b9bff63a961b0c140f9499734f939305713d8dc698c6f",
+  "reasons": []
+}

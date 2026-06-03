@@ -1,0 +1,72 @@
+{
+  "schema": "genesis.market-selector-score.v1",
+  "scoreId": "sel-ETHUSDT-20260601T120105Z",
+  "instrumentId": "ETHUSDT",
+  "rank": 1,
+  "selectionStatus": "SELECTED",
+  "compositeScore": 65,
+  "sourceSnapshotRef": "psn-ETHUSDT-20260601T120105Z",
+  "scoreFactors": [
+    {
+      "factor": "integrity",
+      "value": "OK",
+      "points": 20
+    },
+    {
+      "factor": "dataQuality",
+      "value": "OK",
+      "points": 10
+    },
+    {
+      "factor": "regime",
+      "value": "TRENDING",
+      "points": 20
+    },
+    {
+      "factor": "volatility",
+      "value": "MEDIUM",
+      "points": 5
+    },
+    {
+      "factor": "liquidity",
+      "value": "NORMAL",
+      "points": 10
+    },
+    {
+      "factor": "freshness",
+      "value": 500,
+      "points": 5
+    },
+    {
+      "factor": "flowAlignment",
+      "value": "AGAINST_TREND",
+      "points": -5
+    }
+  ],
+  "selectionReasons": [
+    "RC-SEL-INTEGRITY-OK",
+    "RC-SEL-DQ-OK",
+    "RC-SEL-REGIME-TRENDING",
+    "RC-SEL-VOL-MEDIUM",
+    "RC-SEL-LIQ-NORMAL",
+    "RC-SEL-FRESH-OK"
+  ],
+  "rejectionReasons": [],
+  "dataQuality": {
+    "status": "OK",
+    "completeness": 1
+  },
+  "provenance": {
+    "sourceId": "fixture:phase3/perception/ETHUSDT-perception-snapshot.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE4_RULES_V1",
+    "lineageHash": "sha256:56376b375be533be1759e409af2f9b592c018e0a61dea67dcb80604b62068445"
+  },
+  "contractVersion": "genesis.market-selector-score.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "ScenarioEngine",
+    "OperatorReadModel"
+  ]
+}

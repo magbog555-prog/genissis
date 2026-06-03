@@ -1,0 +1,81 @@
+{
+  "schema": "genesis.owner-operating-views-slice11.v1",
+  "generatedAt": "2026-06-03T05:39:09.029Z",
+  "slice": 11,
+  "pass": true,
+  "viewId": "OWNER-S11-D6009CE45C98C688",
+  "coveredSlices": [
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "sourceReportDigests": {
+    "admission": "sha256:69147410a106119718ed9dcbd215fdd3f9b2a6fe224619b2a1a113e21a409900",
+    "tradeCard": "sha256:4d19889166aa75d6399bcea3598d56b0881910ada2e6f1dbed7c6dd260027a7c",
+    "paperExecution": "sha256:82ef439d2e13d2a351d4b66e00e855529fcc513d8d941d390c7fd45d0504ea3d",
+    "tradeHistory": "sha256:51b3e5dafa634b7a0c8d7f86ca6403d3952ae62af2fe2eabca9898529ebf1a97",
+    "runtimeAlignment": "sha256:85f98bafb6397a699ae3db1e2509b5ec343ac997832523dca4fdbeaa0106ea46"
+  },
+  "sourceReportPass": {
+    "admission": true,
+    "tradeCard": true,
+    "paperExecution": true,
+    "tradeHistory": true,
+    "runtimeAlignment": true
+  },
+  "constraints": {
+    "notaryGreenClaimed": false,
+    "executionAllowed": false,
+    "liveIngestion": false
+  },
+  "freshness": {
+    "ttlMs": 43200000,
+    "maxSourceAgeMs": 4923
+  },
+  "status": "OWNER_VIEW_OK",
+  "ownerOperatingViews": {
+    "genesisShellReadiness": {
+      "summarySchema": "genesis.owner-operator-trust-readmodel.v1",
+      "em012ClosureSupport": true,
+      "operatorShellUiScanClosureStatus": "COMPLETE",
+      "operatorShellUiScanClosureRef": "reports/operator-shell-ui-scan-closure.verify.json",
+      "pairSignalDeclared": "operatorTier + notaryStatus",
+      "pairSignal": "runnable_import_proof_pass + YELLOW_PLUS",
+      "operatorTier": "runnable_import_proof_pass",
+      "notaryStatus": "YELLOW_PLUS",
+      "notaryGreenNo": true,
+      "note": "NOTARY GREEN NO"
+    },
+    "kpis": {
+      "reportsPassRatio": "5/5",
+      "negativeGuardsRatio": "4/4",
+      "readOnlyMode": true,
+      "executionAllowed": false,
+      "provenScreens": 5,
+      "unprovenScreens": 0
+    },
+    "riskSummary": [
+      "Operator shell UI scan closure status: COMPLETE.",
+      "Pair signal snapshot: operatorTier + notaryStatus => runnable_import_proof_pass + YELLOW_PLUS.",
+      "NOTARY GREEN NO remains enforced until closure.",
+      "Notary remains non-GREEN and cannot be interpreted as execution approval.",
+      "All owner metrics are derived from offline reports only.",
+      "Screen↔proof governance discipline verified for active owner/decision screens."
+    ],
+    "blockersSummary": [
+      "Operator shell UI scan closure complete.",
+      "Execution unlock is blocked: executionAllowed=false.",
+      "Notary promotion is blocked: notaryGreenClaimed=false.",
+      "Screen↔proof discipline: proven=5, unproven=0.",
+      "No slice-level blockers detected in source reports."
+    ],
+    "screenProofDiscipline": {
+      "pass": true,
+      "provenScreens": 5,
+      "unprovenScreens": 0,
+      "verifyReportRef": "reports/screen-proof-discipline.verify.json"
+    }
+  }
+}

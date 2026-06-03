@@ -1,0 +1,164 @@
+{
+  "schema": "genesis.market-selector.batch.v1",
+  "batchId": "sel-batch-offline-20260601T120106Z",
+  "asOf": "2026-06-01T12:01:06.000Z",
+  "universeSize": 2,
+  "topK": 3,
+  "scores": [
+    {
+      "schema": "genesis.market-selector-score.v1",
+      "scoreId": "sel-ETHUSDT-20260601T120105Z",
+      "instrumentId": "ETHUSDT",
+      "rank": 1,
+      "selectionStatus": "SELECTED",
+      "compositeScore": 65,
+      "sourceSnapshotRef": "psn-ETHUSDT-20260601T120105Z",
+      "scoreFactors": [
+        {
+          "factor": "integrity",
+          "value": "OK",
+          "points": 20
+        },
+        {
+          "factor": "dataQuality",
+          "value": "OK",
+          "points": 10
+        },
+        {
+          "factor": "regime",
+          "value": "TRENDING",
+          "points": 20
+        },
+        {
+          "factor": "volatility",
+          "value": "MEDIUM",
+          "points": 5
+        },
+        {
+          "factor": "liquidity",
+          "value": "NORMAL",
+          "points": 10
+        },
+        {
+          "factor": "freshness",
+          "value": 500,
+          "points": 5
+        },
+        {
+          "factor": "flowAlignment",
+          "value": "AGAINST_TREND",
+          "points": -5
+        }
+      ],
+      "selectionReasons": [
+        "RC-SEL-INTEGRITY-OK",
+        "RC-SEL-DQ-OK",
+        "RC-SEL-REGIME-TRENDING",
+        "RC-SEL-VOL-MEDIUM",
+        "RC-SEL-LIQ-NORMAL",
+        "RC-SEL-FRESH-OK"
+      ],
+      "rejectionReasons": [],
+      "dataQuality": {
+        "status": "OK",
+        "completeness": 1
+      },
+      "provenance": {
+        "sourceId": "fixture:phase3/perception/ETHUSDT-perception-snapshot.json",
+        "sourceKind": "DERIVED_ENGINE",
+        "derivation": "OFFLINE_SLICE4_RULES_V1",
+        "lineageHash": "sha256:56376b375be533be1759e409af2f9b592c018e0a61dea67dcb80604b62068445"
+      },
+      "contractVersion": "genesis.market-selector-score.v1.0.0",
+      "schemaVersion": "1.0.0",
+      "ownerRole": "Foundation Lead (derived offline)",
+      "consumerRoles": [
+        "ScenarioEngine",
+        "OperatorReadModel"
+      ]
+    },
+    {
+      "schema": "genesis.market-selector-score.v1",
+      "scoreId": "sel-BTCUSDT-20260601T120106Z",
+      "instrumentId": "BTCUSDT",
+      "rank": 2,
+      "selectionStatus": "SELECTED",
+      "compositeScore": 60,
+      "sourceSnapshotRef": "psn-BTCUSDT-20260601T120106Z",
+      "scoreFactors": [
+        {
+          "factor": "integrity",
+          "value": "OK",
+          "points": 20
+        },
+        {
+          "factor": "dataQuality",
+          "value": "OK",
+          "points": 10
+        },
+        {
+          "factor": "regime",
+          "value": "RANGING",
+          "points": 5
+        },
+        {
+          "factor": "volatility",
+          "value": "LOW",
+          "points": 10
+        },
+        {
+          "factor": "liquidity",
+          "value": "NORMAL",
+          "points": 10
+        },
+        {
+          "factor": "freshness",
+          "value": 500,
+          "points": 5
+        }
+      ],
+      "selectionReasons": [
+        "RC-SEL-INTEGRITY-OK",
+        "RC-SEL-DQ-OK",
+        "RC-SEL-REGIME-RANGING",
+        "RC-SEL-VOL-LOW",
+        "RC-SEL-LIQ-NORMAL",
+        "RC-SEL-FRESH-OK"
+      ],
+      "rejectionReasons": [],
+      "dataQuality": {
+        "status": "OK",
+        "completeness": 1
+      },
+      "provenance": {
+        "sourceId": "fixture:phase3/perception/BTCUSDT-perception-snapshot.json",
+        "sourceKind": "DERIVED_ENGINE",
+        "derivation": "OFFLINE_SLICE4_RULES_V1",
+        "lineageHash": "sha256:5b51adf790ce5baa51449e67d1b2389b68bf9c8db055d392c696d4b47c931d02"
+      },
+      "contractVersion": "genesis.market-selector-score.v1.0.0",
+      "schemaVersion": "1.0.0",
+      "ownerRole": "Foundation Lead (derived offline)",
+      "consumerRoles": [
+        "ScenarioEngine",
+        "OperatorReadModel"
+      ]
+    }
+  ],
+  "provenance": {
+    "sourceId": "fixture:phase3/perception/slice3-manifest.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE4_RULES_V1",
+    "lineageHash": "sha256:61b813b79e1fbdb986207d7143f15a4dd5d0991553f9c19ea904b5a6819b479f"
+  },
+  "evidenceRefs": [
+    "EM-P3-SEL-001"
+  ],
+  "contractVersion": "genesis.market-selector-score.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "ScenarioEngine",
+    "OperatorReadModel"
+  ]
+}

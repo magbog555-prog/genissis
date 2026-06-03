@@ -1,0 +1,53 @@
+{
+  "schema": "genesis.owner-decision-screen-map.v1",
+  "updatedAt": "2026-06-02T08:40:00.000Z",
+  "scope": "owner-visible-l2",
+  "screens": [
+    {
+      "screenId": "OWNER-L2-CORE-WIRE",
+      "screenTitle": "Core / Wire health",
+      "screenType": "owner",
+      "status": "PASS",
+      "proofArtifactRef": "reports/mbg-wire-market-observation.json"
+    },
+    {
+      "screenId": "OWNER-L2-OFFLINE-CHAIN",
+      "screenTitle": "Offline chain ETH",
+      "screenType": "owner",
+      "status": "PASS",
+      "proofArtifactRef": "tests/fixtures/phase3/visibility/owner-visible-runtime-summary-slice10.json"
+    },
+    {
+      "screenId": "OWNER-L2-TRUST-VERIFY",
+      "screenTitle": "Trust and verify panel",
+      "screenType": "decision",
+      "status": "PASS",
+      "proofArtifactRef": "reports/owner-operating-views-slice11.verify.json"
+    },
+    {
+      "screenId": "OWNER-L2-LAYERS-TABLE",
+      "screenTitle": "System layers table",
+      "screenType": "owner",
+      "status": "PASS",
+      "proofArtifactRef": "data/board.json"
+    },
+    {
+      "screenId": "OWNER-L2-LINKS-COMMANDS",
+      "screenTitle": "Links and verify commands",
+      "screenType": "owner",
+      "status": "WORKING",
+      "proofArtifactRef": "docs/reports/VISIBLE_SKELETON_L2_REPORT.md"
+    }
+  ],
+  "outOfScopeScreens": [
+    {
+      "screenId": "OWNER-L2-DECISION-MATRIX",
+      "screenTitle": "Decision matrix expansion (future)",
+      "screenType": "decision",
+      "status": "PLANNED",
+      "proofArtifactRef": "NOT_PROVEN",
+      "scopeState": "OUT_OF_ACTIVE_SCOPE",
+      "reason": "Future expansion; no proof artifact yet, excluded from active verify scope."
+    }
+  ]
+}

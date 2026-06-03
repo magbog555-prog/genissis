@@ -1,0 +1,89 @@
+{
+  "schema": "genesis.visibility-runtime-alignment-slice10.v1",
+  "generatedAt": "2026-06-03T05:39:07.825Z",
+  "slice": 10,
+  "pass": true,
+  "runtimeAlignmentId": "RA-S10-5ABBF4FF52949120",
+  "runtimeAlignmentStatus": "ALIGNED_OFFLINE",
+  "ownerVisibleRuntimeSummary": {
+    "status": "ALIGNED_OFFLINE",
+    "coveredSlices": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "allSourceReportsPass": true,
+    "failedSlices": []
+  },
+  "timestamps": {
+    "summaryGeneratedAt": "2026-06-03T05:39:07.825Z",
+    "sourceReports": {
+      "admission": {
+        "reportGeneratedAt": "2026-06-03T05:39:04.106Z",
+        "reportMtimeIso": "2026-06-03T05:39:04.106Z"
+      },
+      "tradeCard": {
+        "reportGeneratedAt": "2026-06-03T05:39:05.092Z",
+        "reportMtimeIso": "2026-06-03T05:39:05.094Z"
+      },
+      "paperExecution": {
+        "reportGeneratedAt": "2026-06-03T05:39:05.935Z",
+        "reportMtimeIso": "2026-06-03T05:39:05.936Z"
+      },
+      "tradeHistory": {
+        "reportGeneratedAt": "2026-06-03T05:39:06.836Z",
+        "reportMtimeIso": "2026-06-03T05:39:06.838Z"
+      }
+    }
+  },
+  "freshness": {
+    "mode": "TTL_OK",
+    "ttlMs": 43200000,
+    "maxSourceAgeMs": 3719
+  },
+  "sourceReportDigests": {
+    "admission": "sha256:69147410a106119718ed9dcbd215fdd3f9b2a6fe224619b2a1a113e21a409900",
+    "tradeCard": "sha256:4d19889166aa75d6399bcea3598d56b0881910ada2e6f1dbed7c6dd260027a7c",
+    "paperExecution": "sha256:82ef439d2e13d2a351d4b66e00e855529fcc513d8d941d390c7fd45d0504ea3d",
+    "tradeHistory": "sha256:51b3e5dafa634b7a0c8d7f86ca6403d3952ae62af2fe2eabca9898529ebf1a97"
+  },
+  "sourceReportMeta": {
+    "admission": {
+      "slice": 6,
+      "path": "reports/admission-offline-slice6.json",
+      "generatedAt": "2026-06-03T05:39:04.106Z",
+      "pass": true,
+      "mtimeIso": "2026-06-03T05:39:04.106Z"
+    },
+    "tradeCard": {
+      "slice": 7,
+      "path": "reports/trade-card-offline-slice7.json",
+      "generatedAt": "2026-06-03T05:39:05.092Z",
+      "pass": true,
+      "mtimeIso": "2026-06-03T05:39:05.094Z"
+    },
+    "paperExecution": {
+      "slice": 8,
+      "path": "reports/paper-execution-offline-slice8.json",
+      "generatedAt": "2026-06-03T05:39:05.935Z",
+      "pass": true,
+      "mtimeIso": "2026-06-03T05:39:05.936Z"
+    },
+    "tradeHistory": {
+      "slice": 9,
+      "path": "reports/trade-history-offline-slice9.json",
+      "generatedAt": "2026-06-03T05:39:06.836Z",
+      "pass": true,
+      "mtimeIso": "2026-06-03T05:39:06.838Z"
+    }
+  },
+  "constraints": {
+    "notaryGreenClaimed": false,
+    "executionAllowed": false,
+    "liveIngestion": false
+  },
+  "risks": [
+    "No live execution unlock; summary remains owner-visible and offline."
+  ]
+}

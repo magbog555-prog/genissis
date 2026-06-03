@@ -1,0 +1,46 @@
+{
+  "schema": "genesis.foundation.route-negative-fixture.v1",
+  "description": "Expected route scanner classifications (Stage 4). Used to validate scan-routes.mjs logic.",
+  "expectations": [
+    {
+      "case": "POST /order in SAFE",
+      "method": "POST",
+      "path": "/order",
+      "file": "core/core/ui-api/connected-readonly-core-api.ts",
+      "scope": "SAFE",
+      "expectedStatus": "RED"
+    },
+    {
+      "case": "POST /trade/place in UNSAFE",
+      "method": "POST",
+      "path": "/trade/place",
+      "file": "core/apps/runtime-api/src/app.ts",
+      "scope": "UNSAFE",
+      "expectedStatus": "FINDING"
+    },
+    {
+      "case": "POST /execution/testnet/place-guarded in UNSAFE",
+      "method": "POST",
+      "path": "/execution/testnet/place-guarded",
+      "file": "core/apps/runtime-api/src/app.ts",
+      "scope": "UNSAFE",
+      "expectedStatus": "FINDING"
+    },
+    {
+      "case": "GET /health in SAFE readonly",
+      "method": "GET",
+      "path": "/health",
+      "file": "core/core/ui-api/connected-readonly-core-api.ts",
+      "scope": "SAFE",
+      "expectedStatus": "GREEN"
+    },
+    {
+      "case": "POST /order in UNKNOWN hypothetical",
+      "method": "POST",
+      "path": "/order",
+      "file": "hypothetical/unknown-surface.ts",
+      "scope": "UNKNOWN",
+      "expectedStatus": "YELLOW"
+    }
+  ]
+}

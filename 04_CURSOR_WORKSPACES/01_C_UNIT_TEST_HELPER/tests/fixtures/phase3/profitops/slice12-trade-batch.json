@@ -1,0 +1,618 @@
+{
+  "schema": "genesis.phase3.slice12-profitops-trade-batch.v1",
+  "slice": 12,
+  "mode": "PAPER_OFFLINE_ONLY",
+  "expansion": "profitops-expanded-sample-v3",
+  "regimeTags": [
+    "TREND",
+    "RANGE",
+    "CHOP"
+  ],
+  "sessionTags": [
+    "ASIA",
+    "LONDON",
+    "NY"
+  ],
+  "trades": [
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b2.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b2.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b3.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b3.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b4.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b4.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b5.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b5.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline.json",
+      "regimeTag": "TREND",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b6.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b6.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b7.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b7.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b8.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b8.json",
+      "regimeTag": "TREND",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b9.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b9.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b10.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b10.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b11.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b11.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b12.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b12.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b13.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b13.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b14.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b14.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b15.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b15.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b16.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b16.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b17.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b17.json",
+      "regimeTag": "TREND",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b18.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b18.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b19.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b19.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b20.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b20.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b22.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b22.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b23.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b23.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b24.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b24.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b25.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b25.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b26.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b26.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b27.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b27.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b28.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b28.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b29.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b29.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b30.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b30.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b31.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b31.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b32.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b32.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b33.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b33.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b34.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b34.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b35.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b35.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b36.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b36.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b37.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b37.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b38.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b38.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b39.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b39.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b40.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b40.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b41.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b41.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b42.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b42.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b43.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b43.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b44.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b44.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b45.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b45.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b46.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b46.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b47.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b47.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b48.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b48.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b49.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b49.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b50.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b50.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b51.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b51.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b52.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b52.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b53.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b53.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b54.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b54.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b55.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b55.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b56.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b56.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b57.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b57.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b58.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b58.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b59.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b59.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b60.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b60.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b61.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b61.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b62.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b62.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b63.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b63.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b64.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b64.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b65.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b65.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b66.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b66.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b67.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b67.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b68.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b68.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b69.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b69.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b70.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b70.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b71.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b71.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b72.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b72.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b73.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b73.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b74.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b74.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b75.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b75.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b76.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b76.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b77.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b77.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b78.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b78.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b79.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b79.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b80.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b80.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b81.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b81.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b82.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b82.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b83.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b83.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b84.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b84.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b85.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b85.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b86.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b86.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b87.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b87.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b88.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b88.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b89.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b89.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b90.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b90.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b91.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b91.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b92.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b92.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b93.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b93.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b94.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b94.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b95.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b95.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b96.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b96.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b97.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b97.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b98.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b98.json",
+      "regimeTag": "RANGE",
+      "sessionTag": "LONDON"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-ethusdt-offline-b99.json",
+      "paperExecution": "paper-execution-liquidity-sweep-ethusdt-offline-b99.json",
+      "regimeTag": "CHOP",
+      "sessionTag": "NY"
+    },
+    {
+      "tradeHistory": "trade-history-liquidity-sweep-btcusdt-offline-b100.json",
+      "paperExecution": "paper-execution-liquidity-sweep-btcusdt-offline-b100.json",
+      "regimeTag": "TREND",
+      "sessionTag": "ASIA"
+    }
+  ]
+}

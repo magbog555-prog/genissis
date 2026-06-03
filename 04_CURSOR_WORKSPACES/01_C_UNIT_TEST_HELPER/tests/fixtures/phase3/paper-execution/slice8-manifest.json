@@ -1,0 +1,15 @@
+{
+  "schema": "genesis.phase3.slice8-paper-execution-manifest.v1",
+  "slice": 8,
+  "mode": "OFFLINE_ONLY",
+  "derivedFrom": "tests/fixtures/phase3/trade-card/trade-card-liquidity-sweep-ethusdt-offline.json",
+  "paperExecutionCount": 1,
+  "files": [
+    "paper-execution-liquidity-sweep-ethusdt-offline.json"
+  ],
+  "negativeFiles": [
+    "negative-forbidden-execution-field-paper-execution.json"
+  ],
+  "liveIngestion": false,
+  "notaryGreenClaimed": false
+}

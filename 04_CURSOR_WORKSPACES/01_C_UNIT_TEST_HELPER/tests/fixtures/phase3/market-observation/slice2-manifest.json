@@ -1,0 +1,18 @@
+{
+  "schema": "genesis.phase3.slice2-manifest.v1",
+  "slice": 2,
+  "mode": "OFFLINE_ONLY",
+  "instruments": ["BTCUSDT", "ETHUSDT"],
+  "fixtureVersion": "slice2-v1",
+  "files": [
+    "BTCUSDT-offline-sample.json",
+    "ETHUSDT-offline-sample.json"
+  ],
+  "negativeFiles": [
+    "negative-admission-on-market.json"
+  ],
+  "qualityGateDoc": "docs/reports/PHASE_3_DATA_QUALITY_GATES_V1.md",
+  "schemaDoc": "docs/reports/PHASE_3_OBSERVATION_SCHEMA_V1.md",
+  "liveIngestion": false,
+  "notaryGreenClaimed": false
+}

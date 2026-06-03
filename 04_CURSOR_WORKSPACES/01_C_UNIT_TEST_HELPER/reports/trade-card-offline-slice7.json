@@ -1,0 +1,50 @@
+{
+  "schema": "genesis.trade-card-offline-slice7.v1",
+  "generatedAt": "2026-06-03T05:39:05.092Z",
+  "slice": 7,
+  "pass": true,
+  "summary": {
+    "tradeCardCount": 1,
+    "goldenFiles": 1,
+    "goldenPass": 1,
+    "negativeFiles": 1,
+    "negativePass": 1,
+    "tradeCardId": "TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+    "instrumentId": "ETHUSDT",
+    "admissionRef": "ADM-LIQUIDITY-SWEEP-RECLAIM-V1"
+  },
+  "files": [
+    {
+      "file": "tests/fixtures/phase3/trade-card/trade-card-liquidity-sweep-ethusdt-offline.json",
+      "expectFail": false,
+      "pass": true,
+      "tradeCardId": "TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "instrumentId": "ETHUSDT",
+      "admissionRef": "ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/trade-card/negative-layer-collapse-trade-card.json",
+      "expectFail": true,
+      "pass": true,
+      "tradeCardId": "TC-NEG-LAYER-COLLAPSE-001",
+      "instrumentId": "ETHUSDT",
+      "admissionRef": "ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "redCount": 1,
+      "violations": [
+        {
+          "ruleId": "RC-LAYER-COLLAPSE",
+          "severity": "RED",
+          "message": "forbidden fields on TradeCardDraft",
+          "tradeCardId": "TC-NEG-LAYER-COLLAPSE-001",
+          "paths": [
+            "executionIntentId"
+          ]
+        }
+      ]
+    }
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

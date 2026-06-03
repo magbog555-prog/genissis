@@ -1,0 +1,27 @@
+{
+  "schema": "genesis.b6-portability-closure.verify.v1",
+  "generatedAt": "2026-06-03T07:06:56.592Z",
+  "pass": false,
+  "tier": "PARTIAL_CI_LOCAL_EXECUTED",
+  "proofKind": null,
+  "proofRef": null,
+  "workflowYamlInRepo": true,
+  "violations": [
+    "MISSING_GITHUB_ACTIONS_URL_OR_SECOND_HOST"
+  ],
+  "artifacts": {
+    "ciRun": "reports/portability-baseline-ci-run.json",
+    "secondHost": "05_REPORTS_AND_MANIFESTS/portability-second-host-result.json",
+    "container": "reports/container-audit-run.json"
+  },
+  "policy": {
+    "notaryGreen": "NO",
+    "archGreenApproved": false,
+    "auditorBundleB6Gate": false
+  },
+  "nextSteps": [
+    "Push Genesis to GitHub and run workflow genesis-foundation-verify",
+    "Download artifact portability-baseline-ci-run OR run: npm run attach:github-actions-run -- --url <run-url>",
+    "Or produce portability-second-host-result.json per portability-second-host-instructions.md"
+  ]
+}

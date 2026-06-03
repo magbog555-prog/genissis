@@ -1,0 +1,15 @@
+{
+  "schema": "genesis.phase3.slice6-admission-manifest.v1",
+  "slice": 6,
+  "mode": "OFFLINE_ONLY",
+  "derivedFrom": "tests/fixtures/phase3/scenario/liquidity-sweep-reclaim-ethusdt-offline.json",
+  "admissionCount": 1,
+  "files": [
+    "admission-liquidity-sweep-ethusdt-offline.json"
+  ],
+  "negativeFiles": [
+    "negative-layer-collapse-admission.json"
+  ],
+  "liveIngestion": false,
+  "notaryGreenClaimed": false
+}

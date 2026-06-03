@@ -1,0 +1,15 @@
+{
+  "schema": "genesis.phase3.slice3-perception-manifest.v1",
+  "slice": 3,
+  "mode": "OFFLINE_ONLY",
+  "derivedFrom": "tests/fixtures/phase3/market-observation",
+  "files": [
+    "BTCUSDT-perception-snapshot.json",
+    "ETHUSDT-perception-snapshot.json"
+  ],
+  "negativeFiles": [
+    "negative-scenario-id-on-perception.json"
+  ],
+  "liveIngestion": false,
+  "notaryGreenClaimed": false
+}

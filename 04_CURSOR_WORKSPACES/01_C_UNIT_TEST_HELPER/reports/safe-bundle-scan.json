@@ -1,0 +1,174 @@
+{
+  "schema": "genesis.safe-bundle-scan.v1",
+  "artifact": "genesis-safe-readonly",
+  "tier": "OPERATOR",
+  "scannedAt": "2026-06-03T07:06:55.766Z",
+  "bundleRoot": "dist/genesis-safe-readonly",
+  "violationCount": 23,
+  "redCount": 0,
+  "warnCount": 23,
+  "violations": [
+    {
+      "type": "FORBIDDEN_IMPORT",
+      "file": "core/core/contracts/normalize-runtime-snapshot.ts",
+      "match": "binance",
+      "severity": "WARN",
+      "reason": "DTO_STRING_LITERAL"
+    },
+    {
+      "type": "FORBIDDEN_IMPORT",
+      "file": "core/core/contracts/ui/computation-trace-dto.ts",
+      "match": "binance",
+      "severity": "WARN",
+      "reason": "DTO_STRING_LITERAL"
+    },
+    {
+      "type": "FORBIDDEN_IMPORT",
+      "file": "core/core/kernel/kernel-constitution.ts",
+      "match": "runtime-api",
+      "severity": "WARN",
+      "reason": "SUBSTRING_NON_IMPORT"
+    },
+    {
+      "type": "FORBIDDEN_IMPORT",
+      "file": "core/core/kernel/kernel-constitution.ts",
+      "match": "engine/execution",
+      "severity": "WARN",
+      "reason": "SUBSTRING_NON_IMPORT"
+    },
+    {
+      "type": "FORBIDDEN_IMPORT",
+      "file": "core/core/kernel/kernel-constitution.ts",
+      "match": "application/exchange",
+      "severity": "WARN",
+      "reason": "SUBSTRING_NON_IMPORT"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/core/kernel/kernel-constitution.ts",
+      "match": "/trade",
+      "severity": "WARN",
+      "reason": "NORMATIVE_TEXT"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/core/kernel/kernel-constitution.ts",
+      "match": "/order",
+      "severity": "WARN",
+      "reason": "NORMATIVE_TEXT"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/core/kernel/kernel-constitution.ts",
+      "match": "/execution",
+      "severity": "WARN",
+      "reason": "NORMATIVE_TEXT"
+    },
+    {
+      "type": "FORBIDDEN_IMPORT",
+      "file": "core/core/live-stream/live-market-stream.ts",
+      "match": "binance",
+      "severity": "WARN",
+      "reason": "DTO_STRING_LITERAL"
+    },
+    {
+      "type": "FORBIDDEN_IMPORT",
+      "file": "core/core/ui-api/mock-scenarios.ts",
+      "match": "binance",
+      "severity": "WARN",
+      "reason": "DTO_STRING_LITERAL"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/CORE_API_MAP.md",
+      "match": "/order",
+      "severity": "WARN",
+      "reason": "DOC_REFERENCE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/CORE_CONSTITUTION.md",
+      "match": "/trade",
+      "severity": "WARN",
+      "reason": "DOC_REFERENCE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/CORE_CONSTITUTION.md",
+      "match": "/order",
+      "severity": "WARN",
+      "reason": "DOC_REFERENCE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/CORE_CONSTITUTION.md",
+      "match": "/execution",
+      "severity": "WARN",
+      "reason": "DOC_REFERENCE"
+    },
+    {
+      "type": "FORBIDDEN_IMPORT",
+      "file": "core/scripts/verify-readonly-surface.mjs",
+      "match": "testnet",
+      "severity": "WARN",
+      "reason": "SUBSTRING_NON_IMPORT"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/scripts/verify-readonly-surface.mjs",
+      "match": "/trade",
+      "severity": "WARN",
+      "reason": "VERIFY_FIXTURE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/scripts/verify-readonly-surface.mjs",
+      "match": "/order",
+      "severity": "WARN",
+      "reason": "VERIFY_FIXTURE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/scripts/verify-readonly-surface.mjs",
+      "match": "/execution",
+      "severity": "WARN",
+      "reason": "VERIFY_FIXTURE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/scripts/verify-readonly-surface.mjs",
+      "match": "/testnet",
+      "severity": "WARN",
+      "reason": "VERIFY_FIXTURE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "core/scripts/verify-readonly-surface.mjs",
+      "match": "/place-guarded",
+      "severity": "WARN",
+      "reason": "VERIFY_FIXTURE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "docs/CORE_SELF_TRUTH_AUDIT.md",
+      "match": "/trade",
+      "severity": "WARN",
+      "reason": "DOC_REFERENCE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "docs/CORE_SELF_TRUTH_AUDIT.md",
+      "match": "/order",
+      "severity": "WARN",
+      "reason": "DOC_REFERENCE"
+    },
+    {
+      "type": "FORBIDDEN_ROUTE",
+      "file": "docs/CORE_SELF_TRUTH_AUDIT.md",
+      "match": "/execution",
+      "severity": "WARN",
+      "reason": "DOC_REFERENCE"
+    }
+  ],
+  "pass": true
+}

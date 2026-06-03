@@ -1,0 +1,12 @@
+{
+  "schema": "genesis.safe-artifact.build.v1",
+  "artifact": "genesis-safe-readonly",
+  "version": "1.0.0-sprint2",
+  "tier": "OPERATOR",
+  "generatedAt": "2026-06-03T07:06:55.531Z",
+  "genesis_root": "D:\\genessis",
+  "source_target": "D:/genessis/02_SOURCE_TARGETS/MBG_OBSERVABLE_CORE_SOURCE_RC4_D2",
+  "fileCount": 44,
+  "closureFileCount": 32,
+  "output_dir": "dist/genesis-safe-readonly"
+}

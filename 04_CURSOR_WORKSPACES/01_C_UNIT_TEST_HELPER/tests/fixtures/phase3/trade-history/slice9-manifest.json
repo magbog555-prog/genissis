@@ -1,0 +1,15 @@
+{
+  "schema": "genesis.phase3.slice9-trade-history-manifest.v1",
+  "slice": 9,
+  "mode": "OFFLINE_ONLY",
+  "derivedFrom": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline.json",
+  "tradeHistoryCount": 1,
+  "files": [
+    "trade-history-liquidity-sweep-ethusdt-offline.json"
+  ],
+  "negativeFiles": [
+    "negative-forbidden-execution-field-layer-collapse-trade-history.json"
+  ],
+  "liveIngestion": false,
+  "notaryGreenClaimed": false
+}

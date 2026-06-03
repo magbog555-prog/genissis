@@ -1,0 +1,43 @@
+{
+  "schema": "genesis.admission-decision.v1",
+  "admissionId": "ADM-NEG-LAYER-COLLAPSE-001",
+  "admissionStatus": "PREPARE",
+  "instrumentId": "ETHUSDT",
+  "scenarioRef": "SCN-LIQUIDITY-SWEEP-RECLAIM-V1",
+  "scenarioPhase": "RECLAIM_FORMING",
+  "confidence": 0.6,
+  "reasons": [
+    "Scenario phase RECLAIM_FORMING",
+    "Confidence 0.6",
+    "Pre-trade preparation only; execution remains blocked"
+  ],
+  "guardrails": {
+    "executionAllowed": false,
+    "mode": "OFFLINE_ONLY",
+    "capitalLocked": true,
+    "maxRiskBudgetBps": 10
+  },
+  "decisionTimestamps": {
+    "computedAt": "2026-06-03T05:39:04.016Z",
+    "expiresAt": "2026-06-01T13:01:06.000Z"
+  },
+  "provenance": {
+    "sourceId": "fixture:phase3/scenario/liquidity-sweep-reclaim-ethusdt-offline.json",
+    "sourceKind": "DERIVED_ENGINE",
+    "derivation": "OFFLINE_SLICE6_RULES_V1",
+    "lineageHash": "sha256:136aff69e2a0749f7507c270f18237e91b780b5afe6a886b5ac8219c06661d39"
+  },
+  "evidenceRefs": [
+    "EM-P3-ADM-001"
+  ],
+  "contractVersion": "genesis.admission-decision.v1.0.0",
+  "schemaVersion": "1.0.0",
+  "ownerRole": "Foundation Lead (derived offline)",
+  "consumerRoles": [
+    "TradeCardEngine",
+    "OperatorReadModel"
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false,
+  "canExecute": true
+}

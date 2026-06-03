@@ -1,0 +1,50 @@
+{
+  "schema": "genesis.paper-execution-offline-slice8.v1",
+  "generatedAt": "2026-06-03T05:39:05.935Z",
+  "slice": 8,
+  "pass": true,
+  "summary": {
+    "paperExecutionCount": 1,
+    "goldenFiles": 1,
+    "goldenPass": 1,
+    "negativeFiles": 1,
+    "negativePass": 1,
+    "paperExecutionId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+    "instrumentId": "ETHUSDT",
+    "tradeCardRef": "TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1"
+  },
+  "files": [
+    {
+      "file": "tests/fixtures/phase3/paper-execution/paper-execution-liquidity-sweep-ethusdt-offline.json",
+      "expectFail": false,
+      "pass": true,
+      "paperExecutionId": "PEX-TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "instrumentId": "ETHUSDT",
+      "tradeCardRef": "TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "redCount": 0,
+      "violations": []
+    },
+    {
+      "file": "tests/fixtures/phase3/paper-execution/negative-forbidden-execution-field-paper-execution.json",
+      "expectFail": true,
+      "pass": true,
+      "paperExecutionId": "PEX-NEG-FORBIDDEN-EXECUTION-001",
+      "instrumentId": "ETHUSDT",
+      "tradeCardRef": "TC-ADM-LIQUIDITY-SWEEP-RECLAIM-V1",
+      "redCount": 1,
+      "violations": [
+        {
+          "ruleId": "RC-LAYER-COLLAPSE",
+          "severity": "RED",
+          "message": "forbidden execution fields on PaperExecution",
+          "paperExecutionId": "PEX-NEG-FORBIDDEN-EXECUTION-001",
+          "paths": [
+            "executionId"
+          ]
+        }
+      ]
+    }
+  ],
+  "notaryGreenClaimed": false,
+  "liveIngestion": false
+}

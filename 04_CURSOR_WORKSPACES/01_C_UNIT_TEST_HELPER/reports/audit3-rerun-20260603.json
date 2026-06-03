@@ -1,0 +1,47 @@
+﻿{
+    "workspace":  "01_C_UNIT_TEST_HELPER",
+    "timestamp":  "2026-06-03T05:43:18.166Z",
+    "schema":  "genesis.audit3-rerun.v1",
+    "steps":  [
+                  {
+                      "script":  "verify:foundation",
+                      "pass":  true,
+                      "exitCode":  0
+                  },
+                  {
+                      "script":  "verify:foundation:strict",
+                      "pass":  true,
+                      "exitCode":  0
+                  },
+                  {
+                      "script":  "verify:perception-slice3",
+                      "pass":  true,
+                      "exitCode":  0
+                  },
+                  {
+                      "script":  "verify:mbg-wire:self-contained",
+                      "pass":  true,
+                      "exitCode":  0
+                  },
+                  {
+                      "script":  "verify:profitops-slice12",
+                      "pass":  true,
+                      "exitCode":  0
+                  },
+                  {
+                      "script":  "verify:screen-proof-discipline",
+                      "pass":  true,
+                      "exitCode":  0
+                  },
+                  {
+                      "script":  "verify:operator-shell-ui-scan-closure",
+                      "pass":  true,
+                      "exitCode":  0
+                  }
+              ],
+    "summary":  {
+                    "pass":  7,
+                    "overallPass":  true,
+                    "total":  7
+                }
+}
