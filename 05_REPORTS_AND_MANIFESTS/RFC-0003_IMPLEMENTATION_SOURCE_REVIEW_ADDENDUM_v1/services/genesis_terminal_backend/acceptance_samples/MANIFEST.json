@@ -1,0 +1,42 @@
+{
+  "rfc": "RFC-0003",
+  "package": "acceptance_samples",
+  "required_samples": [
+    "Successful OrganObservation",
+    "TIMEOUT TerminalRecord",
+    "CANCELLED_BEFORE_START TerminalRecord",
+    "OVERLOAD_REJECTED TerminalRecord",
+    "LateResultArtifact",
+    "DETERMINISM_CONFLICT artifact",
+    "CLOSED Set with timeout",
+    "CLOSED Set with optional-shadow missing",
+    "State CAS conflict with unchanged state",
+    "Duplicate evaluation idempotent replay"
+  ],
+  "files": [
+    {
+      "file": "organ_observation_samples.jsonl",
+      "rows": 1
+    },
+    {
+      "file": "organ_terminal_record_samples.jsonl",
+      "rows": 4
+    },
+    {
+      "file": "late_result_artifact_samples.jsonl",
+      "rows": 1
+    },
+    {
+      "file": "determinism_conflict_artifact_samples.jsonl",
+      "rows": 1
+    },
+    {
+      "file": "organ_observation_set_samples.jsonl",
+      "rows": 3
+    },
+    {
+      "file": "cas_and_idempotency_samples.jsonl",
+      "rows": 2
+    }
+  ]
+}
