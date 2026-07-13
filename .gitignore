@@ -13,6 +13,9 @@ Thumbs.db
 # Audit zip build artifacts (keep sources in 05_REPORTS_AND_MANIFESTS)
 **/AUDIT*_RESPONSE_BUNDLE_*/
 *.zip
+# Permanent mobile handoff outbox — downloadable packages for Android
+!architecture/handoff/mobile_outbox/
+!architecture/handoff/mobile_outbox/**/*.zip
 
 # Cursor / IDE
 .cursor/
