@@ -1,0 +1,2 @@
+{"accepted_into_set": false, "accepted_observation": false, "conflict_advanced": false, "conflict_ok": false, "first_ok": true, "sample": "state_cas_conflict_unchanged_state", "state_revision": 1}
+{"first_hash": "ba590aa20ac4b3fd63c2df0d20ee5d66b6c32a1c4a7952703f4887c973bed3c5", "first_instance": "ed3ff5b2-722c-438c-96ee-4ba85d4358cd", "same_hash": true, "sample": "duplicate_evaluation_idempotent_replay", "second_instance": "ed3ff5b2-722c-438c-96ee-4ba85d4358cd"}

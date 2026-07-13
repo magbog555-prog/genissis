@@ -1,0 +1,14 @@
+{
+  "crash_recovery_supported": false,
+  "frozen": true,
+  "influence_allowed": false,
+  "observation_ok": true,
+  "observation_set_content_hash": "0e5a00f8178b19e05c66923e947bbd13f23cf5bf6013b3a95f10925083dc4977",
+  "observations": 1,
+  "set_lifecycle": "CLOSED",
+  "smoke": "organ_runtime_v1",
+  "status": "CLOSED",
+  "terminal_records": 1,
+  "timeout_is_terminal": true
+}
+SMOKE_CLOSED_FROZEN

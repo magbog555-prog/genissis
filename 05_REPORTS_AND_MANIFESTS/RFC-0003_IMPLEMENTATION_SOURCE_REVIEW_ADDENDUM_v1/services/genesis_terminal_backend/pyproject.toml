@@ -1,0 +1,12 @@
+[project]
+name = "genesis-terminal-backend-organ-runtime"
+version = "0.1.0"
+description = "RFC-0003 Organ Runtime Layer (source review snapshot)"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
