@@ -1,0 +1,11 @@
+{
+  "generated_at": "2026-07-15T23:39:52+00:00",
+  "task_id": "GENESIS-KNOWLEDGE-BASE-REVERSE-MAP-v1",
+  "sources": 151,
+  "concepts": 21,
+  "organs": 15,
+  "families": 8,
+  "algorithms": 8,
+  "hypotheses": 22,
+  "sha256_library": "8aa1a2ee4d97383f7585f3849d31003cd7e93b099f4a7aa0304ade04af0d265b"
+}

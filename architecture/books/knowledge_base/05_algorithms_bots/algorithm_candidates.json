@@ -1,0 +1,276 @@
+{
+  "generated_at": "2026-07-15T23:39:52+00:00",
+  "count": 8,
+  "items": [
+    {
+      "algorithm_id": "ALG-PARDO-WALKFORWARD",
+      "name": "Walk-forward system validation (Pardo)",
+      "source_ids": [
+        "B071"
+      ],
+      "problem_solved": "Reduce naive in-sample curve fitting when testing rule systems",
+      "required_inputs": [
+        "historical OHLCV",
+        "parameter grid",
+        "objective function",
+        "IS/OOS windows"
+      ],
+      "formula_or_pseudocode_summary": "Split chronology → optimize IS → freeze → test OOS → roll window → aggregate OOS",
+      "assumptions": [
+        "Stationarity soft enough for chosen windows",
+        "Objective matches risk reality"
+      ],
+      "look_ahead_risk": "HIGH if features use future bars",
+      "survivorship_risk": "MEDIUM",
+      "overfitting_risk": "HIGH without embargo and reality costs",
+      "execution_assumptions": [
+        "Fills at modeled prices unless costs injected"
+      ],
+      "market_specific_limitations": [
+        "Crypto 24/7 session; fee/funding models needed"
+      ],
+      "possible_genesis_reuse": "REUSE_TEST_METHOD",
+      "current_relevance": "HIGH for admission research",
+      "obsolete_elements": [
+        "Ignoring fees; optimizing Sharpe alone"
+      ],
+      "use_now_class": "USE DURING RESEARCH",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "algorithm_id": "ALG-KURGUZKIN-SYSTEM-SPEC",
+      "name": "Mechanical system specification habit (Kurguzkin)",
+      "source_ids": [
+        "B057",
+        "B058",
+        "B059"
+      ],
+      "problem_solved": "Force explicit rules/hypotheses instead of discretionary folklore",
+      "required_inputs": [
+        "rule language",
+        "entry/exit/risk statements",
+        "market universe"
+      ],
+      "formula_or_pseudocode_summary": "Declare hypothesis → observable conditions → actions → invalidation → log",
+      "assumptions": [
+        "Rules are evaluable on available sensors"
+      ],
+      "look_ahead_risk": "MEDIUM",
+      "survivorship_risk": "MEDIUM",
+      "overfitting_risk": "HIGH if endless retuning",
+      "execution_assumptions": [
+        "Rules are not yet production gates"
+      ],
+      "market_specific_limitations": [
+        "Must map to GENESIS organs, not candle folklore only"
+      ],
+      "possible_genesis_reuse": "REUSE_CONCEPT",
+      "current_relevance": "HIGH for organ/family question design hygiene",
+      "obsolete_elements": [
+        "Treating discretionary commentary as deterministic code"
+      ],
+      "use_now_class": "USE DURING ORGAN DESIGN",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "algorithm_id": "ALG-KATZ-STRATEGY-CATALOG",
+      "name": "Strategy catalog / combinatorial testing ideas (Katz)",
+      "source_ids": [
+        "B048"
+      ],
+      "problem_solved": "Enumerate public strategy skeletons for research priors",
+      "required_inputs": [
+        "feature library",
+        "entry/exit templates"
+      ],
+      "formula_or_pseudocode_summary": "Catalog template families → parameterize → batch backtest with controls",
+      "assumptions": [
+        "Templates are priors, not edges"
+      ],
+      "look_ahead_risk": "HIGH",
+      "survivorship_risk": "HIGH",
+      "overfitting_risk": "VERY_HIGH if mass-tested without multiple-testing control",
+      "execution_assumptions": [
+        "Often optimistic in older literature"
+      ],
+      "market_specific_limitations": [
+        "Many equity/futures assumptions; crypto microstructure different"
+      ],
+      "possible_genesis_reuse": "ADAPT_WITH_REVIEW",
+      "current_relevance": "MEDIUM as prior catalog only",
+      "obsolete_elements": [
+        "Claiming catalog winner is production rule"
+      ],
+      "use_now_class": "USE DURING RESEARCH",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "algorithm_id": "ALG-LEBEAU-INDICATOR-FEATURES",
+      "name": "Indicator feature construction (LeBeau & Lucas)",
+      "source_ids": [
+        "B060"
+      ],
+      "problem_solved": "Translate classic indicators into computable features",
+      "required_inputs": [
+        "OHLC",
+        "indicator definitions"
+      ],
+      "formula_or_pseudocode_summary": "Define indicator → window → normalize → treat as feature, not signal",
+      "assumptions": [
+        "Bar series enough"
+      ],
+      "look_ahead_risk": "MEDIUM",
+      "survivorship_risk": "LOW",
+      "overfitting_risk": "HIGH with indicator shopping",
+      "execution_assumptions": [
+        "N/A at observation stage"
+      ],
+      "market_specific_limitations": [
+        "Lags vs tape/DOM reality"
+      ],
+      "possible_genesis_reuse": "REUSE_DATA_MODEL",
+      "current_relevance": "MEDIUM for feature labs under AFML hygiene",
+      "obsolete_elements": [
+        "Retail ‘magic settings’"
+      ],
+      "use_now_class": "USE DURING RESEARCH",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "algorithm_id": "ALG-PRADO-PURGED-CV",
+      "name": "Purged/embargoed CV + meta-labeling (Lopez de Prado)",
+      "source_ids": [
+        "B145"
+      ],
+      "problem_solved": "Honest ML validation on overlapping financial labels",
+      "required_inputs": [
+        "event labels",
+        "features",
+        "t1 horizons",
+        "CV folds"
+      ],
+      "formula_or_pseudocode_summary": "Purge overlapping labels → embargo → CV → optional meta-label model on primary side",
+      "assumptions": [
+        "Events/labels defined without leakage"
+      ],
+      "look_ahead_risk": "CRITICAL if t1 wrong",
+      "survivorship_risk": "MEDIUM",
+      "overfitting_risk": "HIGH but reduced vs naive CV",
+      "execution_assumptions": [
+        "Prediction ≠ fillable edge"
+      ],
+      "market_specific_limitations": [
+        "Needs GENESIS event model; crypto funding/OI features optional"
+      ],
+      "possible_genesis_reuse": "REUSE_RESEARCH_METHOD",
+      "current_relevance": "VERY HIGH",
+      "obsolete_elements": [
+        "IID assumptions on returns"
+      ],
+      "use_now_class": "USE DURING RESEARCH",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "algorithm_id": "ALG-DATAMINING-GENERIC",
+      "name": "Generic data-mining cookbook (large scan)",
+      "source_ids": [
+        "B001"
+      ],
+      "problem_solved": "Broad ML/pattern mining techniques reference",
+      "required_inputs": [
+        "tabular/sequence datasets"
+      ],
+      "formula_or_pseudocode_summary": "REFERENCE ONLY — no specific formula admitted without extraction review",
+      "assumptions": [
+        "UNKNOWN until targeted chapter review"
+      ],
+      "look_ahead_risk": "UNKNOWN",
+      "survivorship_risk": "UNKNOWN",
+      "overfitting_risk": "VERY_HIGH if applied naively to markets",
+      "execution_assumptions": [
+        "UNKNOWN"
+      ],
+      "market_specific_limitations": [
+        "Not market-microstructure specific; 328MB scan friction"
+      ],
+      "possible_genesis_reuse": "ADAPT_WITH_REVIEW",
+      "current_relevance": "LOW until selective extraction",
+      "obsolete_elements": [
+        "Likely many generic DM methods unsuitable as trading rules"
+      ],
+      "use_now_class": "USE LATER",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "algorithm_id": "ALG-VINCE-SIZING",
+      "name": "Capital fraction / money management mathematics (Vince)",
+      "source_ids": [
+        "B117"
+      ],
+      "problem_solved": "Relate bet size to equity path risk",
+      "required_inputs": [
+        "return distribution or trade P&L series"
+      ],
+      "formula_or_pseudocode_summary": "Estimate growth/risk criterion → choose fraction ≪ aggressive optimal folklore",
+      "assumptions": [
+        "Historical trade stats meaningful"
+      ],
+      "look_ahead_risk": "LOW at sizing layer",
+      "survivorship_risk": "MEDIUM",
+      "overfitting_risk": "HIGH if fit on small samples",
+      "execution_assumptions": [
+        "Assumes positions can be sized continuously"
+      ],
+      "market_specific_limitations": [
+        "Crypto leverage/funding change effective fraction"
+      ],
+      "possible_genesis_reuse": "REUSE_CONCEPT",
+      "current_relevance": "HIGH as research prior for risk organ design — NOT risk passport change",
+      "obsolete_elements": [
+        "Blind optimal-f max"
+      ],
+      "use_now_class": "USE DURING ORGAN DESIGN",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "algorithm_id": "ALG-ROBOT-CHEBOTAREV",
+      "name": "Exchange robot patterns (Chebotarev RU market)",
+      "source_ids": [
+        "B042"
+      ],
+      "problem_solved": "Local historical bot architecture patterns on RF equities",
+      "required_inputs": [
+        "exchange APIs of era",
+        "signals"
+      ],
+      "formula_or_pseudocode_summary": "REFERENCE — venue-specific automation patterns; do not port blindly",
+      "assumptions": [
+        "Older venue microstructure"
+      ],
+      "look_ahead_risk": "UNKNOWN",
+      "survivorship_risk": "HIGH",
+      "overfitting_risk": "HIGH",
+      "execution_assumptions": [
+        "Legacy exchange constraints"
+      ],
+      "market_specific_limitations": [
+        "Not crypto; APIs obsolete"
+      ],
+      "possible_genesis_reuse": "DO_NOT_REUSE",
+      "current_relevance": "LOW as code; LOW-MED as cautionary history",
+      "obsolete_elements": [
+        "Venue-specific robot code"
+      ],
+      "use_now_class": "DO NOT USE",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM"
+    }
+  ]
+}

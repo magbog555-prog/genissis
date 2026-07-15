@@ -1,0 +1,53 @@
+﻿{
+    "generated_at":  "2026-07-16T01:46:44.8160770+03:00",
+    "operations":  [
+                       {
+                           "action":  "move_out",
+                           "from":  "_software/TelegramSender_Modul_L54_20231217.rar",
+                           "to":  "D:/genessis/tools/TelegramSender_Modul_L54_20231217.rar",
+                           "reason":  "not a book"
+                       },
+                       {
+                           "action":  "move",
+                           "from":  "09_programming_quant/Data Mining - metody analiza modeley slozhnyh sistem.pdf",
+                           "to":  "_large/Data Mining - metody analiza modeley slozhnyh sistem.pdf",
+                           "reason":  "isolate oversized reference scan (~328MB)"
+                       },
+                       {
+                           "action":  "move",
+                           "from":  "02_trading_systems_practice/Trading Web.pdf",
+                           "to":  "02_trading_systems_practice/Kurguzkin A - Birzhevoy treyding sistemnyy podhod.pdf",
+                           "reason":  "identified: Kurguzkin 2009"
+                       },
+                       {
+                           "action":  "move",
+                           "from":  "01_technical_analysis/Elliott - Materialy.pdf",
+                           "to":  "01_technical_analysis/Frost Prechter - Volnovoy printsip Elliotta.pdf",
+                           "reason":  "identified: Frost \u0026 Prechter Elliott Wave Principle (RU 6th ed excerpt via Potashkin/Alpina)"
+                       },
+                       {
+                           "action":  "move",
+                           "from":  "02_trading_systems_practice/Lebo Charles - Day trading.pdf",
+                           "to":  "02_trading_systems_practice/LeBeau Lucas - Kompyuternyy analiz fyuchersnyh rynkov.pdf",
+                           "reason":  "identified: Computer Analysis of the Futures Market"
+                       },
+                       {
+                           "action":  "move",
+                           "from":  "03_market_wizards_bios/Begushchie po grablyam.pdf",
+                           "to":  "02_trading_systems_practice/Feniks - Begushchie po grablyam 10 oshibok treydera.pdf",
+                           "reason":  "identified: Feniks Institute brochure 2016; reclassified to practice/course"
+                       },
+                       {
+                           "action":  "move",
+                           "from":  "10_misc/Большая игра на понижение. Тайные пружины финансовой катастрофы (Майкл Льюис) 2011.pdf",
+                           "to":  "03_market_wizards_bios/Lewis Michael - Bolshaya igra na ponizhenie.pdf",
+                           "reason":  "Michael Lewis The Big Short (RU); was misfiled in 10_misc"
+                       },
+                       {
+                           "action":  "note",
+                           "from":  "03_market_wizards_bios/Ispoved.pdf",
+                           "to":  "03_market_wizards_bios/_NOTE_Ispoved.txt",
+                           "reason":  "still needs manual ID"
+                       }
+                   ]
+}

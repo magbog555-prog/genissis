@@ -1,0 +1,215 @@
+{
+  "generated_at": "2026-07-15T23:39:52+00:00",
+  "items": [
+    {
+      "concept_id": "KC-AUCTION-VALUE-AREA",
+      "name_en": "Session value area",
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-VSA-EFFORT-RESULT",
+      "name_en": "Effort versus result",
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-WYCKOFF-PHASES",
+      "name_en": "Wyckoff market phases",
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-BOOK-IMBALANCE",
+      "name_en": "Order book imbalance",
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-ABSORPTION",
+      "name_en": "Absorption",
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-SPREAD-COST",
+      "name_en": "Quoted entry cost / spread",
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-VOL-REGIME",
+      "name_en": "Volatility regime",
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "name_en": "Support and resistance",
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "name_en": "Breakout doctrine",
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-MA-CROSS",
+      "name_en": "Moving average crossovers",
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-RSI",
+      "name_en": "Relative Strength Index",
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-CANDLES",
+      "name_en": "Candlestick patterns",
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-ELLIOTT",
+      "name_en": "Elliott Wave",
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-FIB",
+      "name_en": "Fibonacci retracements",
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-FUNDING-EXTREME",
+      "name_en": "Funding extremes",
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "VENDOR_POPULAR",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-OI-PRICE",
+      "name_en": "Open interest with price",
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-OPENING-RANGE",
+      "name_en": "Session opening range",
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-SYSTEM-WALKFORWARD",
+      "name_en": "Walk-forward validation",
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-AFFML-FEATURE-HYGIENE",
+      "name_en": "Feature hygiene / purged CV",
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "ACADEMIC",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-POSITION-SIZING",
+      "name_en": "Position sizing / capital fraction",
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "name_en": "News impulse",
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge.",
+      "production_influence": false
+    }
+  ]
+}

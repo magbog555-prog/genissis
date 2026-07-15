@@ -1,0 +1,32 @@
+# OWNER_DECISION — STAMPED
+
+**Canonical stamp also at:**  
+`D:\genessis\architecture\research_platform\OWNER_DECISION_STAMP_KNOWLEDGE_BASE_v1.md`
+
+```text
+OWNER_DECISION
+
+GENESIS_KNOWLEDGE_BASE_v1:
+  ACCEPT
+
+REVERSE_ORGAN_MAP:
+  ACCEPT
+
+REVERSE_THINKING_FAMILY_MAP:
+  ACCEPT
+
+ALGORITHMS_AND_BOTS_REUSE:
+  ALLOW_RESEARCH
+
+COMMERCIAL_SAFETY:
+  PASS
+
+PRODUCTION_INFLUENCE:
+  NOT AUTHORIZED
+```
+
+## Library path (updated)
+
+```text
+D:\genessis\architecture\books
+```

@@ -1,0 +1,487 @@
+﻿[
+    {
+        "author":  "Erik Nayman",
+        "count":  4,
+        "titles":  "Buy Cheap Sell Expensive (RU) | Small Trader Encyclopedia (RU) | Master Trading (RU) | Trader-Investor (RU)"
+    },
+    {
+        "author":  "V.I. Safin",
+        "count":  4,
+        "titles":  "Who Do Japanese Candles Shine For (RU) | How to See Money on the Monitor (RU) | Trader Trading System: Success Factor (RU) | Intraday System: 5 Points for Success (RU)"
+    },
+    {
+        "author":  "Jack Schwager",
+        "count":  4,
+        "titles":  "Technical Analysis (full course, RU) | Market Wizards (RU) | Stock Market Wizards (RU) | The New Market Wizards (RU)"
+    },
+    {
+        "author":  "Alexander Kurguzkin",
+        "count":  3,
+        "titles":  "Birzhevoy treyding: sistemnyy podhod (2009) | Labyrinth (RU) | Trading: Game Structure (RU)"
+    },
+    {
+        "author":  "M. Chekulaev",
+        "count":  3,
+        "titles":  "Risk Management (RU) | Trading Volatility (alt version, RU) | Trading Volatility (RU)"
+    },
+    {
+        "author":  "Michael Covel",
+        "count":  2,
+        "titles":  "Trend Following (RU) | The Complete TurtleTrader (RU)"
+    },
+    {
+        "author":  "Nassim Taleb",
+        "count":  2,
+        "titles":  "The Black Swan (RU) | Fooled by Randomness (RU)"
+    },
+    {
+        "author":  "Kathy Lien",
+        "count":  2,
+        "titles":  "Prop Trading Secrets (RU) | Millionaire Traders (RU)"
+    },
+    {
+        "author":  "Bill Williams",
+        "count":  2,
+        "titles":  "New Trading Dimensions (RU) | Trading Chaos 2 (RU)"
+    },
+    {
+        "author":  "Alexander Elder",
+        "count":  2,
+        "titles":  "Trading for a Living basics (RU) | Trading: First Steps (RU)"
+    },
+    {
+        "author":  "Steve Nison",
+        "count":  2,
+        "titles":  "Japanese Candlestick Charting (RU) | Beyond Candlesticks (RU)"
+    },
+    {
+        "author":  "James Dalton",
+        "count":  2,
+        "titles":  "Markets in Profile | Mind Over Markets / Footprint (RU)"
+    },
+    {
+        "author":  "Van Tharp",
+        "count":  2,
+        "titles":  "Super Trader (RU) | Trade Your Way to Financial Freedom (RU)"
+    },
+    {
+        "author":  "Robert Fisher",
+        "count":  2,
+        "titles":  "Fibonacci Applications for Traders (RU) | New Fibonacci Trading Methods (RU)"
+    },
+    {
+        "author":  "William Bernstein",
+        "count":  1,
+        "titles":  "The Intelligent Asset Allocator (RU)"
+    },
+    {
+        "author":  "Satyajit Das",
+        "count":  1,
+        "titles":  "Traders, Guns \u0026 Money (RU)"
+    },
+    {
+        "author":  "Max Gunther",
+        "count":  1,
+        "titles":  "The Zurich Axioms (RU)"
+    },
+    {
+        "author":  "Connie Bruck",
+        "count":  1,
+        "titles":  "The Predators\u0027 Ball (RU)"
+    },
+    {
+        "author":  "Deborah Weir",
+        "count":  1,
+        "titles":  "Timing the Markets (RU)"
+    },
+    {
+        "author":  "Ken Wolff",
+        "count":  1,
+        "titles":  "Momentum Investing (RU)"
+    },
+    {
+        "author":  "Kenneth Grant",
+        "count":  1,
+        "titles":  "Trading Risk (RU)"
+    },
+    {
+        "author":  "Peter Bernstein",
+        "count":  1,
+        "titles":  "Against the Gods (RU)"
+    },
+    {
+        "author":  "George Akerlof, Robert Shiller",
+        "count":  1,
+        "titles":  "Phishing for Phools (RU)"
+    },
+    {
+        "author":  "Terry Burnham",
+        "count":  1,
+        "titles":  "Mean Markets and Lizard Brains (RU)"
+    },
+    {
+        "author":  "Tolly",
+        "count":  1,
+        "titles":  "Playing the Short Side (RU)"
+    },
+    {
+        "author":  "Michael Lewis",
+        "count":  1,
+        "titles":  "The Big Short (RU)"
+    },
+    {
+        "author":  "Richard Thaler, Cass Sunstein",
+        "count":  1,
+        "titles":  "Nudge"
+    },
+    {
+        "author":  "Victor Sperandeo",
+        "count":  1,
+        "titles":  "Trader Vic II (RU)"
+    },
+    {
+        "author":  "Edwin Lefèvre",
+        "count":  1,
+        "titles":  "Reminiscences of a Stock Operator (RU)"
+    },
+    {
+        "author":  "David Cohen",
+        "count":  1,
+        "titles":  "Fear, Greed and Panic (RU)"
+    },
+    {
+        "author":  "A. Burenin",
+        "count":  1,
+        "titles":  "Futures, Forwards and Options Markets (RU)"
+    },
+    {
+        "author":  "Kevin Connolly",
+        "count":  1,
+        "titles":  "Buying and Selling Volatility (RU)"
+    },
+    {
+        "author":  "A. Feldman",
+        "count":  1,
+        "titles":  "Derivatives: Financial and Commodity (RU)"
+    },
+    {
+        "author":  "Vladimir Popov",
+        "count":  1,
+        "titles":  "ICO: Essence, Problems, Law (RU)"
+    },
+    {
+        "author":  "Nathaniel Popper",
+        "count":  1,
+        "titles":  "Digital Gold (RU)"
+    },
+    {
+        "author":  "Adam Tepper",
+        "count":  1,
+        "titles":  "Bitcoin and Money (RU)"
+    },
+    {
+        "author":  "Matt Weisfeld",
+        "count":  1,
+        "titles":  "The Object-Oriented Thought Process (RU)"
+    },
+    {
+        "author":  "Maxim Kotin",
+        "count":  1,
+        "titles":  "Geeks Do Business Too (RU)"
+    },
+    {
+        "author":  "Karl Popper",
+        "count":  1,
+        "titles":  "The Logic of Scientific Discovery (RU)"
+    },
+    {
+        "author":  "A. Shvedov",
+        "count":  1,
+        "titles":  "Interest Rate Instruments: Pricing \u0026 Hedging (RU)"
+    },
+    {
+        "author":  "Cory Althoff",
+        "count":  1,
+        "titles":  "Self-Taught Computer Scientist (RU)"
+    },
+    {
+        "author":  "Mikhail Flenov",
+        "count":  1,
+        "titles":  "C# Bible 4th ed. 2019 (RU)"
+    },
+    {
+        "author":  "Benjamin Graham",
+        "count":  1,
+        "titles":  "Security Analysis (RU)"
+    },
+    {
+        "author":  "F.A. Hayek",
+        "count":  1,
+        "titles":  "Hayek on Money"
+    },
+    {
+        "author":  "Peter Krass",
+        "count":  1,
+        "titles":  "The Book of Investing Wisdom (RU)"
+    },
+    {
+        "author":  "Ralph Vince",
+        "count":  1,
+        "titles":  "The Mathematics of Money Management (RU)"
+    },
+    {
+        "author":  "John Bogle",
+        "count":  1,
+        "titles":  "The Clash of the Cultures (RU)"
+    },
+    {
+        "author":  "Philip Fisher",
+        "count":  1,
+        "titles":  "Common Stocks and Uncommon Profits (RU)"
+    },
+    {
+        "author":  "James Weatherall",
+        "count":  1,
+        "titles":  "The Physics of Wall Street (RU)"
+    },
+    {
+        "author":  "R. Yamarone",
+        "count":  1,
+        "titles":  "The Trader\u0027s Guide to Key Economic Indicators (RU)"
+    },
+    {
+        "author":  "Andreas Antonopoulos",
+        "count":  1,
+        "titles":  "Mastering Bitcoin"
+    },
+    {
+        "author":  "Scott Patterson",
+        "count":  1,
+        "titles":  "The Quants (RU)"
+    },
+    {
+        "author":  "Vera Smith",
+        "count":  1,
+        "titles":  "The Rationale of Central Banking (RU)"
+    },
+    {
+        "author":  "K. Tsarikhin",
+        "count":  1,
+        "titles":  "Fundamental Analysis (RU)"
+    },
+    {
+        "author":  "John Murphy?",
+        "count":  1,
+        "titles":  "The Visual Investor (RU)"
+    },
+    {
+        "author":  "John Murphy",
+        "count":  1,
+        "titles":  "Technical Analysis of the Financial Markets (RU)"
+    },
+    {
+        "author":  "Edgar Peters",
+        "count":  1,
+        "titles":  "Fractal Market Analysis (RU)"
+    },
+    {
+        "author":  "Greg Morris",
+        "count":  1,
+        "titles":  "Candlestick Charting Explained (RU)"
+    },
+    {
+        "author":  "James Hyerczyk",
+        "count":  1,
+        "titles":  "Pattern, Price \u0026 Time / Gann (RU)"
+    },
+    {
+        "author":  "T. Joseph",
+        "count":  1,
+        "titles":  "Simplified Elliott Wave (RU)"
+    },
+    {
+        "author":  "F. Ahundov",
+        "count":  1,
+        "titles":  "The Whole Truth About Forex (RU)"
+    },
+    {
+        "author":  "S. Belyaev",
+        "count":  1,
+        "titles":  "Trading System: Next Candle Calculation (RU)"
+    },
+    {
+        "author":  "Tom Williams",
+        "count":  1,
+        "titles":  "Master the Markets / VSA (RU)"
+    },
+    {
+        "author":  "Martin Pring",
+        "count":  1,
+        "titles":  "On Price Patterns (RU)"
+    },
+    {
+        "author":  "Safonov",
+        "count":  1,
+        "titles":  "Practical Elliott Wave (RU)"
+    },
+    {
+        "author":  "D. Hutson",
+        "count":  1,
+        "titles":  "Wyckoff Method (RU)"
+    },
+    {
+        "author":  "John Bollinger",
+        "count":  1,
+        "titles":  "Bollinger on Bollinger Bands (RU)"
+    },
+    {
+        "author":  "A.G. Bolton",
+        "count":  1,
+        "titles":  "Complete Elliott Wave Works (RU)"
+    },
+    {
+        "author":  "Rick Bensignor",
+        "count":  1,
+        "titles":  "New Thinking in Technical Analysis (RU)"
+    },
+    {
+        "author":  "Steven Achelis",
+        "count":  1,
+        "titles":  "Technical Analysis from A to Z (RU)"
+    },
+    {
+        "author":  "A.A. Almazov",
+        "count":  1,
+        "titles":  "Fractal Theory (RU)"
+    },
+    {
+        "author":  "Robert Colby",
+        "count":  1,
+        "titles":  "Encyclopedia of Technical Market Indicators (RU)"
+    },
+    {
+        "author":  "A.J. Frost, Robert Prechter",
+        "count":  1,
+        "titles":  "Elliott Wave Principle (RU)"
+    },
+    {
+        "author":  "Joe DiNapoli",
+        "count":  1,
+        "titles":  "DiNapoli Levels (RU)"
+    },
+    {
+        "author":  "V. Boriskin",
+        "count":  1,
+        "titles":  "Harmonic Wave Analysis (RU)"
+    },
+    {
+        "author":  "Tom DeMark",
+        "count":  1,
+        "titles":  "The New Science of Technical Analysis (RU)"
+    },
+    {
+        "author":  "Robert Pardo",
+        "count":  1,
+        "titles":  "Design, Testing, and Optimization of Trading Systems (RU)"
+    },
+    {
+        "author":  "Curtis Faith?",
+        "count":  1,
+        "titles":  "Way of the Turtle (RU)"
+    },
+    {
+        "author":  "William O\u0027Neil",
+        "count":  1,
+        "titles":  "How to Make Money in Stocks (RU)"
+    },
+    {
+        "author":  "R. Jones",
+        "count":  1,
+        "titles":  "The Trading Game (RU)"
+    },
+    {
+        "author":  "Charles LeBeau, David Lucas",
+        "count":  1,
+        "titles":  "Computer Analysis of the Futures Market (RU)"
+    },
+    {
+        "author":  "Stanbridge",
+        "count":  1,
+        "titles":  "Trader Self-Study Guide (RU)"
+    },
+    {
+        "author":  "Van Tharp, Brian June",
+        "count":  1,
+        "titles":  "Intraday Trading Secrets (RU)"
+    },
+    {
+        "author":  "Solabuto",
+        "count":  1,
+        "titles":  "Trading Systems and Methods (RU)"
+    },
+    {
+        "author":  "Linda Raschke, Laurence Connors",
+        "count":  1,
+        "titles":  "Street Smarts (RU)"
+    },
+    {
+        "author":  "Gary Smith",
+        "count":  1,
+        "titles":  "How I Trade and Invest (RU)"
+    },
+    {
+        "author":  "A. Gerchik, S. Bychenok",
+        "count":  1,
+        "titles":  "Active Trader Course (RU)"
+    },
+    {
+        "author":  "Jeffrey Katz, Donna McCormick",
+        "count":  1,
+        "titles":  "Encyclopedia of Trading Strategies (RU)"
+    },
+    {
+        "author":  "Curtis Faith",
+        "count":  1,
+        "titles":  "Trading from Your Gut (RU)"
+    },
+    {
+        "author":  "Yu. Chebotarev",
+        "count":  1,
+        "titles":  "Trading Robots on Russian Equity Market (RU)"
+    },
+    {
+        "author":  "Lewis Borsellino",
+        "count":  1,
+        "titles":  "Day Trading Workbook (RU)"
+    },
+    {
+        "author":  "S. Bulashev",
+        "count":  1,
+        "titles":  "Statistics for Traders (RU)"
+    },
+    {
+        "author":  "Jesse Livermore (about)",
+        "count":  1,
+        "titles":  "Livermore Formula (RU)"
+    },
+    {
+        "author":  "M. Friedfertig, D. West",
+        "count":  1,
+        "titles":  "Electronic Day Trading (RU)"
+    },
+    {
+        "author":  "D. Ferguson",
+        "count":  1,
+        "titles":  "Martingale Method (RU)"
+    },
+    {
+        "author":  "K. Farrell",
+        "count":  1,
+        "titles":  "Day Trade Online (RU)"
+    },
+    {
+        "author":  "Feniks Institute",
+        "count":  1,
+        "titles":  "Begushchie po grablyam: 10 critical trader mistakes (2016)"
+    }
+]

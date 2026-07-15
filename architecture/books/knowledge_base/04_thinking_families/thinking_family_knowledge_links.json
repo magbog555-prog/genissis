@@ -1,0 +1,204 @@
+{
+  "generated_at": "2026-07-15T23:39:52+00:00",
+  "count": 8,
+  "items": [
+    {
+      "family_id": "trend_continuation",
+      "title": "Trend Continuation",
+      "dossier": "04_thinking_families/01_trend_continuation.md",
+      "source_ids": [
+        "B005",
+        "B006",
+        "B010",
+        "B012",
+        "B013",
+        "B014",
+        "B015",
+        "B016",
+        "B017",
+        "B020",
+        "B024",
+        "B025",
+        "B026",
+        "B030",
+        "B032",
+        "B035",
+        "B046",
+        "B047",
+        "B048",
+        "B057",
+        "B058",
+        "B059",
+        "B060",
+        "B071",
+        "B085",
+        "B086",
+        "B087",
+        "B088"
+      ],
+      "concept_ids": [
+        "KC-VSA-EFFORT-RESULT",
+        "KC-WYCKOFF-PHASES",
+        "KC-VOL-REGIME",
+        "KC-MA-CROSS",
+        "KC-CANDLES",
+        "KC-ELLIOTT",
+        "KC-OI-PRICE"
+      ],
+      "production_influence": false
+    },
+    {
+      "family_id": "reversal",
+      "title": "Reversal",
+      "dossier": "04_thinking_families/02_reversal.md",
+      "source_ids": [
+        "B005",
+        "B006",
+        "B010",
+        "B012",
+        "B013",
+        "B014",
+        "B015",
+        "B016",
+        "B017",
+        "B020",
+        "B024",
+        "B025",
+        "B026",
+        "B030",
+        "B032",
+        "B035",
+        "B060",
+        "B088"
+      ],
+      "concept_ids": [
+        "KC-VSA-EFFORT-RESULT",
+        "KC-WYCKOFF-PHASES",
+        "KC-ABSORPTION",
+        "KC-RSI",
+        "KC-CANDLES",
+        "KC-ELLIOTT",
+        "KC-FIB",
+        "KC-FUNDING-EXTREME",
+        "KC-OI-PRICE"
+      ],
+      "production_influence": false
+    },
+    {
+      "family_id": "breakout",
+      "title": "Breakout",
+      "dossier": "04_thinking_families/03_breakout.md",
+      "source_ids": [
+        "B005",
+        "B008",
+        "B009",
+        "B010",
+        "B013",
+        "B024",
+        "B025",
+        "B026",
+        "B032",
+        "B048",
+        "B057",
+        "B058",
+        "B059",
+        "B071",
+        "B088"
+      ],
+      "concept_ids": [
+        "KC-AUCTION-VALUE-AREA",
+        "KC-BOOK-IMBALANCE",
+        "KC-SPREAD-COST",
+        "KC-VOL-REGIME",
+        "KC-SUPPORT-RESISTANCE",
+        "KC-BREAKOUT-DOCTRINE",
+        "KC-OPENING-RANGE"
+      ],
+      "production_influence": false
+    },
+    {
+      "family_id": "liquidity_sweep",
+      "title": "Liquidity Sweep",
+      "dossier": "04_thinking_families/04_liquidity_sweep.md",
+      "source_ids": [
+        "B008",
+        "B009",
+        "B017"
+      ],
+      "concept_ids": [
+        "KC-WYCKOFF-PHASES",
+        "KC-BOOK-IMBALANCE"
+      ],
+      "production_influence": false
+    },
+    {
+      "family_id": "return_to_range",
+      "title": "Range Return",
+      "dossier": "04_thinking_families/05_return_to_range.md",
+      "source_ids": [
+        "B048",
+        "B057",
+        "B058",
+        "B059"
+      ],
+      "concept_ids": [
+        "KC-AUCTION-VALUE-AREA",
+        "KC-SUPPORT-RESISTANCE",
+        "KC-RSI",
+        "KC-FIB",
+        "KC-OPENING-RANGE"
+      ],
+      "production_influence": false
+    },
+    {
+      "family_id": "news_impulse_mode",
+      "title": "Event Acceleration",
+      "dossier": "04_thinking_families/06_news_impulse_mode.md",
+      "source_ids": [
+        "B132",
+        "B133",
+        "B134",
+        "B135",
+        "B136"
+      ],
+      "concept_ids": [
+        "KC-SPREAD-COST",
+        "KC-VOL-REGIME",
+        "KC-FUNDING-EXTREME",
+        "KC-NEWS-IMPULSE"
+      ],
+      "production_influence": false
+    },
+    {
+      "family_id": "session_open",
+      "title": "Session Open",
+      "dossier": "04_thinking_families/07_session_open.md",
+      "source_ids": [
+        "B008",
+        "B009"
+      ],
+      "concept_ids": [
+        "KC-AUCTION-VALUE-AREA",
+        "KC-SPREAD-COST",
+        "KC-OPENING-RANGE"
+      ],
+      "production_influence": false
+    },
+    {
+      "family_id": "false_break_failed_follow_through",
+      "title": "False Break / Failed Follow-Through",
+      "dossier": "04_thinking_families/08_manipulation_false_breakout.md",
+      "source_ids": [
+        "B035"
+      ],
+      "concept_ids": [
+        "KC-VSA-EFFORT-RESULT",
+        "KC-BOOK-IMBALANCE",
+        "KC-ABSORPTION",
+        "KC-SUPPORT-RESISTANCE",
+        "KC-BREAKOUT-DOCTRINE"
+      ],
+      "production_influence": false
+    }
+  ]
+}

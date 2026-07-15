@@ -1,0 +1,962 @@
+﻿[
+    {
+        "id":  "B001",
+        "from":  "_Алмазов А.А., Фрактальная теория.pdf",
+        "to":  "01_technical_analysis/Almazov A.A. - Fraktalnaya teoriya.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B002",
+        "from":  "_Сафин В.И., Торговая система трейдера. Фактор успеха.pdf",
+        "to":  "02_trading_systems_practice/Safin V.I. - Torgovaya sistema treydera Faktor uspeha.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B003",
+        "from":  "+Сафонов.Практическое использование волн Эллиотта.djvu",
+        "to":  "01_technical_analysis/Safonov - Prakticheskoe ispolzovanie voln Elliotta.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B004",
+        "from":  "+Толли Игра на понижение.djvu",
+        "to":  "03_market_wizards_bios/Tolly - Igra na ponizhenie.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B005",
+        "from":  "50_shades_of_Forex_RU.pdf",
+        "to":  "02_trading_systems_practice/50 Shades of Forex RU.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B006",
+        "from":  "adam-tepper-bitkoi-774-n-dengi-dlya-v.pdf",
+        "to":  "07_crypto_defi/Tepper Adam - Bitcoin i dengi.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B007",
+        "from":  "Ahundov_F._Vsya_Pravda_O_Forex_Razob.a6.pdf",
+        "to":  "02_trading_systems_practice/Ahundov F - Vsya pravda o Forex.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B008",
+        "from":  "Alexandr_Kurguzkin_Treyding-struktura_igry.pdf",
+        "to":  "02_trading_systems_practice/Kurguzkin A - Treyding struktura igry.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B009",
+        "from":  "Bendzhamin_Grekhem_-_Analiz_tsennykh_bumag.djvu",
+        "to":  "06_investing_fundamental/Graham Benjamin - Analiz tsennyh bumag.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B010",
+        "from":  "bill_vilyams_torgovyj_haos_2.zip",
+        "to":  "_archives/Williams Bill - Torgovyy haos 2.zip",
+        "status":  "moved"
+    },
+    {
+        "id":  "B011",
+        "from":  "birzhevye_sekrety_Rashke_Konnors.pdf",
+        "to":  "02_trading_systems_practice/Raschke Connors - Birzhevye sekrety.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B012",
+        "from":  "bollindzher_o_lentah_bollindzhera.pdf",
+        "to":  "01_technical_analysis/Bollinger John - O lentah Bollingera.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B013",
+        "from":  "c_sharp2.pdf",
+        "to":  "_review_duplicates/C Sharp materials 2.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B014",
+        "from":  "Chebotarev_Yu_Torgovye_roboty_na_rossijskom_fondovom_rynke.pdf",
+        "to":  "02_trading_systems_practice/Chebotarev Yu - Torgovye roboty na RF rynke.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B015",
+        "from":  "D.Hatson._Method_Vaykoffa.pdf",
+        "to":  "01_technical_analysis/Hutson D - Metod Wyckoffa.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B016",
+        "from":  "dinapoli.pdf",
+        "to":  "01_technical_analysis/DiNapoli Joe - Torgovye urovni.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B017",
+        "from":  "Dnevnik hedjera.pdf",
+        "to":  "02_trading_systems_practice/Dnevnik hedzhera.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B018",
+        "from":  "enayman_malaya_encyiklopyedyiya_tryeydyera.pdf",
+        "to":  "02_trading_systems_practice/Nayman Erik - Malaya entsiklopediya treydera.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B019",
+        "from":  "erik_naiman_kak_pokupat_deshevo_prodavat_dorogo.fb2",
+        "to":  "02_trading_systems_practice/Nayman Erik - Kak pokupat deshevo prodavat dorogo.fb2",
+        "status":  "moved"
+    },
+    {
+        "id":  "B020",
+        "from":  "G.Morris.Yaponskie-svechi-metody-analiza-akciy-proverennye-vr.pdf",
+        "to":  "01_technical_analysis/Morris Greg - Yapounskie svechi metody analiza.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B021",
+        "from":  "Hayek-Money.pdf",
+        "to":  "06_investing_fundamental/Hayek F - Money.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B022",
+        "from":  "How_to_DeFi_Russian.pdf",
+        "to":  "07_crypto_defi/How to DeFi (Russian).pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B023",
+        "from":  "I_botaniki_delayut_biznes_-_Maxim_Kotin.pdf",
+        "to":  "10_misc/Kotin Maxim - I botaniki delayut biznes.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B024",
+        "from":  "James Dalton-Markets in Profile.pdf",
+        "to":  "01_technical_analysis/Dalton James - Markets in Profile.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B025",
+        "from":  "K_Konnolli_Pokupka_i_prodazha_volatilnosti.pdf",
+        "to":  "08_derivatives_options/Connolly K - Pokupka i prodazha volatilnosti.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B026",
+        "from":  "Kurguzkin-Labyrinth.pdf",
+        "to":  "02_trading_systems_practice/Kurguzkin A - Labyrinth.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B027",
+        "from":  "L.Borselino.Zadachnik-po-deytreydingu.pdf",
+        "to":  "02_trading_systems_practice/Borsellino L - Zadachnik po daytreydingu.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B028",
+        "from":  "lebo.pdf",
+        "to":  "02_trading_systems_practice/Lebo Charles - Day trading.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B029",
+        "from":  "lektsia-1-lektsia-2-lektsia-3-lektsia-4-lektsia-5-lektsia-6-merged.pdf",
+        "to":  "02_trading_systems_practice/Lektsii 1-6 merged.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B030",
+        "from":  "Lin_Ketti_Treidery-millionery.fb2",
+        "to":  "02_trading_systems_practice/Lien Kathy - Treydry millionery.fb2",
+        "status":  "moved"
+    },
+    {
+        "id":  "B031",
+        "from":  "Momentum Investing (Вольф Кен).doc",
+        "to":  "02_trading_systems_practice/Wolff Ken - Momentum Investing.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B032",
+        "from":  "nayman_master_traiding.pdf",
+        "to":  "02_trading_systems_practice/Nayman Erik - Master trading.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B033",
+        "from":  "nudge-28-6-17.pdf",
+        "to":  "04_psychology_behavior/Thaler Sunstein - Nudge.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B034",
+        "from":  "oxota-na-prostaka-9785001004677.pdf",
+        "to":  "04_psychology_behavior/Akerlof Shiller - Ohota na prostaka.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B035",
+        "from":  "P.Bernstayn.Protiv-bogov.pdf",
+        "to":  "05_risk_money_management/Bernstein Peter - Protiv bogov.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B036",
+        "from":  "Price Action Intraday Trading Strategy for Crude Oil_ NO loss Day Trading - with price action (volume Book 1).pdf",
+        "to":  "02_trading_systems_practice/Price Action Intraday Crude Oil Book 1.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B037",
+        "from":  "R.Bensignor_(sost).Novoe_myishlenie_v_tehnicheskom_analize.pdf",
+        "to":  "01_technical_analysis/Bensignor R - Novoe myshlenie v tehanalize.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B038",
+        "from":  "R_Fisher_Posledovatelnost_Fibonachchi_Prilozhenia_i_strategii_dlya_treyderov.pdf",
+        "to":  "01_technical_analysis/Fisher R - Fibonacci dlya treyderov.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B039",
+        "from":  "Robert_Pardo_Razrabotka_Razrabotka_testirovan.pdf",
+        "to":  "02_trading_systems_practice/Pardo Robert - Razrabotka i testirovanie TS.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B040",
+        "from":  "S.Nison._The_Japanese_candles._The_graphic_analysis_financial_market.pdf",
+        "to":  "01_technical_analysis/Nison Steve - Yapounskie svechi.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B041",
+        "from":  "sekrety_torgovli_aktsiyami_on-line.pdf",
+        "to":  "02_trading_systems_practice/Sekrety torgovli aktsiyami online.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B042",
+        "from":  "skolzyashiy_po_lezviyu_fondovogo_rinka.doc",
+        "to":  "10_misc/Skolzyashchiy po lezviyu fondovogo rynka.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B043",
+        "from":  "Skott_Patterson_Kvanty.docx",
+        "to":  "06_investing_fundamental/Patterson Scott - Kvanty.docx",
+        "status":  "moved"
+    },
+    {
+        "id":  "B044",
+        "from":  "Solabuto_Treyding._Torgovyie_sistemyi_i_metodyi.pdf",
+        "to":  "02_trading_systems_practice/Solabuto - Treyding torgovye sistemy i metody.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B045",
+        "from":  "Stanbadjer-Cfmou4itel tradera.pdf",
+        "to":  "02_trading_systems_practice/Stanbridge - Samouchitel treydera.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B046",
+        "from":  "Stiv-Nison.-Za-granyu-yaponskikh-svechey.pdf",
+        "to":  "01_technical_analysis/Nison Steve - Za granyu yaponskih svechey.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B047",
+        "from":  "T.Dzhozef._The_simplified_analysis_of_a_wave_of_Elliotta.pdf",
+        "to":  "01_technical_analysis/Joseph T - Uproshchennyy analiz voln Elliotta.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B048",
+        "from":  "T_Demark-tehnicheskiy-analiz.pdf",
+        "to":  "01_technical_analysis/DeMark Tom - Tekhnicheskiy analiz.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B049",
+        "from":  "Tehanaliz-polnyy-kurs-D.-Shvager.pdf",
+        "to":  "01_technical_analysis/Schwager Jack - Tehanaliz polnyy kurs.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B050",
+        "from":  "TelegramSender_Modul_L54_20231217.rar",
+        "to":  "_software/TelegramSender_Modul_L54_20231217.rar",
+        "status":  "moved"
+    },
+    {
+        "id":  "B051",
+        "from":  "Terri-Bernhem-Podlyie-ryinki-i-mozg-yashhera.pdf",
+        "to":  "04_psychology_behavior/Burnham Terry - Podlye rynki i mozg yashchera.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B052",
+        "from":  "tom-williams-hozyaeva-rinka.compressed.pdf",
+        "to":  "01_technical_analysis/Williams Tom - Hozyaeva rynka.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B053",
+        "from":  "trading_web.pdf",
+        "to":  "02_trading_systems_practice/Trading Web.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B054",
+        "from":  "Trei_774_dery_Pushki_i_Dengi_Satyadzhit_Das.pdf",
+        "to":  "03_market_wizards_bios/Das Satyajit - Traders Guns and Money.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B055",
+        "from":  "V.Safin_Vnutridnevnaja_torgovaja_sistema_5_ballov_za_uspeh.pdf",
+        "to":  "02_trading_systems_practice/Safin V.I. - Vnutridnevnaya TS 5 ballov.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B056",
+        "from":  "Vospominania_Birzhevogo_Spekulyanta.pdf",
+        "to":  "03_market_wizards_bios/Lefevre Edwin - Vospominaniya birzhevogo spekulyanta.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B057",
+        "from":  "Zhizn_i_Smert_velichayshego_spekulyanta.pdf",
+        "to":  "03_market_wizards_bios/Zhizn i smert velichayshego spekulyanta.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B058",
+        "from":  "А.Буренин.Фьючерсные, форвардные и опционные рынки.pdf",
+        "to":  "08_derivatives_options/Burenin A - Fyuchersnye forvardnye i optsionnye rynki.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B059",
+        "from":  "А.Г.Болтон.Полное собрание работ по волнам Эллиотта.pdf",
+        "to":  "01_technical_analysis/Bolton A.G. - Polnoe sobranie rabot po volnam Elliotta.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B060",
+        "from":  "А.Герчик, С.Быченок. Курс активного трейдера.pdf",
+        "to":  "02_trading_systems_practice/Gerchik A Bychenok S - Kurs aktivnogo treydera.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B061",
+        "from":  "А.Фельдман.Производные финансовые и товарные инструменты.doc",
+        "to":  "08_derivatives_options/Feldman A - Proizvodnye finansovye i tovarnye instrumenty.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B062",
+        "from":  "А.Шведов.Процентные финансовые инструменты-оценка и хеджирование.djvu",
+        "to":  "08_derivatives_options/Shvedov A - Protsentnye instrumenty otsenka i hedzhirovanie.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B063",
+        "from":  "Азбука валютного дилинга.doc",
+        "to":  "02_trading_systems_practice/Azbuka valyutnogo dilinga.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B064",
+        "from":  "Аксимы_биржевого_спекулянта_-_М.Гюнтер.pdf",
+        "to":  "03_market_wizards_bios/Gunther M - Aksromy birzhevogo spekulyanta.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B065",
+        "from":  "Александр Элдер. Трейдинг. Первые шаги.pdf",
+        "to":  "02_trading_systems_practice/Elder Alexander - Treyding Pervye shagi.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B066",
+        "from":  "Альткофф_Кори_Computer_Science_для_программиста_самоучки.pdf",
+        "to":  "09_programming_quant/Althoff Cory - Computer Science dlya programmista samouchki.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B067",
+        "from":  "Американский фондовый рынок без воды.pdf",
+        "to":  "06_investing_fundamental/Amerikanskiy fondovyy rynok bez vody.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B068",
+        "from":  "Бегущие по граблям.pdf",
+        "to":  "03_market_wizards_bios/Begushchie po grablyam.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B069",
+        "from":  "Бернстайн Уильям. Разумное распределение активов. Как построить портфель с максимальной доходностью и минимальным риском.pdf",
+        "to":  "05_risk_money_management/Bernstein William - Razumnoe raspredelenie aktivov.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B070",
+        "from":  "Библия C# 4е изд. Михаил Фленов 2019 (1).pdf",
+        "to":  "09_programming_quant/Flenov Mikhail - Bibliya C Sharp 4e izd 2019.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B071",
+        "from":  "Билл Вильямс Новые измерения.pdf",
+        "to":  "01_technical_analysis/Williams Bill - Novye izmereniya.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B072",
+        "from":  "Биржевые маги. Швагер .pdf",
+        "to":  "03_market_wizards_bios/Schwager Jack - Birzhevye magi.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B073",
+        "from":  "Большая игра на понижение. Тайные пружины финансовой катастрофы (Майкл Льюис) 2011.pdf",
+        "to":  "10_misc/Большая игра на понижение. Тайные пружины финансовой катастрофы (Майкл Льюис) 2011.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B074",
+        "from":  "В.Борискин.Гармонический волновой анализ финансовых рынков.pdf",
+        "to":  "01_technical_analysis/Boriskin V - Garmonicheskiy volnovoy analiz.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B075",
+        "from":  "Ван К. Тарп, Супертрейдер.djvu",
+        "to":  "02_trading_systems_practice/Tharp Van - Supertreyder.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B076",
+        "from":  "Ван Тарп и Брайан Джун.Внутридневный трейдинг.Секреты масте.djvu",
+        "to":  "02_trading_systems_practice/Tharp Van June B - Vnutridnevnyy treyding.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B077",
+        "from":  "Вера Смит. Происхождение центральных банков.doc",
+        "to":  "06_investing_fundamental/Smith Vera - Proishozhdenie tsentralnyh bankov.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B078",
+        "from":  "Визуальный инвестор. Как определять тренды.djvu",
+        "to":  "02_trading_systems_practice/Vizualnyy investor - Kak opredelyat trendy.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B079",
+        "from":  "Виктор Сперандео. Trader Vic II - Принципы профессиональной спекуляции.djvu",
+        "to":  "03_market_wizards_bios/Sperandeo Victor - Trader Vic II.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B080",
+        "from":  "Владимир Попов - ICO сущность, проблемы, закон.pdf",
+        "to":  "07_crypto_defi/Popov Vladimir - ICO sushchnost problemy zakon.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B081",
+        "from":  "Всё о распределении активов1.pdf",
+        "to":  "05_risk_money_management/Vse o raspredelenii aktivov.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B082",
+        "from":  "Все продается.doc",
+        "to":  "04_psychology_behavior/Vse prodaetsya.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B083",
+        "from":  "Высокочастотная революция.pdf",
+        "to":  "02_trading_systems_practice/Vysokochastotnaya revolyutsiya.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B084",
+        "from":  "Глава 1 Введение в криптографию и криптовалюты.pdf",
+        "to":  "_review_duplicates/Mastering Bitcoin - Glava 1.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B085",
+        "from":  "Глава 2 Как биткоин достигает децентрализации.pdf",
+        "to":  "_review_duplicates/Mastering Bitcoin - Glava 2.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B086",
+        "from":  "Глава 3 Механика Биткоина.pdf",
+        "to":  "_review_duplicates/Mastering Bitcoin - Glava 3.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B087",
+        "from":  "Глава 4 Как хранить и использовать биткоины.pdf",
+        "to":  "_review_duplicates/Mastering Bitcoin - Glava 4.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B088",
+        "from":  "Глава 5 Майнинг биткоинов.pdf",
+        "to":  "_review_duplicates/Mastering Bitcoin - Glava 5.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B089",
+        "from":  "Глава 7 Сообщество, политика и регулирование.pdf",
+        "to":  "_review_duplicates/Mastering Bitcoin - Glava 7.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B090",
+        "from":  "Гэри Смит. Как я играю и выигрываю на бирже.djvu",
+        "to":  "02_trading_systems_practice/Smith Gary - Kak ya igrayu i vyigryvayu na birzhe.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B091",
+        "from":  "Д.Фергюсон.Метод Мартингейла.doc",
+        "to":  "02_trading_systems_practice/Ferguson D - Metod Martingeyla.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B092",
+        "from":  "Д.Швагер. Маги фондового рынка.djvu",
+        "to":  "03_market_wizards_bios/Schwager Jack - Magi fondovogo rynka.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B093",
+        "from":  "Дебора Вейр, Тайминг финансовых рынков.djvu",
+        "to":  "02_trading_systems_practice/Weir Deborah - Tayming finansovyh rynkov.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B094",
+        "from":  "Джеймс Уэзеролл-Физика фондового рынка.pdf",
+        "to":  "06_investing_fundamental/Weatherall James - Fizika fondovogo rynka.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B095",
+        "from":  "ДжеймсДалтон-Разум над рынками-футпринт.pdf",
+        "to":  "01_technical_analysis/Dalton James - Razum nad rynkami footprint.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B096",
+        "from":  "Джон Богл-Инвесторы против спекулянтоврынком.PDF",
+        "to":  "06_investing_fundamental/Bogle John - Investory protiv spekulyantov.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B097",
+        "from":  "Дэвид Кохен, Психология фондового рынка - страх, алчность и паника.pdf",
+        "to":  "04_psychology_behavior/Cohen David - Psihologiya fondovogo rynka.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B098",
+        "from":  "ИНДИКАТОР ИШИМОКУ 1.doc",
+        "to":  "01_technical_analysis/Indikator Ishimoku 1.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B099",
+        "from":  "Исповедь.pdf",
+        "to":  "03_market_wizards_bios/Ispoved.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B100",
+        "from":  "К.Брук.Бал хищников.doc",
+        "to":  "03_market_wizards_bios/Bruck Connie - Bal hishchnikov.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B101",
+        "from":  "К.Фаррел.Дейтрейд онлайн.doc",
+        "to":  "02_trading_systems_practice/Farrell K - Daytrade online.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B102",
+        "from":  "К.Царихин.Фундаментальный анализ.pdf.pdf",
+        "to":  "06_investing_fundamental/Tsarikhin K - Fundamentalnyy analiz.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B103",
+        "from":  "Как предсказывать крахи фин. рынков.djvu",
+        "to":  "05_risk_money_management/Kak predskazyvat krahi fin rynkov.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B104",
+        "from":  "Кеннет Л. Грант, Управление рисками в трейдинге.pdf",
+        "to":  "05_risk_money_management/Grant Kenneth - Upravlenie riskami v treydinge.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B105",
+        "from":  "Кетти-Лин Секреты проп трейдинга.pdf",
+        "to":  "02_trading_systems_practice/Lien Kathy - Sekrety prop treydinga.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B106",
+        "from":  "Книга  - Mastering Bitcoin.pdf",
+        "to":  "07_crypto_defi/Antonopoulos Andreas - Mastering Bitcoin.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B107",
+        "from":  "Книга «Биржа. Будет не легко».zip",
+        "to":  "_archives/Birzha - Budet ne legko.zip",
+        "status":  "moved"
+    },
+    {
+        "id":  "B108",
+        "from":  "Куртис Фейс, Трейдинг, основанный на интуиции.doc",
+        "to":  "02_trading_systems_practice/Faith Curtis - Treyding osnovannyy na intuitsii.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B109",
+        "from":  "М.Фридфертиг,Д.Уэст.Электронная внутридневная торговля ценными бумагами.djvu",
+        "to":  "02_trading_systems_practice/Friedfertig West - Elektronnaya vnutridnevnaya torgovlya.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B110",
+        "from":  "М.Чекулаев.Риск менеджмент.Управление финансовыми рисками н.djvu",
+        "to":  "05_risk_money_management/Chekulaev M - Risk menedzhment.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B111",
+        "from":  "М.Чекулаев.Торговля волатильностью.doc",
+        "to":  "_review_duplicates/Chekulaev M - Torgovlya volatilnostyu.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B112",
+        "from":  "М.Чекулаев.Торговля волатильностью1.doc",
+        "to":  "_review_duplicates/Chekulaev M - Torgovlya volatilnostyu (copy1).doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B113",
+        "from":  "Майкл Ковел - Биржевая торговля по трендам.pdf",
+        "to":  "02_trading_systems_practice/Covel Michael - Birzhevaya torgovlya po trendam.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B114",
+        "from":  "Майкл Ковел, Черепахи-трейдеры.djvu",
+        "to":  "02_trading_systems_practice/Covel Michael - Cherepahi-treydry.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B115",
+        "from":  "Мартин Принг О ценовых моделях.pdf",
+        "to":  "01_technical_analysis/Pring Martin - O tsenovyh modelyah.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B116",
+        "from":  "Машинное_обучение__а.pdf",
+        "to":  "09_programming_quant/Mashinnoe obuchenie.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B117",
+        "from":  "Метод графического анализа Крестики-нолики.pdf",
+        "to":  "01_technical_analysis/Metod krestiki-noliki.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B118",
+        "from":  "Методы Data Mining для анализа моделей сложных систем.zip",
+        "to":  "_archives/Data Mining - metody analiza modeley slozhnyh sistem.zip",
+        "status":  "moved"
+    },
+    {
+        "id":  "B119",
+        "from":  "Механизмы трейдинга.pdf",
+        "to":  "02_trading_systems_practice/Mehanizmy treydinga.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B120",
+        "from":  "Механические торговые системы. Психология трейдинга и технический анализ.pdf",
+        "to":  "02_trading_systems_practice/Mehanicheskie torgovye sistemy.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B121",
+        "from":  "Модель, цена и время. Применение теории Ганна (Хьержик Джеймс).pdf",
+        "to":  "01_technical_analysis/Hyerczyk James - Model tsena i vremya (Gann).pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B122",
+        "from":  "Моментум, направленность и расхождение.pdf",
+        "to":  "01_technical_analysis/Momentum napravlennost i rashozhdenie.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B123",
+        "from":  "Мэрфи - тех анализ.pdf",
+        "to":  "01_technical_analysis/Murphy John - Tekhnicheskiy analiz.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B124",
+        "from":  "Мэтт Вайсфельд - Объектно-ориентированный подход.pdf",
+        "to":  "09_programming_quant/Weisfeld Matt - Obektno-orientirovannyy podhod.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B125",
+        "from":  "Нассим_Николас_Талеб_Одураченные случайностью (1).pdf",
+        "to":  "05_risk_money_management/Taleb Nassim - Odurachennye sluchaynostyu.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B126",
+        "from":  "ОНил. Как делать деньги на фондовом рынке.djvu",
+        "to":  "02_trading_systems_practice/ONeil William - Kak delat dengi na fondovom rynke.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B127",
+        "from":  "Питер Красс, Книга инвестиционной мудрости.pdf",
+        "to":  "06_investing_fundamental/Krass Peter - Kniga investitsionnoy mudrosti.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B128",
+        "from":  "Поппер Карл Логика научного исследования (2004).fb2",
+        "to":  "10_misc/Popper Karl - Logika nauchnogo issledovaniya.fb2",
+        "status":  "moved"
+    },
+    {
+        "id":  "B129",
+        "from":  "Программирование_на_Rust.pdf",
+        "to":  "09_programming_quant/Programmirovanie na Rust.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B130",
+        "from":  "путь_черепах_из_дилетантов_в_легендарные_трейдеры.pdf",
+        "to":  "02_trading_systems_practice/Put cherepah - iz diletantov v legendarnye treydry.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B131",
+        "from":  "Р. Винс.Математика управления капиталом.pdf",
+        "to":  "05_risk_money_management/Vince Ralph - Matematika upravleniya kapitalom.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B132",
+        "from":  "Р.Джонс.Биржевая игра.doc",
+        "to":  "02_trading_systems_practice/Jones R - Birzhevaya igra.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B133",
+        "from":  "Р.Фишер.Новые методы торговли по Фибоначчи.pdf",
+        "to":  "01_technical_analysis/Fisher R - Novye metody torgovli po Fibonachchi.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B134",
+        "from":  "Р.Ямароне.Ключевые экономические индикаторы.Руководство трейдера.djvu",
+        "to":  "06_investing_fundamental/Yamarone R - Klyuchevye ekonomicheskie indikatory.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B135",
+        "from":  "Рынок ценных бумаг и производных финансовых инструментов.pdf",
+        "to":  "06_investing_fundamental/Rynok tsennyh bumag i PFI.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B136",
+        "from":  "С.Беляев._Торговая_система_Расчет_следующей_свечи.PDF",
+        "to":  "02_trading_systems_practice/Belyaev S - TS Raschet sleduyushchey svechi.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B137",
+        "from":  "С.Булашев - Статистика для трейдеров.pdf",
+        "to":  "02_trading_systems_practice/Bulashev S - Statistika dlya treyderov.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B138",
+        "from":  "самый_сильный_сигнал_в_техническом_анализе_расхождения_и_развороты_трендов.pdf",
+        "to":  "01_technical_analysis/Samyy silnyy signal - rashozhdeniya i razvoroty.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B139",
+        "from":  "Сафин В.И. - Как увидеть деньги на экране монитора (2004)(ru).djvu",
+        "to":  "02_trading_systems_practice/Safin V.I. - Kak uvidet dengi na ekrane monitora.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B140",
+        "from":  "Сафин В.И. - Кому светят японские свечи[q] (2004)(ru).djvu",
+        "to":  "01_technical_analysis/Safin V.I. - Komu svetyat yaponskie svechi.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B141",
+        "from":  "Тарп - Трейдинг ваш путь.djvu",
+        "to":  "02_trading_systems_practice/Tharp Van - Treyding vash put.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B142",
+        "from":  "Технический анализ от А до Я (Акелис).doc",
+        "to":  "01_technical_analysis/Achelis Steven - Tekhnicheskiy analiz ot A do Ya.doc",
+        "status":  "moved"
+    },
+    {
+        "id":  "B143",
+        "from":  "Управляя рисками. Клиринг с участием центральных контрагентов на глобальных финансовых рынках.pdf",
+        "to":  "05_risk_money_management/Upravlyaya riskami - Kliring i CCP.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B144",
+        "from":  "Ф.Фишер.Обыкновенные акции и необыкновенные доходы.djvu",
+        "to":  "06_investing_fundamental/Fisher Philip - Obyknovennye aktsii i neobyknovennye dohodi.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B145",
+        "from":  "Фленов Михаил. Библия C#. 2016.pdf",
+        "to":  "_review_duplicates/Flenov Mikhail - Bibliya C Sharp 2016.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B146",
+        "from":  "Формула Ливермора.pdf",
+        "to":  "02_trading_systems_practice/Formula Livermora.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B147",
+        "from":  "Фундаментальный анализ.pdf",
+        "to":  "06_investing_fundamental/Fundamentalnyy analiz (sbornik).pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B148",
+        "from":  "Цифровое Золото.pdf",
+        "to":  "07_crypto_defi/Popper Nathaniel - Tsifrovoe Zoloto.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B149",
+        "from":  "Черный Лебедь Талеб.zip",
+        "to":  "_archives/Taleb - Chernyy Lebed.zip",
+        "status":  "moved"
+    },
+    {
+        "id":  "B150",
+        "from":  "Швагер - Новые маги рынка.pdf",
+        "to":  "03_market_wizards_bios/Schwager Jack - Novye magi rynka.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B151",
+        "from":  "Школа успешного трейдера - 1 курс.pdf",
+        "to":  "02_trading_systems_practice/Shkola uspeshnogo treydera - 1 kurs.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B152",
+        "from":  "Школа успешного трейдера - 2 курс.pdf",
+        "to":  "02_trading_systems_practice/Shkola uspeshnogo treydera - 2 kurs.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B153",
+        "from":  "Школа успешного трейдера - 3 курс.pdf",
+        "to":  "02_trading_systems_practice/Shkola uspeshnogo treydera - 3 kurs.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B154",
+        "from":  "Эдгар Петерс, Фрактальный анализ финансовых рынков.djvu",
+        "to":  "01_technical_analysis/Peters Edgar - Fraktalnyy analiz finansovyh rynkov.djvu",
+        "status":  "moved"
+    },
+    {
+        "id":  "B155",
+        "from":  "Элдер А. - Основы биржевой торговли(ru).pdf",
+        "to":  "02_trading_systems_practice/Elder Alexander - Osnovy birzhevoy torgovli.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B156",
+        "from":  "Элиот. Интервал торговли золотом.pdf",
+        "to":  "01_technical_analysis/Elliott - Interval torgovli zolotom.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B157",
+        "from":  "элиот.pdf",
+        "to":  "01_technical_analysis/Elliott - Materialy.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B158",
+        "from":  "Энциклопедия технических индикаторов рынка.pdf",
+        "to":  "01_technical_analysis/Entsiklopediya tehnicheskih indikatorov rynka.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B159",
+        "from":  "Энциклопедия-торговых-стратегий.pdf",
+        "to":  "02_trading_systems_practice/Entsiklopediya torgovyh strategiy.pdf",
+        "status":  "moved"
+    },
+    {
+        "id":  "B160",
+        "from":  "Эрик Найман, Трейдер-Инвестор.pdf",
+        "to":  "02_trading_systems_practice/Nayman Erik - Treydr-Investor.pdf",
+        "status":  "moved"
+    }
+]

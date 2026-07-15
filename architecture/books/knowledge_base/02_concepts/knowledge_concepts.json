@@ -1,0 +1,1269 @@
+{
+  "generated_at": "2026-07-15T23:39:52+00:00",
+  "count": 21,
+  "items": [
+    {
+      "concept_id": "KC-AUCTION-VALUE-AREA",
+      "name_ru": "Value Area / география сессии",
+      "name_en": "Session value area",
+      "definition_original": "Literature claim: auction markets distribute around accepted value and reject price outside it.",
+      "concept_class": "OBSERVATION",
+      "source_refs": [
+        {
+          "source_id": "B008",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B009",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "session_profile",
+        "chart_structure",
+        "market_context"
+      ],
+      "related_families": [
+        "session_open",
+        "return_to_range",
+        "breakout"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "OHLC",
+        "volume_profile_or_TPO",
+        "session_clock"
+      ],
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "Requires correct session definition; crypto sessions may differ from cash futures."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-VSA-EFFORT-RESULT",
+      "name_ru": "Effort vs Result (VSA)",
+      "name_en": "Effort versus result",
+      "definition_original": "Literature claim: volume effort vs price result can flag absorption or lack of interest.",
+      "concept_class": "INTERPRETATION",
+      "source_refs": [
+        {
+          "source_id": "B035",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "tape_executed_trades",
+        "chart_structure"
+      ],
+      "related_families": [
+        "reversal",
+        "false_break_failed_follow_through",
+        "trend_continuation"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "volume",
+        "price_bar",
+        "preferably tick/tape"
+      ],
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "Subjective without defined thresholds; must not invent actor intent."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-WYCKOFF-PHASES",
+      "name_ru": "Фазы Wyckoff",
+      "name_en": "Wyckoff market phases",
+      "definition_original": "Literature claim: accumulation/markup/distribution/markdown as structural participation phases.",
+      "concept_class": "METHOD",
+      "source_refs": [
+        {
+          "source_id": "B017",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "chart_structure",
+        "liquidity",
+        "tape_executed_trades"
+      ],
+      "related_families": [
+        "trend_continuation",
+        "reversal",
+        "liquidity_sweep"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "OHLC",
+        "volume",
+        "multi_bar_window"
+      ],
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "Phase labels are interpretive; crypto 24/7 regime can blur classical phase windows."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-BOOK-IMBALANCE",
+      "name_ru": "Дисбаланс стакана",
+      "name_en": "Order book imbalance",
+      "definition_original": "Literature/microstructure claim: resting size asymmetry near touch may precede short-horizon moves.",
+      "concept_class": "OBSERVATION",
+      "source_refs": [
+        {
+          "source_id": "B008",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B009",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B035",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "dom_order_book",
+        "liquidity"
+      ],
+      "related_families": [
+        "breakout",
+        "liquidity_sweep",
+        "false_break_failed_follow_through"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "L2_depth",
+        "top_of_book"
+      ],
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "Visible liquidity ≠ intent; spoof/cancel risk; must not equal absorption alone."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue."
+    },
+    {
+      "concept_id": "KC-ABSORPTION",
+      "name_ru": "Абсорбция",
+      "name_en": "Absorption",
+      "definition_original": "Requires relation of resting/pressure cues with executed tape; not a DOM-only fact.",
+      "concept_class": "INTERPRETATION",
+      "source_refs": [
+        {
+          "source_id": "B017",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B035",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "dom_order_book",
+        "tape_executed_trades"
+      ],
+      "related_families": [
+        "reversal",
+        "false_break_failed_follow_through"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "L2_depth",
+        "trades"
+      ],
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "GENESIS fence: absorption is cross-organ; DOM alone insufficient."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue."
+    },
+    {
+      "concept_id": "KC-SPREAD-COST",
+      "name_ru": "Котируемая стоимость входа",
+      "name_en": "Quoted entry cost / spread",
+      "definition_original": "Top-of-book bid-ask width as immediate entry cost fact.",
+      "concept_class": "EXECUTION",
+      "source_refs": [
+        {
+          "source_id": "B112",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B117",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B137",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "spread_entry_cost"
+      ],
+      "related_families": [
+        "breakout",
+        "session_open",
+        "news_impulse_mode"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "best_bid",
+        "best_ask"
+      ],
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "Spread ≠ slippage; impact is liquidity/execution modeling."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue."
+    },
+    {
+      "concept_id": "KC-VOL-REGIME",
+      "name_ru": "Режим волатильности",
+      "name_en": "Volatility regime",
+      "definition_original": "Amplitude expand/compress/extreme as regime observation from variance/range facts.",
+      "concept_class": "OBSERVATION",
+      "source_refs": [
+        {
+          "source_id": "B111",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B112",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B138",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B139",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B140",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B145",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "volatility",
+        "market_context"
+      ],
+      "related_families": [
+        "trend_continuation",
+        "breakout",
+        "news_impulse_mode"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "returns_or_range",
+        "window"
+      ],
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "Amplitude ≠ direction; should gate later research, not invent signals."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "name_ru": "Поддержка / сопротивление",
+      "name_en": "Support and resistance",
+      "definition_original": "Popular doctrine of levels where price historically reacted.",
+      "concept_class": "INTERPRETATION",
+      "source_refs": [
+        {
+          "source_id": "B024",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B025",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B026",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B032",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B088",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B099",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B100",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B101",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "chart_structure"
+      ],
+      "related_families": [
+        "breakout",
+        "return_to_range",
+        "false_break_failed_follow_through"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "OHLC"
+      ],
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "known_limitations": [
+        "Definition instability; hindsight bias; crowded stops around visible levels."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "name_ru": "Доктрина пробоя",
+      "name_en": "Breakout doctrine",
+      "definition_original": "Retail/professional claim: leave a range with follow-through after level breach.",
+      "concept_class": "METHOD",
+      "source_refs": [
+        {
+          "source_id": "B024",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B032",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B048",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B057",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B058",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B059",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B088",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B099",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B100",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B101",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "chart_structure",
+        "tape_executed_trades",
+        "liquidity"
+      ],
+      "related_families": [
+        "breakout",
+        "false_break_failed_follow_through"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "OHLC",
+        "volume_or_tape"
+      ],
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "known_limitations": [
+        "False breaks common; crowded stop entries above levels."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-MA-CROSS",
+      "name_ru": "Пересечения скользящих средних",
+      "name_en": "Moving average crossovers",
+      "definition_original": "Classic lagging trend filter widely taught in retail TA.",
+      "concept_class": "METHOD",
+      "source_refs": [
+        {
+          "source_id": "B013",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B024",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B060",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B088",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "chart_structure"
+      ],
+      "related_families": [
+        "trend_continuation"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "OHLC"
+      ],
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "known_limitations": [
+        "Lag; whipsaw in ranges; not microstructure evidence."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-RSI",
+      "name_ru": "RSI",
+      "name_en": "Relative Strength Index",
+      "definition_original": "Oscillator of momentum used for overbought/oversold narratives.",
+      "concept_class": "METHOD",
+      "source_refs": [
+        {
+          "source_id": "B013",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B024",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B060",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B088",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "chart_structure",
+        "impulse_quality"
+      ],
+      "related_families": [
+        "reversal",
+        "return_to_range"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "OHLC"
+      ],
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "known_limitations": [
+        "Threshold folklore; contradicts trend regimes without context."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-CANDLES",
+      "name_ru": "Японские свечи",
+      "name_en": "Candlestick patterns",
+      "definition_original": "Pattern language for bar psychology/geometry.",
+      "concept_class": "INTERPRETATION",
+      "source_refs": [
+        {
+          "source_id": "B023",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B025",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B026",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B029",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B075",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B076",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B077",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "chart_structure"
+      ],
+      "related_families": [
+        "reversal",
+        "trend_continuation"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "OHLC"
+      ],
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "known_limitations": [
+        "Low specificity alone; needs participation context."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-ELLIOTT",
+      "name_ru": "Волны Эллиотта",
+      "name_en": "Elliott Wave",
+      "definition_original": "Deterministic-style wave labeling school.",
+      "concept_class": "INTERPRETATION",
+      "source_refs": [
+        {
+          "source_id": "B006",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B012",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B016",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B020",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B030",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "chart_structure"
+      ],
+      "related_families": [
+        "trend_continuation",
+        "reversal"
+      ],
+      "algorithmizable": false,
+      "required_data": [
+        "OHLC"
+      ],
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "known_limitations": [
+        "Label indeterminacy; conflicts with probabilistic modeling."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-FIB",
+      "name_ru": "Уровни Фибоначчи",
+      "name_en": "Fibonacci retracements",
+      "definition_original": "Proportion-based level overlays popular in retail.",
+      "concept_class": "METHOD",
+      "source_refs": [
+        {
+          "source_id": "B014",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B015",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B121",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "chart_structure"
+      ],
+      "related_families": [
+        "return_to_range",
+        "reversal"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "OHLC",
+        "swing_anchors"
+      ],
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "known_limitations": [
+        "Anchor subjectivity; crowd clustering around round Fibs."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-FUNDING-EXTREME",
+      "name_ru": "Экстремумы funding",
+      "name_en": "Funding extremes",
+      "definition_original": "Perpetual futures funding as crowd positioning tax signal in crypto literature.",
+      "concept_class": "OBSERVATION",
+      "source_refs": [
+        {
+          "source_id": "B132",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B133",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B134",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B135",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B136",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "funding",
+        "open_interest",
+        "market_context"
+      ],
+      "related_families": [
+        "news_impulse_mode",
+        "reversal"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "funding_rate",
+        "instrument_type"
+      ],
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "VENDOR_POPULAR",
+      "known_limitations": [
+        "Not available on all instruments; not a local book aggression fact."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-OI-PRICE",
+      "name_ru": "OI + цена",
+      "name_en": "Open interest with price",
+      "definition_original": "Claim: OI change + price direction classifies positioning regimes.",
+      "concept_class": "INTERPRETATION",
+      "source_refs": [
+        {
+          "source_id": "B132",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B133",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B134",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B135",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B136",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B137",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "open_interest",
+        "chart_structure"
+      ],
+      "related_families": [
+        "trend_continuation",
+        "reversal"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "open_interest",
+        "price"
+      ],
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "Reporting lag; exchange-specific definitions."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-OPENING-RANGE",
+      "name_ru": "Opening range",
+      "name_en": "Session opening range",
+      "definition_original": "Early session high/low as reference for day structure.",
+      "concept_class": "METHOD",
+      "source_refs": [
+        {
+          "source_id": "B008",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B009",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B085",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B086",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B087",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "session_profile",
+        "chart_structure"
+      ],
+      "related_families": [
+        "session_open",
+        "breakout",
+        "return_to_range"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "session_clock",
+        "OHLC"
+      ],
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "known_limitations": [
+        "Crypto 24/7 needs explicit session contract."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-SYSTEM-WALKFORWARD",
+      "name_ru": "Walk-forward / out-of-sample",
+      "name_en": "Walk-forward validation",
+      "definition_original": "Research method: optimize in-sample, validate out-of-sample, roll forward.",
+      "concept_class": "RESEARCH",
+      "source_refs": [
+        {
+          "source_id": "B048",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B071",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B145",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "market_context"
+      ],
+      "related_families": [],
+      "algorithmizable": true,
+      "required_data": [
+        "historical_series",
+        "split_protocol"
+      ],
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "Does not eliminate all overfitting; protocol details matter."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue."
+    },
+    {
+      "concept_id": "KC-AFFML-FEATURE-HYGIENE",
+      "name_ru": "Гигиена признаков (AFML)",
+      "name_en": "Feature hygiene / purged CV",
+      "definition_original": "Lopez de Prado research doctrine: label leakage, purged/embargoed CV, meta-labeling.",
+      "concept_class": "RESEARCH",
+      "source_refs": [
+        {
+          "source_id": "B145",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "market_context",
+        "volatility"
+      ],
+      "related_families": [],
+      "algorithmizable": true,
+      "required_data": [
+        "labeled_events",
+        "feature_matrix"
+      ],
+      "crowd_exposure": "MEDIUM",
+      "commercialization_level": "ACADEMIC",
+      "known_limitations": [
+        "Requires careful event labeling; not a turnkey strategy."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Lower retail saturation; still not proof of edge.",
+      "possible_crowding_risk": "UNKNOWN",
+      "possible_second_order_use": "Possible specialist/professional context cue."
+    },
+    {
+      "concept_id": "KC-POSITION-SIZING",
+      "name_ru": "Размер позиции / fraction",
+      "name_en": "Position sizing / capital fraction",
+      "definition_original": "Vince et al.: sizing as primary survival/growth control.",
+      "concept_class": "RISK",
+      "source_refs": [
+        {
+          "source_id": "B085",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B086",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B087",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B112",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B117",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "volatility",
+        "liquidity",
+        "spread_entry_cost"
+      ],
+      "related_families": [],
+      "algorithmizable": true,
+      "required_data": [
+        "equity",
+        "risk_per_trade",
+        "volatility_estimate"
+      ],
+      "crowd_exposure": "HIGH",
+      "commercialization_level": "PROFESSIONAL",
+      "known_limitations": [
+        "Aggressive optimal-f folklore can be ruinous; literature ≠ admitted risk rule."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "name_ru": "Импульс новости",
+      "name_en": "News impulse",
+      "definition_original": "Public claim: scheduled/unscheduled news compresses decision time and widens spreads.",
+      "concept_class": "OBSERVATION",
+      "source_refs": [
+        {
+          "source_id": "B032",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B099",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B100",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B101",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B114",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B115",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B132",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        },
+        {
+          "source_id": "B136",
+          "chapter": "",
+          "page": "",
+          "citation_type": "REFERENCE_ONLY"
+        }
+      ],
+      "related_organs": [
+        "news_events",
+        "volatility",
+        "spread_entry_cost",
+        "market_tempo"
+      ],
+      "related_families": [
+        "news_impulse_mode"
+      ],
+      "algorithmizable": true,
+      "required_data": [
+        "event_calendar",
+        "quotes",
+        "trades"
+      ],
+      "crowd_exposure": "VERY_HIGH",
+      "commercialization_level": "RETAIL_MAINSTREAM",
+      "known_limitations": [
+        "Headline alone must not authorize Scenario; integrity of event binding required."
+      ],
+      "contradictions": [],
+      "internal_status": "LITERATURE_ONLY",
+      "production_influence": false,
+      "evidence_class": "LITERATURE_CLAIM",
+      "crowd_behavior_implication": "Many participants may act on similar cues; expect clustered entries/stops around popular levels.",
+      "possible_crowding_risk": "Crowded entries can convert a classic setup into liquidity for opposing flow.",
+      "possible_second_order_use": "Use as map of expected crowd behavior and stop density, not as automatic edge."
+    }
+  ]
+}

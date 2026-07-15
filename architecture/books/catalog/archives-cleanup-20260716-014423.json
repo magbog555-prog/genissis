@@ -1,0 +1,57 @@
+﻿{
+    "generated_at":  "2026-07-16T01:44:28.6707079+03:00",
+    "operations":  [
+                       {
+                           "action":  "extract",
+                           "zip":  "Taleb - Chernyy Lebed.zip",
+                           "entry":  "Черный Лебедь Талеб/Chyornij lebedj. Pod znakom nepredskazuemosti.pdf",
+                           "to":  "05_risk_money_management/Taleb Nassim - Chernyy Lebed.pdf",
+                           "size_mb":  6.73
+                       },
+                       {
+                           "action":  "extract",
+                           "zip":  "Williams Bill - Torgovyy haos 2.zip",
+                           "entry":  "bill_vilyams_-_torgovyj_haos_2/bill_vilyams_-_torgovyj_haos_2.pdf",
+                           "to":  "01_technical_analysis/Williams Bill - Torgovyy haos 2.pdf",
+                           "size_mb":  3.33
+                       },
+                       {
+                           "action":  "extract",
+                           "zip":  "Birzha - Budet ne legko.zip",
+                           "entry":  "Книга «Биржа. Будет не легко»/Книга «Биржа. Будет не легко»/PDF/Биржа будет не легко.pdf",
+                           "to":  "03_market_wizards_bios/Birzha - Budet ne legko.pdf",
+                           "size_mb":  40.58
+                       },
+                       {
+                           "action":  "extract",
+                           "zip":  "Data Mining - metody analiza modeley slozhnyh sistem.zip",
+                           "entry":  "ЊҐв®¤л Data Mining ¤«п  ­ «Ё§  ¬®¤Ґ«Ґ© б«®¦­ле бЁбвҐ¬/Data Mining.pdf",
+                           "to":  "09_programming_quant/Data Mining - metody analiza modeley slozhnyh sistem.pdf",
+                           "size_mb":  327.74
+                       },
+                       {
+                           "action":  "delete_zip",
+                           "zip":  "Birzha - Budet ne legko.zip",
+                           "size_mb":  47.54,
+                           "sha256":  "2557BFDBE8112ED2F6E7A488475015881FD971ABE712609C85E45CEAEC6A7A6A"
+                       },
+                       {
+                           "action":  "delete_zip",
+                           "zip":  "Data Mining - metody analiza modeley slozhnyh sistem.zip",
+                           "size_mb":  321.45,
+                           "sha256":  "0C07AEED7B505240EC671343BB44C6E91D0DACBBB650504F3A11E605C8437DA6"
+                       },
+                       {
+                           "action":  "delete_zip",
+                           "zip":  "Taleb - Chernyy Lebed.zip",
+                           "size_mb":  6.73,
+                           "sha256":  "26772C294B39CE7144B4C2B9B175F085EA422704EB4631BA00E484FA06BCB591"
+                       },
+                       {
+                           "action":  "delete_zip",
+                           "zip":  "Williams Bill - Torgovyy haos 2.zip",
+                           "size_mb":  3.19,
+                           "sha256":  "F0C4E95CDEE11441332C1ED9DD1F4A24403B6284CB52CFD93B7206DCAEC31BAD"
+                       }
+                   ]
+}

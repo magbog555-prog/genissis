@@ -1,0 +1,2857 @@
+{
+    "generated_at":  "2026-07-16T02:03:55.2776277+03:00",
+    "total_books":  151,
+    "root":  "D:\\genessis\\architecture\\books",
+    "taxonomy":  [
+                     "_archives",
+                     "_large",
+                     "_review_duplicates",
+                     "_software",
+                     "01_technical_analysis",
+                     "02_trading_systems_practice",
+                     "03_market_wizards_bios",
+                     "04_psychology_behavior",
+                     "05_risk_money_management",
+                     "06_investing_fundamental",
+                     "07_crypto_defi",
+                     "08_derivatives_options",
+                     "09_programming_quant",
+                     "10_misc"
+                 ],
+    "errors":  [
+
+               ],
+    "items":  [
+                  {
+                      "id":  "B001",
+                      "status":  "indexed",
+                      "category":  "_large",
+                      "author":  "",
+                      "title":  "Data Mining methods for complex systems (RU)",
+                      "tags":  [
+                                   "ml",
+                                   "datamining",
+                                   "quant",
+                                   "large"
+                               ],
+                      "notes":  "Isolated in _large (~328MB scan)",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  343661224,
+                      "size_mb":  327.74,
+                      "original_name":  "Data Mining - metody analiza modeley slozhnyh sistem.pdf",
+                      "relative_path":  "_large/Data Mining - metody analiza modeley slozhnyh sistem.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\_large\\Data Mining - metody analiza modeley slozhnyh sistem.pdf"
+                  },
+                  {
+                      "id":  "B002",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Steven Achelis",
+                      "title":  "Technical Analysis from A to Z (RU)",
+                      "tags":  [
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  4928000,
+                      "size_mb":  4.7,
+                      "original_name":  "Технический анализ от А до Я (Акелис).doc",
+                      "relative_path":  "01_technical_analysis/Achelis Steven - Tekhnicheskiy analiz ot A do Ya.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Achelis Steven - Tekhnicheskiy analiz ot A do Ya.doc"
+                  },
+                  {
+                      "id":  "B003",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "A.A. Almazov",
+                      "title":  "Fractal Theory (RU)",
+                      "tags":  [
+                                   "fractals",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  7181666,
+                      "size_mb":  6.85,
+                      "original_name":  "_Алмазов А.А., Фрактальная теория.pdf",
+                      "relative_path":  "01_technical_analysis/Almazov A.A. - Fraktalnaya teoriya.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Almazov A.A. - Fraktalnaya teoriya.pdf"
+                  },
+                  {
+                      "id":  "B004",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Rick Bensignor",
+                      "title":  "New Thinking in Technical Analysis (RU)",
+                      "tags":  [
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  7478376,
+                      "size_mb":  7.13,
+                      "original_name":  "R.Bensignor_(sost).Novoe_myishlenie_v_tehnicheskom_analize.pdf",
+                      "relative_path":  "01_technical_analysis/Bensignor R - Novoe myshlenie v tehanalize.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Bensignor R - Novoe myshlenie v tehanalize.pdf"
+                  },
+                  {
+                      "id":  "B005",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "John Bollinger",
+                      "title":  "Bollinger on Bollinger Bands (RU)",
+                      "tags":  [
+                                   "bollinger",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  5570923,
+                      "size_mb":  5.31,
+                      "original_name":  "bollindzher_o_lentah_bollindzhera.pdf",
+                      "relative_path":  "01_technical_analysis/Bollinger John - O lentah Bollingera.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Bollinger John - O lentah Bollingera.pdf"
+                  },
+                  {
+                      "id":  "B006",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "A.G. Bolton",
+                      "title":  "Complete Elliott Wave Works (RU)",
+                      "tags":  [
+                                   "elliott",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4404783,
+                      "size_mb":  4.2,
+                      "original_name":  "А.Г.Болтон.Полное собрание работ по волнам Эллиотта.pdf",
+                      "relative_path":  "01_technical_analysis/Bolton A.G. - Polnoe sobranie rabot po volnam Elliotta.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Bolton A.G. - Polnoe sobranie rabot po volnam Elliotta.pdf"
+                  },
+                  {
+                      "id":  "B007",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "V. Boriskin",
+                      "title":  "Harmonic Wave Analysis (RU)",
+                      "tags":  [
+                                   "harmonic",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2567099,
+                      "size_mb":  2.45,
+                      "original_name":  "В.Борискин.Гармонический волновой анализ финансовых рынков.pdf",
+                      "relative_path":  "01_technical_analysis/Boriskin V - Garmonicheskiy volnovoy analiz.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Boriskin V - Garmonicheskiy volnovoy analiz.pdf"
+                  },
+                  {
+                      "id":  "B008",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "James Dalton",
+                      "title":  "Markets in Profile",
+                      "tags":  [
+                                   "market-profile",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  9153740,
+                      "size_mb":  8.73,
+                      "original_name":  "James Dalton-Markets in Profile.pdf",
+                      "relative_path":  "01_technical_analysis/Dalton James - Markets in Profile.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Dalton James - Markets in Profile.pdf"
+                  },
+                  {
+                      "id":  "B009",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "James Dalton",
+                      "title":  "Mind Over Markets / Footprint (RU)",
+                      "tags":  [
+                                   "market-profile",
+                                   "footprint",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  10782404,
+                      "size_mb":  10.28,
+                      "original_name":  "ДжеймсДалтон-Разум над рынками-футпринт.pdf",
+                      "relative_path":  "01_technical_analysis/Dalton James - Razum nad rynkami footprint.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Dalton James - Razum nad rynkami footprint.pdf"
+                  },
+                  {
+                      "id":  "B010",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Tom DeMark",
+                      "title":  "The New Science of Technical Analysis (RU)",
+                      "tags":  [
+                                   "demark",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2406559,
+                      "size_mb":  2.3,
+                      "original_name":  "T_Demark-tehnicheskiy-analiz.pdf",
+                      "relative_path":  "01_technical_analysis/DeMark Tom - Tekhnicheskiy analiz.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\DeMark Tom - Tekhnicheskiy analiz.pdf"
+                  },
+                  {
+                      "id":  "B011",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Joe DiNapoli",
+                      "title":  "DiNapoli Levels (RU)",
+                      "tags":  [
+                                   "dinapoli",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  5130167,
+                      "size_mb":  4.89,
+                      "original_name":  "dinapoli.pdf",
+                      "relative_path":  "01_technical_analysis/DiNapoli Joe - Torgovye urovni.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\DiNapoli Joe - Torgovye urovni.pdf"
+                  },
+                  {
+                      "id":  "B012",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "",
+                      "title":  "Elliott: Gold Trading Interval (RU)",
+                      "tags":  [
+                                   "elliott",
+                                   "gold",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1457691,
+                      "size_mb":  1.39,
+                      "original_name":  "Элиот. Интервал торговли золотом.pdf",
+                      "relative_path":  "01_technical_analysis/Elliott - Interval torgovli zolotom.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Elliott - Interval torgovli zolotom.pdf"
+                  },
+                  {
+                      "id":  "B013",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Robert Colby",
+                      "title":  "Encyclopedia of Technical Market Indicators (RU)",
+                      "tags":  [
+                                   "indicators",
+                                   "ta",
+                                   "colby"
+                               ],
+                      "notes":  "Author attributed by common RU edition",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  40679812,
+                      "size_mb":  38.8,
+                      "original_name":  "Энциклопедия технических индикаторов рынка.pdf",
+                      "relative_path":  "01_technical_analysis/Entsiklopediya tehnicheskih indikatorov rynka.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Entsiklopediya tehnicheskih indikatorov rynka.pdf"
+                  },
+                  {
+                      "id":  "B014",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Robert Fisher",
+                      "title":  "Fibonacci Applications for Traders (RU)",
+                      "tags":  [
+                                   "fibonacci",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1675780,
+                      "size_mb":  1.6,
+                      "original_name":  "R_Fisher_Posledovatelnost_Fibonachchi_Prilozhenia_i_strategii_dlya_treyderov.pdf",
+                      "relative_path":  "01_technical_analysis/Fisher R - Fibonacci dlya treyderov.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Fisher R - Fibonacci dlya treyderov.pdf"
+                  },
+                  {
+                      "id":  "B015",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Robert Fisher",
+                      "title":  "New Fibonacci Trading Methods (RU)",
+                      "tags":  [
+                                   "fibonacci",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  6167336,
+                      "size_mb":  5.88,
+                      "original_name":  "Р.Фишер.Новые методы торговли по Фибоначчи.pdf",
+                      "relative_path":  "01_technical_analysis/Fisher R - Novye metody torgovli po Fibonachchi.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Fisher R - Novye metody torgovli po Fibonachchi.pdf"
+                  },
+                  {
+                      "id":  "B016",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "A.J. Frost, Robert Prechter",
+                      "title":  "Elliott Wave Principle (RU)",
+                      "tags":  [
+                                   "elliott",
+                                   "ta",
+                                   "frost",
+                                   "prechter"
+                               ],
+                      "notes":  "Was Elliott - Materialy.pdf; Alpina/Potashkin edition material",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  468734,
+                      "size_mb":  0.45,
+                      "original_name":  "элиот.pdf",
+                      "relative_path":  "01_technical_analysis/Frost Prechter - Volnovoy printsip Elliotta.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Frost Prechter - Volnovoy printsip Elliotta.pdf"
+                  },
+                  {
+                      "id":  "B017",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "D. Hutson",
+                      "title":  "Wyckoff Method (RU)",
+                      "tags":  [
+                                   "wyckoff",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2001923,
+                      "size_mb":  1.91,
+                      "original_name":  "D.Hatson._Method_Vaykoffa.pdf",
+                      "relative_path":  "01_technical_analysis/Hutson D - Metod Wyckoffa.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Hutson D - Metod Wyckoffa.pdf"
+                  },
+                  {
+                      "id":  "B018",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "James Hyerczyk",
+                      "title":  "Pattern, Price \u0026 Time / Gann (RU)",
+                      "tags":  [
+                                   "gann",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4803349,
+                      "size_mb":  4.58,
+                      "original_name":  "Модель, цена и время. Применение теории Ганна (Хьержик Джеймс).pdf",
+                      "relative_path":  "01_technical_analysis/Hyerczyk James - Model tsena i vremya (Gann).pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Hyerczyk James - Model tsena i vremya (Gann).pdf"
+                  },
+                  {
+                      "id":  "B019",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "",
+                      "title":  "Ichimoku Indicator (notes)",
+                      "tags":  [
+                                   "ichimoku",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  297472,
+                      "size_mb":  0.28,
+                      "original_name":  "ИНДИКАТОР ИШИМОКУ 1.doc",
+                      "relative_path":  "01_technical_analysis/Indikator Ishimoku 1.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Indikator Ishimoku 1.doc"
+                  },
+                  {
+                      "id":  "B020",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "T. Joseph",
+                      "title":  "Simplified Elliott Wave (RU)",
+                      "tags":  [
+                                   "elliott",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2563525,
+                      "size_mb":  2.44,
+                      "original_name":  "T.Dzhozef._The_simplified_analysis_of_a_wave_of_Elliotta.pdf",
+                      "relative_path":  "01_technical_analysis/Joseph T - Uproshchennyy analiz voln Elliotta.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Joseph T - Uproshchennyy analiz voln Elliotta.pdf"
+                  },
+                  {
+                      "id":  "B021",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "",
+                      "title":  "Point and Figure Charting (RU)",
+                      "tags":  [
+                                   "pnf",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  7804521,
+                      "size_mb":  7.44,
+                      "original_name":  "Метод графического анализа Крестики-нолики.pdf",
+                      "relative_path":  "01_technical_analysis/Metod krestiki-noliki.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Metod krestiki-noliki.pdf"
+                  },
+                  {
+                      "id":  "B022",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "",
+                      "title":  "Momentum, Direction and Divergence (RU)",
+                      "tags":  [
+                                   "momentum",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  5649293,
+                      "size_mb":  5.39,
+                      "original_name":  "Моментум, направленность и расхождение.pdf",
+                      "relative_path":  "01_technical_analysis/Momentum napravlennost i rashozhdenie.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Momentum napravlennost i rashozhdenie.pdf"
+                  },
+                  {
+                      "id":  "B023",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Greg Morris",
+                      "title":  "Candlestick Charting Explained (RU)",
+                      "tags":  [
+                                   "candles",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  9653015,
+                      "size_mb":  9.21,
+                      "original_name":  "G.Morris.Yaponskie-svechi-metody-analiza-akciy-proverennye-vr.pdf",
+                      "relative_path":  "01_technical_analysis/Morris Greg - Yapounskie svechi metody analiza.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Morris Greg - Yapounskie svechi metody analiza.pdf"
+                  },
+                  {
+                      "id":  "B024",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "John Murphy",
+                      "title":  "Technical Analysis of the Financial Markets (RU)",
+                      "tags":  [
+                                   "murphy",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  9529754,
+                      "size_mb":  9.09,
+                      "original_name":  "Мэрфи - тех анализ.pdf",
+                      "relative_path":  "01_technical_analysis/Murphy John - Tekhnicheskiy analiz.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Murphy John - Tekhnicheskiy analiz.pdf"
+                  },
+                  {
+                      "id":  "B025",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Steve Nison",
+                      "title":  "Japanese Candlestick Charting (RU)",
+                      "tags":  [
+                                   "candles",
+                                   "nison",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  7392207,
+                      "size_mb":  7.05,
+                      "original_name":  "S.Nison._The_Japanese_candles._The_graphic_analysis_financial_market.pdf",
+                      "relative_path":  "01_technical_analysis/Nison Steve - Yapounskie svechi.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Nison Steve - Yapounskie svechi.pdf"
+                  },
+                  {
+                      "id":  "B026",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Steve Nison",
+                      "title":  "Beyond Candlesticks (RU)",
+                      "tags":  [
+                                   "candles",
+                                   "nison",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  6040304,
+                      "size_mb":  5.76,
+                      "original_name":  "Stiv-Nison.-Za-granyu-yaponskikh-svechey.pdf",
+                      "relative_path":  "01_technical_analysis/Nison Steve - Za granyu yaponskih svechey.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Nison Steve - Za granyu yaponskih svechey.pdf"
+                  },
+                  {
+                      "id":  "B027",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Edgar Peters",
+                      "title":  "Fractal Market Analysis (RU)",
+                      "tags":  [
+                                   "fractals",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  4054825,
+                      "size_mb":  3.87,
+                      "original_name":  "Эдгар Петерс, Фрактальный анализ финансовых рынков.djvu",
+                      "relative_path":  "01_technical_analysis/Peters Edgar - Fraktalnyy analiz finansovyh rynkov.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Peters Edgar - Fraktalnyy analiz finansovyh rynkov.djvu"
+                  },
+                  {
+                      "id":  "B028",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Martin Pring",
+                      "title":  "On Price Patterns (RU)",
+                      "tags":  [
+                                   "patterns",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  5435362,
+                      "size_mb":  5.18,
+                      "original_name":  "Мартин Принг О ценовых моделях.pdf",
+                      "relative_path":  "01_technical_analysis/Pring Martin - O tsenovyh modelyah.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Pring Martin - O tsenovyh modelyah.pdf"
+                  },
+                  {
+                      "id":  "B029",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "V.I. Safin",
+                      "title":  "Who Do Japanese Candles Shine For (RU)",
+                      "tags":  [
+                                   "candles",
+                                   "safin",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  2785561,
+                      "size_mb":  2.66,
+                      "original_name":  "Сафин В.И. - Кому светят японские свечи[q] (2004)(ru).djvu",
+                      "relative_path":  "01_technical_analysis/Safin V.I. - Komu svetyat yaponskie svechi.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Safin V.I. - Komu svetyat yaponskie svechi.djvu"
+                  },
+                  {
+                      "id":  "B030",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Safonov",
+                      "title":  "Practical Elliott Wave (RU)",
+                      "tags":  [
+                                   "elliott",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  4004612,
+                      "size_mb":  3.82,
+                      "original_name":  "+Сафонов.Практическое использование волн Эллиотта.djvu",
+                      "relative_path":  "01_technical_analysis/Safonov - Prakticheskoe ispolzovanie voln Elliotta.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Safonov - Prakticheskoe ispolzovanie voln Elliotta.djvu"
+                  },
+                  {
+                      "id":  "B031",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "",
+                      "title":  "Strongest Signal: Divergences and Reversals (RU)",
+                      "tags":  [
+                                   "divergence",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2270151,
+                      "size_mb":  2.16,
+                      "original_name":  "самый_сильный_сигнал_в_техническом_анализе_расхождения_и_развороты_трендов.pdf",
+                      "relative_path":  "01_technical_analysis/Samyy silnyy signal - rashozhdeniya i razvoroty.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Samyy silnyy signal - rashozhdeniya i razvoroty.pdf"
+                  },
+                  {
+                      "id":  "B032",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Jack Schwager",
+                      "title":  "Technical Analysis (full course, RU)",
+                      "tags":  [
+                                   "schwager",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3326264,
+                      "size_mb":  3.17,
+                      "original_name":  "Tehanaliz-polnyy-kurs-D.-Shvager.pdf",
+                      "relative_path":  "01_technical_analysis/Schwager Jack - Tehanaliz polnyy kurs.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Schwager Jack - Tehanaliz polnyy kurs.pdf"
+                  },
+                  {
+                      "id":  "B033",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Bill Williams",
+                      "title":  "New Trading Dimensions (RU)",
+                      "tags":  [
+                                   "williams",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4383031,
+                      "size_mb":  4.18,
+                      "original_name":  "Билл Вильямс Новые измерения.pdf",
+                      "relative_path":  "01_technical_analysis/Williams Bill - Novye izmereniya.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Williams Bill - Novye izmereniya.pdf"
+                  },
+                  {
+                      "id":  "B034",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Bill Williams",
+                      "title":  "Trading Chaos 2 (RU)",
+                      "tags":  [
+                                   "williams",
+                                   "ta",
+                                   "chaos"
+                               ],
+                      "notes":  "Extracted from ZIP archive",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3491741,
+                      "size_mb":  3.33,
+                      "original_name":  "Williams Bill - Torgovyy haos 2.pdf",
+                      "relative_path":  "01_technical_analysis/Williams Bill - Torgovyy haos 2.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Williams Bill - Torgovyy haos 2.pdf"
+                  },
+                  {
+                      "id":  "B035",
+                      "status":  "indexed",
+                      "category":  "01_technical_analysis",
+                      "author":  "Tom Williams",
+                      "title":  "Master the Markets / VSA (RU)",
+                      "tags":  [
+                                   "vsa",
+                                   "williams",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  6849116,
+                      "size_mb":  6.53,
+                      "original_name":  "tom-williams-hozyaeva-rinka.compressed.pdf",
+                      "relative_path":  "01_technical_analysis/Williams Tom - Hozyaeva rynka.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\01_technical_analysis\\Williams Tom - Hozyaeva rynka.pdf"
+                  },
+                  {
+                      "id":  "B036",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "50 Shades of Forex (RU)",
+                      "tags":  [
+                                   "forex"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  15715130,
+                      "size_mb":  14.99,
+                      "original_name":  "50_shades_of_Forex_RU.pdf",
+                      "relative_path":  "02_trading_systems_practice/50 Shades of Forex RU.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\50 Shades of Forex RU.pdf"
+                  },
+                  {
+                      "id":  "B037",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "F. Ahundov",
+                      "title":  "The Whole Truth About Forex (RU)",
+                      "tags":  [
+                                   "forex"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4420411,
+                      "size_mb":  4.22,
+                      "original_name":  "Ahundov_F._Vsya_Pravda_O_Forex_Razob.a6.pdf",
+                      "relative_path":  "02_trading_systems_practice/Ahundov F - Vsya pravda o Forex.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Ahundov F - Vsya pravda o Forex.pdf"
+                  },
+                  {
+                      "id":  "B038",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "FX Dealing ABC (RU)",
+                      "tags":  [
+                                   "forex"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  2331136,
+                      "size_mb":  2.22,
+                      "original_name":  "Азбука валютного дилинга.doc",
+                      "relative_path":  "02_trading_systems_practice/Azbuka valyutnogo dilinga.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Azbuka valyutnogo dilinga.doc"
+                  },
+                  {
+                      "id":  "B039",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "S. Belyaev",
+                      "title":  "Trading System: Next Candle Calculation (RU)",
+                      "tags":  [
+                                   "systems",
+                                   "candles"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  34323855,
+                      "size_mb":  32.73,
+                      "original_name":  "С.Беляев._Торговая_система_Расчет_следующей_свечи.PDF",
+                      "relative_path":  "02_trading_systems_practice/Belyaev S - TS Raschet sleduyushchey svechi.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Belyaev S - TS Raschet sleduyushchey svechi.pdf"
+                  },
+                  {
+                      "id":  "B040",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Lewis Borsellino",
+                      "title":  "Day Trading Workbook (RU)",
+                      "tags":  [
+                                   "daytrading"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1504695,
+                      "size_mb":  1.43,
+                      "original_name":  "L.Borselino.Zadachnik-po-deytreydingu.pdf",
+                      "relative_path":  "02_trading_systems_practice/Borsellino L - Zadachnik po daytreydingu.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Borsellino L - Zadachnik po daytreydingu.pdf"
+                  },
+                  {
+                      "id":  "B041",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "S. Bulashev",
+                      "title":  "Statistics for Traders (RU)",
+                      "tags":  [
+                                   "stats"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1579464,
+                      "size_mb":  1.51,
+                      "original_name":  "С.Булашев - Статистика для трейдеров.pdf",
+                      "relative_path":  "02_trading_systems_practice/Bulashev S - Statistika dlya treyderov.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Bulashev S - Statistika dlya treyderov.pdf"
+                  },
+                  {
+                      "id":  "B042",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Yu. Chebotarev",
+                      "title":  "Trading Robots on Russian Equity Market (RU)",
+                      "tags":  [
+                                   "algo",
+                                   "robots"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1911043,
+                      "size_mb":  1.82,
+                      "original_name":  "Chebotarev_Yu_Torgovye_roboty_na_rossijskom_fondovom_rynke.pdf",
+                      "relative_path":  "02_trading_systems_practice/Chebotarev Yu - Torgovye roboty na RF rynke.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Chebotarev Yu - Torgovye roboty na RF rynke.pdf"
+                  },
+                  {
+                      "id":  "B043",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Michael Covel",
+                      "title":  "Trend Following (RU)",
+                      "tags":  [
+                                   "trend-following"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2884026,
+                      "size_mb":  2.75,
+                      "original_name":  "Майкл Ковел - Биржевая торговля по трендам.pdf",
+                      "relative_path":  "02_trading_systems_practice/Covel Michael - Birzhevaya torgovlya po trendam.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Covel Michael - Birzhevaya torgovlya po trendam.pdf"
+                  },
+                  {
+                      "id":  "B044",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Michael Covel",
+                      "title":  "The Complete TurtleTrader (RU)",
+                      "tags":  [
+                                   "turtles",
+                                   "trend-following"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  17537812,
+                      "size_mb":  16.73,
+                      "original_name":  "Майкл Ковел, Черепахи-трейдеры.djvu",
+                      "relative_path":  "02_trading_systems_practice/Covel Michael - Cherepahi-treydry.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Covel Michael - Cherepahi-treydry.djvu"
+                  },
+                  {
+                      "id":  "B045",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "Hedger Diary (RU)",
+                      "tags":  [
+                                   "diary",
+                                   "hedging"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3755023,
+                      "size_mb":  3.58,
+                      "original_name":  "Dnevnik hedjera.pdf",
+                      "relative_path":  "02_trading_systems_practice/Dnevnik hedzhera.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Dnevnik hedzhera.pdf"
+                  },
+                  {
+                      "id":  "B046",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Alexander Elder",
+                      "title":  "Trading for a Living basics (RU)",
+                      "tags":  [
+                                   "elder"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2274684,
+                      "size_mb":  2.17,
+                      "original_name":  "Элдер А. - Основы биржевой торговли(ru).pdf",
+                      "relative_path":  "02_trading_systems_practice/Elder Alexander - Osnovy birzhevoy torgovli.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Elder Alexander - Osnovy birzhevoy torgovli.pdf"
+                  },
+                  {
+                      "id":  "B047",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Alexander Elder",
+                      "title":  "Trading: First Steps (RU)",
+                      "tags":  [
+                                   "elder"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  575017,
+                      "size_mb":  0.55,
+                      "original_name":  "Александр Элдер. Трейдинг. Первые шаги.pdf",
+                      "relative_path":  "02_trading_systems_practice/Elder Alexander - Treyding Pervye shagi.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Elder Alexander - Treyding Pervye shagi.pdf"
+                  },
+                  {
+                      "id":  "B048",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Jeffrey Katz, Donna McCormick",
+                      "title":  "Encyclopedia of Trading Strategies (RU)",
+                      "tags":  [
+                                   "strategies",
+                                   "systems"
+                               ],
+                      "notes":  "Common attribution for RU edition of this title",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  6253373,
+                      "size_mb":  5.96,
+                      "original_name":  "Энциклопедия-торговых-стратегий.pdf",
+                      "relative_path":  "02_trading_systems_practice/Entsiklopediya torgovyh strategiy.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Entsiklopediya torgovyh strategiy.pdf"
+                  },
+                  {
+                      "id":  "B049",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Curtis Faith",
+                      "title":  "Trading from Your Gut (RU)",
+                      "tags":  [
+                                   "turtles"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  1063424,
+                      "size_mb":  1.01,
+                      "original_name":  "Куртис Фейс, Трейдинг, основанный на интуиции.doc",
+                      "relative_path":  "02_trading_systems_practice/Faith Curtis - Treyding osnovannyy na intuitsii.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Faith Curtis - Treyding osnovannyy na intuitsii.doc"
+                  },
+                  {
+                      "id":  "B050",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "K. Farrell",
+                      "title":  "Day Trade Online (RU)",
+                      "tags":  [
+                                   "daytrading"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  1603584,
+                      "size_mb":  1.53,
+                      "original_name":  "К.Фаррел.Дейтрейд онлайн.doc",
+                      "relative_path":  "02_trading_systems_practice/Farrell K - Daytrade online.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Farrell K - Daytrade online.doc"
+                  },
+                  {
+                      "id":  "B051",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Feniks Institute",
+                      "title":  "Begushchie po grablyam: 10 critical trader mistakes (2016)",
+                      "tags":  [
+                                   "course",
+                                   "psychology",
+                                   "brochure"
+                               ],
+                      "notes":  "Short brochure from fenixtradingclub.ru",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2803474,
+                      "size_mb":  2.67,
+                      "original_name":  "Бегущие по граблям.pdf",
+                      "relative_path":  "02_trading_systems_practice/Feniks - Begushchie po grablyam 10 oshibok treydera.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Feniks - Begushchie po grablyam 10 oshibok treydera.pdf"
+                  },
+                  {
+                      "id":  "B052",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "D. Ferguson",
+                      "title":  "Martingale Method (RU)",
+                      "tags":  [
+                                   "martingale",
+                                   "caution"
+                               ],
+                      "notes":  "Martingale — high-risk concept",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  101888,
+                      "size_mb":  0.1,
+                      "original_name":  "Д.Фергюсон.Метод Мартингейла.doc",
+                      "relative_path":  "02_trading_systems_practice/Ferguson D - Metod Martingeyla.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Ferguson D - Metod Martingeyla.doc"
+                  },
+                  {
+                      "id":  "B053",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Jesse Livermore (about)",
+                      "title":  "Livermore Formula (RU)",
+                      "tags":  [
+                                   "livermore"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  6035403,
+                      "size_mb":  5.76,
+                      "original_name":  "Формула Ливермора.pdf",
+                      "relative_path":  "02_trading_systems_practice/Formula Livermora.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Formula Livermora.pdf"
+                  },
+                  {
+                      "id":  "B054",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "M. Friedfertig, D. West",
+                      "title":  "Electronic Day Trading (RU)",
+                      "tags":  [
+                                   "intraday"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  3262860,
+                      "size_mb":  3.11,
+                      "original_name":  "М.Фридфертиг,Д.Уэст.Электронная внутридневная торговля ценными бумагами.djvu",
+                      "relative_path":  "02_trading_systems_practice/Friedfertig West - Elektronnaya vnutridnevnaya torgovlya.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Friedfertig West - Elektronnaya vnutridnevnaya torgovlya.djvu"
+                  },
+                  {
+                      "id":  "B055",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "A. Gerchik, S. Bychenok",
+                      "title":  "Active Trader Course (RU)",
+                      "tags":  [
+                                   "gerchik"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  7551557,
+                      "size_mb":  7.2,
+                      "original_name":  "А.Герчик, С.Быченок. Курс активного трейдера.pdf",
+                      "relative_path":  "02_trading_systems_practice/Gerchik A Bychenok S - Kurs aktivnogo treydera.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Gerchik A Bychenok S - Kurs aktivnogo treydera.pdf"
+                  },
+                  {
+                      "id":  "B056",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "R. Jones",
+                      "title":  "The Trading Game (RU)",
+                      "tags":  [
+                                   "practice"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  1868288,
+                      "size_mb":  1.78,
+                      "original_name":  "Р.Джонс.Биржевая игра.doc",
+                      "relative_path":  "02_trading_systems_practice/Jones R - Birzhevaya igra.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Jones R - Birzhevaya igra.doc"
+                  },
+                  {
+                      "id":  "B057",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Alexander Kurguzkin",
+                      "title":  "Birzhevoy treyding: sistemnyy podhod (2009)",
+                      "tags":  [
+                                   "kurguzkin",
+                                   "systems"
+                               ],
+                      "notes":  "Identified from PDF text layer (was Trading Web.pdf)",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1154176,
+                      "size_mb":  1.1,
+                      "original_name":  "trading_web.pdf",
+                      "relative_path":  "02_trading_systems_practice/Kurguzkin A - Birzhevoy treyding sistemnyy podhod.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Kurguzkin A - Birzhevoy treyding sistemnyy podhod.pdf"
+                  },
+                  {
+                      "id":  "B058",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Alexander Kurguzkin",
+                      "title":  "Labyrinth (RU)",
+                      "tags":  [
+                                   "kurguzkin",
+                                   "systems"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1436174,
+                      "size_mb":  1.37,
+                      "original_name":  "Kurguzkin-Labyrinth.pdf",
+                      "relative_path":  "02_trading_systems_practice/Kurguzkin A - Labyrinth.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Kurguzkin A - Labyrinth.pdf"
+                  },
+                  {
+                      "id":  "B059",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Alexander Kurguzkin",
+                      "title":  "Trading: Game Structure (RU)",
+                      "tags":  [
+                                   "kurguzkin",
+                                   "systems"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1150194,
+                      "size_mb":  1.1,
+                      "original_name":  "Alexandr_Kurguzkin_Treyding-struktura_igry.pdf",
+                      "relative_path":  "02_trading_systems_practice/Kurguzkin A - Treyding struktura igry.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Kurguzkin A - Treyding struktura igry.pdf"
+                  },
+                  {
+                      "id":  "B060",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Charles LeBeau, David Lucas",
+                      "title":  "Computer Analysis of the Futures Market (RU)",
+                      "tags":  [
+                                   "lebeau",
+                                   "futures",
+                                   "ta",
+                                   "systems"
+                               ],
+                      "notes":  "Was mislabeled as Lebo day trading",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3276567,
+                      "size_mb":  3.12,
+                      "original_name":  "lebo.pdf",
+                      "relative_path":  "02_trading_systems_practice/LeBeau Lucas - Kompyuternyy analiz fyuchersnyh rynkov.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\LeBeau Lucas - Kompyuternyy analiz fyuchersnyh rynkov.pdf"
+                  },
+                  {
+                      "id":  "B061",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "Lectures 1–6 (merged)",
+                      "tags":  [
+                                   "course",
+                                   "lectures"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2715555,
+                      "size_mb":  2.59,
+                      "original_name":  "lektsia-1-lektsia-2-lektsia-3-lektsia-4-lektsia-5-lektsia-6-merged.pdf",
+                      "relative_path":  "02_trading_systems_practice/Lektsii 1-6 merged.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Lektsii 1-6 merged.pdf"
+                  },
+                  {
+                      "id":  "B062",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Kathy Lien",
+                      "title":  "Prop Trading Secrets (RU)",
+                      "tags":  [
+                                   "prop",
+                                   "forex"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1527062,
+                      "size_mb":  1.46,
+                      "original_name":  "Кетти-Лин Секреты проп трейдинга.pdf",
+                      "relative_path":  "02_trading_systems_practice/Lien Kathy - Sekrety prop treydinga.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Lien Kathy - Sekrety prop treydinga.pdf"
+                  },
+                  {
+                      "id":  "B063",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Kathy Lien",
+                      "title":  "Millionaire Traders (RU)",
+                      "tags":  [
+                                   "prop"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "fb2",
+                      "size_bytes":  1295830,
+                      "size_mb":  1.24,
+                      "original_name":  "Lin_Ketti_Treidery-millionery.fb2",
+                      "relative_path":  "02_trading_systems_practice/Lien Kathy - Treydry millionery.fb2",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Lien Kathy - Treydry millionery.fb2"
+                  },
+                  {
+                      "id":  "B064",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "Mechanical Trading Systems (RU)",
+                      "tags":  [
+                                   "systems",
+                                   "psychology"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3336284,
+                      "size_mb":  3.18,
+                      "original_name":  "Механические торговые системы. Психология трейдинга и технический анализ.pdf",
+                      "relative_path":  "02_trading_systems_practice/Mehanicheskie torgovye sistemy.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Mehanicheskie torgovye sistemy.pdf"
+                  },
+                  {
+                      "id":  "B065",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "Trading Mechanisms (RU)",
+                      "tags":  [
+                                   "systems"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  26410599,
+                      "size_mb":  25.19,
+                      "original_name":  "Механизмы трейдинга.pdf",
+                      "relative_path":  "02_trading_systems_practice/Mehanizmy treydinga.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Mehanizmy treydinga.pdf"
+                  },
+                  {
+                      "id":  "B066",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Erik Nayman",
+                      "title":  "Buy Cheap Sell Expensive (RU)",
+                      "tags":  [
+                                   "nayman"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "fb2",
+                      "size_bytes":  1293690,
+                      "size_mb":  1.23,
+                      "original_name":  "erik_naiman_kak_pokupat_deshevo_prodavat_dorogo.fb2",
+                      "relative_path":  "02_trading_systems_practice/Nayman Erik - Kak pokupat deshevo prodavat dorogo.fb2",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Nayman Erik - Kak pokupat deshevo prodavat dorogo.fb2"
+                  },
+                  {
+                      "id":  "B067",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Erik Nayman",
+                      "title":  "Small Trader Encyclopedia (RU)",
+                      "tags":  [
+                                   "nayman"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2706363,
+                      "size_mb":  2.58,
+                      "original_name":  "enayman_malaya_encyiklopyedyiya_tryeydyera.pdf",
+                      "relative_path":  "02_trading_systems_practice/Nayman Erik - Malaya entsiklopediya treydera.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Nayman Erik - Malaya entsiklopediya treydera.pdf"
+                  },
+                  {
+                      "id":  "B068",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Erik Nayman",
+                      "title":  "Master Trading (RU)",
+                      "tags":  [
+                                   "nayman"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  6918838,
+                      "size_mb":  6.6,
+                      "original_name":  "nayman_master_traiding.pdf",
+                      "relative_path":  "02_trading_systems_practice/Nayman Erik - Master trading.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Nayman Erik - Master trading.pdf"
+                  },
+                  {
+                      "id":  "B069",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Erik Nayman",
+                      "title":  "Trader-Investor (RU)",
+                      "tags":  [
+                                   "nayman"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  13203199,
+                      "size_mb":  12.59,
+                      "original_name":  "Эрик Найман, Трейдер-Инвестор.pdf",
+                      "relative_path":  "02_trading_systems_practice/Nayman Erik - Treydr-Investor.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Nayman Erik - Treydr-Investor.pdf"
+                  },
+                  {
+                      "id":  "B070",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "William O\u0027Neil",
+                      "title":  "How to Make Money in Stocks (RU)",
+                      "tags":  [
+                                   "oneil",
+                                   "stocks"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  5890258,
+                      "size_mb":  5.62,
+                      "original_name":  "ОНил. Как делать деньги на фондовом рынке.djvu",
+                      "relative_path":  "02_trading_systems_practice/ONeil William - Kak delat dengi na fondovom rynke.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\ONeil William - Kak delat dengi na fondovom rynke.djvu"
+                  },
+                  {
+                      "id":  "B071",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Robert Pardo",
+                      "title":  "Design, Testing, and Optimization of Trading Systems (RU)",
+                      "tags":  [
+                                   "systems",
+                                   "backtest"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1799507,
+                      "size_mb":  1.72,
+                      "original_name":  "Robert_Pardo_Razrabotka_Razrabotka_testirovan.pdf",
+                      "relative_path":  "02_trading_systems_practice/Pardo Robert - Razrabotka i testirovanie TS.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Pardo Robert - Razrabotka i testirovanie TS.pdf"
+                  },
+                  {
+                      "id":  "B072",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "Price Action Intraday Crude Oil (Book 1)",
+                      "tags":  [
+                                   "price-action",
+                                   "intraday",
+                                   "oil"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2366528,
+                      "size_mb":  2.26,
+                      "original_name":  "Price Action Intraday Trading Strategy for Crude Oil_ NO loss Day Trading - with price action (volume Book 1).pdf",
+                      "relative_path":  "02_trading_systems_practice/Price Action Intraday Crude Oil Book 1.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Price Action Intraday Crude Oil Book 1.pdf"
+                  },
+                  {
+                      "id":  "B073",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Curtis Faith?",
+                      "title":  "Way of the Turtle (RU)",
+                      "tags":  [
+                                   "turtles"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4006306,
+                      "size_mb":  3.82,
+                      "original_name":  "путь_черепах_из_дилетантов_в_легендарные_трейдеры.pdf",
+                      "relative_path":  "02_trading_systems_practice/Put cherepah - iz diletantov v legendarnye treydry.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Put cherepah - iz diletantov v legendarnye treydry.pdf"
+                  },
+                  {
+                      "id":  "B074",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Linda Raschke, Laurence Connors",
+                      "title":  "Street Smarts (RU)",
+                      "tags":  [
+                                   "raschke",
+                                   "systems"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2463807,
+                      "size_mb":  2.35,
+                      "original_name":  "birzhevye_sekrety_Rashke_Konnors.pdf",
+                      "relative_path":  "02_trading_systems_practice/Raschke Connors - Birzhevye sekrety.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Raschke Connors - Birzhevye sekrety.pdf"
+                  },
+                  {
+                      "id":  "B075",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "V.I. Safin",
+                      "title":  "How to See Money on the Monitor (RU)",
+                      "tags":  [
+                                   "safin"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  3629779,
+                      "size_mb":  3.46,
+                      "original_name":  "Сафин В.И. - Как увидеть деньги на экране монитора (2004)(ru).djvu",
+                      "relative_path":  "02_trading_systems_practice/Safin V.I. - Kak uvidet dengi na ekrane monitora.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Safin V.I. - Kak uvidet dengi na ekrane monitora.djvu"
+                  },
+                  {
+                      "id":  "B076",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "V.I. Safin",
+                      "title":  "Trader Trading System: Success Factor (RU)",
+                      "tags":  [
+                                   "safin",
+                                   "systems"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  12247241,
+                      "size_mb":  11.68,
+                      "original_name":  "_Сафин В.И., Торговая система трейдера. Фактор успеха.pdf",
+                      "relative_path":  "02_trading_systems_practice/Safin V.I. - Torgovaya sistema treydera Faktor uspeha.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Safin V.I. - Torgovaya sistema treydera Faktor uspeha.pdf"
+                  },
+                  {
+                      "id":  "B077",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "V.I. Safin",
+                      "title":  "Intraday System: 5 Points for Success (RU)",
+                      "tags":  [
+                                   "safin",
+                                   "intraday"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2363697,
+                      "size_mb":  2.25,
+                      "original_name":  "V.Safin_Vnutridnevnaja_torgovaja_sistema_5_ballov_za_uspeh.pdf",
+                      "relative_path":  "02_trading_systems_practice/Safin V.I. - Vnutridnevnaya TS 5 ballov.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Safin V.I. - Vnutridnevnaya TS 5 ballov.pdf"
+                  },
+                  {
+                      "id":  "B078",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "Online Stock Trading Secrets (RU)",
+                      "tags":  [
+                                   "stocks"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  659092,
+                      "size_mb":  0.63,
+                      "original_name":  "sekrety_torgovli_aktsiyami_on-line.pdf",
+                      "relative_path":  "02_trading_systems_practice/Sekrety torgovli aktsiyami online.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Sekrety torgovli aktsiyami online.pdf"
+                  },
+                  {
+                      "id":  "B079",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "Successful Trader School — Course 1",
+                      "tags":  [
+                                   "course"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  615678,
+                      "size_mb":  0.59,
+                      "original_name":  "Школа успешного трейдера - 1 курс.pdf",
+                      "relative_path":  "02_trading_systems_practice/Shkola uspeshnogo treydera - 1 kurs.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Shkola uspeshnogo treydera - 1 kurs.pdf"
+                  },
+                  {
+                      "id":  "B080",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "Successful Trader School — Course 2",
+                      "tags":  [
+                                   "course"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4612348,
+                      "size_mb":  4.4,
+                      "original_name":  "Школа успешного трейдера - 2 курс.pdf",
+                      "relative_path":  "02_trading_systems_practice/Shkola uspeshnogo treydera - 2 kurs.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Shkola uspeshnogo treydera - 2 kurs.pdf"
+                  },
+                  {
+                      "id":  "B081",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "Successful Trader School — Course 3",
+                      "tags":  [
+                                   "course"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4011205,
+                      "size_mb":  3.83,
+                      "original_name":  "Школа успешного трейдера - 3 курс.pdf",
+                      "relative_path":  "02_trading_systems_practice/Shkola uspeshnogo treydera - 3 kurs.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Shkola uspeshnogo treydera - 3 kurs.pdf"
+                  },
+                  {
+                      "id":  "B082",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Gary Smith",
+                      "title":  "How I Trade and Invest (RU)",
+                      "tags":  [
+                                   "practice"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  5858058,
+                      "size_mb":  5.59,
+                      "original_name":  "Гэри Смит. Как я играю и выигрываю на бирже.djvu",
+                      "relative_path":  "02_trading_systems_practice/Smith Gary - Kak ya igrayu i vyigryvayu na birzhe.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Smith Gary - Kak ya igrayu i vyigryvayu na birzhe.djvu"
+                  },
+                  {
+                      "id":  "B083",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Solabuto",
+                      "title":  "Trading Systems and Methods (RU)",
+                      "tags":  [
+                                   "systems"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2961220,
+                      "size_mb":  2.82,
+                      "original_name":  "Solabuto_Treyding._Torgovyie_sistemyi_i_metodyi.pdf",
+                      "relative_path":  "02_trading_systems_practice/Solabuto - Treyding torgovye sistemy i metody.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Solabuto - Treyding torgovye sistemy i metody.pdf"
+                  },
+                  {
+                      "id":  "B084",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Stanbridge",
+                      "title":  "Trader Self-Study Guide (RU)",
+                      "tags":  [
+                                   "course"
+                               ],
+                      "notes":  "Filename OCR-fixed",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4419162,
+                      "size_mb":  4.21,
+                      "original_name":  "Stanbadjer-Cfmou4itel tradera.pdf",
+                      "relative_path":  "02_trading_systems_practice/Stanbridge - Samouchitel treydera.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Stanbridge - Samouchitel treydera.pdf"
+                  },
+                  {
+                      "id":  "B085",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Van Tharp",
+                      "title":  "Super Trader (RU)",
+                      "tags":  [
+                                   "tharp"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  12942267,
+                      "size_mb":  12.34,
+                      "original_name":  "Ван К. Тарп, Супертрейдер.djvu",
+                      "relative_path":  "02_trading_systems_practice/Tharp Van - Supertreyder.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Tharp Van - Supertreyder.djvu"
+                  },
+                  {
+                      "id":  "B086",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Van Tharp",
+                      "title":  "Trade Your Way to Financial Freedom (RU)",
+                      "tags":  [
+                                   "tharp"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  3402351,
+                      "size_mb":  3.24,
+                      "original_name":  "Тарп - Трейдинг ваш путь.djvu",
+                      "relative_path":  "02_trading_systems_practice/Tharp Van - Treyding vash put.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Tharp Van - Treyding vash put.djvu"
+                  },
+                  {
+                      "id":  "B087",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Van Tharp, Brian June",
+                      "title":  "Intraday Trading Secrets (RU)",
+                      "tags":  [
+                                   "tharp",
+                                   "intraday"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  3451829,
+                      "size_mb":  3.29,
+                      "original_name":  "Ван Тарп и Брайан Джун.Внутридневный трейдинг.Секреты масте.djvu",
+                      "relative_path":  "02_trading_systems_practice/Tharp Van June B - Vnutridnevnyy treyding.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Tharp Van June B - Vnutridnevnyy treyding.djvu"
+                  },
+                  {
+                      "id":  "B088",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "John Murphy?",
+                      "title":  "The Visual Investor (RU)",
+                      "tags":  [
+                                   "trends",
+                                   "ta"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  2929832,
+                      "size_mb":  2.79,
+                      "original_name":  "Визуальный инвестор. Как определять тренды.djvu",
+                      "relative_path":  "02_trading_systems_practice/Vizualnyy investor - Kak opredelyat trendy.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Vizualnyy investor - Kak opredelyat trendy.djvu"
+                  },
+                  {
+                      "id":  "B089",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "",
+                      "title":  "HFT Revolution (RU)",
+                      "tags":  [
+                                   "hft"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1757932,
+                      "size_mb":  1.68,
+                      "original_name":  "Высокочастотная революция.pdf",
+                      "relative_path":  "02_trading_systems_practice/Vysokochastotnaya revolyutsiya.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Vysokochastotnaya revolyutsiya.pdf"
+                  },
+                  {
+                      "id":  "B090",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Deborah Weir",
+                      "title":  "Timing the Markets (RU)",
+                      "tags":  [
+                                   "timing"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  8130667,
+                      "size_mb":  7.75,
+                      "original_name":  "Дебора Вейр, Тайминг финансовых рынков.djvu",
+                      "relative_path":  "02_trading_systems_practice/Weir Deborah - Tayming finansovyh rynkov.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Weir Deborah - Tayming finansovyh rynkov.djvu"
+                  },
+                  {
+                      "id":  "B091",
+                      "status":  "indexed",
+                      "category":  "02_trading_systems_practice",
+                      "author":  "Ken Wolff",
+                      "title":  "Momentum Investing (RU)",
+                      "tags":  [
+                                   "momentum"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  538112,
+                      "size_mb":  0.51,
+                      "original_name":  "Momentum Investing (Вольф Кен).doc",
+                      "relative_path":  "02_trading_systems_practice/Wolff Ken - Momentum Investing.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Wolff Ken - Momentum Investing.doc"
+                  },
+                  {
+                      "id":  "B092",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "",
+                      "title":  "Birzha. Budet ne legko (RU)",
+                      "tags":  [
+                                   "trading",
+                                   "narrative"
+                               ],
+                      "notes":  "Extracted PDF from ZIP; DJVU discarded",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  42551927,
+                      "size_mb":  40.58,
+                      "original_name":  "Birzha - Budet ne legko.pdf",
+                      "relative_path":  "03_market_wizards_bios/Birzha - Budet ne legko.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Birzha - Budet ne legko.pdf"
+                  },
+                  {
+                      "id":  "B093",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Connie Bruck",
+                      "title":  "The Predators\u0027 Ball (RU)",
+                      "tags":  [
+                                   "history"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  2621440,
+                      "size_mb":  2.5,
+                      "original_name":  "К.Брук.Бал хищников.doc",
+                      "relative_path":  "03_market_wizards_bios/Bruck Connie - Bal hishchnikov.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Bruck Connie - Bal hishchnikov.doc"
+                  },
+                  {
+                      "id":  "B094",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Satyajit Das",
+                      "title":  "Traders, Guns \u0026 Money (RU)",
+                      "tags":  [
+                                   "das",
+                                   "derivatives-narrative"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3559550,
+                      "size_mb":  3.39,
+                      "original_name":  "Trei_774_dery_Pushki_i_Dengi_Satyadzhit_Das.pdf",
+                      "relative_path":  "03_market_wizards_bios/Das Satyajit - Traders Guns and Money.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Das Satyajit - Traders Guns and Money.pdf"
+                  },
+                  {
+                      "id":  "B095",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Max Gunther",
+                      "title":  "The Zurich Axioms (RU)",
+                      "tags":  [
+                                   "axioms"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  966838,
+                      "size_mb":  0.92,
+                      "original_name":  "Аксимы_биржевого_спекулянта_-_М.Гюнтер.pdf",
+                      "relative_path":  "03_market_wizards_bios/Gunther M - Aksromy birzhevogo spekulyanta.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Gunther M - Aksromy birzhevogo spekulyanta.pdf"
+                  },
+                  {
+                      "id":  "B096",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "",
+                      "title":  "Ispoved (unidentified, 354p scan)",
+                      "tags":  [
+                                   "needs-review",
+                                   "unidentified",
+                                   "scan"
+                               ],
+                      "notes":  "Still unidentified: scanned cover-only image PDF, 354 pages. OCR not available in environment. Open cover manually.",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  19149119,
+                      "size_mb":  18.26,
+                      "original_name":  "Исповедь.pdf",
+                      "relative_path":  "03_market_wizards_bios/Ispoved.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Ispoved.pdf"
+                  },
+                  {
+                      "id":  "B097",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Edwin Lefèvre",
+                      "title":  "Reminiscences of a Stock Operator (RU)",
+                      "tags":  [
+                                   "livermore",
+                                   "classic"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1957910,
+                      "size_mb":  1.87,
+                      "original_name":  "Vospominania_Birzhevogo_Spekulyanta.pdf",
+                      "relative_path":  "03_market_wizards_bios/Lefevre Edwin - Vospominaniya birzhevogo spekulyanta.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Lefevre Edwin - Vospominaniya birzhevogo spekulyanta.pdf"
+                  },
+                  {
+                      "id":  "B098",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Michael Lewis",
+                      "title":  "The Big Short (RU)",
+                      "tags":  [
+                                   "lewis",
+                                   "crisis",
+                                   "narrative"
+                               ],
+                      "notes":  "Moved from 10_misc; filename had special Unicode spaces",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3087383,
+                      "size_mb":  2.94,
+                      "original_name":  "Lewis Michael - Bolshaya igra na ponizhenie.pdf",
+                      "relative_path":  "03_market_wizards_bios/Lewis Michael - Bolshaya igra na ponizhenie.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Lewis Michael - Bolshaya igra na ponizhenie.pdf"
+                  },
+                  {
+                      "id":  "B099",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Jack Schwager",
+                      "title":  "Market Wizards (RU)",
+                      "tags":  [
+                                   "schwager",
+                                   "wizards"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  33001170,
+                      "size_mb":  31.47,
+                      "original_name":  "Биржевые маги. Швагер .pdf",
+                      "relative_path":  "03_market_wizards_bios/Schwager Jack - Birzhevye magi.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Schwager Jack - Birzhevye magi.pdf"
+                  },
+                  {
+                      "id":  "B100",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Jack Schwager",
+                      "title":  "Stock Market Wizards (RU)",
+                      "tags":  [
+                                   "schwager",
+                                   "wizards"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  2552954,
+                      "size_mb":  2.43,
+                      "original_name":  "Д.Швагер. Маги фондового рынка.djvu",
+                      "relative_path":  "03_market_wizards_bios/Schwager Jack - Magi fondovogo rynka.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Schwager Jack - Magi fondovogo rynka.djvu"
+                  },
+                  {
+                      "id":  "B101",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Jack Schwager",
+                      "title":  "The New Market Wizards (RU)",
+                      "tags":  [
+                                   "schwager",
+                                   "wizards"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2188729,
+                      "size_mb":  2.09,
+                      "original_name":  "Швагер - Новые маги рынка.pdf",
+                      "relative_path":  "03_market_wizards_bios/Schwager Jack - Novye magi rynka.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Schwager Jack - Novye magi rynka.pdf"
+                  },
+                  {
+                      "id":  "B102",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Victor Sperandeo",
+                      "title":  "Trader Vic II (RU)",
+                      "tags":  [
+                                   "sperandeo"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  3161202,
+                      "size_mb":  3.01,
+                      "original_name":  "Виктор Сперандео. Trader Vic II - Принципы профессиональной спекуляции.djvu",
+                      "relative_path":  "03_market_wizards_bios/Sperandeo Victor - Trader Vic II.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Sperandeo Victor - Trader Vic II.djvu"
+                  },
+                  {
+                      "id":  "B103",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "Tolly",
+                      "title":  "Playing the Short Side (RU)",
+                      "tags":  [
+                                   "shorting"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  6184874,
+                      "size_mb":  5.9,
+                      "original_name":  "+Толли Игра на понижение.djvu",
+                      "relative_path":  "03_market_wizards_bios/Tolly - Igra na ponizhenie.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Tolly - Igra na ponizhenie.djvu"
+                  },
+                  {
+                      "id":  "B104",
+                      "status":  "indexed",
+                      "category":  "03_market_wizards_bios",
+                      "author":  "",
+                      "title":  "Life and Death of the Greatest Speculator (RU)",
+                      "tags":  [
+                                   "livermore",
+                                   "bio"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2866237,
+                      "size_mb":  2.73,
+                      "original_name":  "Zhizn_i_Smert_velichayshego_spekulyanta.pdf",
+                      "relative_path":  "03_market_wizards_bios/Zhizn i smert velichayshego spekulyanta.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Zhizn i smert velichayshego spekulyanta.pdf"
+                  },
+                  {
+                      "id":  "B105",
+                      "status":  "indexed",
+                      "category":  "04_psychology_behavior",
+                      "author":  "George Akerlof, Robert Shiller",
+                      "title":  "Phishing for Phools (RU)",
+                      "tags":  [
+                                   "behavior"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4981888,
+                      "size_mb":  4.75,
+                      "original_name":  "oxota-na-prostaka-9785001004677.pdf",
+                      "relative_path":  "04_psychology_behavior/Akerlof Shiller - Ohota na prostaka.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\04_psychology_behavior\\Akerlof Shiller - Ohota na prostaka.pdf"
+                  },
+                  {
+                      "id":  "B106",
+                      "status":  "indexed",
+                      "category":  "04_psychology_behavior",
+                      "author":  "Terry Burnham",
+                      "title":  "Mean Markets and Lizard Brains (RU)",
+                      "tags":  [
+                                   "behavior"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1860585,
+                      "size_mb":  1.77,
+                      "original_name":  "Terri-Bernhem-Podlyie-ryinki-i-mozg-yashhera.pdf",
+                      "relative_path":  "04_psychology_behavior/Burnham Terry - Podlye rynki i mozg yashchera.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\04_psychology_behavior\\Burnham Terry - Podlye rynki i mozg yashchera.pdf"
+                  },
+                  {
+                      "id":  "B107",
+                      "status":  "indexed",
+                      "category":  "04_psychology_behavior",
+                      "author":  "David Cohen",
+                      "title":  "Fear, Greed and Panic (RU)",
+                      "tags":  [
+                                   "psychology"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3312017,
+                      "size_mb":  3.16,
+                      "original_name":  "Дэвид Кохен, Психология фондового рынка - страх, алчность и паника.pdf",
+                      "relative_path":  "04_psychology_behavior/Cohen David - Psihologiya fondovogo rynka.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\04_psychology_behavior\\Cohen David - Psihologiya fondovogo rynka.pdf"
+                  },
+                  {
+                      "id":  "B108",
+                      "status":  "indexed",
+                      "category":  "04_psychology_behavior",
+                      "author":  "Richard Thaler, Cass Sunstein",
+                      "title":  "Nudge",
+                      "tags":  [
+                                   "behavior",
+                                   "nudge"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3380025,
+                      "size_mb":  3.22,
+                      "original_name":  "nudge-28-6-17.pdf",
+                      "relative_path":  "04_psychology_behavior/Thaler Sunstein - Nudge.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\04_psychology_behavior\\Thaler Sunstein - Nudge.pdf"
+                  },
+                  {
+                      "id":  "B109",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "Peter Bernstein",
+                      "title":  "Against the Gods (RU)",
+                      "tags":  [
+                                   "risk-history"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3270509,
+                      "size_mb":  3.12,
+                      "original_name":  "P.Bernstayn.Protiv-bogov.pdf",
+                      "relative_path":  "05_risk_money_management/Bernstein Peter - Protiv bogov.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Bernstein Peter - Protiv bogov.pdf"
+                  },
+                  {
+                      "id":  "B110",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "William Bernstein",
+                      "title":  "The Intelligent Asset Allocator (RU)",
+                      "tags":  [
+                                   "asset-allocation"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4802623,
+                      "size_mb":  4.58,
+                      "original_name":  "Бернстайн Уильям. Разумное распределение активов. Как построить портфель с максимальной доходностью и минимальным риском.pdf",
+                      "relative_path":  "05_risk_money_management/Bernstein William - Razumnoe raspredelenie aktivov.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Bernstein William - Razumnoe raspredelenie aktivov.pdf"
+                  },
+                  {
+                      "id":  "B111",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "M. Chekulaev",
+                      "title":  "Risk Management (RU)",
+                      "tags":  [
+                                   "risk"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  2366756,
+                      "size_mb":  2.26,
+                      "original_name":  "М.Чекулаев.Риск менеджмент.Управление финансовыми рисками н.djvu",
+                      "relative_path":  "05_risk_money_management/Chekulaev M - Risk menedzhment.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Chekulaev M - Risk menedzhment.djvu"
+                  },
+                  {
+                      "id":  "B112",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "Kenneth Grant",
+                      "title":  "Trading Risk (RU)",
+                      "tags":  [
+                                   "risk"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3182248,
+                      "size_mb":  3.03,
+                      "original_name":  "Кеннет Л. Грант, Управление рисками в трейдинге.pdf",
+                      "relative_path":  "05_risk_money_management/Grant Kenneth - Upravlenie riskami v treydinge.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Grant Kenneth - Upravlenie riskami v treydinge.pdf"
+                  },
+                  {
+                      "id":  "B113",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "",
+                      "title":  "How to Predict Financial Crashes (RU)",
+                      "tags":  [
+                                   "crashes",
+                                   "risk"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  7741052,
+                      "size_mb":  7.38,
+                      "original_name":  "Как предсказывать крахи фин. рынков.djvu",
+                      "relative_path":  "05_risk_money_management/Kak predskazyvat krahi fin rynkov.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Kak predskazyvat krahi fin rynkov.djvu"
+                  },
+                  {
+                      "id":  "B114",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "Nassim Taleb",
+                      "title":  "The Black Swan (RU)",
+                      "tags":  [
+                                   "taleb",
+                                   "risk",
+                                   "black-swan"
+                               ],
+                      "notes":  "Extracted from ZIP archive",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  7060363,
+                      "size_mb":  6.73,
+                      "original_name":  "Taleb Nassim - Chernyy Lebed.pdf",
+                      "relative_path":  "05_risk_money_management/Taleb Nassim - Chernyy Lebed.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Taleb Nassim - Chernyy Lebed.pdf"
+                  },
+                  {
+                      "id":  "B115",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "Nassim Taleb",
+                      "title":  "Fooled by Randomness (RU)",
+                      "tags":  [
+                                   "taleb",
+                                   "risk"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  574600,
+                      "size_mb":  0.55,
+                      "original_name":  "Нассим_Николас_Талеб_Одураченные случайностью (1).pdf",
+                      "relative_path":  "05_risk_money_management/Taleb Nassim - Odurachennye sluchaynostyu.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Taleb Nassim - Odurachennye sluchaynostyu.pdf"
+                  },
+                  {
+                      "id":  "B116",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "",
+                      "title":  "Managing Risk: CCP Clearing (RU)",
+                      "tags":  [
+                                   "clearing",
+                                   "risk"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  6029682,
+                      "size_mb":  5.75,
+                      "original_name":  "Управляя рисками. Клиринг с участием центральных контрагентов на глобальных финансовых рынках.pdf",
+                      "relative_path":  "05_risk_money_management/Upravlyaya riskami - Kliring i CCP.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Upravlyaya riskami - Kliring i CCP.pdf"
+                  },
+                  {
+                      "id":  "B117",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "Ralph Vince",
+                      "title":  "The Mathematics of Money Management (RU)",
+                      "tags":  [
+                                   "money-management",
+                                   "kelly"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2237730,
+                      "size_mb":  2.13,
+                      "original_name":  "Р. Винс.Математика управления капиталом.pdf",
+                      "relative_path":  "05_risk_money_management/Vince Ralph - Matematika upravleniya kapitalom.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Vince Ralph - Matematika upravleniya kapitalom.pdf"
+                  },
+                  {
+                      "id":  "B118",
+                      "status":  "indexed",
+                      "category":  "05_risk_money_management",
+                      "author":  "",
+                      "title":  "All About Asset Allocation (RU)",
+                      "tags":  [
+                                   "asset-allocation"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  7307388,
+                      "size_mb":  6.97,
+                      "original_name":  "Всё о распределении активов1.pdf",
+                      "relative_path":  "05_risk_money_management/Vse o raspredelenii aktivov.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\05_risk_money_management\\Vse o raspredelenii aktivov.pdf"
+                  },
+                  {
+                      "id":  "B119",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "",
+                      "title":  "US Stock Market Without the Fluff (RU)",
+                      "tags":  [
+                                   "us-markets"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  14837533,
+                      "size_mb":  14.15,
+                      "original_name":  "Американский фондовый рынок без воды.pdf",
+                      "relative_path":  "06_investing_fundamental/Amerikanskiy fondovyy rynok bez vody.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Amerikanskiy fondovyy rynok bez vody.pdf"
+                  },
+                  {
+                      "id":  "B120",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "John Bogle",
+                      "title":  "The Clash of the Cultures (RU)",
+                      "tags":  [
+                                   "bogle",
+                                   "index"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  4100954,
+                      "size_mb":  3.91,
+                      "original_name":  "Джон Богл-Инвесторы против спекулянтоврынком.PDF",
+                      "relative_path":  "06_investing_fundamental/Bogle John - Investory protiv spekulyantov.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Bogle John - Investory protiv spekulyantov.pdf"
+                  },
+                  {
+                      "id":  "B121",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "Philip Fisher",
+                      "title":  "Common Stocks and Uncommon Profits (RU)",
+                      "tags":  [
+                                   "fisher",
+                                   "growth"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  1787128,
+                      "size_mb":  1.7,
+                      "original_name":  "Ф.Фишер.Обыкновенные акции и необыкновенные доходы.djvu",
+                      "relative_path":  "06_investing_fundamental/Fisher Philip - Obyknovennye aktsii i neobyknovennye dohodi.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Fisher Philip - Obyknovennye aktsii i neobyknovennye dohodi.djvu"
+                  },
+                  {
+                      "id":  "B122",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "",
+                      "title":  "Fundamental Analysis (large volume)",
+                      "tags":  [
+                                   "fundamental"
+                               ],
+                      "notes":  "54MB — likely multi-part/scan",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  57016963,
+                      "size_mb":  54.38,
+                      "original_name":  "Фундаментальный анализ.pdf",
+                      "relative_path":  "06_investing_fundamental/Fundamentalnyy analiz (sbornik).pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Fundamentalnyy analiz (sbornik).pdf"
+                  },
+                  {
+                      "id":  "B123",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "Benjamin Graham",
+                      "title":  "Security Analysis (RU)",
+                      "tags":  [
+                                   "graham",
+                                   "value"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  6818842,
+                      "size_mb":  6.5,
+                      "original_name":  "Bendzhamin_Grekhem_-_Analiz_tsennykh_bumag.djvu",
+                      "relative_path":  "06_investing_fundamental/Graham Benjamin - Analiz tsennyh bumag.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Graham Benjamin - Analiz tsennyh bumag.djvu"
+                  },
+                  {
+                      "id":  "B124",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "F.A. Hayek",
+                      "title":  "Hayek on Money",
+                      "tags":  [
+                                   "hayek",
+                                   "macro"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  278018,
+                      "size_mb":  0.27,
+                      "original_name":  "Hayek-Money.pdf",
+                      "relative_path":  "06_investing_fundamental/Hayek F - Money.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Hayek F - Money.pdf"
+                  },
+                  {
+                      "id":  "B125",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "Peter Krass",
+                      "title":  "The Book of Investing Wisdom (RU)",
+                      "tags":  [
+                                   "anthology"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  21170931,
+                      "size_mb":  20.19,
+                      "original_name":  "Питер Красс, Книга инвестиционной мудрости.pdf",
+                      "relative_path":  "06_investing_fundamental/Krass Peter - Kniga investitsionnoy mudrosti.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Krass Peter - Kniga investitsionnoy mudrosti.pdf"
+                  },
+                  {
+                      "id":  "B126",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "Scott Patterson",
+                      "title":  "The Quants (RU)",
+                      "tags":  [
+                                   "quant",
+                                   "narrative"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "docx",
+                      "size_bytes":  2121963,
+                      "size_mb":  2.02,
+                      "original_name":  "Skott_Patterson_Kvanty.docx",
+                      "relative_path":  "06_investing_fundamental/Patterson Scott - Kvanty.docx",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Patterson Scott - Kvanty.docx"
+                  },
+                  {
+                      "id":  "B127",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "",
+                      "title":  "Securities and Derivatives Market (RU)",
+                      "tags":  [
+                                   "markets",
+                                   "textbook"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  2178973,
+                      "size_mb":  2.08,
+                      "original_name":  "Рынок ценных бумаг и производных финансовых инструментов.pdf",
+                      "relative_path":  "06_investing_fundamental/Rynok tsennyh bumag i PFI.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Rynok tsennyh bumag i PFI.pdf"
+                  },
+                  {
+                      "id":  "B128",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "Vera Smith",
+                      "title":  "The Rationale of Central Banking (RU)",
+                      "tags":  [
+                                   "central-banking"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  1026560,
+                      "size_mb":  0.98,
+                      "original_name":  "Вера Смит. Происхождение центральных банков.doc",
+                      "relative_path":  "06_investing_fundamental/Smith Vera - Proishozhdenie tsentralnyh bankov.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Smith Vera - Proishozhdenie tsentralnyh bankov.doc"
+                  },
+                  {
+                      "id":  "B129",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "K. Tsarikhin",
+                      "title":  "Fundamental Analysis (RU)",
+                      "tags":  [
+                                   "fundamental"
+                               ],
+                      "notes":  "Renamed from double .pdf.pdf",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1552106,
+                      "size_mb":  1.48,
+                      "original_name":  "К.Царихин.Фундаментальный анализ.pdf.pdf",
+                      "relative_path":  "06_investing_fundamental/Tsarikhin K - Fundamentalnyy analiz.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Tsarikhin K - Fundamentalnyy analiz.pdf"
+                  },
+                  {
+                      "id":  "B130",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "James Weatherall",
+                      "title":  "The Physics of Wall Street (RU)",
+                      "tags":  [
+                                   "quant-history"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3302786,
+                      "size_mb":  3.15,
+                      "original_name":  "Джеймс Уэзеролл-Физика фондового рынка.pdf",
+                      "relative_path":  "06_investing_fundamental/Weatherall James - Fizika fondovogo rynka.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Weatherall James - Fizika fondovogo rynka.pdf"
+                  },
+                  {
+                      "id":  "B131",
+                      "status":  "indexed",
+                      "category":  "06_investing_fundamental",
+                      "author":  "R. Yamarone",
+                      "title":  "The Trader\u0027s Guide to Key Economic Indicators (RU)",
+                      "tags":  [
+                                   "macro",
+                                   "indicators"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  5552000,
+                      "size_mb":  5.29,
+                      "original_name":  "Р.Ямароне.Ключевые экономические индикаторы.Руководство трейдера.djvu",
+                      "relative_path":  "06_investing_fundamental/Yamarone R - Klyuchevye ekonomicheskie indikatory.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Yamarone R - Klyuchevye ekonomicheskie indikatory.djvu"
+                  },
+                  {
+                      "id":  "B132",
+                      "status":  "indexed",
+                      "category":  "07_crypto_defi",
+                      "author":  "Andreas Antonopoulos",
+                      "title":  "Mastering Bitcoin",
+                      "tags":  [
+                                   "bitcoin",
+                                   "core"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  11910896,
+                      "size_mb":  11.36,
+                      "original_name":  "Книга  - Mastering Bitcoin.pdf",
+                      "relative_path":  "07_crypto_defi/Antonopoulos Andreas - Mastering Bitcoin.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\07_crypto_defi\\Antonopoulos Andreas - Mastering Bitcoin.pdf"
+                  },
+                  {
+                      "id":  "B133",
+                      "status":  "indexed",
+                      "category":  "07_crypto_defi",
+                      "author":  "",
+                      "title":  "How to DeFi (RU)",
+                      "tags":  [
+                                   "defi"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  5490157,
+                      "size_mb":  5.24,
+                      "original_name":  "How_to_DeFi_Russian.pdf",
+                      "relative_path":  "07_crypto_defi/How to DeFi (Russian).pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\07_crypto_defi\\How to DeFi (Russian).pdf"
+                  },
+                  {
+                      "id":  "B134",
+                      "status":  "indexed",
+                      "category":  "07_crypto_defi",
+                      "author":  "Vladimir Popov",
+                      "title":  "ICO: Essence, Problems, Law (RU)",
+                      "tags":  [
+                                   "ico"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  823912,
+                      "size_mb":  0.79,
+                      "original_name":  "Владимир Попов - ICO сущность, проблемы, закон.pdf",
+                      "relative_path":  "07_crypto_defi/Popov Vladimir - ICO sushchnost problemy zakon.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\07_crypto_defi\\Popov Vladimir - ICO sushchnost problemy zakon.pdf"
+                  },
+                  {
+                      "id":  "B135",
+                      "status":  "indexed",
+                      "category":  "07_crypto_defi",
+                      "author":  "Nathaniel Popper",
+                      "title":  "Digital Gold (RU)",
+                      "tags":  [
+                                   "bitcoin",
+                                   "history"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  35162282,
+                      "size_mb":  33.53,
+                      "original_name":  "Цифровое Золото.pdf",
+                      "relative_path":  "07_crypto_defi/Popper Nathaniel - Tsifrovoe Zoloto.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\07_crypto_defi\\Popper Nathaniel - Tsifrovoe Zoloto.pdf"
+                  },
+                  {
+                      "id":  "B136",
+                      "status":  "indexed",
+                      "category":  "07_crypto_defi",
+                      "author":  "Adam Tepper",
+                      "title":  "Bitcoin and Money (RU)",
+                      "tags":  [
+                                   "bitcoin"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1210966,
+                      "size_mb":  1.15,
+                      "original_name":  "adam-tepper-bitkoi-774-n-dengi-dlya-v.pdf",
+                      "relative_path":  "07_crypto_defi/Tepper Adam - Bitcoin i dengi.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\07_crypto_defi\\Tepper Adam - Bitcoin i dengi.pdf"
+                  },
+                  {
+                      "id":  "B137",
+                      "status":  "indexed",
+                      "category":  "08_derivatives_options",
+                      "author":  "A. Burenin",
+                      "title":  "Futures, Forwards and Options Markets (RU)",
+                      "tags":  [
+                                   "derivatives"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  1486449,
+                      "size_mb":  1.42,
+                      "original_name":  "А.Буренин.Фьючерсные, форвардные и опционные рынки.pdf",
+                      "relative_path":  "08_derivatives_options/Burenin A - Fyuchersnye forvardnye i optsionnye rynki.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\08_derivatives_options\\Burenin A - Fyuchersnye forvardnye i optsionnye rynki.pdf"
+                  },
+                  {
+                      "id":  "B138",
+                      "status":  "indexed",
+                      "category":  "08_derivatives_options",
+                      "author":  "M. Chekulaev",
+                      "title":  "Trading Volatility (alt version, RU)",
+                      "tags":  [
+                                   "volatility",
+                                   "options",
+                                   "alt-version"
+                               ],
+                      "notes":  "Alternate scan/version — different SHA256 from main copy; both kept",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  484352,
+                      "size_mb":  0.46,
+                      "original_name":  "М.Чекулаев.Торговля волатильностью1.doc",
+                      "relative_path":  "08_derivatives_options/Chekulaev M - Torgovlya volatilnostyu (alt).doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\08_derivatives_options\\Chekulaev M - Torgovlya volatilnostyu (alt).doc"
+                  },
+                  {
+                      "id":  "B139",
+                      "status":  "indexed",
+                      "category":  "08_derivatives_options",
+                      "author":  "M. Chekulaev",
+                      "title":  "Trading Volatility (RU)",
+                      "tags":  [
+                                   "volatility",
+                                   "options"
+                               ],
+                      "notes":  "Moved from _review_duplicates; pair with (alt) — different hashes",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  427008,
+                      "size_mb":  0.41,
+                      "original_name":  "М.Чекулаев.Торговля волатильностью.doc",
+                      "relative_path":  "08_derivatives_options/Chekulaev M - Torgovlya volatilnostyu.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\08_derivatives_options\\Chekulaev M - Torgovlya volatilnostyu.doc"
+                  },
+                  {
+                      "id":  "B140",
+                      "status":  "indexed",
+                      "category":  "08_derivatives_options",
+                      "author":  "Kevin Connolly",
+                      "title":  "Buying and Selling Volatility (RU)",
+                      "tags":  [
+                                   "volatility",
+                                   "options"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  9915618,
+                      "size_mb":  9.46,
+                      "original_name":  "K_Konnolli_Pokupka_i_prodazha_volatilnosti.pdf",
+                      "relative_path":  "08_derivatives_options/Connolly K - Pokupka i prodazha volatilnosti.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\08_derivatives_options\\Connolly K - Pokupka i prodazha volatilnosti.pdf"
+                  },
+                  {
+                      "id":  "B141",
+                      "status":  "indexed",
+                      "category":  "08_derivatives_options",
+                      "author":  "A. Feldman",
+                      "title":  "Derivatives: Financial and Commodity (RU)",
+                      "tags":  [
+                                   "derivatives"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  3176960,
+                      "size_mb":  3.03,
+                      "original_name":  "А.Фельдман.Производные финансовые и товарные инструменты.doc",
+                      "relative_path":  "08_derivatives_options/Feldman A - Proizvodnye finansovye i tovarnye instrumenty.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\08_derivatives_options\\Feldman A - Proizvodnye finansovye i tovarnye instrumenty.doc"
+                  },
+                  {
+                      "id":  "B142",
+                      "status":  "indexed",
+                      "category":  "08_derivatives_options",
+                      "author":  "A. Shvedov",
+                      "title":  "Interest Rate Instruments: Pricing \u0026 Hedging (RU)",
+                      "tags":  [
+                                   "rates",
+                                   "hedging"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "djvu",
+                      "size_bytes":  887827,
+                      "size_mb":  0.85,
+                      "original_name":  "А.Шведов.Процентные финансовые инструменты-оценка и хеджирование.djvu",
+                      "relative_path":  "08_derivatives_options/Shvedov A - Protsentnye instrumenty otsenka i hedzhirovanie.djvu",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\08_derivatives_options\\Shvedov A - Protsentnye instrumenty otsenka i hedzhirovanie.djvu"
+                  },
+                  {
+                      "id":  "B143",
+                      "status":  "indexed",
+                      "category":  "09_programming_quant",
+                      "author":  "Cory Althoff",
+                      "title":  "Self-Taught Computer Scientist (RU)",
+                      "tags":  [
+                                   "cs"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  3255247,
+                      "size_mb":  3.1,
+                      "original_name":  "Альткофф_Кори_Computer_Science_для_программиста_самоучки.pdf",
+                      "relative_path":  "09_programming_quant/Althoff Cory - Computer Science dlya programmista samouchki.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\09_programming_quant\\Althoff Cory - Computer Science dlya programmista samouchki.pdf"
+                  },
+                  {
+                      "id":  "B144",
+                      "status":  "indexed",
+                      "category":  "09_programming_quant",
+                      "author":  "Mikhail Flenov",
+                      "title":  "C# Bible 4th ed. 2019 (RU)",
+                      "tags":  [
+                                   "csharp"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  11090267,
+                      "size_mb":  10.58,
+                      "original_name":  "Библия C# 4е изд. Михаил Фленов 2019 (1).pdf",
+                      "relative_path":  "09_programming_quant/Flenov Mikhail - Bibliya C Sharp 4e izd 2019.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\09_programming_quant\\Flenov Mikhail - Bibliya C Sharp 4e izd 2019.pdf"
+                  },
+                  {
+                      "id":  "B145",
+                      "status":  "indexed",
+                      "category":  "09_programming_quant",
+                      "author":  "Marcos Lopez de Prado",
+                      "title":  "Advances in Financial ML / Mashinnoe obuchenie: algoritmy dlya biznesa (RU)",
+                      "tags":  [
+                                   "ml",
+                                   "afml",
+                                   "quant",
+                                   "prado",
+                                   "core-architect"
+                               ],
+                      "notes":  "Identified: Lopez de Prado; Piter 2019, 432p. Key for market architecture / ML research stack.",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  9821962,
+                      "size_mb":  9.37,
+                      "original_name":  "Машинное_обучение__а.pdf",
+                      "relative_path":  "09_programming_quant/Lopez de Prado Marcos - Mashinnoe obuchenie algoritmy dlya biznesa.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\09_programming_quant\\Lopez de Prado Marcos - Mashinnoe obuchenie algoritmy dlya biznesa.pdf"
+                  },
+                  {
+                      "id":  "B146",
+                      "status":  "indexed",
+                      "category":  "09_programming_quant",
+                      "author":  "",
+                      "title":  "Programming in Rust (RU)",
+                      "tags":  [
+                                   "rust"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  6711431,
+                      "size_mb":  6.4,
+                      "original_name":  "Программирование_на_Rust.pdf",
+                      "relative_path":  "09_programming_quant/Programmirovanie na Rust.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\09_programming_quant\\Programmirovanie na Rust.pdf"
+                  },
+                  {
+                      "id":  "B147",
+                      "status":  "indexed",
+                      "category":  "09_programming_quant",
+                      "author":  "Matt Weisfeld",
+                      "title":  "The Object-Oriented Thought Process (RU)",
+                      "tags":  [
+                                   "oop"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  17981424,
+                      "size_mb":  17.15,
+                      "original_name":  "Мэтт Вайсфельд - Объектно-ориентированный подход.pdf",
+                      "relative_path":  "09_programming_quant/Weisfeld Matt - Obektno-orientirovannyy podhod.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\09_programming_quant\\Weisfeld Matt - Obektno-orientirovannyy podhod.pdf"
+                  },
+                  {
+                      "id":  "B148",
+                      "status":  "indexed",
+                      "category":  "10_misc",
+                      "author":  "Alexander Davidson",
+                      "title":  "Sliding on the Edge of the Stock Market (RU)",
+                      "tags":  [
+                                   "narrative",
+                                   "fiction",
+                                   "markets"
+                               ],
+                      "notes":  "Identified from DOC text; RU translation by A. Shmatov",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  1031168,
+                      "size_mb":  0.98,
+                      "original_name":  "skolzyashiy_po_lezviyu_fondovogo_rinka.doc",
+                      "relative_path":  "10_misc/Davidson Alexander - Skolzyashchiy po lezviyu fondovogo rynka.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\10_misc\\Davidson Alexander - Skolzyashchiy po lezviyu fondovogo rynka.doc"
+                  },
+                  {
+                      "id":  "B149",
+                      "status":  "indexed",
+                      "category":  "10_misc",
+                      "author":  "Maxim Kotin",
+                      "title":  "Geeks Do Business Too (RU)",
+                      "tags":  [
+                                   "business",
+                                   "startup"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "pdf",
+                      "size_bytes":  734651,
+                      "size_mb":  0.7,
+                      "original_name":  "I_botaniki_delayut_biznes_-_Maxim_Kotin.pdf",
+                      "relative_path":  "10_misc/Kotin Maxim - I botaniki delayut biznes.pdf",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\10_misc\\Kotin Maxim - I botaniki delayut biznes.pdf"
+                  },
+                  {
+                      "id":  "B150",
+                      "status":  "indexed",
+                      "category":  "10_misc",
+                      "author":  "Karl Popper",
+                      "title":  "The Logic of Scientific Discovery (RU)",
+                      "tags":  [
+                                   "philosophy",
+                                   "science"
+                               ],
+                      "notes":  "",
+                      "duplicate_candidate":  false,
+                      "format":  "fb2",
+                      "size_bytes":  98831,
+                      "size_mb":  0.09,
+                      "original_name":  "Поппер Карл Логика научного исследования (2004).fb2",
+                      "relative_path":  "10_misc/Popper Karl - Logika nauchnogo issledovaniya.fb2",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\10_misc\\Popper Karl - Logika nauchnogo issledovaniya.fb2"
+                  },
+                  {
+                      "id":  "B151",
+                      "status":  "indexed",
+                      "category":  "10_misc",
+                      "author":  "Michael Ridpath",
+                      "title":  "Free to Trade / Vse prodaetsya (RU)",
+                      "tags":  [
+                                   "fiction",
+                                   "thriller",
+                                   "markets"
+                               ],
+                      "notes":  "Fiction thriller (not psychology textbook). Identified from DOC text.",
+                      "duplicate_candidate":  false,
+                      "format":  "doc",
+                      "size_bytes":  1794560,
+                      "size_mb":  1.71,
+                      "original_name":  "Все продается.doc",
+                      "relative_path":  "10_misc/Ridpath Michael - Vse prodaetsya.doc",
+                      "absolute_path":  "D:\\genessis\\architecture\\books\\10_misc\\Ridpath Michael - Vse prodaetsya.doc"
+                  }
+              ]
+}

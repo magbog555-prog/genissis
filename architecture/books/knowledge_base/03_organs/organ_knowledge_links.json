@@ -1,0 +1,309 @@
+{
+  "generated_at": "2026-07-15T23:39:52+00:00",
+  "count": 15,
+  "items": [
+    {
+      "organ_id": "chart_structure",
+      "dossier": "03_organs/01_chart_price_structure.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [
+        "B005",
+        "B006",
+        "B008",
+        "B009",
+        "B010",
+        "B012",
+        "B013",
+        "B014",
+        "B015",
+        "B016",
+        "B017",
+        "B020",
+        "B024",
+        "B025",
+        "B026",
+        "B030",
+        "B032",
+        "B035",
+        "B048",
+        "B057",
+        "B058",
+        "B059",
+        "B060",
+        "B088"
+      ],
+      "concept_ids": [
+        "KC-AUCTION-VALUE-AREA",
+        "KC-VSA-EFFORT-RESULT",
+        "KC-WYCKOFF-PHASES",
+        "KC-SUPPORT-RESISTANCE",
+        "KC-BREAKOUT-DOCTRINE",
+        "KC-MA-CROSS",
+        "KC-RSI",
+        "KC-CANDLES",
+        "KC-ELLIOTT",
+        "KC-FIB",
+        "KC-OI-PRICE",
+        "KC-OPENING-RANGE"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "dom_order_book",
+      "dossier": "03_organs/02_dom_order_book.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [],
+      "concept_ids": [
+        "KC-BOOK-IMBALANCE",
+        "KC-ABSORPTION"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "tape_executed_trades",
+      "dossier": "03_organs/03_tape_executed_trades.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [
+        "B017",
+        "B035"
+      ],
+      "concept_ids": [
+        "KC-VSA-EFFORT-RESULT",
+        "KC-WYCKOFF-PHASES",
+        "KC-ABSORPTION",
+        "KC-BREAKOUT-DOCTRINE"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "spread_entry_cost",
+      "dossier": "03_organs/04_spread_entry_cost.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [
+        "B112"
+      ],
+      "concept_ids": [
+        "KC-SPREAD-COST",
+        "KC-POSITION-SIZING",
+        "KC-NEWS-IMPULSE"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "volatility",
+      "dossier": "03_organs/05_volatility.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [
+        "B060",
+        "B112",
+        "B114",
+        "B115",
+        "B117",
+        "B137",
+        "B138",
+        "B139",
+        "B140",
+        "B141",
+        "B142",
+        "B145"
+      ],
+      "concept_ids": [
+        "KC-VOL-REGIME",
+        "KC-AFFML-FEATURE-HYGIENE",
+        "KC-POSITION-SIZING",
+        "KC-NEWS-IMPULSE"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "liquidity",
+      "dossier": "03_organs/06_liquidity.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [
+        "B008",
+        "B009",
+        "B017",
+        "B035",
+        "B112",
+        "B117"
+      ],
+      "concept_ids": [
+        "KC-WYCKOFF-PHASES",
+        "KC-BOOK-IMBALANCE",
+        "KC-BREAKOUT-DOCTRINE",
+        "KC-POSITION-SIZING"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "market_tempo",
+      "dossier": "03_organs/07_tempo.md",
+      "organ_class": "DERIVED",
+      "independence_class": "DERIVED_FROM_DECLARED_PARENTS",
+      "source_ids": [],
+      "concept_ids": [
+        "KC-NEWS-IMPULSE"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "impulse_quality",
+      "dossier": "03_organs/08_impulse_quality.md",
+      "organ_class": "DERIVED",
+      "independence_class": "DERIVED_FROM_DECLARED_PARENTS",
+      "source_ids": [
+        "B046",
+        "B047",
+        "B060",
+        "B085",
+        "B086",
+        "B087"
+      ],
+      "concept_ids": [
+        "KC-RSI"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "market_context",
+      "dossier": "03_organs/09_market_context.md",
+      "organ_class": "DERIVED",
+      "independence_class": "DERIVED_FROM_DECLARED_PARENTS",
+      "source_ids": [
+        "B001",
+        "B046",
+        "B047",
+        "B048",
+        "B057",
+        "B058",
+        "B059",
+        "B071",
+        "B085",
+        "B086",
+        "B087",
+        "B114",
+        "B115",
+        "B145"
+      ],
+      "concept_ids": [
+        "KC-AUCTION-VALUE-AREA",
+        "KC-VOL-REGIME",
+        "KC-FUNDING-EXTREME",
+        "KC-SYSTEM-WALKFORWARD",
+        "KC-AFFML-FEATURE-HYGIENE"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "exhaustion",
+      "dossier": "03_organs/10_exhaustion.md",
+      "organ_class": "DERIVED",
+      "independence_class": "DERIVED_FROM_DECLARED_PARENTS",
+      "source_ids": [],
+      "concept_ids": [],
+      "production_influence": false
+    },
+    {
+      "organ_id": "cross_symbol_correlation",
+      "dossier": "03_organs/11_correlation.md",
+      "organ_class": "CROSS_SYMBOL",
+      "independence_class": "CROSS_CONTEXT_ONLY",
+      "source_ids": [],
+      "concept_ids": [],
+      "production_influence": false
+    },
+    {
+      "organ_id": "news_events",
+      "dossier": "03_organs/12_news_events.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [
+        "B132",
+        "B133",
+        "B134",
+        "B135",
+        "B136"
+      ],
+      "concept_ids": [
+        "KC-NEWS-IMPULSE"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "funding",
+      "dossier": "03_organs/13_funding.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [
+        "B132",
+        "B133",
+        "B134",
+        "B135",
+        "B136",
+        "B137",
+        "B138",
+        "B139",
+        "B140",
+        "B141",
+        "B142"
+      ],
+      "concept_ids": [
+        "KC-FUNDING-EXTREME"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "open_interest",
+      "dossier": "03_organs/14_open_interest.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [
+        "B132",
+        "B133",
+        "B134",
+        "B135",
+        "B136",
+        "B137",
+        "B138",
+        "B139",
+        "B140",
+        "B141",
+        "B142"
+      ],
+      "concept_ids": [
+        "KC-FUNDING-EXTREME",
+        "KC-OI-PRICE"
+      ],
+      "production_influence": false
+    },
+    {
+      "organ_id": "session_profile",
+      "dossier": "03_organs/15_session_profile.md",
+      "organ_class": "PRIMARY",
+      "independence_class": "INDEPENDENT_ROOT",
+      "source_ids": [
+        "B005",
+        "B008",
+        "B009",
+        "B010",
+        "B013",
+        "B024",
+        "B025",
+        "B026",
+        "B032",
+        "B088"
+      ],
+      "concept_ids": [
+        "KC-AUCTION-VALUE-AREA",
+        "KC-OPENING-RANGE"
+      ],
+      "production_influence": false
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+﻿{
+    "generated_at":  "2026-07-16T01:42:12.1515222+03:00",
+    "moved":  [
+                  {
+                      "to":  "08_derivatives_options/Chekulaev M - Torgovlya volatilnostyu.doc",
+                      "from":  "_review_duplicates/Chekulaev M - Torgovlya volatilnostyu.doc"
+                  },
+                  {
+                      "to":  "08_derivatives_options/Chekulaev M - Torgovlya volatilnostyu (alt).doc",
+                      "from":  "_review_duplicates/Chekulaev M - Torgovlya volatilnostyu (copy1).doc"
+                  }
+              ],
+    "deleted":  [
+                    {
+                        "deleted_at":  "2026-07-16T01:42:11.8657247+03:00",
+                        "reason":  "duplicate of full Mastering Bitcoin in 07_crypto_defi",
+                        "name":  "Mastering Bitcoin - Glava 1.pdf",
+                        "size_bytes":  418534,
+                        "sha256":  "4D1E267BC343950283EAE9A6F8D4F4332064D0A956F5A77C35DDCCA046AB035E",
+                        "from":  "_review_duplicates/Mastering Bitcoin - Glava 1.pdf"
+                    },
+                    {
+                        "deleted_at":  "2026-07-16T01:42:11.9880124+03:00",
+                        "reason":  "duplicate of full Mastering Bitcoin in 07_crypto_defi",
+                        "name":  "Mastering Bitcoin - Glava 2.pdf",
+                        "size_bytes":  267965,
+                        "sha256":  "D041AAD8BF23D67D0A78D85B8E329AE1E438821C4ADC018B60911F93DEF38ADD",
+                        "from":  "_review_duplicates/Mastering Bitcoin - Glava 2.pdf"
+                    },
+                    {
+                        "deleted_at":  "2026-07-16T01:42:11.9961419+03:00",
+                        "reason":  "duplicate of full Mastering Bitcoin in 07_crypto_defi",
+                        "name":  "Mastering Bitcoin - Glava 3.pdf",
+                        "size_bytes":  420438,
+                        "sha256":  "59A700A2F9805606D8DDF5D775908B4163203650E3B03E4DFE42F2DFB28514F6",
+                        "from":  "_review_duplicates/Mastering Bitcoin - Glava 3.pdf"
+                    },
+                    {
+                        "deleted_at":  "2026-07-16T01:42:12.0047446+03:00",
+                        "reason":  "duplicate of full Mastering Bitcoin in 07_crypto_defi",
+                        "name":  "Mastering Bitcoin - Glava 4.pdf",
+                        "size_bytes":  382856,
+                        "sha256":  "C2F47AC0CA16D042071990A8B7BFB99D44B5A835405E3E3509FEAF60E5B749AC",
+                        "from":  "_review_duplicates/Mastering Bitcoin - Glava 4.pdf"
+                    },
+                    {
+                        "deleted_at":  "2026-07-16T01:42:12.0047446+03:00",
+                        "reason":  "duplicate of full Mastering Bitcoin in 07_crypto_defi",
+                        "name":  "Mastering Bitcoin - Glava 5.pdf",
+                        "size_bytes":  892491,
+                        "sha256":  "44FA73D0C13B61CE54EF9908C81B41D6535C11F06D926560E46ADD4901E7ACEB",
+                        "from":  "_review_duplicates/Mastering Bitcoin - Glava 5.pdf"
+                    },
+                    {
+                        "deleted_at":  "2026-07-16T01:42:12.0171639+03:00",
+                        "reason":  "duplicate of full Mastering Bitcoin in 07_crypto_defi",
+                        "name":  "Mastering Bitcoin - Glava 7.pdf",
+                        "size_bytes":  336585,
+                        "sha256":  "6C09CEC0114A490D8869ADF95FCB5E81378FA5E2F589C13FFCA465692AD0742A",
+                        "from":  "_review_duplicates/Mastering Bitcoin - Glava 7.pdf"
+                    },
+                    {
+                        "deleted_at":  "2026-07-16T01:42:12.0211632+03:00",
+                        "reason":  "superseded by 2019 edition in 09_programming_quant",
+                        "name":  "Flenov Mikhail - Bibliya C Sharp 2016.pdf",
+                        "size_bytes":  21176620,
+                        "sha256":  "0C3521E1D31BD6BF6F197E2E1102568C75CC6E89A6613A03126FCB08316B572D",
+                        "from":  "_review_duplicates/Flenov Mikhail - Bibliya C Sharp 2016.pdf"
+                    },
+                    {
+                        "deleted_at":  "2026-07-16T01:42:12.1044292+03:00",
+                        "reason":  "user requested delete; unidentified C# material alongside Flenov 2019",
+                        "name":  "C Sharp materials 2.pdf",
+                        "size_bytes":  8646446,
+                        "sha256":  "2F9173A7FE59FE2FA03712B5C46C71D34BD54208F7C21671F9643279612B6E47",
+                        "from":  "_review_duplicates/C Sharp materials 2.pdf"
+                    }
+                ]
+}

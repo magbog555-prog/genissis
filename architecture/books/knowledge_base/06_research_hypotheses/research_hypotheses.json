@@ -1,0 +1,548 @@
+{
+  "generated_at": "2026-07-15T23:39:52+00:00",
+  "count": 22,
+  "items": [
+    {
+      "hypothesis_id": "RH-001",
+      "statement": "Literature concept KC-AUCTION-VALUE-AREA (Session value area) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-AUCTION-VALUE-AREA"
+      ],
+      "related_organs": [
+        "session_profile",
+        "chart_structure",
+        "market_context"
+      ],
+      "related_families": [
+        "session_open",
+        "return_to_range",
+        "breakout"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-002",
+      "statement": "Literature concept KC-VSA-EFFORT-RESULT (Effort versus result) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-VSA-EFFORT-RESULT"
+      ],
+      "related_organs": [
+        "tape_executed_trades",
+        "chart_structure"
+      ],
+      "related_families": [
+        "reversal",
+        "false_break_failed_follow_through",
+        "trend_continuation"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-003",
+      "statement": "Literature concept KC-WYCKOFF-PHASES (Wyckoff market phases) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-WYCKOFF-PHASES"
+      ],
+      "related_organs": [
+        "chart_structure",
+        "liquidity",
+        "tape_executed_trades"
+      ],
+      "related_families": [
+        "trend_continuation",
+        "reversal",
+        "liquidity_sweep"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-004",
+      "statement": "Literature concept KC-BOOK-IMBALANCE (Order book imbalance) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-BOOK-IMBALANCE"
+      ],
+      "related_organs": [
+        "dom_order_book",
+        "liquidity"
+      ],
+      "related_families": [
+        "breakout",
+        "liquidity_sweep",
+        "false_break_failed_follow_through"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "MEDIUM",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-005",
+      "statement": "Literature concept KC-VOL-REGIME (Volatility regime) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-VOL-REGIME"
+      ],
+      "related_organs": [
+        "volatility",
+        "market_context"
+      ],
+      "related_families": [
+        "trend_continuation",
+        "breakout",
+        "news_impulse_mode"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-006",
+      "statement": "Literature concept KC-SUPPORT-RESISTANCE (Support and resistance) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-SUPPORT-RESISTANCE"
+      ],
+      "related_organs": [
+        "chart_structure"
+      ],
+      "related_families": [
+        "breakout",
+        "return_to_range",
+        "false_break_failed_follow_through"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-007",
+      "statement": "Literature concept KC-BREAKOUT-DOCTRINE (Breakout doctrine) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-BREAKOUT-DOCTRINE"
+      ],
+      "related_organs": [
+        "chart_structure",
+        "tape_executed_trades",
+        "liquidity"
+      ],
+      "related_families": [
+        "breakout",
+        "false_break_failed_follow_through"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-008",
+      "statement": "Literature concept KC-MA-CROSS (Moving average crossovers) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-MA-CROSS"
+      ],
+      "related_organs": [
+        "chart_structure"
+      ],
+      "related_families": [
+        "trend_continuation"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-009",
+      "statement": "Literature concept KC-RSI (Relative Strength Index) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-RSI"
+      ],
+      "related_organs": [
+        "chart_structure",
+        "impulse_quality"
+      ],
+      "related_families": [
+        "reversal",
+        "return_to_range"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-010",
+      "statement": "Literature concept KC-CANDLES (Candlestick patterns) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-CANDLES"
+      ],
+      "related_organs": [
+        "chart_structure"
+      ],
+      "related_families": [
+        "reversal",
+        "trend_continuation"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-011",
+      "statement": "Literature concept KC-FIB (Fibonacci retracements) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-FIB"
+      ],
+      "related_organs": [
+        "chart_structure"
+      ],
+      "related_families": [
+        "return_to_range",
+        "reversal"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-012",
+      "statement": "Literature concept KC-FUNDING-EXTREME (Funding extremes) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-FUNDING-EXTREME"
+      ],
+      "related_organs": [
+        "funding",
+        "open_interest",
+        "market_context"
+      ],
+      "related_families": [
+        "news_impulse_mode",
+        "reversal"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-013",
+      "statement": "Literature concept KC-OI-PRICE (Open interest with price) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-OI-PRICE"
+      ],
+      "related_organs": [
+        "open_interest",
+        "chart_structure"
+      ],
+      "related_families": [
+        "trend_continuation",
+        "reversal"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-014",
+      "statement": "Literature concept KC-OPENING-RANGE (Session opening range) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-OPENING-RANGE"
+      ],
+      "related_organs": [
+        "session_profile",
+        "chart_structure"
+      ],
+      "related_families": [
+        "session_open",
+        "breakout",
+        "return_to_range"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-015",
+      "statement": "Literature concept KC-SYSTEM-WALKFORWARD (Walk-forward validation) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-SYSTEM-WALKFORWARD"
+      ],
+      "related_organs": [
+        "market_context"
+      ],
+      "related_families": [],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "MEDIUM",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-016",
+      "statement": "Literature concept KC-AFFML-FEATURE-HYGIENE (Feature hygiene / purged CV) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-AFFML-FEATURE-HYGIENE"
+      ],
+      "related_organs": [
+        "market_context",
+        "volatility"
+      ],
+      "related_families": [],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "MEDIUM",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-017",
+      "statement": "Literature concept KC-POSITION-SIZING (Position sizing / capital fraction) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-POSITION-SIZING"
+      ],
+      "related_organs": [
+        "volatility",
+        "liquidity",
+        "spread_entry_cost"
+      ],
+      "related_families": [],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-018",
+      "statement": "Literature concept KC-NEWS-IMPULSE (News impulse) can be formalized as a testable observer feature under GENESIS organ contracts.",
+      "basis_concepts": [
+        "KC-NEWS-IMPULSE"
+      ],
+      "related_organs": [
+        "news_events",
+        "volatility",
+        "spread_entry_cost",
+        "market_tempo"
+      ],
+      "related_families": [
+        "news_impulse_mode"
+      ],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Define deterministic feature on GENESIS Frame slots",
+        "No look-ahead",
+        "Integrity/freshness gates",
+        "Out-of-sample / purged validation where ML used"
+      ],
+      "production_influence": false,
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Hypothesis only — literature prior."
+    },
+    {
+      "hypothesis_id": "RH-019",
+      "statement": "Method ALG-PARDO-WALKFORWARD is reusable as REUSE_TEST_METHOD without importing literature rules as production gates.",
+      "basis_algorithms": [
+        "ALG-PARDO-WALKFORWARD"
+      ],
+      "related_organs": [],
+      "related_families": [],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Map to GENESIS data model",
+        "Document assumptions",
+        "Commercial-safe reimplementation"
+      ],
+      "production_influence": false,
+      "use_now_class": "USE DURING RESEARCH",
+      "notes": "Walk-forward system validation (Pardo)"
+    },
+    {
+      "hypothesis_id": "RH-020",
+      "statement": "Method ALG-KURGUZKIN-SYSTEM-SPEC is reusable as REUSE_CONCEPT without importing literature rules as production gates.",
+      "basis_algorithms": [
+        "ALG-KURGUZKIN-SYSTEM-SPEC"
+      ],
+      "related_organs": [],
+      "related_families": [],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Map to GENESIS data model",
+        "Document assumptions",
+        "Commercial-safe reimplementation"
+      ],
+      "production_influence": false,
+      "use_now_class": "USE DURING ORGAN DESIGN",
+      "notes": "Mechanical system specification habit (Kurguzkin)"
+    },
+    {
+      "hypothesis_id": "RH-021",
+      "statement": "Method ALG-PRADO-PURGED-CV is reusable as REUSE_RESEARCH_METHOD without importing literature rules as production gates.",
+      "basis_algorithms": [
+        "ALG-PRADO-PURGED-CV"
+      ],
+      "related_organs": [],
+      "related_families": [],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Map to GENESIS data model",
+        "Document assumptions",
+        "Commercial-safe reimplementation"
+      ],
+      "production_influence": false,
+      "use_now_class": "USE DURING RESEARCH",
+      "notes": "Purged/embargoed CV + meta-labeling (Lopez de Prado)"
+    },
+    {
+      "hypothesis_id": "RH-022",
+      "statement": "Method ALG-VINCE-SIZING is reusable as REUSE_CONCEPT without importing literature rules as production gates.",
+      "basis_algorithms": [
+        "ALG-VINCE-SIZING"
+      ],
+      "related_organs": [],
+      "related_families": [],
+      "evidence_class": "INTERNAL_HYPOTHESIS",
+      "internal_status": "RESEARCH_CANDIDATE",
+      "required_tests": [
+        "Map to GENESIS data model",
+        "Document assumptions",
+        "Commercial-safe reimplementation"
+      ],
+      "production_influence": false,
+      "use_now_class": "USE DURING ORGAN DESIGN",
+      "notes": "Capital fraction / money management mathematics (Vince)"
+    }
+  ]
+}

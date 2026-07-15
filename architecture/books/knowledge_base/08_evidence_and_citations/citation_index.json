@@ -1,0 +1,743 @@
+{
+  "generated_at": "2026-07-15T23:39:52+00:00",
+  "note": "Pages/chapters intentionally empty until audited extraction; no fabricated refs.",
+  "count": 92,
+  "items": [
+    {
+      "concept_id": "KC-AUCTION-VALUE-AREA",
+      "source_id": "B008",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-AUCTION-VALUE-AREA",
+      "source_id": "B009",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-VSA-EFFORT-RESULT",
+      "source_id": "B035",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-WYCKOFF-PHASES",
+      "source_id": "B017",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BOOK-IMBALANCE",
+      "source_id": "B008",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BOOK-IMBALANCE",
+      "source_id": "B009",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BOOK-IMBALANCE",
+      "source_id": "B035",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-ABSORPTION",
+      "source_id": "B017",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-ABSORPTION",
+      "source_id": "B035",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SPREAD-COST",
+      "source_id": "B112",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SPREAD-COST",
+      "source_id": "B117",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SPREAD-COST",
+      "source_id": "B137",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-VOL-REGIME",
+      "source_id": "B111",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-VOL-REGIME",
+      "source_id": "B112",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-VOL-REGIME",
+      "source_id": "B138",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-VOL-REGIME",
+      "source_id": "B139",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-VOL-REGIME",
+      "source_id": "B140",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-VOL-REGIME",
+      "source_id": "B145",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "source_id": "B024",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "source_id": "B025",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "source_id": "B026",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "source_id": "B032",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "source_id": "B088",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "source_id": "B099",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "source_id": "B100",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SUPPORT-RESISTANCE",
+      "source_id": "B101",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B024",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B032",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B048",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B057",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B058",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B059",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B088",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B099",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B100",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-BREAKOUT-DOCTRINE",
+      "source_id": "B101",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-MA-CROSS",
+      "source_id": "B013",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-MA-CROSS",
+      "source_id": "B024",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-MA-CROSS",
+      "source_id": "B060",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-MA-CROSS",
+      "source_id": "B088",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-RSI",
+      "source_id": "B013",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-RSI",
+      "source_id": "B024",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-RSI",
+      "source_id": "B060",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-RSI",
+      "source_id": "B088",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-CANDLES",
+      "source_id": "B023",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-CANDLES",
+      "source_id": "B025",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-CANDLES",
+      "source_id": "B026",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-CANDLES",
+      "source_id": "B029",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-CANDLES",
+      "source_id": "B075",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-CANDLES",
+      "source_id": "B076",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-CANDLES",
+      "source_id": "B077",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-ELLIOTT",
+      "source_id": "B006",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-ELLIOTT",
+      "source_id": "B012",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-ELLIOTT",
+      "source_id": "B016",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-ELLIOTT",
+      "source_id": "B020",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-ELLIOTT",
+      "source_id": "B030",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-FIB",
+      "source_id": "B014",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-FIB",
+      "source_id": "B015",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-FIB",
+      "source_id": "B121",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-FUNDING-EXTREME",
+      "source_id": "B132",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-FUNDING-EXTREME",
+      "source_id": "B133",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-FUNDING-EXTREME",
+      "source_id": "B134",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-FUNDING-EXTREME",
+      "source_id": "B135",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-FUNDING-EXTREME",
+      "source_id": "B136",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OI-PRICE",
+      "source_id": "B132",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OI-PRICE",
+      "source_id": "B133",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OI-PRICE",
+      "source_id": "B134",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OI-PRICE",
+      "source_id": "B135",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OI-PRICE",
+      "source_id": "B136",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OI-PRICE",
+      "source_id": "B137",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OPENING-RANGE",
+      "source_id": "B008",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OPENING-RANGE",
+      "source_id": "B009",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OPENING-RANGE",
+      "source_id": "B085",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OPENING-RANGE",
+      "source_id": "B086",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-OPENING-RANGE",
+      "source_id": "B087",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SYSTEM-WALKFORWARD",
+      "source_id": "B048",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SYSTEM-WALKFORWARD",
+      "source_id": "B071",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-SYSTEM-WALKFORWARD",
+      "source_id": "B145",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-AFFML-FEATURE-HYGIENE",
+      "source_id": "B145",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-POSITION-SIZING",
+      "source_id": "B085",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-POSITION-SIZING",
+      "source_id": "B086",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-POSITION-SIZING",
+      "source_id": "B087",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-POSITION-SIZING",
+      "source_id": "B112",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-POSITION-SIZING",
+      "source_id": "B117",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "source_id": "B032",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "source_id": "B099",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "source_id": "B100",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "source_id": "B101",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "source_id": "B114",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "source_id": "B115",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "source_id": "B132",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    },
+    {
+      "concept_id": "KC-NEWS-IMPULSE",
+      "source_id": "B136",
+      "chapter": "",
+      "page": "",
+      "citation_type": "REFERENCE_ONLY",
+      "evidence_class": "LITERATURE_CLAIM"
+    }
+  ]
+}

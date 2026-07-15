@@ -1,0 +1,38 @@
+# Keep metadata/knowledge in git; do not commit book binaries (~1GB+ copyrighted works).
+*
+!*/
+!.gitignore
+!README.md
+!LOCATION.md
+!catalog/
+!catalog/**
+!knowledge_base/
+!knowledge_base/**
+!от чата/
+!от чата/**
+
+# Never track book binaries even if someone force-adds later under catalog
+*.pdf
+*.PDF
+*.djvu
+*.DJVU
+*.doc
+*.docx
+*.fb2
+*.zip
+*.rar
+*.7z
+*.png
+*.jpg
+*.jpeg
+*.epub
+
+# Allow tiny notes
+!**/README.md
+!**/*.md
+!**/*.json
+!**/*.py
+!**/*.ps1
+!**/*.csv
+!**/*.txt
+!**/*.sha256

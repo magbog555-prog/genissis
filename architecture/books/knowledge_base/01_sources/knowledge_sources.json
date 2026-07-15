@@ -1,0 +1,4777 @@
+{
+  "generated_at": "2026-07-15T23:39:52+00:00",
+  "task_id": "GENESIS-KNOWLEDGE-BASE-REVERSE-MAP-v1",
+  "count": 151,
+  "doctrine": "BOOK KNOWLEDGE ≠ PROVEN EDGE ≠ PRODUCTION RULE",
+  "items": [
+    {
+      "source_id": "B001",
+      "author": "",
+      "title": "Data Mining methods for complex systems (RU)",
+      "category": "_large",
+      "relative_path": "_large/Data Mining - metody analiza modeley slozhnyh sistem.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\_large\\Data Mining - metody analiza modeley slozhnyh sistem.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 327.74,
+      "relevance": {
+        "organs": [
+          "market_context"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "datamining"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Isolated in _large (~328MB scan)",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B002",
+      "author": "Steven Achelis",
+      "title": "Technical Analysis from A to Z (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Achelis Steven - Tekhnicheskiy analiz ot A do Ya.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Achelis Steven - Tekhnicheskiy analiz ot A do Ya.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 4.7,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B003",
+      "author": "A.A. Almazov",
+      "title": "Fractal Theory (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Almazov A.A. - Fraktalnaya teoriya.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Almazov A.A. - Fraktalnaya teoriya.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 6.85,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B004",
+      "author": "Rick Bensignor",
+      "title": "New Thinking in Technical Analysis (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Bensignor R - Novoe myshlenie v tehanalize.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Bensignor R - Novoe myshlenie v tehanalize.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 7.13,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B005",
+      "author": "John Bollinger",
+      "title": "Bollinger on Bollinger Bands (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Bollinger John - O lentah Bollingera.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Bollinger John - O lentah Bollingera.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 5.31,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "reversal"
+        ],
+        "algorithms": [
+          "ta_toolkit"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B006",
+      "author": "A.G. Bolton",
+      "title": "Complete Elliott Wave Works (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Bolton A.G. - Polnoe sobranie rabot po volnam Elliotta.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Bolton A.G. - Polnoe sobranie rabot po volnam Elliotta.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 4.2,
+      "relevance": {
+        "organs": [
+          "chart_structure"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal"
+        ],
+        "algorithms": [
+          "geometry"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B007",
+      "author": "V. Boriskin",
+      "title": "Harmonic Wave Analysis (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Boriskin V - Garmonicheskiy volnovoy analiz.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Boriskin V - Garmonicheskiy volnovoy analiz.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.45,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B008",
+      "author": "James Dalton",
+      "title": "Markets in Profile",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Dalton James - Markets in Profile.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Dalton James - Markets in Profile.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 8.73,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile",
+          "liquidity"
+        ],
+        "thinking_families": [
+          "session_open",
+          "breakout",
+          "liquidity_sweep"
+        ],
+        "algorithms": [
+          "auction"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B009",
+      "author": "James Dalton",
+      "title": "Mind Over Markets / Footprint (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Dalton James - Razum nad rynkami footprint.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Dalton James - Razum nad rynkami footprint.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 10.28,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile",
+          "liquidity"
+        ],
+        "thinking_families": [
+          "session_open",
+          "breakout",
+          "liquidity_sweep"
+        ],
+        "algorithms": [
+          "auction"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B010",
+      "author": "Tom DeMark",
+      "title": "The New Science of Technical Analysis (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/DeMark Tom - Tekhnicheskiy analiz.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\DeMark Tom - Tekhnicheskiy analiz.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 2.3,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "reversal"
+        ],
+        "algorithms": [
+          "ta_toolkit"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B011",
+      "author": "Joe DiNapoli",
+      "title": "DiNapoli Levels (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/DiNapoli Joe - Torgovye urovni.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\DiNapoli Joe - Torgovye urovni.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 4.89,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B012",
+      "author": "",
+      "title": "Elliott: Gold Trading Interval (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Elliott - Interval torgovli zolotom.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Elliott - Interval torgovli zolotom.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 1.39,
+      "relevance": {
+        "organs": [
+          "chart_structure"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal"
+        ],
+        "algorithms": [
+          "geometry"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B013",
+      "author": "Robert Colby",
+      "title": "Encyclopedia of Technical Market Indicators (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Entsiklopediya tehnicheskih indikatorov rynka.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Entsiklopediya tehnicheskih indikatorov rynka.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 38.8,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "reversal"
+        ],
+        "algorithms": [
+          "ta_toolkit"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Author attributed by common RU edition",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B014",
+      "author": "Robert Fisher",
+      "title": "Fibonacci Applications for Traders (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Fisher R - Fibonacci dlya treyderov.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Fisher R - Fibonacci dlya treyderov.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 1.6,
+      "relevance": {
+        "organs": [
+          "chart_structure"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal"
+        ],
+        "algorithms": [
+          "geometry"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B015",
+      "author": "Robert Fisher",
+      "title": "New Fibonacci Trading Methods (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Fisher R - Novye metody torgovli po Fibonachchi.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Fisher R - Novye metody torgovli po Fibonachchi.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 5.88,
+      "relevance": {
+        "organs": [
+          "chart_structure"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal"
+        ],
+        "algorithms": [
+          "geometry"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B016",
+      "author": "A.J. Frost, Robert Prechter",
+      "title": "Elliott Wave Principle (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Frost Prechter - Volnovoy printsip Elliotta.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Frost Prechter - Volnovoy printsip Elliotta.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 0.45,
+      "relevance": {
+        "organs": [
+          "chart_structure"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal"
+        ],
+        "algorithms": [
+          "geometry"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "Was Elliott - Materialy.pdf; Alpina/Potashkin edition material",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B017",
+      "author": "D. Hutson",
+      "title": "Wyckoff Method (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Hutson D - Metod Wyckoffa.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Hutson D - Metod Wyckoffa.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 1.91,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "liquidity",
+          "tape_executed_trades"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal",
+          "liquidity_sweep"
+        ],
+        "algorithms": [
+          "structure"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B018",
+      "author": "James Hyerczyk",
+      "title": "Pattern, Price & Time / Gann (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Hyerczyk James - Model tsena i vremya (Gann).pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Hyerczyk James - Model tsena i vremya (Gann).pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 4.58,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B019",
+      "author": "",
+      "title": "Ichimoku Indicator (notes)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Indikator Ishimoku 1.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Indikator Ishimoku 1.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.28,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B020",
+      "author": "T. Joseph",
+      "title": "Simplified Elliott Wave (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Joseph T - Uproshchennyy analiz voln Elliotta.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Joseph T - Uproshchennyy analiz voln Elliotta.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 2.44,
+      "relevance": {
+        "organs": [
+          "chart_structure"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal"
+        ],
+        "algorithms": [
+          "geometry"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B021",
+      "author": "",
+      "title": "Point and Figure Charting (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Metod krestiki-noliki.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Metod krestiki-noliki.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 7.44,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B022",
+      "author": "",
+      "title": "Momentum, Direction and Divergence (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Momentum napravlennost i rashozhdenie.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Momentum napravlennost i rashozhdenie.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 5.39,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B023",
+      "author": "Greg Morris",
+      "title": "Candlestick Charting Explained (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Morris Greg - Yapounskie svechi metody analiza.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Morris Greg - Yapounskie svechi metody analiza.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 9.21,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B024",
+      "author": "John Murphy",
+      "title": "Technical Analysis of the Financial Markets (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Murphy John - Tekhnicheskiy analiz.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Murphy John - Tekhnicheskiy analiz.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 9.09,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "reversal"
+        ],
+        "algorithms": [
+          "ta_toolkit"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B025",
+      "author": "Steve Nison",
+      "title": "Japanese Candlestick Charting (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Nison Steve - Yapounskie svechi.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Nison Steve - Yapounskie svechi.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 7.05,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "reversal"
+        ],
+        "algorithms": [
+          "ta_toolkit"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B026",
+      "author": "Steve Nison",
+      "title": "Beyond Candlesticks (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Nison Steve - Za granyu yaponskih svechey.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Nison Steve - Za granyu yaponskih svechey.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 5.76,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "reversal"
+        ],
+        "algorithms": [
+          "ta_toolkit"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B027",
+      "author": "Edgar Peters",
+      "title": "Fractal Market Analysis (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Peters Edgar - Fraktalnyy analiz finansovyh rynkov.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Peters Edgar - Fraktalnyy analiz finansovyh rynkov.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.87,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B028",
+      "author": "Martin Pring",
+      "title": "On Price Patterns (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Pring Martin - O tsenovyh modelyah.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Pring Martin - O tsenovyh modelyah.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 5.18,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B029",
+      "author": "V.I. Safin",
+      "title": "Who Do Japanese Candles Shine For (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Safin V.I. - Komu svetyat yaponskie svechi.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Safin V.I. - Komu svetyat yaponskie svechi.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.66,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B030",
+      "author": "Safonov",
+      "title": "Practical Elliott Wave (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Safonov - Prakticheskoe ispolzovanie voln Elliotta.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Safonov - Prakticheskoe ispolzovanie voln Elliotta.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 3.82,
+      "relevance": {
+        "organs": [
+          "chart_structure"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal"
+        ],
+        "algorithms": [
+          "geometry"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B031",
+      "author": "",
+      "title": "Strongest Signal: Divergences and Reversals (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Samyy silnyy signal - rashozhdeniya i razvoroty.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Samyy silnyy signal - rashozhdeniya i razvoroty.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.16,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B032",
+      "author": "Jack Schwager",
+      "title": "Technical Analysis (full course, RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Schwager Jack - Tehanaliz polnyy kurs.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Schwager Jack - Tehanaliz polnyy kurs.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 3.17,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "reversal"
+        ],
+        "algorithms": [
+          "ta_toolkit"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B033",
+      "author": "Bill Williams",
+      "title": "New Trading Dimensions (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Williams Bill - Novye izmereniya.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Williams Bill - Novye izmereniya.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 4.18,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B034",
+      "author": "Bill Williams",
+      "title": "Trading Chaos 2 (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Williams Bill - Torgovyy haos 2.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Williams Bill - Torgovyy haos 2.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.33,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Extracted from ZIP archive",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B035",
+      "author": "Tom Williams",
+      "title": "Master the Markets / VSA (RU)",
+      "category": "01_technical_analysis",
+      "relative_path": "01_technical_analysis/Williams Tom - Hozyaeva rynka.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\01_technical_analysis\\Williams Tom - Hozyaeva rynka.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 6.53,
+      "relevance": {
+        "organs": [
+          "tape_executed_trades",
+          "chart_structure",
+          "liquidity"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal",
+          "false_break_failed_follow_through"
+        ],
+        "algorithms": [
+          "vsa"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B036",
+      "author": "",
+      "title": "50 Shades of Forex (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/50 Shades of Forex RU.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\50 Shades of Forex RU.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 14.99,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B037",
+      "author": "F. Ahundov",
+      "title": "The Whole Truth About Forex (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Ahundov F - Vsya pravda o Forex.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Ahundov F - Vsya pravda o Forex.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 4.22,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B038",
+      "author": "",
+      "title": "FX Dealing ABC (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Azbuka valyutnogo dilinga.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Azbuka valyutnogo dilinga.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.22,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B039",
+      "author": "S. Belyaev",
+      "title": "Trading System: Next Candle Calculation (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Belyaev S - TS Raschet sleduyushchey svechi.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Belyaev S - TS Raschet sleduyushchey svechi.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 32.73,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B040",
+      "author": "Lewis Borsellino",
+      "title": "Day Trading Workbook (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Borsellino L - Zadachnik po daytreydingu.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Borsellino L - Zadachnik po daytreydingu.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.43,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B041",
+      "author": "S. Bulashev",
+      "title": "Statistics for Traders (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Bulashev S - Statistika dlya treyderov.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Bulashev S - Statistika dlya treyderov.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.51,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B042",
+      "author": "Yu. Chebotarev",
+      "title": "Trading Robots on Russian Equity Market (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Chebotarev Yu - Torgovye roboty na RF rynke.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Chebotarev Yu - Torgovye roboty na RF rynke.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.82,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B043",
+      "author": "Michael Covel",
+      "title": "Trend Following (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Covel Michael - Birzhevaya torgovlya po trendam.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Covel Michael - Birzhevaya torgovlya po trendam.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.75,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B044",
+      "author": "Michael Covel",
+      "title": "The Complete TurtleTrader (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Covel Michael - Cherepahi-treydry.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Covel Michael - Cherepahi-treydry.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 16.73,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B045",
+      "author": "",
+      "title": "Hedger Diary (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Dnevnik hedzhera.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Dnevnik hedzhera.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.58,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B046",
+      "author": "Alexander Elder",
+      "title": "Trading for a Living basics (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Elder Alexander - Osnovy birzhevoy torgovli.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Elder Alexander - Osnovy birzhevoy torgovli.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 2.17,
+      "relevance": {
+        "organs": [
+          "market_context",
+          "impulse_quality"
+        ],
+        "thinking_families": [
+          "trend_continuation"
+        ],
+        "algorithms": [
+          "process"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B047",
+      "author": "Alexander Elder",
+      "title": "Trading: First Steps (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Elder Alexander - Treyding Pervye shagi.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Elder Alexander - Treyding Pervye shagi.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 0.55,
+      "relevance": {
+        "organs": [
+          "market_context",
+          "impulse_quality"
+        ],
+        "thinking_families": [
+          "trend_continuation"
+        ],
+        "algorithms": [
+          "process"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B048",
+      "author": "Jeffrey Katz, Donna McCormick",
+      "title": "Encyclopedia of Trading Strategies (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Entsiklopediya torgovyh strategiy.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Entsiklopediya torgovyh strategiy.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P2",
+      "size_mb": 5.96,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "market_context"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "return_to_range"
+        ],
+        "algorithms": [
+          "strategies_catalog"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "Common attribution for RU edition of this title",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B049",
+      "author": "Curtis Faith",
+      "title": "Trading from Your Gut (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Faith Curtis - Treyding osnovannyy na intuitsii.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Faith Curtis - Treyding osnovannyy na intuitsii.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.01,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B050",
+      "author": "K. Farrell",
+      "title": "Day Trade Online (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Farrell K - Daytrade online.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Farrell K - Daytrade online.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.53,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B051",
+      "author": "Feniks Institute",
+      "title": "Begushchie po grablyam: 10 critical trader mistakes (2016)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Feniks - Begushchie po grablyam 10 oshibok treydera.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Feniks - Begushchie po grablyam 10 oshibok treydera.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.67,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Short brochure from fenixtradingclub.ru",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B052",
+      "author": "D. Ferguson",
+      "title": "Martingale Method (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Ferguson D - Metod Martingeyla.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Ferguson D - Metod Martingeyla.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.1,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Martingale — high-risk concept",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B053",
+      "author": "Jesse Livermore (about)",
+      "title": "Livermore Formula (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Formula Livermora.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Formula Livermora.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 5.76,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B054",
+      "author": "M. Friedfertig, D. West",
+      "title": "Electronic Day Trading (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Friedfertig West - Elektronnaya vnutridnevnaya torgovlya.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Friedfertig West - Elektronnaya vnutridnevnaya torgovlya.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.11,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B055",
+      "author": "A. Gerchik, S. Bychenok",
+      "title": "Active Trader Course (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Gerchik A Bychenok S - Kurs aktivnogo treydera.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Gerchik A Bychenok S - Kurs aktivnogo treydera.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 7.2,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B056",
+      "author": "R. Jones",
+      "title": "The Trading Game (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Jones R - Birzhevaya igra.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Jones R - Birzhevaya igra.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.78,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B057",
+      "author": "Alexander Kurguzkin",
+      "title": "Birzhevoy treyding: sistemnyy podhod (2009)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Kurguzkin A - Birzhevoy treyding sistemnyy podhod.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Kurguzkin A - Birzhevoy treyding sistemnyy podhod.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 1.1,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "market_context"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "return_to_range"
+        ],
+        "algorithms": [
+          "systems"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "Identified from PDF text layer (was Trading Web.pdf)",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B058",
+      "author": "Alexander Kurguzkin",
+      "title": "Labyrinth (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Kurguzkin A - Labyrinth.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Kurguzkin A - Labyrinth.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 1.37,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "market_context"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "return_to_range"
+        ],
+        "algorithms": [
+          "systems"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B059",
+      "author": "Alexander Kurguzkin",
+      "title": "Trading: Game Structure (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Kurguzkin A - Treyding struktura igry.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Kurguzkin A - Treyding struktura igry.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 1.1,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "market_context"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "return_to_range"
+        ],
+        "algorithms": [
+          "systems"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B060",
+      "author": "Charles LeBeau, David Lucas",
+      "title": "Computer Analysis of the Futures Market (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/LeBeau Lucas - Kompyuternyy analiz fyuchersnyh rynkov.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\LeBeau Lucas - Kompyuternyy analiz fyuchersnyh rynkov.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P2",
+      "size_mb": 3.12,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "volatility",
+          "impulse_quality"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "reversal"
+        ],
+        "algorithms": [
+          "indicators",
+          "systems"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "Was mislabeled as Lebo day trading",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B061",
+      "author": "",
+      "title": "Lectures 1–6 (merged)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Lektsii 1-6 merged.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Lektsii 1-6 merged.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.59,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B062",
+      "author": "Kathy Lien",
+      "title": "Prop Trading Secrets (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Lien Kathy - Sekrety prop treydinga.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Lien Kathy - Sekrety prop treydinga.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.46,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B063",
+      "author": "Kathy Lien",
+      "title": "Millionaire Traders (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Lien Kathy - Treydry millionery.fb2",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Lien Kathy - Treydry millionery.fb2",
+      "path_exists": true,
+      "format": "fb2",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.24,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B064",
+      "author": "",
+      "title": "Mechanical Trading Systems (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Mehanicheskie torgovye sistemy.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Mehanicheskie torgovye sistemy.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.18,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B065",
+      "author": "",
+      "title": "Trading Mechanisms (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Mehanizmy treydinga.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Mehanizmy treydinga.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 25.19,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B066",
+      "author": "Erik Nayman",
+      "title": "Buy Cheap Sell Expensive (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Nayman Erik - Kak pokupat deshevo prodavat dorogo.fb2",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Nayman Erik - Kak pokupat deshevo prodavat dorogo.fb2",
+      "path_exists": true,
+      "format": "fb2",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.23,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B067",
+      "author": "Erik Nayman",
+      "title": "Small Trader Encyclopedia (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Nayman Erik - Malaya entsiklopediya treydera.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Nayman Erik - Malaya entsiklopediya treydera.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.58,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B068",
+      "author": "Erik Nayman",
+      "title": "Master Trading (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Nayman Erik - Master trading.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Nayman Erik - Master trading.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 6.6,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B069",
+      "author": "Erik Nayman",
+      "title": "Trader-Investor (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Nayman Erik - Treydr-Investor.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Nayman Erik - Treydr-Investor.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 12.59,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B070",
+      "author": "William O'Neil",
+      "title": "How to Make Money in Stocks (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/ONeil William - Kak delat dengi na fondovom rynke.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\ONeil William - Kak delat dengi na fondovom rynke.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 5.62,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B071",
+      "author": "Robert Pardo",
+      "title": "Design, Testing, and Optimization of Trading Systems (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Pardo Robert - Razrabotka i testirovanie TS.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Pardo Robert - Razrabotka i testirovanie TS.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 1.72,
+      "relevance": {
+        "organs": [
+          "market_context"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout"
+        ],
+        "algorithms": [
+          "systems",
+          "backtest"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research",
+          "overfitting"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B072",
+      "author": "",
+      "title": "Price Action Intraday Crude Oil (Book 1)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Price Action Intraday Crude Oil Book 1.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Price Action Intraday Crude Oil Book 1.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.26,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B073",
+      "author": "Curtis Faith?",
+      "title": "Way of the Turtle (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Put cherepah - iz diletantov v legendarnye treydry.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Put cherepah - iz diletantov v legendarnye treydry.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.82,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B074",
+      "author": "Linda Raschke, Laurence Connors",
+      "title": "Street Smarts (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Raschke Connors - Birzhevye sekrety.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Raschke Connors - Birzhevye sekrety.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.35,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B075",
+      "author": "V.I. Safin",
+      "title": "How to See Money on the Monitor (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Safin V.I. - Kak uvidet dengi na ekrane monitora.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Safin V.I. - Kak uvidet dengi na ekrane monitora.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.46,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B076",
+      "author": "V.I. Safin",
+      "title": "Trader Trading System: Success Factor (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Safin V.I. - Torgovaya sistema treydera Faktor uspeha.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Safin V.I. - Torgovaya sistema treydera Faktor uspeha.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 11.68,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B077",
+      "author": "V.I. Safin",
+      "title": "Intraday System: 5 Points for Success (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Safin V.I. - Vnutridnevnaya TS 5 ballov.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Safin V.I. - Vnutridnevnaya TS 5 ballov.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.25,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B078",
+      "author": "",
+      "title": "Online Stock Trading Secrets (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Sekrety torgovli aktsiyami online.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Sekrety torgovli aktsiyami online.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.63,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B079",
+      "author": "",
+      "title": "Successful Trader School — Course 1",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Shkola uspeshnogo treydera - 1 kurs.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Shkola uspeshnogo treydera - 1 kurs.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.59,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B080",
+      "author": "",
+      "title": "Successful Trader School — Course 2",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Shkola uspeshnogo treydera - 2 kurs.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Shkola uspeshnogo treydera - 2 kurs.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 4.4,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B081",
+      "author": "",
+      "title": "Successful Trader School — Course 3",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Shkola uspeshnogo treydera - 3 kurs.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Shkola uspeshnogo treydera - 3 kurs.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.83,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B082",
+      "author": "Gary Smith",
+      "title": "How I Trade and Invest (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Smith Gary - Kak ya igrayu i vyigryvayu na birzhe.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Smith Gary - Kak ya igrayu i vyigryvayu na birzhe.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 5.59,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B083",
+      "author": "Solabuto",
+      "title": "Trading Systems and Methods (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Solabuto - Treyding torgovye sistemy i metody.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Solabuto - Treyding torgovye sistemy i metody.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.82,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B084",
+      "author": "Stanbridge",
+      "title": "Trader Self-Study Guide (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Stanbridge - Samouchitel treydera.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Stanbridge - Samouchitel treydera.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 4.21,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Filename OCR-fixed",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B085",
+      "author": "Van Tharp",
+      "title": "Super Trader (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Tharp Van - Supertreyder.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Tharp Van - Supertreyder.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 12.34,
+      "relevance": {
+        "organs": [
+          "market_context",
+          "impulse_quality"
+        ],
+        "thinking_families": [
+          "trend_continuation"
+        ],
+        "algorithms": [
+          "process"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B086",
+      "author": "Van Tharp",
+      "title": "Trade Your Way to Financial Freedom (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Tharp Van - Treyding vash put.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Tharp Van - Treyding vash put.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 3.24,
+      "relevance": {
+        "organs": [
+          "market_context",
+          "impulse_quality"
+        ],
+        "thinking_families": [
+          "trend_continuation"
+        ],
+        "algorithms": [
+          "process"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B087",
+      "author": "Van Tharp, Brian June",
+      "title": "Intraday Trading Secrets (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Tharp Van June B - Vnutridnevnyy treyding.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Tharp Van June B - Vnutridnevnyy treyding.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 3.29,
+      "relevance": {
+        "organs": [
+          "market_context",
+          "impulse_quality"
+        ],
+        "thinking_families": [
+          "trend_continuation"
+        ],
+        "algorithms": [
+          "process"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B088",
+      "author": "John Murphy?",
+      "title": "The Visual Investor (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Vizualnyy investor - Kak opredelyat trendy.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Vizualnyy investor - Kak opredelyat trendy.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 2.79,
+      "relevance": {
+        "organs": [
+          "chart_structure",
+          "session_profile"
+        ],
+        "thinking_families": [
+          "trend_continuation",
+          "breakout",
+          "reversal"
+        ],
+        "algorithms": [
+          "ta_toolkit"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B089",
+      "author": "",
+      "title": "HFT Revolution (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Vysokochastotnaya revolyutsiya.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Vysokochastotnaya revolyutsiya.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.68,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B090",
+      "author": "Deborah Weir",
+      "title": "Timing the Markets (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Weir Deborah - Tayming finansovyh rynkov.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Weir Deborah - Tayming finansovyh rynkov.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 7.75,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B091",
+      "author": "Ken Wolff",
+      "title": "Momentum Investing (RU)",
+      "category": "02_trading_systems_practice",
+      "relative_path": "02_trading_systems_practice/Wolff Ken - Momentum Investing.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\02_trading_systems_practice\\Wolff Ken - Momentum Investing.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.51,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B092",
+      "author": "",
+      "title": "Birzha. Budet ne legko (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Birzha - Budet ne legko.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Birzha - Budet ne legko.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 40.58,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Extracted PDF from ZIP; DJVU discarded",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B093",
+      "author": "Connie Bruck",
+      "title": "The Predators' Ball (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Bruck Connie - Bal hishchnikov.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Bruck Connie - Bal hishchnikov.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.5,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B094",
+      "author": "Satyajit Das",
+      "title": "Traders, Guns & Money (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Das Satyajit - Traders Guns and Money.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Das Satyajit - Traders Guns and Money.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.39,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B095",
+      "author": "Max Gunther",
+      "title": "The Zurich Axioms (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Gunther M - Aksromy birzhevogo spekulyanta.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Gunther M - Aksromy birzhevogo spekulyanta.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.92,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B096",
+      "author": "",
+      "title": "Ispoved (unidentified, 354p scan)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Ispoved.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Ispoved.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": true,
+      "core_priority": "REFERENCE",
+      "size_mb": 18.26,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Still unidentified: scanned cover-only image PDF, 354 pages. OCR not available in environment. Open cover manually.",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B097",
+      "author": "Edwin Lefèvre",
+      "title": "Reminiscences of a Stock Operator (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Lefevre Edwin - Vospominaniya birzhevogo spekulyanta.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Lefevre Edwin - Vospominaniya birzhevogo spekulyanta.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.87,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B098",
+      "author": "Michael Lewis",
+      "title": "The Big Short (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Lewis Michael - Bolshaya igra na ponizhenie.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Lewis Michael - Bolshaya igra na ponizhenie.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.94,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Moved from 10_misc; filename had special Unicode spaces",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B099",
+      "author": "Jack Schwager",
+      "title": "Market Wizards (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Schwager Jack - Birzhevye magi.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Schwager Jack - Birzhevye magi.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 31.47,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B100",
+      "author": "Jack Schwager",
+      "title": "Stock Market Wizards (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Schwager Jack - Magi fondovogo rynka.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Schwager Jack - Magi fondovogo rynka.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.43,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B101",
+      "author": "Jack Schwager",
+      "title": "The New Market Wizards (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Schwager Jack - Novye magi rynka.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Schwager Jack - Novye magi rynka.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.09,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B102",
+      "author": "Victor Sperandeo",
+      "title": "Trader Vic II (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Sperandeo Victor - Trader Vic II.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Sperandeo Victor - Trader Vic II.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.01,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B103",
+      "author": "Tolly",
+      "title": "Playing the Short Side (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Tolly - Igra na ponizhenie.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Tolly - Igra na ponizhenie.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 5.9,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B104",
+      "author": "",
+      "title": "Life and Death of the Greatest Speculator (RU)",
+      "category": "03_market_wizards_bios",
+      "relative_path": "03_market_wizards_bios/Zhizn i smert velichayshego spekulyanta.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\03_market_wizards_bios\\Zhizn i smert velichayshego spekulyanta.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.73,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [
+          "narrative"
+        ],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B105",
+      "author": "George Akerlof, Robert Shiller",
+      "title": "Phishing for Phools (RU)",
+      "category": "04_psychology_behavior",
+      "relative_path": "04_psychology_behavior/Akerlof Shiller - Ohota na prostaka.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\04_psychology_behavior\\Akerlof Shiller - Ohota na prostaka.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 4.75,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B106",
+      "author": "Terry Burnham",
+      "title": "Mean Markets and Lizard Brains (RU)",
+      "category": "04_psychology_behavior",
+      "relative_path": "04_psychology_behavior/Burnham Terry - Podlye rynki i mozg yashchera.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\04_psychology_behavior\\Burnham Terry - Podlye rynki i mozg yashchera.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.77,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B107",
+      "author": "David Cohen",
+      "title": "Fear, Greed and Panic (RU)",
+      "category": "04_psychology_behavior",
+      "relative_path": "04_psychology_behavior/Cohen David - Psihologiya fondovogo rynka.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\04_psychology_behavior\\Cohen David - Psihologiya fondovogo rynka.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.16,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B108",
+      "author": "Richard Thaler, Cass Sunstein",
+      "title": "Nudge",
+      "category": "04_psychology_behavior",
+      "relative_path": "04_psychology_behavior/Thaler Sunstein - Nudge.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\04_psychology_behavior\\Thaler Sunstein - Nudge.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.22,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B109",
+      "author": "Peter Bernstein",
+      "title": "Against the Gods (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Bernstein Peter - Protiv bogov.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Bernstein Peter - Protiv bogov.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.12,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B110",
+      "author": "William Bernstein",
+      "title": "The Intelligent Asset Allocator (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Bernstein William - Razumnoe raspredelenie aktivov.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Bernstein William - Razumnoe raspredelenie aktivov.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 4.58,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B111",
+      "author": "M. Chekulaev",
+      "title": "Risk Management (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Chekulaev M - Risk menedzhment.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Chekulaev M - Risk menedzhment.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.26,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B112",
+      "author": "Kenneth Grant",
+      "title": "Trading Risk (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Grant Kenneth - Upravlenie riskami v treydinge.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Grant Kenneth - Upravlenie riskami v treydinge.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 3.03,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "liquidity",
+          "spread_entry_cost"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "risk"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B113",
+      "author": "",
+      "title": "How to Predict Financial Crashes (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Kak predskazyvat krahi fin rynkov.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Kak predskazyvat krahi fin rynkov.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 7.38,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B114",
+      "author": "Nassim Taleb",
+      "title": "The Black Swan (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Taleb Nassim - Chernyy Lebed.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Taleb Nassim - Chernyy Lebed.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 6.73,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "market_context"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "epistemology"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "Extracted from ZIP archive",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B115",
+      "author": "Nassim Taleb",
+      "title": "Fooled by Randomness (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Taleb Nassim - Odurachennye sluchaynostyu.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Taleb Nassim - Odurachennye sluchaynostyu.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 0.55,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "market_context"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "epistemology"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B116",
+      "author": "",
+      "title": "Managing Risk: CCP Clearing (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Upravlyaya riskami - Kliring i CCP.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Upravlyaya riskami - Kliring i CCP.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 5.75,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B117",
+      "author": "Ralph Vince",
+      "title": "The Mathematics of Money Management (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Vince Ralph - Matematika upravleniya kapitalom.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Vince Ralph - Matematika upravleniya kapitalom.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 2.13,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "liquidity"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "money_management"
+        ],
+        "risk": [
+          "risk",
+          "capital"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B118",
+      "author": "",
+      "title": "All About Asset Allocation (RU)",
+      "category": "05_risk_money_management",
+      "relative_path": "05_risk_money_management/Vse o raspredelenii aktivov.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\05_risk_money_management\\Vse o raspredelenii aktivov.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 6.97,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B119",
+      "author": "",
+      "title": "US Stock Market Without the Fluff (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Amerikanskiy fondovyy rynok bez vody.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Amerikanskiy fondovyy rynok bez vody.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 14.15,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B120",
+      "author": "John Bogle",
+      "title": "The Clash of the Cultures (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Bogle John - Investory protiv spekulyantov.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Bogle John - Investory protiv spekulyantov.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.91,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B121",
+      "author": "Philip Fisher",
+      "title": "Common Stocks and Uncommon Profits (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Fisher Philip - Obyknovennye aktsii i neobyknovennye dohodi.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Fisher Philip - Obyknovennye aktsii i neobyknovennye dohodi.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.7,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B122",
+      "author": "",
+      "title": "Fundamental Analysis (large volume)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Fundamentalnyy analiz (sbornik).pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Fundamentalnyy analiz (sbornik).pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 54.38,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "54MB — likely multi-part/scan",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B123",
+      "author": "Benjamin Graham",
+      "title": "Security Analysis (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Graham Benjamin - Analiz tsennyh bumag.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Graham Benjamin - Analiz tsennyh bumag.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 6.5,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B124",
+      "author": "F.A. Hayek",
+      "title": "Hayek on Money",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Hayek F - Money.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Hayek F - Money.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.27,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B125",
+      "author": "Peter Krass",
+      "title": "The Book of Investing Wisdom (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Krass Peter - Kniga investitsionnoy mudrosti.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Krass Peter - Kniga investitsionnoy mudrosti.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 20.19,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B126",
+      "author": "Scott Patterson",
+      "title": "The Quants (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Patterson Scott - Kvanty.docx",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Patterson Scott - Kvanty.docx",
+      "path_exists": true,
+      "format": "docx",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.02,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B127",
+      "author": "",
+      "title": "Securities and Derivatives Market (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Rynok tsennyh bumag i PFI.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Rynok tsennyh bumag i PFI.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 2.08,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B128",
+      "author": "Vera Smith",
+      "title": "The Rationale of Central Banking (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Smith Vera - Proishozhdenie tsentralnyh bankov.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Smith Vera - Proishozhdenie tsentralnyh bankov.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.98,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B129",
+      "author": "K. Tsarikhin",
+      "title": "Fundamental Analysis (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Tsarikhin K - Fundamentalnyy analiz.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Tsarikhin K - Fundamentalnyy analiz.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.48,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Renamed from double .pdf.pdf",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B130",
+      "author": "James Weatherall",
+      "title": "The Physics of Wall Street (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Weatherall James - Fizika fondovogo rynka.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Weatherall James - Fizika fondovogo rynka.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.15,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B131",
+      "author": "R. Yamarone",
+      "title": "The Trader's Guide to Key Economic Indicators (RU)",
+      "category": "06_investing_fundamental",
+      "relative_path": "06_investing_fundamental/Yamarone R - Klyuchevye ekonomicheskie indikatory.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\06_investing_fundamental\\Yamarone R - Klyuchevye ekonomicheskie indikatory.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 5.29,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B132",
+      "author": "Andreas Antonopoulos",
+      "title": "Mastering Bitcoin",
+      "category": "07_crypto_defi",
+      "relative_path": "07_crypto_defi/Antonopoulos Andreas - Mastering Bitcoin.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\07_crypto_defi\\Antonopoulos Andreas - Mastering Bitcoin.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 11.36,
+      "relevance": {
+        "organs": [
+          "funding",
+          "open_interest",
+          "news_events"
+        ],
+        "thinking_families": [
+          "news_impulse_mode"
+        ],
+        "algorithms": [
+          "crypto"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B133",
+      "author": "",
+      "title": "How to DeFi (RU)",
+      "category": "07_crypto_defi",
+      "relative_path": "07_crypto_defi/How to DeFi (Russian).pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\07_crypto_defi\\How to DeFi (Russian).pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 5.24,
+      "relevance": {
+        "organs": [
+          "funding",
+          "open_interest",
+          "news_events"
+        ],
+        "thinking_families": [
+          "news_impulse_mode"
+        ],
+        "algorithms": [
+          "crypto"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B134",
+      "author": "Vladimir Popov",
+      "title": "ICO: Essence, Problems, Law (RU)",
+      "category": "07_crypto_defi",
+      "relative_path": "07_crypto_defi/Popov Vladimir - ICO sushchnost problemy zakon.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\07_crypto_defi\\Popov Vladimir - ICO sushchnost problemy zakon.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 0.79,
+      "relevance": {
+        "organs": [
+          "funding",
+          "open_interest",
+          "news_events"
+        ],
+        "thinking_families": [
+          "news_impulse_mode"
+        ],
+        "algorithms": [
+          "crypto"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B135",
+      "author": "Nathaniel Popper",
+      "title": "Digital Gold (RU)",
+      "category": "07_crypto_defi",
+      "relative_path": "07_crypto_defi/Popper Nathaniel - Tsifrovoe Zoloto.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\07_crypto_defi\\Popper Nathaniel - Tsifrovoe Zoloto.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 33.53,
+      "relevance": {
+        "organs": [
+          "funding",
+          "open_interest",
+          "news_events"
+        ],
+        "thinking_families": [
+          "news_impulse_mode"
+        ],
+        "algorithms": [
+          "crypto"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B136",
+      "author": "Adam Tepper",
+      "title": "Bitcoin and Money (RU)",
+      "category": "07_crypto_defi",
+      "relative_path": "07_crypto_defi/Tepper Adam - Bitcoin i dengi.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\07_crypto_defi\\Tepper Adam - Bitcoin i dengi.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P3",
+      "size_mb": 1.15,
+      "relevance": {
+        "organs": [
+          "funding",
+          "open_interest",
+          "news_events"
+        ],
+        "thinking_families": [
+          "news_impulse_mode"
+        ],
+        "algorithms": [
+          "crypto"
+        ],
+        "risk": [],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "VERY_HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B137",
+      "author": "A. Burenin",
+      "title": "Futures, Forwards and Options Markets (RU)",
+      "category": "08_derivatives_options",
+      "relative_path": "08_derivatives_options/Burenin A - Fyuchersnye forvardnye i optsionnye rynki.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\08_derivatives_options\\Burenin A - Fyuchersnye forvardnye i optsionnye rynki.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P2",
+      "size_mb": 1.42,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "funding",
+          "open_interest"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "volatility",
+          "derivatives"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B138",
+      "author": "M. Chekulaev",
+      "title": "Trading Volatility (alt version, RU)",
+      "category": "08_derivatives_options",
+      "relative_path": "08_derivatives_options/Chekulaev M - Torgovlya volatilnostyu (alt).doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\08_derivatives_options\\Chekulaev M - Torgovlya volatilnostyu (alt).doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "P2",
+      "size_mb": 0.46,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "funding",
+          "open_interest"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "volatility",
+          "derivatives"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "Alternate scan/version — different SHA256 from main copy; both kept",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B139",
+      "author": "M. Chekulaev",
+      "title": "Trading Volatility (RU)",
+      "category": "08_derivatives_options",
+      "relative_path": "08_derivatives_options/Chekulaev M - Torgovlya volatilnostyu.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\08_derivatives_options\\Chekulaev M - Torgovlya volatilnostyu.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "P2",
+      "size_mb": 0.41,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "funding",
+          "open_interest"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "volatility",
+          "derivatives"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "Moved from _review_duplicates; pair with (alt) — different hashes",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B140",
+      "author": "Kevin Connolly",
+      "title": "Buying and Selling Volatility (RU)",
+      "category": "08_derivatives_options",
+      "relative_path": "08_derivatives_options/Connolly K - Pokupka i prodazha volatilnosti.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\08_derivatives_options\\Connolly K - Pokupka i prodazha volatilnosti.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P2",
+      "size_mb": 9.46,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "funding",
+          "open_interest"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "volatility",
+          "derivatives"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B141",
+      "author": "A. Feldman",
+      "title": "Derivatives: Financial and Commodity (RU)",
+      "category": "08_derivatives_options",
+      "relative_path": "08_derivatives_options/Feldman A - Proizvodnye finansovye i tovarnye instrumenty.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\08_derivatives_options\\Feldman A - Proizvodnye finansovye i tovarnye instrumenty.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "P2",
+      "size_mb": 3.03,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "funding",
+          "open_interest"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "volatility",
+          "derivatives"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B142",
+      "author": "A. Shvedov",
+      "title": "Interest Rate Instruments: Pricing & Hedging (RU)",
+      "category": "08_derivatives_options",
+      "relative_path": "08_derivatives_options/Shvedov A - Protsentnye instrumenty otsenka i hedzhirovanie.djvu",
+      "absolute_path": "D:\\genessis\\architecture\\books\\08_derivatives_options\\Shvedov A - Protsentnye instrumenty otsenka i hedzhirovanie.djvu",
+      "path_exists": true,
+      "format": "djvu",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "P2",
+      "size_mb": 0.85,
+      "relevance": {
+        "organs": [
+          "volatility",
+          "funding",
+          "open_interest"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "volatility",
+          "derivatives"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B143",
+      "author": "Cory Althoff",
+      "title": "Self-Taught Computer Scientist (RU)",
+      "category": "09_programming_quant",
+      "relative_path": "09_programming_quant/Althoff Cory - Computer Science dlya programmista samouchki.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\09_programming_quant\\Althoff Cory - Computer Science dlya programmista samouchki.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 3.1,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B144",
+      "author": "Mikhail Flenov",
+      "title": "C# Bible 4th ed. 2019 (RU)",
+      "category": "09_programming_quant",
+      "relative_path": "09_programming_quant/Flenov Mikhail - Bibliya C Sharp 4e izd 2019.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\09_programming_quant\\Flenov Mikhail - Bibliya C Sharp 4e izd 2019.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 10.58,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B145",
+      "author": "Marcos Lopez de Prado",
+      "title": "Advances in Financial ML / Mashinnoe obuchenie: algoritmy dlya biznesa (RU)",
+      "category": "09_programming_quant",
+      "relative_path": "09_programming_quant/Lopez de Prado Marcos - Mashinnoe obuchenie algoritmy dlya biznesa.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\09_programming_quant\\Lopez de Prado Marcos - Mashinnoe obuchenie algoritmy dlya biznesa.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "P1",
+      "size_mb": 9.37,
+      "relevance": {
+        "organs": [
+          "market_context",
+          "volatility"
+        ],
+        "thinking_families": [],
+        "algorithms": [
+          "ml",
+          "meta_labeling"
+        ],
+        "risk": [
+          "risk"
+        ],
+        "research": [
+          "research",
+          "overfitting",
+          "feature_hygiene"
+        ]
+      },
+      "crowd_exposure": "HIGH",
+      "notes": "Identified: Lopez de Prado; Piter 2019, 432p. Key for market architecture / ML research stack.",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B146",
+      "author": "",
+      "title": "Programming in Rust (RU)",
+      "category": "09_programming_quant",
+      "relative_path": "09_programming_quant/Programmirovanie na Rust.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\09_programming_quant\\Programmirovanie na Rust.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 6.4,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B147",
+      "author": "Matt Weisfeld",
+      "title": "The Object-Oriented Thought Process (RU)",
+      "category": "09_programming_quant",
+      "relative_path": "09_programming_quant/Weisfeld Matt - Obektno-orientirovannyy podhod.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\09_programming_quant\\Weisfeld Matt - Obektno-orientirovannyy podhod.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 17.15,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B148",
+      "author": "Alexander Davidson",
+      "title": "Sliding on the Edge of the Stock Market (RU)",
+      "category": "10_misc",
+      "relative_path": "10_misc/Davidson Alexander - Skolzyashchiy po lezviyu fondovogo rynka.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\10_misc\\Davidson Alexander - Skolzyashchiy po lezviyu fondovogo rynka.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.98,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Identified from DOC text; RU translation by A. Shmatov",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B149",
+      "author": "Maxim Kotin",
+      "title": "Geeks Do Business Too (RU)",
+      "category": "10_misc",
+      "relative_path": "10_misc/Kotin Maxim - I botaniki delayut biznes.pdf",
+      "absolute_path": "D:\\genessis\\architecture\\books\\10_misc\\Kotin Maxim - I botaniki delayut biznes.pdf",
+      "path_exists": true,
+      "format": "pdf",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.7,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B150",
+      "author": "Karl Popper",
+      "title": "The Logic of Scientific Discovery (RU)",
+      "category": "10_misc",
+      "relative_path": "10_misc/Popper Karl - Logika nauchnogo issledovaniya.fb2",
+      "absolute_path": "D:\\genessis\\architecture\\books\\10_misc\\Popper Karl - Logika nauchnogo issledovaniya.fb2",
+      "path_exists": true,
+      "format": "fb2",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": true,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 0.09,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    },
+    {
+      "source_id": "B151",
+      "author": "Michael Ridpath",
+      "title": "Free to Trade / Vse prodaetsya (RU)",
+      "category": "10_misc",
+      "relative_path": "10_misc/Ridpath Michael - Vse prodaetsya.doc",
+      "absolute_path": "D:\\genessis\\architecture\\books\\10_misc\\Ridpath Michael - Vse prodaetsya.doc",
+      "path_exists": true,
+      "format": "doc",
+      "language": "ru_or_mixed",
+      "copyright_status": "UNKNOWN",
+      "commercial_source": true,
+      "text_extractable": false,
+      "ocr_required": false,
+      "core_priority": "REFERENCE",
+      "size_mb": 1.71,
+      "relevance": {
+        "organs": [],
+        "thinking_families": [],
+        "algorithms": [],
+        "risk": [],
+        "research": []
+      },
+      "crowd_exposure": "MEDIUM",
+      "notes": "Fiction thriller (not psychology textbook). Identified from DOC text.",
+      "evidence_class_default": "LITERATURE_CLAIM",
+      "production_influence": false
+    }
+  ]
+}

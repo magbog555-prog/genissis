@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "error_count": 0,
+  "warning_count": 0,
+  "errors": [],
+  "warnings": [],
+  "counts": {
+    "sources": 151,
+    "concepts": 21,
+    "organs": 15,
+    "families": 8,
+    "citations": 92,
+    "algorithms": 8,
+    "hypotheses": 22
+  }
+}

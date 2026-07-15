@@ -1,0 +1,647 @@
+﻿[
+    {
+        "tag":  "algo",
+        "count":  1,
+        "ids":  "B042"
+    },
+    {
+        "tag":  "alt-version",
+        "count":  1,
+        "ids":  "B139"
+    },
+    {
+        "tag":  "anthology",
+        "count":  1,
+        "ids":  "B126"
+    },
+    {
+        "tag":  "asset-allocation",
+        "count":  2,
+        "ids":  "B111,B119"
+    },
+    {
+        "tag":  "axioms",
+        "count":  1,
+        "ids":  "B095"
+    },
+    {
+        "tag":  "backtest",
+        "count":  1,
+        "ids":  "B071"
+    },
+    {
+        "tag":  "behavior",
+        "count":  3,
+        "ids":  "B105,B106,B108"
+    },
+    {
+        "tag":  "bio",
+        "count":  1,
+        "ids":  "B104"
+    },
+    {
+        "tag":  "bitcoin",
+        "count":  3,
+        "ids":  "B133,B136,B137"
+    },
+    {
+        "tag":  "black-swan",
+        "count":  1,
+        "ids":  "B115"
+    },
+    {
+        "tag":  "bogle",
+        "count":  1,
+        "ids":  "B121"
+    },
+    {
+        "tag":  "bollinger",
+        "count":  1,
+        "ids":  "B005"
+    },
+    {
+        "tag":  "brochure",
+        "count":  1,
+        "ids":  "B051"
+    },
+    {
+        "tag":  "business",
+        "count":  1,
+        "ids":  "B149"
+    },
+    {
+        "tag":  "candles",
+        "count":  5,
+        "ids":  "B023,B025,B026,B029,B039"
+    },
+    {
+        "tag":  "caution",
+        "count":  1,
+        "ids":  "B052"
+    },
+    {
+        "tag":  "central-banking",
+        "count":  1,
+        "ids":  "B129"
+    },
+    {
+        "tag":  "chaos",
+        "count":  1,
+        "ids":  "B034"
+    },
+    {
+        "tag":  "classic",
+        "count":  1,
+        "ids":  "B097"
+    },
+    {
+        "tag":  "clearing",
+        "count":  1,
+        "ids":  "B117"
+    },
+    {
+        "tag":  "colby",
+        "count":  1,
+        "ids":  "B013"
+    },
+    {
+        "tag":  "core",
+        "count":  1,
+        "ids":  "B133"
+    },
+    {
+        "tag":  "course",
+        "count":  6,
+        "ids":  "B051,B061,B079,B080,B081,B084"
+    },
+    {
+        "tag":  "crashes",
+        "count":  1,
+        "ids":  "B114"
+    },
+    {
+        "tag":  "crisis",
+        "count":  1,
+        "ids":  "B098"
+    },
+    {
+        "tag":  "cs",
+        "count":  1,
+        "ids":  "B144"
+    },
+    {
+        "tag":  "csharp",
+        "count":  1,
+        "ids":  "B145"
+    },
+    {
+        "tag":  "das",
+        "count":  1,
+        "ids":  "B094"
+    },
+    {
+        "tag":  "datamining",
+        "count":  1,
+        "ids":  "B001"
+    },
+    {
+        "tag":  "daytrading",
+        "count":  2,
+        "ids":  "B040,B050"
+    },
+    {
+        "tag":  "defi",
+        "count":  1,
+        "ids":  "B134"
+    },
+    {
+        "tag":  "demark",
+        "count":  1,
+        "ids":  "B010"
+    },
+    {
+        "tag":  "derivatives",
+        "count":  2,
+        "ids":  "B138,B142"
+    },
+    {
+        "tag":  "derivatives-narrative",
+        "count":  1,
+        "ids":  "B094"
+    },
+    {
+        "tag":  "diary",
+        "count":  1,
+        "ids":  "B045"
+    },
+    {
+        "tag":  "dinapoli",
+        "count":  1,
+        "ids":  "B011"
+    },
+    {
+        "tag":  "divergence",
+        "count":  1,
+        "ids":  "B031"
+    },
+    {
+        "tag":  "elder",
+        "count":  2,
+        "ids":  "B046,B047"
+    },
+    {
+        "tag":  "elliott",
+        "count":  5,
+        "ids":  "B006,B012,B016,B020,B030"
+    },
+    {
+        "tag":  "fibonacci",
+        "count":  2,
+        "ids":  "B014,B015"
+    },
+    {
+        "tag":  "fisher",
+        "count":  1,
+        "ids":  "B122"
+    },
+    {
+        "tag":  "footprint",
+        "count":  1,
+        "ids":  "B009"
+    },
+    {
+        "tag":  "forex",
+        "count":  4,
+        "ids":  "B036,B037,B038,B062"
+    },
+    {
+        "tag":  "fractals",
+        "count":  2,
+        "ids":  "B003,B027"
+    },
+    {
+        "tag":  "frost",
+        "count":  1,
+        "ids":  "B016"
+    },
+    {
+        "tag":  "fundamental",
+        "count":  2,
+        "ids":  "B123,B130"
+    },
+    {
+        "tag":  "futures",
+        "count":  1,
+        "ids":  "B060"
+    },
+    {
+        "tag":  "gann",
+        "count":  1,
+        "ids":  "B018"
+    },
+    {
+        "tag":  "gerchik",
+        "count":  1,
+        "ids":  "B055"
+    },
+    {
+        "tag":  "gold",
+        "count":  1,
+        "ids":  "B012"
+    },
+    {
+        "tag":  "graham",
+        "count":  1,
+        "ids":  "B124"
+    },
+    {
+        "tag":  "growth",
+        "count":  1,
+        "ids":  "B122"
+    },
+    {
+        "tag":  "harmonic",
+        "count":  1,
+        "ids":  "B007"
+    },
+    {
+        "tag":  "hayek",
+        "count":  1,
+        "ids":  "B125"
+    },
+    {
+        "tag":  "hedging",
+        "count":  2,
+        "ids":  "B045,B143"
+    },
+    {
+        "tag":  "hft",
+        "count":  1,
+        "ids":  "B089"
+    },
+    {
+        "tag":  "history",
+        "count":  2,
+        "ids":  "B093,B136"
+    },
+    {
+        "tag":  "ichimoku",
+        "count":  1,
+        "ids":  "B019"
+    },
+    {
+        "tag":  "ico",
+        "count":  1,
+        "ids":  "B135"
+    },
+    {
+        "tag":  "index",
+        "count":  1,
+        "ids":  "B121"
+    },
+    {
+        "tag":  "indicators",
+        "count":  2,
+        "ids":  "B013,B132"
+    },
+    {
+        "tag":  "intraday",
+        "count":  4,
+        "ids":  "B054,B072,B077,B087"
+    },
+    {
+        "tag":  "kelly",
+        "count":  1,
+        "ids":  "B118"
+    },
+    {
+        "tag":  "kurguzkin",
+        "count":  3,
+        "ids":  "B057,B058,B059"
+    },
+    {
+        "tag":  "large",
+        "count":  1,
+        "ids":  "B001"
+    },
+    {
+        "tag":  "lebeau",
+        "count":  1,
+        "ids":  "B060"
+    },
+    {
+        "tag":  "lectures",
+        "count":  1,
+        "ids":  "B061"
+    },
+    {
+        "tag":  "lewis",
+        "count":  1,
+        "ids":  "B098"
+    },
+    {
+        "tag":  "livermore",
+        "count":  3,
+        "ids":  "B053,B097,B104"
+    },
+    {
+        "tag":  "macro",
+        "count":  2,
+        "ids":  "B125,B132"
+    },
+    {
+        "tag":  "market-profile",
+        "count":  2,
+        "ids":  "B008,B009"
+    },
+    {
+        "tag":  "markets",
+        "count":  1,
+        "ids":  "B128"
+    },
+    {
+        "tag":  "martingale",
+        "count":  1,
+        "ids":  "B052"
+    },
+    {
+        "tag":  "ml",
+        "count":  2,
+        "ids":  "B001,B146"
+    },
+    {
+        "tag":  "momentum",
+        "count":  2,
+        "ids":  "B022,B091"
+    },
+    {
+        "tag":  "money-management",
+        "count":  1,
+        "ids":  "B118"
+    },
+    {
+        "tag":  "murphy",
+        "count":  1,
+        "ids":  "B024"
+    },
+    {
+        "tag":  "narrative",
+        "count":  4,
+        "ids":  "B092,B098,B127,B151"
+    },
+    {
+        "tag":  "nayman",
+        "count":  4,
+        "ids":  "B066,B067,B068,B069"
+    },
+    {
+        "tag":  "needs-review",
+        "count":  4,
+        "ids":  "B096,B109,B146,B151"
+    },
+    {
+        "tag":  "nison",
+        "count":  2,
+        "ids":  "B025,B026"
+    },
+    {
+        "tag":  "nudge",
+        "count":  1,
+        "ids":  "B108"
+    },
+    {
+        "tag":  "oil",
+        "count":  1,
+        "ids":  "B072"
+    },
+    {
+        "tag":  "oneil",
+        "count":  1,
+        "ids":  "B070"
+    },
+    {
+        "tag":  "oop",
+        "count":  1,
+        "ids":  "B148"
+    },
+    {
+        "tag":  "options",
+        "count":  3,
+        "ids":  "B139,B140,B141"
+    },
+    {
+        "tag":  "patterns",
+        "count":  1,
+        "ids":  "B028"
+    },
+    {
+        "tag":  "philosophy",
+        "count":  1,
+        "ids":  "B150"
+    },
+    {
+        "tag":  "pnf",
+        "count":  1,
+        "ids":  "B021"
+    },
+    {
+        "tag":  "practice",
+        "count":  2,
+        "ids":  "B056,B082"
+    },
+    {
+        "tag":  "prechter",
+        "count":  1,
+        "ids":  "B016"
+    },
+    {
+        "tag":  "price-action",
+        "count":  1,
+        "ids":  "B072"
+    },
+    {
+        "tag":  "prop",
+        "count":  2,
+        "ids":  "B062,B063"
+    },
+    {
+        "tag":  "psychology",
+        "count":  3,
+        "ids":  "B051,B064,B107"
+    },
+    {
+        "tag":  "quant",
+        "count":  2,
+        "ids":  "B001,B127"
+    },
+    {
+        "tag":  "quant-history",
+        "count":  1,
+        "ids":  "B131"
+    },
+    {
+        "tag":  "raschke",
+        "count":  1,
+        "ids":  "B074"
+    },
+    {
+        "tag":  "rates",
+        "count":  1,
+        "ids":  "B143"
+    },
+    {
+        "tag":  "risk",
+        "count":  6,
+        "ids":  "B112,B113,B114,B115,B116,B117"
+    },
+    {
+        "tag":  "risk-history",
+        "count":  1,
+        "ids":  "B110"
+    },
+    {
+        "tag":  "robots",
+        "count":  1,
+        "ids":  "B042"
+    },
+    {
+        "tag":  "rust",
+        "count":  1,
+        "ids":  "B147"
+    },
+    {
+        "tag":  "safin",
+        "count":  4,
+        "ids":  "B029,B075,B076,B077"
+    },
+    {
+        "tag":  "schwager",
+        "count":  4,
+        "ids":  "B032,B099,B100,B101"
+    },
+    {
+        "tag":  "science",
+        "count":  1,
+        "ids":  "B150"
+    },
+    {
+        "tag":  "shorting",
+        "count":  1,
+        "ids":  "B103"
+    },
+    {
+        "tag":  "sperandeo",
+        "count":  1,
+        "ids":  "B102"
+    },
+    {
+        "tag":  "startup",
+        "count":  1,
+        "ids":  "B149"
+    },
+    {
+        "tag":  "stats",
+        "count":  1,
+        "ids":  "B041"
+    },
+    {
+        "tag":  "stocks",
+        "count":  2,
+        "ids":  "B070,B078"
+    },
+    {
+        "tag":  "strategies",
+        "count":  1,
+        "ids":  "B048"
+    },
+    {
+        "tag":  "systems",
+        "count":  12,
+        "ids":  "B039,B048,B057,B058,B059,B060,B064,B065,B071,B074,B076,B083"
+    },
+    {
+        "tag":  "ta",
+        "count":  36,
+        "ids":  "B002,B003,B004,B005,B006,B007,B008,B009,B010,B011,B012,B013,B014,B015,B016,B017,B018,B019,B020,B021,B022,B023,B024,B025,B026,B027,B028,B029,B030,B031,B032,B033,B034,B035,B060,B088"
+    },
+    {
+        "tag":  "taleb",
+        "count":  2,
+        "ids":  "B115,B116"
+    },
+    {
+        "tag":  "textbook",
+        "count":  1,
+        "ids":  "B128"
+    },
+    {
+        "tag":  "tharp",
+        "count":  3,
+        "ids":  "B085,B086,B087"
+    },
+    {
+        "tag":  "timing",
+        "count":  1,
+        "ids":  "B090"
+    },
+    {
+        "tag":  "trading",
+        "count":  1,
+        "ids":  "B092"
+    },
+    {
+        "tag":  "trend-following",
+        "count":  2,
+        "ids":  "B043,B044"
+    },
+    {
+        "tag":  "trends",
+        "count":  1,
+        "ids":  "B088"
+    },
+    {
+        "tag":  "turtles",
+        "count":  3,
+        "ids":  "B044,B049,B073"
+    },
+    {
+        "tag":  "unidentified",
+        "count":  1,
+        "ids":  "B096"
+    },
+    {
+        "tag":  "us-markets",
+        "count":  1,
+        "ids":  "B120"
+    },
+    {
+        "tag":  "value",
+        "count":  1,
+        "ids":  "B124"
+    },
+    {
+        "tag":  "volatility",
+        "count":  3,
+        "ids":  "B139,B140,B141"
+    },
+    {
+        "tag":  "vsa",
+        "count":  1,
+        "ids":  "B035"
+    },
+    {
+        "tag":  "williams",
+        "count":  3,
+        "ids":  "B033,B034,B035"
+    },
+    {
+        "tag":  "wizards",
+        "count":  3,
+        "ids":  "B099,B100,B101"
+    },
+    {
+        "tag":  "wyckoff",
+        "count":  1,
+        "ids":  "B017"
+    }
+]
