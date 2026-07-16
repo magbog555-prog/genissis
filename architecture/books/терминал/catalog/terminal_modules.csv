@@ -1,0 +1,55 @@
+id,category,kind,title,purpose,genesis_organs,priority,notes,format,size_mb,relative_path,original_name
+T001,03_time_datetime,datetime,Time - Add Subtract,Add/subtract time intervals,session_profile;market_tempo,P2,,rar,0.056,03_time_datetime/Time - Add Subtract.rar,AddSubtractTime.rar
+T002,01_indicators,indicator,Indicator - Bollinger Bands Channel,Bollinger channel envelope,chart_structure;volatility,P2,,zip,0.179,01_indicators/Indicator - Bollinger Bands Channel.zip,BollingerBands_канал.zip
+T003,02_trade_control,trade_guard,Trade - Check Trade Settings,Pre-trade settings validation cube,spread_entry_cost;liquidity,P1,Useful pattern for readiness gates (research only),rar,0.143,02_trade_control/Trade - Check Trade Settings.rar,CheckTradeSettings.rar
+T004,04_risk_money_stats,costs,Money - Commission Advanced,Advanced commission model,spread_entry_cost,P1,Cost realism for research backtests,rar,0.082,04_risk_money_stats/Money - Commission Advanced.rar,ComissionAdv.rar
+T005,04_risk_money_stats,stats,Stats - Correlation,Correlation block,cross_symbol_correlation,P2,,rar,0.098,04_risk_money_stats/Stats - Correlation.rar,Correlation.rar
+T006,03_time_datetime,datetime,Time - DateTime Constant,Datetime constant source,session_profile,P3,,rar,0.089,03_time_datetime/Time - DateTime Constant.rar,DateTimeConstant.rar
+T007,04_risk_money_stats,pnl,Money - Income For Period,Income over period,market_context,P2,,rar,0.382,04_risk_money_stats/Money - Income For Period.rar,Dohod_za_Period.rar
+T008,03_time_datetime,datetime,Time - Double To Text Date,Numeric date to text,session_profile,P3,,rar,0.015,03_time_datetime/Time - Double To Text Date.rar,DoubleToTextDate.rar
+T009,04_risk_money_stats,risk,Risk - Balance Control,Balance / equity control helper,liquidity;volatility,P1,,rar,0.11,04_risk_money_stats/Risk - Balance Control.rar,gaaDifferent_BalanceControl.rar
+T010,04_risk_money_stats,risk,Risk - Ticket Risk Data,Per-ticket risk data block,spread_entry_cost;liquidity,P1,,rar,0.044,04_risk_money_stats/Risk - Ticket Risk Data.rar,gaaMarketData_TicketRiskData.rar
+T011,04_risk_money_stats,stats,Stats - Period Statistic,Period statistics aggregation,market_context;volatility,P2,,rar,0.207,04_risk_money_stats/Stats - Period Statistic.rar,gaaStatData_PeriodStatistic.rar
+T012,05_data_io_utils,state,Data - Inter Recalc Memorizer,Memoization across recalculation,market_tempo,P1,Observer continuity / state pattern analog,rar,0.064,05_data_io_utils/Data - Inter Recalc Memorizer.rar,InterRecalcMemorizer.rar
+T013,02_trade_control,trade_state,Trade - Is Position Long Short,Position side detector,market_context,P2,,rar,0.085,02_trade_control/Trade - Is Position Long Short.rar,IsPositionLong_Short.rar
+T014,02_trade_control,trade_guard,Trade - Is Ready For Trade,Ready-to-trade predicate,spread_entry_cost;liquidity,P1,,rar,0.097,02_trade_control/Trade - Is Ready For Trade.rar,IsReadyForTrade.rar
+T015,02_trade_control,trade_state,Trade - Locked Money,Locked margin/money observation,liquidity,P2,,rar,0.019,02_trade_control/Trade - Locked Money.rar,LockedMoney3.rar
+T016,01_indicators,indicator,Indicator - LSMA,Least Squares Moving Average,chart_structure,P3,,zip,0.106,01_indicators/Indicator - LSMA.zip,LSMA-Индикатор.zip
+T017,01_indicators,indicator,Indicator - MFI,Money Flow Index,chart_structure;impulse_quality,P3,,zip,0.181,01_indicators/Indicator - MFI.zip,MFI_Индикатор TSLab.zip
+T018,01_indicators,indicator,Indicator - PMA,PMA indicator block,chart_structure,P3,,rar,0.145,01_indicators/Indicator - PMA.rar,PMA_IndicatorTsLab.rar
+T019,02_trade_control,trade_state,Trade - Positions Info,Open positions information,market_context,P2,,rar,0.047,02_trade_control/Trade - Positions Info.rar,PositionsInfo.rar
+T020,05_data_io_utils,tempo,Tempo - Random Metronome,Random metronome tick source,market_tempo,P3,,rar,0.07,05_data_io_utils/Tempo - Random Metronome.rar,RandomMetronome.rar
+T021,01_indicators,indicator,Indicator - SMA Adaptive Period,SMA with adaptive period,chart_structure;volatility,P2,,rar,0.001,01_indicators/Indicator - SMA Adaptive Period.rar,SMAсАдаптивнымПериодом.rar
+T022,04_risk_money_stats,stats,Stats - Smirnov Coefficient,Smirnov coefficient block,market_context,P3,,rar,0.045,04_risk_money_stats/Stats - Smirnov Coefficient.rar,SmirnovCoef.rar
+T023,03_time_datetime,datetime,Time - System Date,System date block,session_profile,P3,,rar,0.066,03_time_datetime/Time - System Date.rar,SystemDate.rar
+T024,04_risk_money_stats,stats,Stats - Trades Distribution,Trade distribution analytics,market_context,P2,,rar,0.114,04_risk_money_stats/Stats - Trades Distribution.rar,TradesDistribution.rar
+T025,04_risk_money_stats,logging,Stats - Trades Logger,Trades logging cube,market_context,P2,,rar,0.076,04_risk_money_stats/Stats - Trades Logger.rar,TradesLoger.rar
+T026,07_toolkits_bundles,toolkit,Bundle - TSBTD v1.0,TSBTD toolkit v1.0,market_context,P3,,rar,2.471,07_toolkits_bundles/Bundle - TSBTD v1.0.rar,TSBTD v1.0.rar
+T027,07_toolkits_bundles,toolkit,Bundle - TsLab Mega Toolzer,Large multi-tool pack,market_context,P2,Inspect before reuse; treat as vendor bundle,rar,8.371,07_toolkits_bundles/Bundle - TsLab Mega Toolzer.rar,TsLabMegaTulzer.rar
+T028,01_indicators,indicator,Indicator - Volatility Index,Volatility index sensor,volatility,P2,,rar,0.004,01_indicators/Indicator - Volatility Index.rar,VolatilityIndex.rar
+T029,01_indicators,indicator,Indicator - VWAP,Volume Weighted Average Price,session_profile;chart_structure,P2,,rar,0.157,01_indicators/Indicator - VWAP.rar,VWAP_ind.rar
+T030,05_data_io_utils,util,Data - Sec To Text Instrument Name,Security to readable name,market_context,P3,,zip,0.041,05_data_io_utils/Data - Sec To Text Instrument Name.zip,Блок показывает название инструмента SecToText.zip
+T031,02_trade_control,env_guard,Trade - Is Lab Mode,Lab vs live mode discriminator,market_context,P1,Critical hygiene: never mix lab and live semantics,rar,0.056,02_trade_control/Trade - Is Lab Mode.rar,Блок_IsLabMode.rar
+T032,06_messaging_ui,ui,UI - Message Advanced,Advanced message/notification block,news_events,P3,,rar,0.144,06_messaging_ui/UI - Message Advanced.rar,БлокСообщение_MessageAdv.rar
+T033,03_time_datetime,datetime,Time - Date Normalized Text,Human-readable date format,session_profile,P3,,rar,0.008,03_time_datetime/Time - Date Normalized Text.rar,ДатаВнормальномВиде.rar
+T034,02_trade_control,trade_flow,Trade - Dual Exit Cube,Block with two exit paths,impulse_quality,P3,,rar,0.001,02_trade_control/Trade - Dual Exit Cube.rar,ДваВыходаИзКубика.rar
+T035,05_data_io_utils,util,Data - Dividers,Divider utilities pack,chart_structure,P3,,rar,0.502,05_data_io_utils/Data - Dividers.rar,Делители.rar
+T036,05_data_io_utils,io,Data - Write To File,File writer block,market_context,P2,,rar,0.188,05_data_io_utils/Data - Write To File.rar,ЗаписьВфайл.rar
+T037,01_indicators,indicator,Indicator - DiNapoli Stochastic,DiNapoli stochastic script,chart_structure,P2,,tscript,0.025,01_indicators/Indicator - DiNapoli Stochastic.tscript,Индикатор DiNapoli Stochastic.tscript
+T038,01_indicators,indicator,Indicator - EMA,EMA block,chart_structure,P3,,rar,0.65,01_indicators/Indicator - EMA.rar,Индикатор_EMA_в_TSLab.rar
+T039,01_indicators,indicator,Indicator - SMA,SMA block,chart_structure,P3,,rar,0.369,01_indicators/Indicator - SMA.rar,Индикатор_SMA.rar
+T040,04_risk_money_stats,pnl,Money - Income Counter Indicator,Income counting indicator,market_context,P3,,zip,0.009,04_risk_money_stats/Money - Income Counter Indicator.zip,Индикатор_Подсчет_дохода.zip
+T041,03_time_datetime,datetime,Time - Intervals Between Dates,Date interval calculator,session_profile,P3,,rar,0.232,03_time_datetime/Time - Intervals Between Dates.rar,ИнтерваловМеждуДатами.rar
+T042,05_data_io_utils,util,Data - Value Getter Cube,Generic value getter,market_context,P3,,rar,0.04,05_data_io_utils/Data - Value Getter Cube.rar,кубик для получения значений.rar
+T043,03_time_datetime,bar_state,Time - Is Last Bar,Detect last bar in series,chart_structure;market_tempo,P1,Important for look-ahead hygiene analogies,rar,0.196,03_time_datetime/Time - Is Last Bar.rar,кубик_IsLastBar.rar
+T044,03_time_datetime,datetime,Time - System Time,System clock block,market_tempo;session_profile,P2,,rar,0.079,03_time_datetime/Time - System Time.rar,Кубик_SystemTime.rar
+T045,03_time_datetime,datetime,Time - Bar Date,Bar date extraction,session_profile;chart_structure,P2,,rar,0.092,03_time_datetime/Time - Bar Date.rar,КубикBarDate.rar
+T046,06_messaging_ui,ui,UI - Ruler,Chart ruler tool,chart_structure,P3,,zip,0.149,06_messaging_ui/UI - Ruler.zip,Линейка_в_TSLab.zip
+T047,05_data_io_utils,tempo,Tempo - Metronomes Pack,Metronome utility pack,market_tempo,P3,,rar,0.05,05_data_io_utils/Tempo - Metronomes Pack.rar,Метраномы для TSLab.rar
+T048,07_toolkits_bundles,update,Bundle - Update 2021-03-31,Dated update pack,market_context,P3,Legacy dated bundle,rar,0.495,07_toolkits_bundles/Bundle - Update 2021-03-31.rar,Обновление 31_03_2021.rar
+T049,03_time_datetime,alert,Time - Expiry Date Alert,Instrument expiry date notification,news_events;session_profile,P2,,rar,0.004,03_time_datetime/Time - Expiry Date Alert.rar,ОповещениеДатаЭкспирация.rar
+T050,04_risk_money_stats,costs,Money - Commission Example,Commission calculation example,spread_entry_cost,P2,,rar,0.001,04_risk_money_stats/Money - Commission Example.rar,ПримерРасчетаКомиссии.rar
+T051,06_messaging_ui,ui,UI - Drawing Code,Drawing helpers in TSLab,chart_structure,P3,,zip,0.003,06_messaging_ui/UI - Drawing Code.zip,Рисования_в_тслаб_код.zip
+T052,01_indicators,indicator,Indicator - Up Down Counter,Rise/fall bar counter,chart_structure;impulse_quality,P3,,rar,0.002,01_indicators/Indicator - Up Down Counter.rar,Счетчик_Рост_Падение_ind.rar
+T053,02_trade_control,trade_timing,Trade - Interval Minutes,Trading interval in minutes,session_profile;market_tempo,P2,,rar,0.027,02_trade_control/Trade - Interval Minutes.rar,Торговый_интервал_в_минуты.rar
+T054,08_connectivity,connectivity,Connectivity - OKX API Ping Checker,OKX API latency/ping checker,spread_entry_cost;market_tempo,P1,Exchange health probe pattern for GENESIS connectivity research,rar,3.386,08_connectivity/Connectivity - OKX API Ping Checker.rar,чекер пинга к OKX api.rar

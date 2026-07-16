@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-07-16T00:14:35.536136+00:00",
+  "total": 54,
+  "by_category": [
+    {
+      "category": "01_indicators",
+      "count": 11,
+      "size_mb": 1.82
+    },
+    {
+      "category": "02_trade_control",
+      "count": 8,
+      "size_mb": 0.47
+    },
+    {
+      "category": "03_time_datetime",
+      "count": 10,
+      "size_mb": 0.84
+    },
+    {
+      "category": "04_risk_money_stats",
+      "count": 11,
+      "size_mb": 1.17
+    },
+    {
+      "category": "05_data_io_utils",
+      "count": 7,
+      "size_mb": 0.96
+    },
+    {
+      "category": "06_messaging_ui",
+      "count": 3,
+      "size_mb": 0.3
+    },
+    {
+      "category": "07_toolkits_bundles",
+      "count": 3,
+      "size_mb": 11.34
+    },
+    {
+      "category": "08_connectivity",
+      "count": 1,
+      "size_mb": 3.39
+    }
+  ],
+  "root": "D:\\genessis\\architecture\\books\\терминал"
+}

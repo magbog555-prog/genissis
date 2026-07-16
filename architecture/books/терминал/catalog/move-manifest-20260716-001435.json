@@ -1,0 +1,272 @@
+[
+  {
+    "id": "T001",
+    "from": "AddSubtractTime.rar",
+    "to": "03_time_datetime/Time - Add Subtract.rar"
+  },
+  {
+    "id": "T002",
+    "from": "BollingerBands_канал.zip",
+    "to": "01_indicators/Indicator - Bollinger Bands Channel.zip"
+  },
+  {
+    "id": "T003",
+    "from": "CheckTradeSettings.rar",
+    "to": "02_trade_control/Trade - Check Trade Settings.rar"
+  },
+  {
+    "id": "T004",
+    "from": "ComissionAdv.rar",
+    "to": "04_risk_money_stats/Money - Commission Advanced.rar"
+  },
+  {
+    "id": "T005",
+    "from": "Correlation.rar",
+    "to": "04_risk_money_stats/Stats - Correlation.rar"
+  },
+  {
+    "id": "T006",
+    "from": "DateTimeConstant.rar",
+    "to": "03_time_datetime/Time - DateTime Constant.rar"
+  },
+  {
+    "id": "T007",
+    "from": "Dohod_za_Period.rar",
+    "to": "04_risk_money_stats/Money - Income For Period.rar"
+  },
+  {
+    "id": "T008",
+    "from": "DoubleToTextDate.rar",
+    "to": "03_time_datetime/Time - Double To Text Date.rar"
+  },
+  {
+    "id": "T009",
+    "from": "gaaDifferent_BalanceControl.rar",
+    "to": "04_risk_money_stats/Risk - Balance Control.rar"
+  },
+  {
+    "id": "T010",
+    "from": "gaaMarketData_TicketRiskData.rar",
+    "to": "04_risk_money_stats/Risk - Ticket Risk Data.rar"
+  },
+  {
+    "id": "T011",
+    "from": "gaaStatData_PeriodStatistic.rar",
+    "to": "04_risk_money_stats/Stats - Period Statistic.rar"
+  },
+  {
+    "id": "T012",
+    "from": "InterRecalcMemorizer.rar",
+    "to": "05_data_io_utils/Data - Inter Recalc Memorizer.rar"
+  },
+  {
+    "id": "T013",
+    "from": "IsPositionLong_Short.rar",
+    "to": "02_trade_control/Trade - Is Position Long Short.rar"
+  },
+  {
+    "id": "T014",
+    "from": "IsReadyForTrade.rar",
+    "to": "02_trade_control/Trade - Is Ready For Trade.rar"
+  },
+  {
+    "id": "T015",
+    "from": "LockedMoney3.rar",
+    "to": "02_trade_control/Trade - Locked Money.rar"
+  },
+  {
+    "id": "T016",
+    "from": "LSMA-Индикатор.zip",
+    "to": "01_indicators/Indicator - LSMA.zip"
+  },
+  {
+    "id": "T017",
+    "from": "MFI_Индикатор TSLab.zip",
+    "to": "01_indicators/Indicator - MFI.zip"
+  },
+  {
+    "id": "T018",
+    "from": "PMA_IndicatorTsLab.rar",
+    "to": "01_indicators/Indicator - PMA.rar"
+  },
+  {
+    "id": "T019",
+    "from": "PositionsInfo.rar",
+    "to": "02_trade_control/Trade - Positions Info.rar"
+  },
+  {
+    "id": "T020",
+    "from": "RandomMetronome.rar",
+    "to": "05_data_io_utils/Tempo - Random Metronome.rar"
+  },
+  {
+    "id": "T021",
+    "from": "SMAсАдаптивнымПериодом.rar",
+    "to": "01_indicators/Indicator - SMA Adaptive Period.rar"
+  },
+  {
+    "id": "T022",
+    "from": "SmirnovCoef.rar",
+    "to": "04_risk_money_stats/Stats - Smirnov Coefficient.rar"
+  },
+  {
+    "id": "T023",
+    "from": "SystemDate.rar",
+    "to": "03_time_datetime/Time - System Date.rar"
+  },
+  {
+    "id": "T024",
+    "from": "TradesDistribution.rar",
+    "to": "04_risk_money_stats/Stats - Trades Distribution.rar"
+  },
+  {
+    "id": "T025",
+    "from": "TradesLoger.rar",
+    "to": "04_risk_money_stats/Stats - Trades Logger.rar"
+  },
+  {
+    "id": "T026",
+    "from": "TSBTD v1.0.rar",
+    "to": "07_toolkits_bundles/Bundle - TSBTD v1.0.rar"
+  },
+  {
+    "id": "T027",
+    "from": "TsLabMegaTulzer.rar",
+    "to": "07_toolkits_bundles/Bundle - TsLab Mega Toolzer.rar"
+  },
+  {
+    "id": "T028",
+    "from": "VolatilityIndex.rar",
+    "to": "01_indicators/Indicator - Volatility Index.rar"
+  },
+  {
+    "id": "T029",
+    "from": "VWAP_ind.rar",
+    "to": "01_indicators/Indicator - VWAP.rar"
+  },
+  {
+    "id": "T030",
+    "from": "Блок показывает название инструмента SecToText.zip",
+    "to": "05_data_io_utils/Data - Sec To Text Instrument Name.zip"
+  },
+  {
+    "id": "T031",
+    "from": "Блок_IsLabMode.rar",
+    "to": "02_trade_control/Trade - Is Lab Mode.rar"
+  },
+  {
+    "id": "T032",
+    "from": "БлокСообщение_MessageAdv.rar",
+    "to": "06_messaging_ui/UI - Message Advanced.rar"
+  },
+  {
+    "id": "T033",
+    "from": "ДатаВнормальномВиде.rar",
+    "to": "03_time_datetime/Time - Date Normalized Text.rar"
+  },
+  {
+    "id": "T034",
+    "from": "ДваВыходаИзКубика.rar",
+    "to": "02_trade_control/Trade - Dual Exit Cube.rar"
+  },
+  {
+    "id": "T035",
+    "from": "Делители.rar",
+    "to": "05_data_io_utils/Data - Dividers.rar"
+  },
+  {
+    "id": "T036",
+    "from": "ЗаписьВфайл.rar",
+    "to": "05_data_io_utils/Data - Write To File.rar"
+  },
+  {
+    "id": "T037",
+    "from": "Индикатор DiNapoli Stochastic.tscript",
+    "to": "01_indicators/Indicator - DiNapoli Stochastic.tscript"
+  },
+  {
+    "id": "T038",
+    "from": "Индикатор_EMA_в_TSLab.rar",
+    "to": "01_indicators/Indicator - EMA.rar"
+  },
+  {
+    "id": "T039",
+    "from": "Индикатор_SMA.rar",
+    "to": "01_indicators/Indicator - SMA.rar"
+  },
+  {
+    "id": "T040",
+    "from": "Индикатор_Подсчет_дохода.zip",
+    "to": "04_risk_money_stats/Money - Income Counter Indicator.zip"
+  },
+  {
+    "id": "T041",
+    "from": "ИнтерваловМеждуДатами.rar",
+    "to": "03_time_datetime/Time - Intervals Between Dates.rar"
+  },
+  {
+    "id": "T042",
+    "from": "кубик для получения значений.rar",
+    "to": "05_data_io_utils/Data - Value Getter Cube.rar"
+  },
+  {
+    "id": "T043",
+    "from": "кубик_IsLastBar.rar",
+    "to": "03_time_datetime/Time - Is Last Bar.rar"
+  },
+  {
+    "id": "T044",
+    "from": "Кубик_SystemTime.rar",
+    "to": "03_time_datetime/Time - System Time.rar"
+  },
+  {
+    "id": "T045",
+    "from": "КубикBarDate.rar",
+    "to": "03_time_datetime/Time - Bar Date.rar"
+  },
+  {
+    "id": "T046",
+    "from": "Линейка_в_TSLab.zip",
+    "to": "06_messaging_ui/UI - Ruler.zip"
+  },
+  {
+    "id": "T047",
+    "from": "Метраномы для TSLab.rar",
+    "to": "05_data_io_utils/Tempo - Metronomes Pack.rar"
+  },
+  {
+    "id": "T048",
+    "from": "Обновление 31_03_2021.rar",
+    "to": "07_toolkits_bundles/Bundle - Update 2021-03-31.rar"
+  },
+  {
+    "id": "T049",
+    "from": "ОповещениеДатаЭкспирация.rar",
+    "to": "03_time_datetime/Time - Expiry Date Alert.rar"
+  },
+  {
+    "id": "T050",
+    "from": "ПримерРасчетаКомиссии.rar",
+    "to": "04_risk_money_stats/Money - Commission Example.rar"
+  },
+  {
+    "id": "T051",
+    "from": "Рисования_в_тслаб_код.zip",
+    "to": "06_messaging_ui/UI - Drawing Code.zip"
+  },
+  {
+    "id": "T052",
+    "from": "Счетчик_Рост_Падение_ind.rar",
+    "to": "01_indicators/Indicator - Up Down Counter.rar"
+  },
+  {
+    "id": "T053",
+    "from": "Торговый_интервал_в_минуты.rar",
+    "to": "02_trade_control/Trade - Interval Minutes.rar"
+  },
+  {
+    "id": "T054",
+    "from": "чекер пинга к OKX api.rar",
+    "to": "08_connectivity/Connectivity - OKX API Ping Checker.rar"
+  }
+]

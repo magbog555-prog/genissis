@@ -23,6 +23,7 @@ It connects the trader library and knowledge base to the evidence path that must
 |---|---|
 | Books library (binaries + catalog) | `D:\genessis\architecture\books\` |
 | Knowledge base | `D:\genessis\architecture\books\knowledge_base\` |
+| Terminal modules (TSLab) | `D:\genessis\architecture\books\терминал\` |
 | Research methodology | `D:\genessis\architecture\research_platform\GENESIS_RESEARCH_METHODOLOGY_v1.md` |
 | Owner decision (stamped) | `D:\genessis\architecture\research_platform\OWNER_DECISION_STAMP_KNOWLEDGE_BASE_v1.md` |
 | Handoff zip | `D:\genessis\architecture\handoff\GENESIS_TRADER_KNOWLEDGE_BASE_DISCOVERY_AND_REVERSE_MAP_v1.zip` |
@@ -33,6 +34,7 @@ It connects the trader library and knowledge base to the evidence path that must
 2. `GENESIS_RESEARCH_METHODOLOGY_v1.md`
 3. `../books/knowledge_base/00_governance/GENESIS_KNOWLEDGE_BASE_CHARTER_v1.md`
 4. `../books/knowledge_base/05_algorithms_bots/WHAT_CAN_HELP_GENESIS_NOW_v1.md`
+5. `../books/терминал/MARKET_ENGINEER_GUIDE.md` + `BACKEND_ENGINEER_GUIDE.md`
 
 ## Doctrine
 

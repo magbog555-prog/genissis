@@ -11,6 +11,10 @@
 !от чата/
 !от чата/**
 
+# TSLab terminal module library (metadata only; rar/zip still ignored)
+!терминал/
+!терминал/**
+
 # Never track book binaries even if someone force-adds later under catalog
 *.pdf
 *.PDF

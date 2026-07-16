@@ -1,0 +1,83 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class MyStrategy : WealthScript
+	{
+		protected override void Execute()
+		{
+			int ATR_Period = 20;
+			int Dynamic_Channel_Period = 0;
+			int Max_Channel_Period = 20;
+			int Trend = 0;
+			double Reverse = 0;
+			double HPrice=0;
+			double LPrice=0;
+			double Multiple = 2.0;
+			
+			DataSeries K = WMA.Series( TrueRange.Series( Bars ), ATR_Period ) * Multiple;
+			DataSeries NRTR_WATR = new DataSeries( Bars, "NRTR_WATR" );
+			
+			for(int bar = K.FirstValidValue; bar < Bars.Count; bar++)
+			{
+				if( Trend >= 0 )
+				{
+					if (Max_Channel_Period > Dynamic_Channel_Period)
+					{
+						Dynamic_Channel_Period++;
+						HPrice = Math.Max( Bars.Close[bar], Highest.Value(bar, Close, Dynamic_Channel_Period));
+					}
+					else HPrice = Math.Max( Bars.Close[bar], Highest.Value(bar, Close, Max_Channel_Period));
+
+					Reverse = HPrice - K[bar]; 
+					if( Bars.Close[bar] <= Reverse )
+					{
+						Dynamic_Channel_Period = 0;
+						Trend = -1;
+						LPrice = Bars.Close[bar];
+						Reverse = LPrice + K[bar];
+					}
+				}
+				if( Trend <= 0 )
+				{
+					if (Max_Channel_Period > Dynamic_Channel_Period)
+					{
+						Dynamic_Channel_Period++;
+						LPrice = Math.Min( Bars.Close[bar], Lowest.Value(bar, Close, Dynamic_Channel_Period));
+					}
+					else LPrice = Math.Min( Bars.Close[bar], Lowest.Value(bar, Close, Max_Channel_Period));
+					
+					Reverse = LPrice + K[bar]; 
+					
+					if( Bars.Close[bar] >= Reverse )
+					{
+						Dynamic_Channel_Period = 0;
+						Trend = 1;
+						HPrice = Bars.Close[bar];
+						Reverse = HPrice - K[bar];
+					}
+				}
+				NRTR_WATR[bar] = Reverse;
+			}         
+
+			// Display the resulting NRTR_WATR data series
+			PlotSeries( PricePane, NRTR_WATR, Color.Aqua, WealthLab.LineStyle.Dashed, 3 );
+			
+			for(int bar = NRTR_WATR.FirstValidValue+1; bar < Bars.Count; bar++)
+			{
+				if (IsLastPositionActive)
+				{
+					if( CrossUnder( bar, Close, NRTR_WATR ) )
+						SellAtMarket( bar+1, LastPosition, "NRTR Exit" );               
+				} 
+				else if( CrossOver( bar, Close, NRTR_WATR ) )
+					BuyAtMarket( bar+1, "NRTR Entry" );            
+			}
+		}
+	}
+}

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExportScriptData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Code><![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<GraphDataBase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="GraphViewData" Version="1.2">
+  <EditData VersionString="2.3" TemplateClass="Script">
+    <ViewModel>
+      <Model Scale="1.2">
+        <Block Key="Источник1" Category="TradableSecurity" Location="0 0" TypeName="TradableSecuritySourceItem">
+          <EditItem Guid="13E828E4-4633-455C-B81B-730B003D8002" CodeName="var0" IsParametersVisible="false" OnlyValueHandlersCanUsed="false" />
+        </Block>
+        <Block Key="Close" Category="TradeMath" Location="210 44" TypeName="ConverterItem">
+          <EditItem Guid="566F73F2-A440-48DF-A5F7-5BA11ABF3973" CodeName="Close" IsParametersVisible="false" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.Script.Handlers.Close, TSLab.Script.Handlers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+        </Block>
+        <Pane Key="График_Цены" Category="GraphPane" Location="17 100" Order="0" IsVisible="true" HideLegend="false" LeftAxisPrecision="-1" LeftAxisByPercents="false" LeftDownHysteresis="0" LeftUpHysteresis="0" RightAxisPrecision="-1" RightAxisByPercents="false" RightDownHysteresis="0" RightUpHysteresis="0" />
+        <Block Key="nFastK" Category="Const" Location="218 241" TypeName="ConverterItem">
+          <EditItem Guid="abdc5c31-a25d-48a1-92b6-28c1576ac1f6" CodeName="nFastK" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.Script.Handlers.ConstGen, TSLab.Script.Handlers, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null" />
+        </Block>
+        <Block Key="nFastD" Category="Const" Location="218 325" TypeName="ConverterItem">
+          <EditItem Guid="75db7fd4-871c-42fb-8ae5-e54dd0d1fef9" CodeName="nFastD" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.Script.Handlers.ConstGen, TSLab.Script.Handlers, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null" />
+        </Block>
+        <Block Key="nSlowD" Category="Const" Location="217.83333333333331 409.1666666666667" TypeName="ConverterItem">
+          <EditItem Guid="4e7d524d-2c3c-4baf-924b-72fbfa544b7b" CodeName="nSlowD" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.Script.Handlers.ConstGen, TSLab.Script.Handlers, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null" />
+        </Block>
+        <Block Key="Low" Category="TradeMath" Location="211 185" TypeName="ConverterItem">
+          <EditItem Guid="27d6df7a-87b5-497a-b40d-feca891e2ccb" CodeName="Low" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.Script.Handlers.Low, TSLab.Script.Handlers, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null" />
+        </Block>
+        <Block Key="High" Category="TradeMath" Location="208 107" TypeName="ConverterItem">
+          <EditItem Guid="dfa133a5-93e0-42e2-8e43-35adcb5fa799" CodeName="High" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.Script.Handlers.High, TSLab.Script.Handlers, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null" />
+        </Block>
+        <Block Key="highestHigh" Category="Indicators" Location="382 82" TypeName="ConverterItem">
+          <EditItem Guid="53ea5884-ea1f-460c-b84c-66c1749c6248" CodeName="highestHigh" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.Script.Handlers.Highest, TSLab.Script.Handlers, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null" />
+        </Block>
+        <Block Key="ОдиКоМноСвяПар" Category="Usual" Location="399 265" TypeName="OneToManyParametersShareItem">
+          <EditItem ParameterName1="Value" ParameterName2="Period" ParameterName3="Period" />
+        </Block>
+        <Block Key="fastDt" Category="Indicators" Location="820 84.66666666666666" TypeName="ConverterItem">
+          <EditItem Guid="4b7b17e7-1eda-45e3-80a5-a959c258360f" CodeName="fastDt" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.Script.Handlers.EMA, TSLab.Script.Handlers, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null" />
+        </Block>
+        <Block Key="ОдиКоМноСвяПар1" Category="Usual" Location="380 370" TypeName="OneToManyParametersShareItem">
+          <EditItem ParameterName1="Value" ParameterName2="Period" ParameterName3="Value" />
+        </Block>
+        <Block Key="fastKValue" Category="Formula" Location="576 81" TypeName="DoubleCustomHandlerItem" Width="120" Height="60" ResizablePartWidth="216" ResizablePartHeight="88" OpenParams="true">
+          <EditItem Guid="3a1a3df5-9857-44fb-bc7f-9bba66e62ec9" CodeName="fastKValue" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.ScriptEngine.Template.DoubleCustomHandlerItem+Handler, TSLab.ScriptEngine, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null">
+            <Parameters>
+              <Parameter Name="Expression" TypeName="String" Value="((Close-lowestLow)/(highestHigh-lowestLow+0.000001))*100" />
+              <Parameter Name="StartIndex" TypeName="Int32" Value="0" />
+            </Parameters>
+          </EditItem>
+        </Block>
+        <Block Key="slowDtValue" Category="Formula" Location="564 235" TypeName="DoubleCustomHandlerItem" Width="120" Height="60" ResizablePartWidth="232" ResizablePartHeight="88" OpenParams="true">
+          <EditItem Guid="f1e6d418-0f73-4824-add0-21d25678080c" CodeName="slowDtValue" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.ScriptEngine.Template.DoubleCustomHandlerItem+Handler, TSLab.ScriptEngine, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null">
+            <Parameters>
+              <Parameter Name="Expression" TypeName="String" Value="slowDtValue[-1]+((fastDt-slowDtValue[-1])/(nSlowD+0.000001))" />
+              <Parameter Name="StartIndex" TypeName="Int32" Value="0" />
+            </Parameters>
+          </EditItem>
+        </Block>
+        <Pane Key="График_DiNapoli_Stochastic" Category="GraphPane" Location="21.166666666666657 226.66666666666669" Order="1" IsVisible="true" HideLegend="false" LeftAxisPrecision="-1" LeftAxisByPercents="false" LeftDownHysteresis="0" LeftUpHysteresis="0" RightAxisPrecision="-1" RightAxisByPercents="false" RightDownHysteresis="0" RightUpHysteresis="0" />
+        <Block Key="lowestLow" Category="Indicators" Location="377.14285714285717 168.28571428571428" TypeName="ConverterItem">
+          <EditItem Guid="663f0cbf-cca4-419a-ad53-640bdfd773e5" CodeName="lowestLow" IsParametersVisible="true" OnlyValueHandlersCanUsed="false" HandlerTypeName="TSLab.Script.Handlers.Lowest, TSLab.Script.Handlers, Version=2.2.23.0, Culture=neutral, PublicKeyToken=null" />
+        </Block>
+        <Link From="Источник1" To="Close" FromPort="Out" ToPort="Src" ToPortNum="0" />
+        <GraphLink From="Источник1" To="График_Цены" FromPort="Out" ToPort="RIGHT" Category="ChartCandleLink">
+          <Data>
+            <GraphData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ListStyle="LINE" CandleStyle="BAR_CANDLE" LineStyle="SOLID" Color="-15197697" AltColor="-53451" Opacity="0" HideLastValue="false" Thickness="1" AltThickness="1" PaneSide="RIGHT" Visible="true" ShowTrades="true" CandleFillStyle="Decreasing" Autoscaling="true">
+              <Points />
+            </GraphData>
+          </Data>
+        </GraphLink>
+        <Link From="Источник1" To="High" FromPort="Out" ToPort="Src" ToPortNum="0" />
+        <Link From="Источник1" To="Low" FromPort="Out" ToPort="Src" ToPortNum="0" />
+        <Link From="High" To="highestHigh" FromPort="Out" ToPort="Src" ToPortNum="0" />
+        <Link From="Close" To="fastKValue" FromPort="Out" ToPortNum="0" />
+        <Link From="highestHigh" To="fastKValue" FromPort="Out" ToPortNum="2" />
+        <Link From="fastKValue" To="fastDt" FromPort="Out" ToPort="Src" ToPortNum="0" />
+        <Link From="fastDt" To="slowDtValue" FromPort="Out" ToPortNum="0" />
+        <Link From="nSlowD" To="slowDtValue" FromPort="Out" ToPortNum="1" />
+        <GraphLink From="fastDt" To="График_DiNapoli_Stochastic" FromPort="Out" ToPort="RIGHT" Category="ChartLineLink">
+          <Data>
+            <GraphData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ListStyle="LINE" CandleStyle="BAR_CANDLE" LineStyle="SOLID" Color="-65536" AltColor="-10047056" Opacity="0" HideLastValue="false" Thickness="2" AltThickness="1" PaneSide="RIGHT" Visible="true" ShowTrades="true" CandleFillStyle="Decreasing" Autoscaling="true">
+              <Points />
+            </GraphData>
+          </Data>
+        </GraphLink>
+        <GraphLink From="slowDtValue" To="График_DiNapoli_Stochastic" FromPort="Out" ToPort="RIGHT" Category="ChartLineLink">
+          <Data>
+            <GraphData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ListStyle="LINE" CandleStyle="BAR_CANDLE" LineStyle="SOLID" Color="-16764161" AltColor="-4119920" Opacity="0" HideLastValue="false" Thickness="2" AltThickness="1" PaneSide="RIGHT" Visible="true" ShowTrades="true" CandleFillStyle="Decreasing" Autoscaling="true">
+              <Points />
+            </GraphData>
+          </Data>
+        </GraphLink>
+        <Link From="lowestLow" To="ОдиКоМноСвяПар" FromPort="Out" ToPort="ScriptEditor.Slave.2" ToPortNum="2" />
+        <Link From="Low" To="lowestLow" FromPort="Out" ToPort="Src" ToPortNum="0" />
+        <Link From="lowestLow" To="fastKValue" FromPort="Out" ToPortNum="0" />
+        <Link From="nFastK" To="ОдиКоМноСвяПар" FromPort="Out" ToPort="ScriptEditor.Master" ToPortNum="0" />
+        <Link From="highestHigh" To="ОдиКоМноСвяПар" FromPort="Out" ToPort="ScriptEditor.Slave.1" ToPortNum="1" />
+        <Link From="nFastD" To="ОдиКоМноСвяПар1" FromPort="Out" ToPort="ScriptEditor.Master" ToPortNum="0" />
+        <Link From="fastDt" To="ОдиКоМноСвяПар1" FromPort="Out" ToPort="ScriptEditor.Slave.1" ToPortNum="1" />
+        <Link From="nSlowD" To="ОдиКоМноСвяПар1" FromPort="Out" ToPort="ScriptEditor.Slave.2" ToPortNum="2" />
+      </Model>
+    </ViewModel>
+  </EditData>
+  <Id>7ac0ec07-de42-4639-a059-5acd029d884a</Id>
+  <Options xsi:type="LabOptions">
+    <BarSizes>
+      <BarSize Key="" Value="7.794868399999997" />
+    </BarSizes>
+    <PaneSizes>
+      <PaneSize Key="Главная" Value="50" />
+      <PaneSize Key="Главная1" Value="50" />
+      <PaneSize Key="График_Цены" Value="50" />
+      <PaneSize Key="График_DiNapoli_Stochastic" Value="50" />
+    </PaneSizes>
+    <Indent>0</Indent>
+    <BarsIndent>0</BarsIndent>
+    <HideValues>false</HideValues>
+    <LegendTransparency>0</LegendTransparency>
+    <TimeScale>Adaptive</TimeScale>
+    <GroupTrades>true</GroupTrades>
+    <LegendForegroundColor>
+      <Value>
+        <A>0</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Value>
+      <IsChanged>false</IsChanged>
+      <Default>
+        <A>255</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Default>
+    </LegendForegroundColor>
+    <ChartBackgroundColor>
+      <Value>
+        <A>0</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Value>
+      <IsChanged>false</IsChanged>
+      <Default>
+        <A>255</A>
+        <R>255</R>
+        <G>255</G>
+        <B>255</B>
+      </Default>
+    </ChartBackgroundColor>
+    <ChartForegroundColor>
+      <Value>
+        <A>0</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Value>
+      <IsChanged>false</IsChanged>
+      <Default>
+        <A>255</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Default>
+    </ChartForegroundColor>
+    <ChartGridColor>
+      <Value>
+        <A>0</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Value>
+      <IsChanged>false</IsChanged>
+      <Default>
+        <A>255</A>
+        <R>214</R>
+        <G>214</G>
+        <B>214</B>
+      </Default>
+    </ChartGridColor>
+    <ChartBorderColor>
+      <Value>
+        <A>0</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Value>
+      <IsChanged>false</IsChanged>
+      <Default>
+        <A>255</A>
+        <R>214</R>
+        <G>214</G>
+        <B>214</B>
+      </Default>
+    </ChartBorderColor>
+    <ChartRulerBackgroundColor>
+      <Value>
+        <A>0</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Value>
+      <IsChanged>false</IsChanged>
+      <Default>
+        <A>255</A>
+        <R>242</R>
+        <G>242</G>
+        <B>242</B>
+      </Default>
+    </ChartRulerBackgroundColor>
+    <ChartRulerForegroundColor>
+      <Value>
+        <A>0</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Value>
+      <IsChanged>false</IsChanged>
+      <Default>
+        <A>255</A>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </Default>
+    </ChartRulerForegroundColor>
+    <IntervalBase>MINUTE</IntervalBase>
+    <Interval>15</Interval>
+    <GraphListVisibilities />
+    <VerticalScales />
+    <RecalcInterval>INTERVAL</RecalcInterval>
+    <DateFrom>2024-09-15T00:00:00+03:00</DateFrom>
+    <UseDateFrom>false</UseDateFrom>
+    <DateTo>2024-10-15T00:00:00+03:00</DateTo>
+    <UseDateTo>false</UseDateTo>
+    <DateReload>2024-10-15T00:00:00+03:00</DateReload>
+    <UseDateReload>true</UseDateReload>
+    <MaxDays>0</MaxDays>
+    <SessionBegin>2000-01-01T00:00:00</SessionBegin>
+    <SessionEnd>2000-01-01T00:00:00</SessionEnd>
+    <DecompressMethod>Method1</DecompressMethod>
+    <MaxCandels>0</MaxCandels>
+    <RtUpdates>false</RtUpdates>
+    <CalcForEachSecurity>false</CalcForEachSecurity>
+    <ScriptEditorShowLinks>true</ScriptEditorShowLinks>
+    <ScriptKillTimeout>0</ScriptKillTimeout>
+    <TradeFromBar>0</TradeFromBar>
+    <IsSplittedProfitByInstruments>false</IsSplittedProfitByInstruments>
+    <NotUsePositions>false</NotUsePositions>
+    <UseMultiOrders>false</UseMultiOrders>
+    <InitDeposit>0</InitDeposit>
+    <LabCalcType>Default</LabCalcType>
+    <TradeMode>All</TradeMode>
+    <IsShowedBlockNumbers>false</IsShowedBlockNumbers>
+    <LimitOrderExecutionMode>Touch</LimitOrderExecutionMode>
+    <DisableFixPrices>false</DisableFixPrices>
+  </Options>
+  <Mappings>
+    <Sources>
+      <Source DataSourceName="finam_txt" BrokerId="TextFiles" SecurityId="Si" Name="13E828E4-4633-455C-B81B-730B003D8002" VisualTypeName="Торгуемый инструмент" IsOption="false">
+        <Records />
+      </Source>
+    </Sources>
+    <Parameters>
+      <Parameter xsi:type="OptimData" ItemName="abdc5c31-a25d-48a1-92b6-28c1576ac1f6" BlockName="nFastK" Name="Значение" InvariantName="Value" CodeName="nFastK_Value" UsedInOptimization="false" IsCalculable="false" Value="14" TypeName="Double" MinValue="1" MaxValue="10" Step="1" ControlMinValue="1" ControlMaxValue="10" ControlStep="1" NumberDecimalDigits="1" />
+      <Parameter xsi:type="OptimData" ItemName="75db7fd4-871c-42fb-8ae5-e54dd0d1fef9" BlockName="nFastD" Name="Значение" InvariantName="Value" CodeName="nFastD_Value" UsedInOptimization="false" IsCalculable="false" Value="3" TypeName="Double" MinValue="1" MaxValue="10" Step="1" ControlMinValue="1" ControlMaxValue="10" ControlStep="1" NumberDecimalDigits="1" />
+    </Parameters>
+    <ParameterGroups />
+    <AutoParameters />
+  </Mappings>
+  <OptimizationMethodTypeName>RandomOptimization</OptimizationMethodTypeName>
+  <Iterations>100</Iterations>
+  <IterationsPrc>100</IterationsPrc>
+  <IsIterationsPrc>false</IsIterationsPrc>
+  <OptParameters />
+</GraphDataBase>]]></Code>
+  <Settings2><![CDATA[{"Options":{"DefEntryApprove":false,"DefExitApprove":false,"AutoEntryBars":0,"AutoEntryIgnoreByMarketAsLimit":false,"AutoCloseBars":0,"AutoCloseIgnoreByMarketAsLimit":false,"AutoFixDoubleExit":false,"Slippage":0,"SlippagePct":0.0,"TakeProfitNoSlippage":false,"OpenPositionNoSlippage":false,"ByMarketAsLimt":false,"InvalidStopsByMarket":false,"OrderExpirationDays":2,"RemoveInactivePositions":true,"WarnSkippedOpenPositions":true,"NotOpenIfHasSkippedExit":false,"NoCalcInfo":false,"MaxBarsForSignal":0,"ExitSignalOnlyForLastBar":false,"WaitExecutionExitBars":0,"WaitExecutionEntryBars":0,"SimulatePositionOrdering":true,"UseCommissionInProfit":false,"MaxDays":0,"MaxCandels":0,"StopIfTimeout":false,"EventOrderRejected":false,"EventOrderFilled":false,"EventOrderCanceled":false,"EventOrderQtyChanged":false,"EventPositionOpening":false,"EventPositionClosing":false,"EventTradingIsStarted":true,"EventTradingIsStopped":false,"EventBarClosedNoTrades":true,"EventPretradeLimitation":false},"AppearanceOptions":{"BarSizes":[],"PaneSizes":[],"GraphListVisibilities":[],"VerticalScales":[]},"Layout":"<XmlLabLayout xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n\t<MainChartWindow Id=\"Main\">\r\n\t\t<Docking>&lt;?xml version=\"1.0\" encoding=\"utf-16\"?&gt;&lt;DockSiteLayout xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" SerializationFormat=\"All\" Version=\"2\"&gt;&lt;AutoHideHost /&gt;&lt;Content xsi:type=\"Workspace\"&gt;&lt;Content xsi:type=\"TabbedMdiHost\"&gt;&lt;Content xsi:type=\"TabbedMdiContainer\" DockedSize=\"1680,783\" SelectedWindowUniqueId=\"7daabc45-b50f-4fdc-ba05-0d1b88c92c72\"&gt;&lt;UIElement xsi:type=\"ToolWindowRef\" UniqueId=\"7daabc45-b50f-4fdc-ba05-0d1b88c92c72\" /&gt;&lt;/Content&gt;&lt;/Content&gt;&lt;/Content&gt;&lt;ToolWindows&gt;&lt;ToolWindow UniqueId=\"7daabc45-b50f-4fdc-ba05-0d1b88c92c72\" SerializationId=\"Graph\" ContainerDockedSize=\"1680,783\" IsOpen=\"true\" LastActiveDateTime=\"2024-10-15T14:16:15.3861139+03:00\" State=\"Document\" /&gt;&lt;/ToolWindows&gt;&lt;/DockSiteLayout&gt;</Docking>\r\n\t</MainChartWindow>\r\n\t<Docking>&lt;DockSiteLayout xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" SerializationFormat=\"All\" Version=\"2\"&gt;\r\n\t&lt;AutoHideHost /&gt;\r\n\t&lt;Content xsi:type=\"Workspace\"&gt;\r\n\t\t&lt;Content xsi:type=\"TabbedMdiHost\"&gt;\r\n\t\t\t&lt;Content xsi:type=\"TabbedMdiContainer\" DockedSize=\"1680,833\" SelectedWindowUniqueId=\"9af69fd5-1238-451f-b48a-495420f50823\"&gt;\r\n\t\t\t\t&lt;UIElement xsi:type=\"ToolWindowRef\" UniqueId=\"a097510a-3158-4483-8f10-f0abdd2d51b5\" /&gt;\r\n\t\t\t\t&lt;UIElement xsi:type=\"ToolWindowRef\" UniqueId=\"9af69fd5-1238-451f-b48a-495420f50823\" /&gt;\r\n\t\t\t\t&lt;UIElement xsi:type=\"ToolWindowRef\" UniqueId=\"4e9e37fc-9fa1-4e74-9d83-75fc3b60f056\" /&gt;\r\n\t\t\t\t&lt;UIElement xsi:type=\"ToolWindowRef\" UniqueId=\"cc1818c3-65f5-4964-b27e-471be7acd785\" /&gt;\r\n\t\t\t\t&lt;UIElement xsi:type=\"ToolWindowRef\" UniqueId=\"45a868a9-d0d2-46b4-b3c0-49cad14a89a8\" /&gt;\r\n\t\t\t\t&lt;UIElement xsi:type=\"ToolWindowRef\" UniqueId=\"cb963aee-2eba-401b-8ea5-f6b2ada589a2\" /&gt;\r\n\t\t\t\t&lt;UIElement xsi:type=\"ToolWindowRef\" UniqueId=\"6302d801-1c56-46d6-be00-60425b1db44e\" /&gt;\r\n\t\t\t\t&lt;UIElement xsi:type=\"ToolWindowRef\" UniqueId=\"8d00295c-9304-43a1-861e-2df3d33e26d5\" /&gt;\r\n\t\t\t&lt;/Content&gt;\r\n\t\t&lt;/Content&gt;\r\n\t&lt;/Content&gt;\r\n\t&lt;ToolWindows&gt;\r\n\t\t&lt;ToolWindow UniqueId=\"a097510a-3158-4483-8f10-f0abdd2d51b5\" SerializationId=\"EditorViewModel\" Name=\"Editor\" ContainerDockedSize=\"1680,833\" IsOpen=\"true\" LastActiveDateTime=\"2024-10-15T15:18:30.7266933+03:00\" State=\"Document\" Type=\"TSLab.Docking.ContentPane, TSLab.Docking\" /&gt;\r\n\t\t&lt;ToolWindow UniqueId=\"9af69fd5-1238-451f-b48a-495420f50823\" SerializationId=\"ChartViewModel\" Name=\"ChartViewModel\" ContainerDockedSize=\"1680,833\" IsOpen=\"true\" LastActiveDateTime=\"2024-10-15T15:43:14.5072799+03:00\" State=\"Document\" Type=\"TSLab.Docking.ContentPane, TSLab.Docking\" /&gt;\r\n\t\t&lt;ToolWindow UniqueId=\"4e9e37fc-9fa1-4e74-9d83-75fc3b60f056\" SerializationId=\"PerformanceViewModel\" Name=\"Performance\" ContainerDockedSize=\"1680,833\" IsOpen=\"true\" State=\"Document\" Type=\"TSLab.Docking.ContentPane, TSLab.Docking\" /&gt;\r\n\t\t&lt;ToolWindow UniqueId=\"cc1818c3-65f5-4964-b27e-471be7acd785\" SerializationId=\"TradesViewModel\" Name=\"Trades\" ContainerDockedSize=\"1680,833\" IsOpen=\"true\" State=\"Document\" Type=\"TSLab.Docking.ContentPane, TSLab.Docking\" /&gt;\r\n\t\t&lt;ToolWindow UniqueId=\"45a868a9-d0d2-46b4-b3c0-49cad14a89a8\" SerializationId=\"ParametersViewModel\" Name=\"Parameters\" ContainerDockedSize=\"1680,833\" IsOpen=\"true\" State=\"Document\" Type=\"TSLab.Docking.ContentPane, TSLab.Docking\" /&gt;\r\n\t\t&lt;ToolWindow UniqueId=\"cb963aee-2eba-401b-8ea5-f6b2ada589a2\" SerializationId=\"OptimizationViewModel\" Name=\"Optimization\" ContainerDockedSize=\"1680,833\" IsOpen=\"true\" LastActiveDateTime=\"2024-10-15T14:10:58.6789822+03:00\" State=\"Document\" Type=\"TSLab.Docking.ContentPane, TSLab.Docking\" /&gt;\r\n\t\t&lt;ToolWindow UniqueId=\"6302d801-1c56-46d6-be00-60425b1db44e\" SerializationId=\"LogViewModel\" Name=\"Log\" ContainerDockedSize=\"1680,833\" IsOpen=\"true\" State=\"Document\" Type=\"TSLab.Docking.ContentPane, TSLab.Docking\" /&gt;\r\n\t\t&lt;ToolWindow UniqueId=\"8d00295c-9304-43a1-861e-2df3d33e26d5\" SerializationId=\"ProfitModel\" Name=\"Profit\" ContainerDockedSize=\"1680,833\" IsOpen=\"true\" State=\"Document\" Type=\"TSLab.Docking.ContentPane, TSLab.Docking\" /&gt;\r\n\t&lt;/ToolWindows&gt;\r\n&lt;/DockSiteLayout&gt;</Docking>\r\n\t<ActiveWindow>ChartViewModel</ActiveWindow>\r\n\t<LabModels>\r\n\t\t<XmlLabModel>\r\n\t\t\t<ContentId>EditorViewModel</ContentId>\r\n\t\t\t<IsVisible>true</IsVisible>\r\n\t\t</XmlLabModel>\r\n\t\t<XmlLabModel>\r\n\t\t\t<ContentId>ChartViewModel</ContentId>\r\n\t\t\t<IsVisible>true</IsVisible>\r\n\t\t</XmlLabModel>\r\n\t\t<XmlLabModel>\r\n\t\t\t<ContentId>PerformanceViewModel</ContentId>\r\n\t\t\t<IsVisible>true</IsVisible>\r\n\t\t</XmlLabModel>\r\n\t\t<XmlLabModel>\r\n\t\t\t<ContentId>TradesViewModel</ContentId>\r\n\t\t\t<IsVisible>true</IsVisible>\r\n\t\t</XmlLabModel>\r\n\t\t<XmlLabModel>\r\n\t\t\t<ContentId>ParametersViewModel</ContentId>\r\n\t\t\t<IsVisible>true</IsVisible>\r\n\t\t</XmlLabModel>\r\n\t\t<XmlLabModel>\r\n\t\t\t<ContentId>OptimizationViewModel</ContentId>\r\n\t\t\t<IsVisible>true</IsVisible>\r\n\t\t</XmlLabModel>\r\n\t\t<XmlLabModel>\r\n\t\t\t<ContentId>LogViewModel</ContentId>\r\n\t\t\t<IsVisible>true</IsVisible>\r\n\t\t</XmlLabModel>\r\n\t\t<XmlLabModel>\r\n\t\t\t<ContentId>ProfitModel</ContentId>\r\n\t\t\t<IsVisible>true</IsVisible>\r\n\t\t</XmlLabModel>\r\n\t</LabModels>\r\n\t<LabWindows />\r\n</XmlLabLayout>","AppProperties":{"PerformanceRowOrder":"[0,1,2,3,4,5,6]","PerformanceExpandStates":"[true,true,true,true,true,true]","OptimizationProperties":"{\"Method\":\"Случайно\",\"IsRemoveNegativePl\":false}","EditorSettings":"{\"LinkColor\":\"false\"}","OptimizationColumns":"[{\"Name\":\"NaturalBlockName\",\"Header\":\"Имя блока\",\"IsVisible\":true,\"Width\":182.0,\"DefinedWidth\":\"182\",\"DisplayIndex\":0,\"Index\":0,\"Filter\":null,\"UseFilter\":false,\"SortDirection\":2,\"IsFilterable\":false,\"FilterSettingsString\":null,\"FilterSettings\":{\"SelectedDistinctValues\":[],\"ColumnUniqueName\":\"NaturalBlockName\",\"Filter1\":null,\"FieldFilterLogicalOperator\":0,\"Filter2\":null}},{\"Name\":\"ParameterName\",\"Header\":\"Параметр\",\"IsVisible\":true,\"Width\":100.0,\"DefinedWidth\":\"100\",\"DisplayIndex\":1,\"Index\":0,\"Filter\":null,\"UseFilter\":false,\"SortDirection\":2,\"IsFilterable\":false,\"FilterSettingsString\":null,\"FilterSettings\":{\"SelectedDistinctValues\":[],\"ColumnUniqueName\":\"ParameterName\",\"Filter1\":null,\"FieldFilterLogicalOperator\":0,\"Filter2\":null}},{\"Name\":\"Value\",\"Header\":\"Значение\",\"IsVisible\":true,\"Width\":125.0,\"DefinedWidth\":\"Auto\",\"DisplayIndex\":2,\"Index\":0,\"Filter\":null,\"UseFilter\":false,\"SortDirection\":2,\"IsFilterable\":false,\"FilterSettingsString\":null,\"FilterSettings\":{\"SelectedDistinctValues\":[],\"ColumnUniqueName\":\"Value\",\"Filter1\":null,\"FieldFilterLogicalOperator\":0,\"Filter2\":null}},{\"Name\":\"MinValue\",\"Header\":\"Мин\",\"IsVisible\":true,\"Width\":70.0,\"DefinedWidth\":\"Auto\",\"DisplayIndex\":3,\"Index\":0,\"Filter\":null,\"UseFilter\":false,\"SortDirection\":2,\"IsFilterable\":false,\"FilterSettingsString\":null,\"FilterSettings\":{\"SelectedDistinctValues\":[],\"ColumnUniqueName\":\"MinValue\",\"Filter1\":null,\"FieldFilterLogicalOperator\":0,\"Filter2\":null}},{\"Name\":\"MaxValue\",\"Header\":\"Макс\",\"IsVisible\":true,\"Width\":70.0,\"DefinedWidth\":\"Auto\",\"DisplayIndex\":4,\"Index\":0,\"Filter\":null,\"UseFilter\":false,\"SortDirection\":2,\"IsFilterable\":false,\"FilterSettingsString\":null,\"FilterSettings\":{\"SelectedDistinctValues\":[],\"ColumnUniqueName\":\"MaxValue\",\"Filter1\":null,\"FieldFilterLogicalOperator\":0,\"Filter2\":null}},{\"Name\":\"Step\",\"Header\":\"Шаг\",\"IsVisible\":true,\"Width\":70.0,\"DefinedWidth\":\"Auto\",\"DisplayIndex\":5,\"Index\":0,\"Filter\":null,\"UseFilter\":false,\"SortDirection\":2,\"IsFilterable\":false,\"FilterSettingsString\":null,\"FilterSettings\":{\"SelectedDistinctValues\":[],\"ColumnUniqueName\":\"Step\",\"Filter1\":null,\"FieldFilterLogicalOperator\":0,\"Filter2\":null}},{\"Name\":\"UsedInOptimization\",\"Header\":\"System.Windows.Controls.StackPanel\",\"IsVisible\":true,\"Width\":89.0,\"DefinedWidth\":\"89\",\"DisplayIndex\":6,\"Index\":0,\"Filter\":null,\"UseFilter\":false,\"SortDirection\":2,\"IsFilterable\":false,\"FilterSettingsString\":null,\"FilterSettings\":{\"SelectedDistinctValues\":[],\"ColumnUniqueName\":\"UsedInOptimization\",\"Filter1\":null,\"FieldFilterLogicalOperator\":0,\"Filter2\":null}}]"}}]]></Settings2>
+  <Comment><![CDATA[https://daytradingschool.ru]]></Comment>
+  <Tags />
+  <CreationData>2024-10-15 13:50:32</CreationData>
+  <ModificationData>2024-10-15 15:48:33</ModificationData>
+</ExportScriptData>
