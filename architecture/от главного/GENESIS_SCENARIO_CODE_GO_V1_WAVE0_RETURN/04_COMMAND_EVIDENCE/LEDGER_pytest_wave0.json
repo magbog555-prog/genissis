@@ -1,0 +1,14 @@
+{
+  "suite": "tests/cognitive_shadow/scenario/",
+  "passed": 26,
+  "failed": 0,
+  "exit_code": 0,
+  "influence_allowed": false,
+  "verdict": "SCENARIO_CODE_GO_V1_WAVE0_READY_WITH_GAPS",
+  "gaps_listed": [
+    "SCENARIO_WAVE0_GAP_W1_1_DETECTOR",
+    "SCENARIO_WAVE0_GAP_W1_2_DETECTOR",
+    "SCENARIO_WAVE0_GAP_W1_3_DETECTOR",
+    "SCENARIO_WAVE0_GAP_W1_4_DETECTOR"
+  ]
+}
