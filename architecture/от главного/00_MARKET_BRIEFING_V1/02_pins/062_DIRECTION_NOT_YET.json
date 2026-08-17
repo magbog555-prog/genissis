@@ -1,0 +1,43 @@
+{
+  "go": "LIBRARY_DIRECTION_LAW_PRECREATE_V1",
+  "actor": "Library",
+  "role": "critic_NOT_authority",
+  "date": "2026-08-15",
+  "plate": 105,
+  "pack": 62,
+  "zip_sha256_verified": "6d3274c1e32e5c5d4c6cbac12098c89ec4f01f160f0ef9a8673a38b4e040032d",
+  "NEW_DIRECTION_LAW_NEEDED": "NOT_YET",
+  "MINIMAL_SEMANTIC_OBJECT": "NONE",
+  "LONG_SHORT_MUST_BE_TOTAL_FUNCTION": "NO",
+  "NO_TRADE_MUST_REMAIN_FIRST_CLASS": "YES",
+  "CAN_LAW_BE_DEFINED_WITHOUT_OUTCOME_PEEK": "YES",
+  "EXISTING_GENESIS_OBSERVABLES_SUFFICIENT_IN_PRINCIPLE": "NO",
+  "READY_FOR_OWNER_LAW_DESIGN": "NO",
+  "surviving_option": "C_NO_LAWFUL_DIRECTION",
+  "missing_before_CREATE": "lawful_pre_decision_side_discriminating_proposition_independent_of_future_outcome",
+  "options": {
+    "A_EVIDENCE_DERIVED": "FAILS_NOW",
+    "B_COMPETING_HYPOTHESES": "FAILS_AS_AVAILABLE_AUTHORITY",
+    "C_NO_LAWFUL_DIRECTION": "SURVIVES"
+  },
+  "CREATE_opened": false,
+  "Direction": "CLOSED",
+  "twenty_x_none": "FROZEN_UNTOUCHED",
+  "BLIND_used": false,
+  "PAPER_DISTANCE": 10,
+  "capital_pct": 0,
+  "do_not": [
+    "Event_to_Direction_shortcut",
+    "CROSSED_UP_to_LONG",
+    "clock_as_side",
+    "mandatory_side_every_W1_1",
+    "BLIND_design",
+    "feature_mine_UP_DOWN",
+    "organ_schema_code",
+    "patch_20xNONE",
+    "CREATE",
+    "GREEN",
+    "lead"
+  ],
+  "next_not_opened_by_Library": "Owner_CREATE_or_law_design_only_if_Owner_says"
+}

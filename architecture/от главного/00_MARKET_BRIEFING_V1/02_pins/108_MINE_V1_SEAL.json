@@ -1,0 +1,27 @@
+{
+  "status": "MINE_V1_ROLE_SEALED",
+  "mine_id": "MINE_V1",
+  "run_id": "core4_week1_organism_memory_20260812_t1",
+  "role": "EXPERIENCE_DISCOVERY",
+  "date": "2026-08-17",
+  "pack": 108,
+  "wall_end_local_planned": "2026-08-19T01:25:00",
+  "wall_complete": false,
+  "collector_pid": 12016,
+  "KEEP_RUNNING_for_Gate2_OOS": true,
+  "project_hostage_to_this_mine": false,
+  "MINE_V1_1": "named_not_opened_new_run_id_later",
+  "DEVELOPMENT_CUT": "2026-08-17T04:53:48.945Z",
+  "discovery_corpus": "all peeks/definitions up to DEVELOPMENT_CUT including overnight NEGATIVE 57",
+  "fresh_unseen_for_Gate2": "pack 107 OOS 06:00Z-16:00Z",
+  "what_it_gave": [
+    "organs + Scenario + F5 + path + densify",
+    "W1-1 freeze grain",
+    "Acceptance V1.1 as sensor not Direction",
+    "Binding/sync/orientation context",
+    "false compressions killed: W1=side, CROSS=side, Acceptance=edge",
+    "correlation / overlapping windows / base-rate trap"
+  ],
+  "not_a_PAPER_factory": true,
+  "delete_journals": false
+}

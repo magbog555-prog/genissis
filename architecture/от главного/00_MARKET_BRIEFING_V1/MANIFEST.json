@@ -1,0 +1,20 @@
+{
+  "package": "GENESIS_MARKET_BRIEFING_AFTER_MINE_V1",
+  "date": "2026-08-17",
+  "audience": ["market_architect", "trader", "new_developer", "Owner_self"],
+  "max_zip_mb": 512,
+  "includes_mine_journals": false,
+  "progress": "W1-1 Gate 2/7 → PAPER",
+  "PAPER_DISTANCE": 10,
+  "DIRECTION": "CLOSED",
+  "capital_pct": 0,
+  "human_entry": "00_READ_ME_FIRST_HUMAN_RU.md",
+  "engineering_entry": "01_ENGINEERING_MAP_RU.md",
+  "read_order": [
+    "00_READ_ME_FIRST_HUMAN_RU.md",
+    "01_ENGINEERING_MAP_RU.md",
+    "02_pins/108_00_ROAD_RU.md",
+    "02_pins/108_LIBRARY_STOP_RU.md",
+    "02_pins/107_SEAL.json"
+  ]
+}

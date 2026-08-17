@@ -1,0 +1,36 @@
+{
+  "desk": "00_AFTER_MINE_V1",
+  "date": "2026-08-17",
+  "do_not_copy_journals_here": true,
+  "mine_v1": {
+    "run_id": "core4_week1_organism_memory_20260812_t1",
+    "role": "EXPERIENCE_DISCOVERY",
+    "status": "ROLE_SEALED_JOURNALS_KEEP",
+    "out": "D:\\genessis\\history\\handoffs\\architecture_handoff\\core4_week1_organism_memory\\core4_week1_organism_memory_20260812_t1",
+    "desk": "architecture/от главного/шахта/",
+    "seal": "architecture/от главного/LLM/108_master_road_to_paper_v1/MINE_V1_SEAL.json",
+    "harvest": "architecture/от главного/LLM/108_master_road_to_paper_v1/03_EVIDENCE/MINE_V1_HARVEST_RU.md",
+    "MINE_V1_1": "named_not_opened_new_run_id_later",
+    "disaster_snapshot_E": "E:\\проект от 16.08\\01_MINE_OUT\\core4_week1_organism_memory_20260812_t1"
+  },
+  "paper_road": {
+    "progress": "W1-1: Gate 2/7 → PAPER",
+    "pack": "architecture/от главного/LLM/108_master_road_to_paper_v1/",
+    "road": "architecture/от главного/LLM/108_master_road_to_paper_v1/00_ROAD_RU.md",
+    "library_stop": "architecture/от главного/LLM/108_master_road_to_paper_v1/LIBRARY_RETURN/",
+    "gate2_exam": "architecture/от главного/LLM/107_owner_negative_onesided_oos_exam/",
+    "direction_closed": "architecture/от главного/LLM/62_library_direction_law_precreate/",
+    "oos_blind_split_old": "architecture/от главного/LLM/19_oos_blind_split/"
+  },
+  "code": {
+    "backend": "services/genesis_terminal_backend/",
+    "collector": "services/genesis_terminal_backend/scripts/run_cognitive_shadow_v1.py"
+  },
+  "pins": {
+    "PAPER_DISTANCE": 10,
+    "DIRECTION": "CLOSED",
+    "capital_pct": 0,
+    "READY_FOR_SENSOR_CREATE": "NO",
+    "OWNER_ROAD_FREEZE": "NOT_DECLARED_ON_THIS_DESK"
+  }
+}

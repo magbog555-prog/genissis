@@ -1,0 +1,35 @@
+{
+  "status": "SEALED_FREEZE",
+  "date": "2026-08-16",
+  "pack": 90,
+  "plate": 134,
+  "ACCEPTANCE_AS_DIRECTION_BRANCH": "CLOSED",
+  "AUCTION_ACCEPTANCE_V1_TAPE_RESPONSE_PROXY": "VALID_SENSOR_KEPT",
+  "version": "V1.1",
+  "NOT_DIRECTIONAL_EVIDENCE_AS_CURRENTLY_TESTED": true,
+  "ACCEPTED_UP_eq_LONG": false,
+  "ACCEPTED_DOWN_eq_SHORT": false,
+  "sensor_discarded": false,
+  "V1_1_changed": false,
+  "ruler_changed": false,
+  "library_pack_89": {
+    "ONE_SIDED_ASSOCIATION": "NOT_SUPPORTED",
+    "CLAIM_FORM": "NEITHER",
+    "READY_FOR_ONE_SIDED_OOS_DESIGN": "NO",
+    "base_rate_14Z_15Z": "261 UP : 17 DOWN ≈ 15:1 unselected; ACCEPTED_UP ≈ 19:1; ACCEPTED_DOWN → future UP 15:0"
+  },
+  "owner_read": "Local W1 event did not carry side. Local Acceptance V1.1 did not carry side. Broad market regime in 14Z–15Z dominated both. Keep the sensor as tape-response-at-R. Do not treat ACCEPTED_UP as LONG.",
+  "library_stop_62": {
+    "NEW_DIRECTION_LAW_NEEDED": "NOT_YET",
+    "MINIMAL_SEMANTIC_OBJECT": "NONE",
+    "READY_FOR_OWNER_LAW_DESIGN": "NO"
+  },
+  "W1_1_ROLE": "EVENT_DETECTOR_NOT_DIRECTION",
+  "CREATE_NEW_SIDE_LAW": "NO",
+  "FEATURE_HUNT": "NO",
+  "NO_TRADE": "FIRST_CLASS",
+  "DIRECTION": "CLOSED",
+  "PAPER_DISTANCE": 10,
+  "capital_pct": 0,
+  "NEXT_ACTIVE": "LIBRARY_PRE_T0_MARKET_DIRECTIONAL_REGIME_EVIDENCE_REQUIREMENTS_V1"
+}

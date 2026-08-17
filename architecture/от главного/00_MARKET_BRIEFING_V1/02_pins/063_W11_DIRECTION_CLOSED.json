@@ -1,0 +1,19 @@
+{
+  "status": "SEALED_FREEZE",
+  "W1_1_DIRECTION_BRANCH": "CLOSED",
+  "W1_1_CURRENT_PRODUCT": "EVENT_THEN_NO_TRADE",
+  "W1_1_ROLE": "EVENT_DETECTOR_NOT_DIRECTION",
+  "CREATE_NEW_SIDE_LAW": "NO",
+  "FEATURE_HUNT": "NO",
+  "NO_TRADE": "FIRST_CLASS",
+  "NEXT_ACTIVE": "W1_2_DIRECTIONAL_POTENTIAL_CANON_AUDIT_V1",
+  "library_stop_62": {
+    "NEW_DIRECTION_LAW_NEEDED": "NOT_YET",
+    "MINIMAL_SEMANTIC_OBJECT": "NONE",
+    "READY_FOR_OWNER_LAW_DESIGN": "NO"
+  },
+  "DIRECTION": "CLOSED",
+  "PAPER_DISTANCE": 10,
+  "capital_pct": 0,
+  "owner_reason": "On current W1-1 observables there is no lawful pre-move side fact. Do not invent a side law to force a trade. Keep W1-1 as event detector. Next: audit W1-2 canon for native directional potential."
+}
